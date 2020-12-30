@@ -2,11 +2,21 @@
   <div class="flex justify-center">
     <img alt="Vue logo" src="./assets/logo.png" />
   </div>
-  <div class="flex items-center flex-col ">
-    <AppButton variant="warning" rounded icon="accessible" disabled @click="clicked" />
-    <app-number-picker :max="5" v-model="numberPickerCount"></app-number-picker>
-    <div>#zia</div>
-    <div></div>
+  <div class="flex items-center flex-col space-y-4">
+    <div>
+      <div>#Ali</div>
+      <AppButton variant="danger" icon="accessible" disabled @click="clicked">
+        some text
+      </AppButton>
+    </div>
+    <div>
+      <div>#zia</div>
+      <app-number-picker
+        :max="5"
+        v-model="numberPickerCount"
+      ></app-number-picker>
+      <div></div>
+    </div>
   </div>
 </template>
 
