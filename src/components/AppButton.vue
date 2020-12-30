@@ -3,7 +3,7 @@
   <button
     :class="{
       'rounded-full': rounded,
-      [variantClasses]: true,
+      [variantClasses]: true
     }"
     class="shadow w-32 block border-blue-600 border-2 focus:outline-none focus:border-blue-600 px-4 py-2 text-blue-60 hover:text-white flex justify-center align-center "
     v-on="$attrs"
@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { variants } from "../../utility/css-helper";
+import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
   props: {
     rounded: {
@@ -45,7 +45,7 @@ export default defineComponent({
         return "bg-warning hover:bg-primary hover:text-white disabled:hover:bg-warning disabled:hover:text-danger";
       }
       throw new Error("variant not found");
-    },
-  },
+    }
+  }
 });
 </script>
