@@ -2,14 +2,14 @@
   <div class="flex items-center">
     <button
       @click="plus"
-      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded"
+      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded-sm"
     >
       +
     </button>
     <span class="w-10 text-center">{{ modelValue }}</span>
     <button
       @click="minus"
-      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded"
+      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded-sm"
     >
       -
     </button>
@@ -23,7 +23,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Number,
-      required: true
+      default: 1
     },
     min: {
       type: Number,
@@ -48,5 +48,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped></style>
