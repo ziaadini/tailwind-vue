@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { vairants } from "../../utility/css-helper";
+import { variants } from "../../utility/css-helper";
 export default defineComponent({
   props: {
     rounded: {
@@ -35,13 +35,13 @@ export default defineComponent({
   },
   computed: {
     variantClasses(): string {
-      if (this.variant === vairants.primary) {
+      if (this.variant === variants.primary) {
         return "bg-primary hover:bg-success hover:text-white disabled:opacity-50";
-      } else if (this.variant === vairants.success) {
+      } else if (this.variant === variants.success) {
         return "bg-success hover:bg-primary hover:text-white disabled:opacity-50";
-      } else if (this.variant === vairants.danger) {
+      } else if (this.variant === variants.danger) {
         return "bg-danger hover:bg-success hover:text-white disabled:opacity-50";
-      } else if (this.variant === vairants.warning) {
+      } else if (this.variant === variants.warning) {
         return "bg-warning hover:bg-primary hover:text-white disabled:hover:bg-warning disabled:hover:text-danger";
       }
       throw new Error("variant not found");
