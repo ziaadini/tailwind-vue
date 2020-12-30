@@ -1,0 +1,11 @@
+/* ./src/index.css */
+
+/*! @import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    body {
+        direction: rtl;
+    }
+}
