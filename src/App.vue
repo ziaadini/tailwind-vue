@@ -3,6 +3,7 @@
      <img alt="Vue logo" src="./assets/logo.png">
   </div>
   <div class="flex items-center flex-col ">
+    <AppButton variant="warning" rounded/>
       <app-number-picker :max="5" v-model="numberPickerCount"></app-number-picker>
     <div>#zia</div>
     <div></div>
@@ -13,11 +14,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AppNumberPicker from "@/components/AppNumberPicker.vue";
+import AppButton from "@/components/AppButton.vue";
 import {ref} from 'vue'
 export default defineComponent({
   name: 'App',
   components: {
-    AppNumberPicker
+    AppNumberPicker,
+    AppButton
   },
   setup(){
     const  numberPickerCount=ref(3)
