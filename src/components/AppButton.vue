@@ -3,49 +3,66 @@
   <button
     :class="{
       'rounded-full': rounded,
-      [variantClasses]: true
+      [variantClasses]: true,
     }"
-    class="shadow w-32 block border-blue-600 border-2 focus:outline-none focus:border-blue-600 px-4 py-2 text-blue-60 hover:text-white flex justify-center align-center "
+    class="shadow rounded-sm block border-blue-600 border-1 focus:outline-none focus:border-blue-600 px-4 py-2 text-blue-60 hover:text-white flex justify-center align-center "
     v-on="$attrs"
     v-bind="$attrs"
   >
-    <i v-if="icon" class="material-icons pl-1">
-      {{ icon }}
-    </i>
-    <span>Button</span>
+    <app-icon :name="icon" />
+    <span>
+      <slot />
+    </span>
   </button>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+import AppIcon from "@/components/AppIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
   props: {
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     variant: {
       type: String,
-      default: "primary"
+      default: "primary",
+      validator: (propValue: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return !!variants[propValue];
+      },
     },
     icon: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
-  computed: {
-    variantClasses(): string {
-      if (this.variant === variants.primary) {
-        return "bg-primary hover:bg-success hover:text-white disabled:opacity-50";
-      } else if (this.variant === variants.success) {
-        return "bg-success hover:bg-primary hover:text-white disabled:opacity-50";
-      } else if (this.variant === variants.danger) {
-        return "bg-danger hover:bg-success hover:text-white disabled:opacity-50";
-      } else if (this.variant === variants.warning) {
-        return "bg-warning hover:bg-primary hover:text-white disabled:hover:bg-warning disabled:hover:text-danger";
+  components: {
+    AppIcon,
+  },
+  setup(props) {
+    const variantClasses = computed((): string => {
+      if (props.variant === variants.primary) {
+        return "bg-primary hover:opacity-80 transition text-white disabled:opacity-50";
+      } else if (props.variant === variants.success) {
+        return "bg-success hover:opacity-80 transition text-white disabled:opacity-50";
+      } else if (props.variant === variants.danger) {
+        return "bg-danger hover:opacity-80 transition text-white disabled:opacity-50";
+      } else if (props.variant === variants.warning) {
+        return "bg-warning hover:opacity-80 transition text-white disabled:opacity-50";
       }
-      throw new Error("variant not found");
-    }
-  }
+
+      return "";
+    });
+
+    return {
+      variantClasses,
+    };
+  },
+  mounted() {
+    console.log(variants);
+  },
 });
 </script>
