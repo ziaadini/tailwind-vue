@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AppNumberPicker from "@/components/AppNumberPicker.vue";
+import AppNumberPicker from "@/components/numberPicker/AppNumberPicker.vue";
 import AppButton from "@/components/AppButton.vue";
 import { ref } from "vue";
 export default defineComponent({
