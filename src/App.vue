@@ -5,7 +5,7 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <AppButton variant="danger" icon="accessible" disabled @click="clicked">
+      <AppButton variant="danger" icon="accessible" disabled>
         some text
       </AppButton>
     </div>
