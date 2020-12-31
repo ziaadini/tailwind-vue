@@ -4,3 +4,10 @@ export enum variants {
   danger = "danger",
   warning = "warning"
 }
+export enum size {
+  xs = "xs",
+  sm = "sm",
+  md = "md",
+  lg = "lg",
+  full = "full"
+}
