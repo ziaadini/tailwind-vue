@@ -3,7 +3,7 @@
   <button
     :class="{
       'rounded-full': rounded,
-      [variantClasses]: true,
+      [variantClasses]: true
     }"
     class="shadow rounded-sm block border-blue-600 border-1 focus:outline-none focus:border-blue-600 px-4 py-2 text-blue-60 hover:text-white flex justify-center align-center "
     v-on="$attrs"
@@ -20,10 +20,11 @@ import { computed, defineComponent } from "vue";
 import AppIcon from "@/components/AppIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
+  name: "AppButton",
   props: {
     rounded: {
       type: Boolean,
-      default: false,
+      default: false
     },
     variant: {
       type: String,
@@ -32,15 +33,15 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     icon: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: {
-    AppIcon,
+    AppIcon
   },
   setup(props) {
     const variantClasses = computed((): string => {
@@ -58,11 +59,8 @@ export default defineComponent({
     });
 
     return {
-      variantClasses,
+      variantClasses
     };
-  },
-  mounted() {
-    console.log(variants);
-  },
+  }
 });
 </script>

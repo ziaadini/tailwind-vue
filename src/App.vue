@@ -29,17 +29,12 @@ export default defineComponent({
   name: "App",
   components: {
     AppNumberPicker,
-    AppButton,
+    AppButton
   },
   setup() {
     const numberPickerCount = ref(3);
 
     return { numberPickerCount };
-  },
-  methods: {
-    clicked(): void {
-      console.log("btn is clicked");
-    },
-  },
+  }
 });
 </script>

@@ -35,6 +35,9 @@ export default defineComponent({
       }
     }
   },
+  emit: {
+    "update:modelValue": null
+  },
   setup(props, { emit }) {
     const plus = () => {
       if (!props.max || props.max >= props.modelValue + 1) {
