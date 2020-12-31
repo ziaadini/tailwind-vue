@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import AppButton from "@/components/TButton.vue";
 export default defineComponent({
   name: "TNumberPicker",
@@ -29,10 +29,8 @@ export default defineComponent({
       type: Number
     },
     buttonProps: {
-      type: Object,
-      default: () => {
-        return { variant: "primary" };
-      }
+      type: Object as PropType<{ variant: string }>,
+      default: () => ({ variant: "primary" })
     }
   },
   emits: {
