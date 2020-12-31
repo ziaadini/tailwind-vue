@@ -3,7 +3,7 @@
   <button
     :class="{
       'rounded-full': rounded,
-      [variantClasses]: true,
+      [variantClasses]: true
     }"
     class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
     v-on="$attrs"
@@ -17,13 +17,14 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import AppIcon from "@/components/AppIcon.vue";
+import AppIcon from "@/components/TIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
+  name: "TButton",
   props: {
     rounded: {
       type: Boolean,
-      default: false,
+      default: false
     },
     variant: {
       type: String,
@@ -32,7 +33,7 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     icon: {
       type: String,
@@ -44,7 +45,7 @@ export default defineComponent({
     },
   },
   components: {
-    AppIcon,
+    AppIcon
   },
   setup(props) {
     const variantClasses = computed((): string => {

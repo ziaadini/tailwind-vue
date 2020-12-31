@@ -5,22 +5,20 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <AppButton
+      <t-button
         variant="warning"
         icon="accessible"
         outline
         disabled
         @click="clicked"
+        d
       >
         some text
-      </AppButton>
+      </t-button>
     </div>
     <div>
       <div>#zia</div>
-      <app-number-picker
-        :max="5"
-        v-model="numberPickerCount"
-      ></app-number-picker>
+      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
       <div></div>
     </div>
   </div>
@@ -28,24 +26,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AppNumberPicker from "@/components/AppNumberPicker.vue";
-import AppButton from "@/components/AppButton.vue";
 import { ref } from "vue";
+import TButton from "@/components/TButton.vue";
+import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 export default defineComponent({
   name: "App",
   components: {
-    AppNumberPicker,
-    AppButton,
+    TNumberPicker,
+    TButton,
   },
   setup() {
     const numberPickerCount = ref(3);
 
     return { numberPickerCount };
-  },
-  methods: {
-    clicked(): void {
-      console.log("btn is clicked");
-    },
   },
 });
 </script>

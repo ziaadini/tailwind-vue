@@ -1,25 +1,21 @@
 <template>
   <div class="flex items-center">
-    <button
-      @click="plus"
-      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded-sm"
-    >
+    <app-button @click="plus" class="w-10" v-bind="buttonProps">
       +
-    </button>
+    </app-button>
     <span class="w-10 text-center">{{ modelValue }}</span>
-    <button
-      @click="minus"
-      class="bg-primary w-10 h-10 text-white text-xl hover:bg-primary-dark focus:outline-none focus:bg-primary focus:ring rounded-sm"
-    >
+    <app-button @click="minus" class="w-10" v-bind="buttonProps">
       -
-    </button>
+    </app-button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import AppButton from "@/components/TButton.vue";
 export default defineComponent({
-  name: "AppNumberPicker",
+  name: "TNumberPicker",
+  components: { AppButton },
   props: {
     modelValue: {
       type: Number,
@@ -31,6 +27,17 @@ export default defineComponent({
     },
     max: {
       type: Number
+    },
+    buttonProps: {
+      type: Object,
+      default: () => {
+        return { variant: "primary" };
+      }
+    }
+  },
+  emits: {
+    "update:modelValue"(value: number) {
+      return typeof value === "number";
     }
   },
   setup(props, { emit }) {

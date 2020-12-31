@@ -7,11 +7,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
+  name: "TIcon",
   props: {
     name: {
       type: String,
-      default: "",
-    },
-  },
+      default: ""
+    }
+  }
 });
 </script>

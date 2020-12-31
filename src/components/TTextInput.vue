@@ -26,7 +26,7 @@
           ' pr-8': rightPadding,
           ' pr-3': !rightPadding,
           ' pl-8': leftPadding,
-          ' pl0-3': !leftPadding,
+          ' pl0-3': !leftPadding
         }"
       />
       <div
@@ -48,23 +48,23 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "AppTextInput",
+  name: "TTextInput",
   props: {
     label: {
       required: false,
       type: String,
-      default: "",
+      default: ""
     },
     leftIcon: {
       required: false,
       type: String,
-      default: "",
+      default: ""
     },
     rightIcon: {
       required: false,
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   computed: {
     rightPadding(): boolean {
@@ -72,7 +72,7 @@ export default defineComponent({
     },
     leftPadding(): boolean {
       return !!(this.$slots.leftSlot || this.leftIcon);
-    },
-  },
+    }
+  }
 });
 </script>
