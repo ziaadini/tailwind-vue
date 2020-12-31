@@ -35,8 +35,10 @@ export default defineComponent({
       }
     }
   },
-  emit: {
-    "update:modelValue": null
+  emits: {
+    "update:modelValue"(value: number) {
+      return typeof value === "number";
+    }
   },
   setup(props, { emit }) {
     const plus = () => {
