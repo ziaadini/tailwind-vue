@@ -5,16 +5,20 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <t-button variant="danger" icon="accessible" disabled>
+      <t-button
+        variant="warning"
+        icon="accessible"
+        outline
+        disabled
+        @click="clicked"
+        d
+      >
         some text
       </t-button>
     </div>
     <div>
       <div>#zia</div>
-      <t-number-picker
-        :max="5"
-        v-model="numberPickerCount"
-      ></t-number-picker>
+      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
       <div></div>
     </div>
   </div>
@@ -29,12 +33,12 @@ export default defineComponent({
   name: "App",
   components: {
     TNumberPicker,
-    TButton
+    TButton,
   },
   setup() {
     const numberPickerCount = ref(3);
 
     return { numberPickerCount };
-  }
+  },
 });
 </script>
