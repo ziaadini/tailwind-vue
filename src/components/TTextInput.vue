@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, onMounted } from "vue";
 
 export default defineComponent({
   name: "TTextInput",
@@ -66,13 +66,11 @@ export default defineComponent({
       default: ""
     }
   },
-  computed: {
-    rightPadding(): boolean {
-      return !!(this.$slots.rightSlot || this.rightIcon);
-    },
-    leftPadding(): boolean {
-      return !!(this.$slots.leftSlot || this.leftIcon);
-    }
+  setup(props, { slots }) {
+    const rightPadding = computed((): boolean => !!(slots.rightSlot || props.rightIcon));
+    const leftPadding = computed((): boolean => !!(slots.leftSlot || props.leftIcon));
+
+    return { rightPadding, leftPadding }
   }
 });
 </script>

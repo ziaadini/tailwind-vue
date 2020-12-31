@@ -37,12 +37,12 @@ export default defineComponent({
     },
     icon: {
       type: String,
-      default: "",
+      default: ""
     },
     outline: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   components: {
     AppIcon
@@ -73,10 +73,7 @@ export default defineComponent({
 
     return {
       variantClasses
-    }
-  },
-  mounted() {
-    console.log(this.outline);
-  },
+    };
+  }
 });
 </script>

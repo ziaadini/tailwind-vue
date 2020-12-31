@@ -33,12 +33,12 @@ export default defineComponent({
   name: "App",
   components: {
     TNumberPicker,
-    TButton,
+    TButton
   },
   setup() {
     const numberPickerCount = ref(3);
 
     return { numberPickerCount };
-  },
+  }
 });
 </script>
