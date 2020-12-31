@@ -5,7 +5,7 @@
       'rounded-full': rounded,
       [variantClasses]: true,
     }"
-    class="shadow rounded-sm block border-blue-600 border-1 focus:outline-none focus:border-blue-600 px-4 py-2 text-blue-60 hover:text-white flex justify-center align-center "
+    class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
     v-on="$attrs"
     v-bind="$attrs"
   >
@@ -38,31 +38,44 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    outline: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     AppIcon,
   },
   setup(props) {
     const variantClasses = computed((): string => {
-      if (props.variant === variants.primary) {
-        return "bg-primary hover:opacity-80 transition text-white disabled:opacity-50";
-      } else if (props.variant === variants.success) {
-        return "bg-success hover:opacity-80 transition text-white disabled:opacity-50";
-      } else if (props.variant === variants.danger) {
-        return "bg-danger hover:opacity-80 transition text-white disabled:opacity-50";
-      } else if (props.variant === variants.warning) {
-        return "bg-warning hover:opacity-80 transition text-white disabled:opacity-50";
+      switch (props.variant) {
+        case variants.primary:
+          return !props.outline
+            ? "bg-primary hover:opacity-80 transition text-white disabled:opacity-50"
+            : "bg-white transition ring-primary ring-4 text-dark hover:bg-primary hover:opacity-80 disabled:opacity-50";
+        case variants.success:
+          return !props.outline
+            ? "bg-success hover:opacity-80 transition text-white disabled:opacity-50"
+            : "bg-white transition ring-success ring-4 text-dark hover:bg-success hover:opacity-80 disabled:opacity-50";
+        case variants.danger:
+          return !props.outline
+            ? "bg-danger hover:opacity-80 transition text-white disabled:opacity-50"
+            : "bg-white transition ring-danger ring-4 text-dark hover:bg-danger hover:opacity-80 disabled:opacity-50";
+        case variants.warning:
+          return !props.outline
+            ? "bg-warning hover:opacity-80 transition text-white disabled:opacity-50"
+            : "bg-white transition ring-warning ring-4 text-dark hover:bg-warning hover:opacity-80 disabled:opacity-50";
+        default:
+          return "";
       }
-
-      return "";
     });
 
     return {
-      variantClasses,
-    };
+      variantClasses
+    }
   },
   mounted() {
-    console.log(variants);
+    console.log(this.outline);
   },
 });
 </script>
