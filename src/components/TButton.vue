@@ -17,10 +17,10 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import AppIcon from "@/components/AppIcon.vue";
+import AppIcon from "@/components/TIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
-  name: "AppButton",
+  name: "TButton",
   props: {
     rounded: {
       type: Boolean,

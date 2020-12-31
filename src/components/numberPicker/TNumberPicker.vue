@@ -12,9 +12,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AppButton from "@/components/AppButton.vue";
+import AppButton from "@/components/TButton.vue";
 export default defineComponent({
-  name: "AppNumberPicker",
+  name: "TNumberPicker",
   components: { AppButton },
   props: {
     modelValue: {
