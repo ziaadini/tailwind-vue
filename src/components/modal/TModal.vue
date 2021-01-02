@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 type BooleanFunction = () => boolean;
 export default defineComponent({
@@ -52,52 +52,54 @@ export default defineComponent({
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
-    }
+    },
   },
   props: {
     modelValue: {
       type: [Number, Boolean],
-      default: 0
-    } as number | boolean,
+      default: 0,
+    },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTag: {
       type: String,
-      default: "h4"
+      default: "h4",
     },
     hasCloseButton: {
       type: Boolean,
-      default() {
+      default: () => {
         return true;
-      }
+      },
     },
     maxSize: {
       type: String,
-      default: "full",
-      validator(propValue: string): boolean {
-        return !!size[propValue];
-      }
+      default: () => {
+        return "full";
+      },
+      validator: (propValue: string) => {
+        return !!(size as { [key: string]: string })[propValue];
+      },
     },
     closeCallback: {
-      type: Function,
-      default(): BooleanFunction {
+      type: Function as PropType<BooleanFunction>,
+      default: () => {
         return () => true;
-      }
-    } as BooleanFunction,
+      },
+    },
     eager: {
       type: Boolean,
       default: (): boolean => {
         return false;
-      }
-    }
+      },
+    },
   },
   setup(props, { emit, slots }) {
     const close = () => {
       props.closeCallback() && emit("update:modelValue", false);
     };
-    const onEscape = e => {
+    const onEscape = (e: any) => {
       if (e.key === "Esc" || e.key === "Escape") {
         close();
       }
@@ -137,8 +139,8 @@ export default defineComponent({
       close,
       showHeader,
       showCloseButton,
-      showTitle
+      showTitle,
     };
-  }
+  },
 });
 </script>

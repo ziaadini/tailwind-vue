@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted } from "vue";
-export const useKeyDown = (callback: () => void) => {
+export const useKeyDown = (callback: (e: any) => void) => {
   onMounted(() => {
     document.addEventListener("keydown", callback);
   });

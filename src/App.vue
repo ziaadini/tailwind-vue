@@ -5,14 +5,7 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <t-button
-        variant="warning"
-        icon="accessible"
-        outline
-        disabled
-        @click="clicked"
-        d
-      >
+      <t-button variant="warning" icon="accessible" outline disabled>
         some text
       </t-button>
     </div>
@@ -61,7 +54,7 @@ export default defineComponent({
   components: {
     TModal,
     TNumberPicker,
-    TButton
+    TButton,
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -71,6 +64,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  }
+  },
 });
 </script>
