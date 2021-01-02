@@ -40,6 +40,10 @@
       </t-modal>
       <t-button @click="modal = true">open modal</t-button>
     </div>
+    <div>
+      <div>#zia</div>
+      <t-switch label="فقط کالاهای موجود"></t-switch>
+    </div>
   </div>
 </template>
 
@@ -49,12 +53,14 @@ import { ref } from "vue";
 import TButton from "@/components/TButton.vue";
 import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
+import TSwitch from "@/components/switch/TSwitch.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TSwitch,
     TModal,
     TNumberPicker,
-    TButton,
+    TButton
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -64,6 +70,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  },
+  }
 });
 </script>
