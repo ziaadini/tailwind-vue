@@ -67,10 +67,14 @@ export default defineComponent({
     }
   },
   setup(props, { slots }) {
-    const rightPadding = computed((): boolean => !!(slots.rightSlot || props.rightIcon));
-    const leftPadding = computed((): boolean => !!(slots.leftSlot || props.leftIcon));
+    const rightPadding = computed(
+      (): boolean => !!(slots.rightSlot || props.rightIcon)
+    );
+    const leftPadding = computed(
+      (): boolean => !!(slots.leftSlot || props.leftIcon)
+    );
 
-    return { rightPadding, leftPadding }
+    return { rightPadding, leftPadding };
   }
 });
 </script>
