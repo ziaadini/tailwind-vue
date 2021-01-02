@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "tailwind-config-viewer -p 8081 & vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "tailwind-config-viewer": "tailwind-config-viewer -o"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -32,6 +33,7 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "postcss": "^7.0.35",
     "prettier": "^1.19.1",
+    "tailwind-config-viewer": "^1.4.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
