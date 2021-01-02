@@ -1,45 +1,47 @@
 <template>
-  <div
-    class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10"
-    v-if="eager || modelValue"
-    v-show="!eager || modelValue"
-  >
+  <transition name="fade" mode="out-in">
     <div
-      class="absolute w-full h-full bg-gray-900 opacity-50"
-      @click="close"
-    ></div>
+      class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10"
+      v-if="eager || modelValue"
+      v-show="!eager || modelValue"
+    >
+      <div
+        class="absolute w-full h-full bg-gray-900 opacity-50"
+        @click="close"
+      ></div>
 
-    <div class="absolute max-h-full" :class="maxWidth">
-      <div class="container bg-white overflow-hidden md:rounded">
-        <div
-          v-if="showHeader"
-          class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
-        >
-          <div>
-            <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+      <div class="absolute max-h-full" :class="maxWidth">
+        <div class="container bg-white overflow-hidden md:rounded">
+          <div
+            v-if="showHeader"
+            class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+          >
+            <div>
+              <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+              <template v-else>
+                <slot name="title"></slot>
+              </template>
+            </div>
+
+            <div
+              v-if="showCloseButton"
+              @click="close"
+              class="text-2xl hover:text-gray-600 cursor-pointer"
+            >
+              &#215;
+            </div>
             <template v-else>
-              <slot name="title"></slot>
+              <slot name="closeButton" :onClick="close"></slot>
             </template>
           </div>
 
-          <div
-            v-if="showCloseButton"
-            @click="close"
-            class="text-2xl hover:text-gray-600 cursor-pointer"
-          >
-            &#215;
+          <div class="max-h-full px-4 py-4">
+            <slot></slot>
           </div>
-          <template v-else>
-            <slot name="closeButton" :onClick="close"></slot>
-          </template>
-        </div>
-
-        <div class="max-h-full px-4 py-4">
-          <slot></slot>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
