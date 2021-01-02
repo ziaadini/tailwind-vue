@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 border-r-4 rounded px-4 py-3"
+    class="mb-4 border-r-4 rounded-sm px-4 py-3"
     v-if="show"
     :class="wrapperColor"
     role="alert"
@@ -57,6 +57,7 @@
 </template>
 
 <script lang="ts">
+import { variants } from "@/utility/css-helper";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -67,25 +68,37 @@ export default defineComponent({
   },
   computed: {
     shade(): string {
-      switch (this.type) {
-        case "info":
-          return "gray";
-        case "warning":
-          return "yellow";
-        case "success":
-          return "teal";
-        case "danger":
-          return "red";
+      switch (this.variant) {
+        case variants.primary:
+          return "bg-primary-100 text-primary-900 border-primary-50";
+        case variants.success:
+          return "bg-success-100 text-success-900 border-success-50";
+        case variants.danger:
+          return "bg-danger-100 text-danger-900 border-danger-50";
+        case variants.warning:
+          return "bg-warning-100 text-warning-900 border-warning-50";
         default:
           return "";
       }
     },
     wrapperColor(): string {
-      return `bg-${this.shade}-100 text-${this.shade}-900 border-${this.shade}-500`;
+      return this.shade
     },
     svgColor(): string {
-      return `text-${this.shade}-500`;
-    },
+
+      switch (this.variant) {
+        case variants.primary:
+          return "text-primary-500";
+        case variants.success:
+          return "text-success-500";
+        case variants.danger:
+          return "text-danger-500";
+        case variants.warning:
+          return "text-warning-500";
+        default:
+          return "";
+      }
+    }
   },
   methods: {
     closeAlert(): void {
@@ -94,11 +107,14 @@ export default defineComponent({
     },
   },
   props: {
-    type: {
+    variant: {
       type: String,
-      default: "info",
-      validator: (value: string) =>
-        ["info", "warning", "success", "danger"].indexOf(value) !== -1,
+      default: "primary",
+      validator: (propValue: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return !!variants[propValue];
+      },
     },
   },
 });

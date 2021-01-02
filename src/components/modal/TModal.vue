@@ -1,7 +1,7 @@
 <template>
-  <transition name="fade" mode="out-in">
+  <div class="transition" :class="{ 'opacity-0': !modelValue }">
     <div
-      class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10"
+      class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10 "
       v-if="eager || modelValue"
       v-show="!eager || modelValue"
     >
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script lang="ts">
@@ -54,26 +54,26 @@ export default defineComponent({
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
-    }
+    },
   },
   props: {
     modelValue: {
       type: [Number, Boolean],
-      default: 0
+      default: 0,
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTag: {
       type: String,
-      default: "h4"
+      default: "h4",
     },
     hasCloseButton: {
       type: Boolean,
       default: () => {
         return true;
-      }
+      },
     },
     maxSize: {
       type: String,
@@ -82,20 +82,20 @@ export default defineComponent({
       },
       validator: (propValue: string) => {
         return !!(size as { [key: string]: string })[propValue];
-      }
+      },
     },
     closeCallback: {
       type: Function as PropType<BooleanFunction>,
       default: () => {
         return () => true;
-      }
+      },
     },
     eager: {
       type: Boolean,
       default: (): boolean => {
         return false;
-      }
-    }
+      },
+    },
   },
   setup(props, { emit, slots }) {
     const close = () => {
@@ -141,8 +141,8 @@ export default defineComponent({
       close,
       showHeader,
       showCloseButton,
-      showTitle
+      showTitle,
     };
-  }
+  },
 });
 </script>
