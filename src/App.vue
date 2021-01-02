@@ -1,69 +1,31 @@
 <template>
-  <div class="flex justify-center">
-    <img alt="Vue logo" src="./assets/logo.png" />
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/ali">Ali</router-link> | 
+    <router-link to="/zia">zia</router-link>
   </div>
-  <div class="flex items-center flex-col space-y-4">
-    <div>
-      <div>#Ali</div>
-      <t-button variant="warning" icon="accessible" outline disabled>
-        some text
-      </t-button>
-    </div>
-    <div>
-      <div>#zia</div>
-      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
-    </div>
-    <div>
-      <div>#zia</div>
-      <t-modal v-model="modal" :close-callback="modalCloseCallback">
-        <!--        <template #closeButton="attrs">-->
-        <!--          <t-button v-bind="attrs">close</t-button>-->
-        <!--        </template>-->
-        <p class="text-gray-800">
-          Are you sure you want you delete your account? This action cannot be
-          undone.
-        </p>
-
-        <div class="text-right mt-4">
-          <button
-            @click="modal = false"
-            class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline"
-          >
-            Cancel
-          </button>
-          <button
-            class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400"
-          >
-            Delete
-          </button>
-        </div>
-      </t-modal>
-      <t-button @click="modal = true">open modal</t-button>
-    </div>
-  </div>
+  <router-view/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { ref } from "vue";
-import TButton from "@/components/TButton.vue";
-import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
-import TModal from "@/components/modal/TModal.vue";
-export default defineComponent({
-  name: "App",
-  components: {
-    TModal,
-    TNumberPicker,
-    TButton,
-  },
-  setup() {
-    const numberPickerCount = ref<number>(3);
-    const modal = ref<boolean>(false);
-    const modalCloseCallback = () => {
-      console.log("modal has been closed");
-      return true;
-    };
-    return { numberPickerCount, modal, modalCloseCallback };
-  },
-});
-</script>
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
