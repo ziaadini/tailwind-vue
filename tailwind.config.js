@@ -9,32 +9,88 @@ module.exports = {
           light: colors.blue,
           DEFAULT: "#377DFF",
           dark: "#124198",
-          hover: "#658dd7"
+          hover: "#658dd7",
+          "50": "#e7efff",
+          "100": "#c3d8ff",
+          "200": "#9bbeff",
+          "300": "#73a4ff",
+          "400": "#5591ff",
+          "500": "#377dff",
+          "600": "#3175ff",
+          "700": "#2a6aff",
+          "800": "#2360ff",
+          "900": "#164dff",
+          A100: "#ffffff",
+          A200: "#fcfcff",
+          A400: "#c9d4ff",
+          A700: "#afbfff",
         },
         success: {
           light: "#8be77b",
           DEFAULT: "#00bd1d",
           dark: "#008916",
-          hover: "#6cc7a7"
+          hover: "#6cc7a7",
+          "50": "#e0f7e4",
+          "100": "#b3ebbb",
+          "200": "#80de8e",
+          "300": "#4dd161",
+          "400": "#26c73f",
+          "500": "#00bd1d",
+          "600": "#00b71a",
+          "700": "#00ae15",
+          "800": "#00a611",
+          "900": "#00980a",
+          A100: "#c3ffc5",
+          A200: "#90ff93",
+          A400: "#5dff61",
+          A700: "#44ff48",
         },
         danger: {
           light: "#f16484",
           DEFAULT: "#f53f66",
           dark: "#a80029",
-          hover: "#ef7491"
+          hover: "#ef7491",
+          "50": "#fee8ed",
+          "100": "#fcc5d1",
+          "200": "#fa9fb3",
+          "300": "#f87994",
+          "400": "#f75c7d",
+          "500": "#f53f66",
+          "600": "#f4395e",
+          "700": "#f23153",
+          "800": "#f02949",
+          "900": "#ee1b38",
+          A100: "#ffffff",
+          A200: "#ffeef0",
+          A400: "#ffbbc3",
+          A700: "#ffa1ac",
         },
         warning: {
           light: "#ec9f76",
           DEFAULT: "#e88550",
           dark: "#f19564",
-          hover: "#ffa882"
-        }
+          hover: "#ffa882",
+          "50": "#fcf0ea",
+          "100": "#f8dacb",
+          "200": "#f4c2a8",
+          "300": "#efaa85",
+          "400": "#eb976a",
+          "500": "#e88550",
+          "600": "#e57d49",
+          "700": "#e27240",
+          "800": "#de6837",
+          "900": "#d85527",
+          A100: "#ffffff",
+          A200: "#ffe9e2",
+          A400: "#ffc2af",
+          A700: "#ffaf96",
+        },
       },
       ringColor: {
         primary: "#9ab4e5",
         success: "#a0eb93",
         danger: "#f48ba3",
-        warning: "#f3c0a5"
+        warning: "#f3c0a5",
       },
       fontSize: {
         xs: "12px",
@@ -45,7 +101,7 @@ module.exports = {
         "2xl": "22px",
         "3xl": "24px",
         "4xl": "26px",
-        "5xl": "28px"
+        "5xl": "28px",
       },
       borderRadius: {
         none: "0",
@@ -54,14 +110,15 @@ module.exports = {
         md: "20px",
         lg: "26px",
         large: "32px",
-        full: "9999px"
-      }
-    }
+        full: "9999px",
+      },
+    },
   },
   variants: {
     extend: {
-      backgroundColor: ["disabled"]
-    }
+      backgroundColor: ["disabled"],
+      ringWidth: ["hover"],
+    },
   },
-  plugins: []
+  plugins: [],
 };

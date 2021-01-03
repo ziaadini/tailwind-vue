@@ -9,3 +9,25 @@
         direction: rtl;
     }
 }
+
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-height-enter,
+.fade-height-leave-to {
+  opacity: 0;
+  height: 0px;
+}
+
+.fade-height-enter-active,
+.fade-height-leave-active {
+  transition: all 0.3s ease;
+}
