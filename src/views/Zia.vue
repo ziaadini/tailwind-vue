@@ -42,14 +42,19 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-switch label="فقط کالاهای موجود"></t-switch>
+      <t-switch
+        v-model="switchModel"
+        :true-value="1"
+        :false-value="0"
+        label="فقط کالاهای موجود"
+      ></t-switch>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import TButton from "@/components/TButton.vue";
 import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
@@ -64,12 +69,16 @@ export default defineComponent({
   },
   setup() {
     const numberPickerCount = ref<number>(3);
+    const switchModel = ref<number>(1);
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
     };
-    return { numberPickerCount, modal, modalCloseCallback };
+    watchEffect(() => {
+      console.log("switchModel", switchModel.value);
+    });
+    return { numberPickerCount, switchModel, modal, modalCloseCallback };
   }
 });
 </script>
