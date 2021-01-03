@@ -48,6 +48,17 @@
         :false-value="0"
         label="فقط کالاهای موجود"
       ></t-switch>
+
+<!--      <t-switch-->
+<!--        v-model="switchModel"-->
+<!--        :value="[{ a: 1 }]"-->
+<!--        label="فقط کالاهای موجود"-->
+<!--      ></t-switch>-->
+<!--      <t-switch-->
+<!--        v-model="switchModel"-->
+<!--        :value="{ a: 2 }"-->
+<!--        label="فقط کالاهای موجود"-->
+<!--      ></t-switch>-->
     </div>
   </div>
 </template>
@@ -69,7 +80,7 @@ export default defineComponent({
   },
   setup() {
     const numberPickerCount = ref<number>(3);
-    const switchModel = ref<number>(1);
+    const switchModel = ref<any>("");
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
