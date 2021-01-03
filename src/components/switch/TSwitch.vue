@@ -1,21 +1,25 @@
 <template>
-  <div class="flex justify-between items-center" @click="updateInput">
+  <div
+    class="flex justify-between items-center cursor-pointer"
+    @click="updateInput"
+  >
     <div
       class="w-16 h-8 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out"
-      :class="{ 'bg-green-400': isChecked }"
+      :class="{ [`bg-${variant}`]: isChecked }"
     >
       <div
         class="bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ease-in-out"
         :class="{ '-translate-x-8': isChecked }"
       ></div>
     </div>
-    <label class="mr-2">{{ label }}</label>
+    <label class="mr-2 cursor-pointer">{{ label }}</label>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType } from "vue";
 import { SwitchAndCheckbox } from "@/types/base-component-types";
+import { variants } from "@/utility/css-helper";
 
 export default defineComponent({
   props: {
@@ -43,6 +47,15 @@ export default defineComponent({
         SwitchAndCheckbox.Value
       >,
       default: 0
+    },
+    variant: {
+      type: String,
+      default: "primary",
+      validator: (propValue: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return !!variants[propValue];
+      }
     }
   },
   emits: ["update:modelValue"],
