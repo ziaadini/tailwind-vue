@@ -53,11 +53,10 @@
           >
         </template>
       </t-dropdown>
-      <br />
       <t-alert variant="warning">
-        هشدار هشدار هشدار هشدار هشدار هشدار
-        هشدار هشدار هشدار هشدار هشدار هشدار
+        هشدار هشدار هشدار هشدار هشدار هشدار هشدار هشدار هشدار هشدار هشدار هشدار
       </t-alert>
+      <t-breadcrumb v-model="items" />
     </div>
     <div>
       <div>#zia</div>
@@ -101,6 +100,8 @@ import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
 import TDropdown from "@/components/dropdown/TDropdown.vue";
 import TAlert from "@/components/alert/TAlert.vue";
+import TBreadcrumb from "@/components/breadcrumb/TBreadcrumb.vue";
+import { BreadCrumb } from "@/types/base-component-types";
 
 export default defineComponent({
   name: "App",
@@ -110,6 +111,26 @@ export default defineComponent({
     TButton,
     TDropdown,
     TAlert,
+    TBreadcrumb,
+  },
+  data() {
+    return {
+      items: [
+        {
+          text: "تست۱",
+          url: "مقدار ۱",
+        },
+        {
+          text: "تست۲",
+          url: "مقدار ۲",
+        },
+        {
+          text: "تست۳",
+          url: "مقدار ۳",
+          active: true,
+        },
+      ] as BreadCrumb.Root,
+    };
   },
   setup() {
     const numberPickerCount = ref<number>(3);
