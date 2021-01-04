@@ -83,8 +83,8 @@ export default defineComponent({
       }
       return compare(props.modelValue, props.trueValue);
     });
-    const updateInput = () => {
-      const isActive = !isChecked.value;
+    const updateInput = e => {
+      const isActive = e?.target?.checked ?? !isChecked.value;
       if (Array.isArray(props.modelValue)) {
         const newValue = [...props.modelValue];
         if (isActive) {
