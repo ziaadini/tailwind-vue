@@ -49,16 +49,26 @@
         label="فقط کالاهای موجود"
       ></t-switch>
 
-<!--      <t-switch-->
-<!--        v-model="switchModel"-->
-<!--        :value="[{ a: 1 }]"-->
-<!--        label="فقط کالاهای موجود"-->
-<!--      ></t-switch>-->
-<!--      <t-switch-->
-<!--        v-model="switchModel"-->
-<!--        :value="{ a: 2 }"-->
-<!--        label="فقط کالاهای موجود"-->
-<!--      ></t-switch>-->
+      <!--      <t-switch-->
+      <!--        v-model="switchModel"-->
+      <!--        :value="[{ a: 1 }]"-->
+      <!--        label="فقط کالاهای موجود"-->
+      <!--      ></t-switch>-->
+      <!--      <t-switch-->
+      <!--        v-model="switchModel"-->
+      <!--        :value="{ a: 2 }"-->
+      <!--        label="فقط کالاهای موجود"-->
+      <!--      ></t-switch>-->
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-checkbox
+        v-model="checkboxModel"
+        :true-value="1"
+        :false-value="0"
+        label="سامسونگ"
+      ></t-checkbox>
     </div>
   </div>
 </template>
@@ -66,13 +76,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref, watchEffect } from "vue";
+
 import TButton from "@/components/tailwind/TButton.vue";
 import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
+import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TCheckbox,
     TSwitch,
     TModal,
     TNumberPicker,
@@ -81,6 +94,7 @@ export default defineComponent({
   setup() {
     const numberPickerCount = ref<number>(3);
     const switchModel = ref<any>("");
+    const checkboxModel = ref<any>("");
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
@@ -88,8 +102,15 @@ export default defineComponent({
     };
     watchEffect(() => {
       console.log("switchModel", switchModel.value);
+      console.log("checkboxModel", checkboxModel.value);
     });
-    return { numberPickerCount, switchModel, modal, modalCloseCallback };
+    return {
+      numberPickerCount,
+      switchModel,
+      modal,
+      modalCloseCallback,
+      checkboxModel
+    };
   }
 });
 </script>
