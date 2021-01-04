@@ -4,42 +4,12 @@
   </div>
   <div class="flex items-center flex-col space-y-4">
     <div>
-      <div>#Ali</div>
-      <t-button variant="warning" icon="accessible" outline disabled>
+      <p>ripple effect</p>
+      <t-button variant="warning" icon="accessible" ripple>
         some text
       </t-button>
     </div>
-    <div>
-      <div>#zia</div>
-      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
-    </div>
-    <div>
-      <div>#zia</div>
-      <t-modal v-model="modal" :close-callback="modalCloseCallback">
-        <!--        <template #closeButton="attrs">-->
-        <!--          <t-button v-bind="attrs">close</t-button>-->
-        <!--        </template>-->
-        <p class="text-gray-800">
-          Are you sure you want you delete your account? This action cannot be
-          undone.
-        </p>
-
-        <div class="text-right mt-4">
-          <button
-            @click="modal = false"
-            class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline"
-          >
-            Cancel
-          </button>
-          <button
-            class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400"
-          >
-            Delete
-          </button>
-        </div>
-      </t-modal>
-      <t-button @click="modal = true">open modal</t-button>
-    </div>
+    <t-pagination :currentPage="1" :maxPages="12" />
   </div>
 </template>
 
@@ -47,14 +17,12 @@
 import { defineComponent } from "vue";
 import { ref } from "vue";
 import TButton from "@/components/tailwind/TButton.vue";
-import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
-import TModal from "@/components/tailwind/modal/TModal.vue";
+import TPagination from "@/components/tailwind/paginantion/TPagination.vue";
 export default defineComponent({
   name: "App",
   components: {
-    TModal,
-    TNumberPicker,
-    TButton
+    TButton,
+    TPagination
   },
   setup() {
     const numberPickerCount = ref<number>(3);

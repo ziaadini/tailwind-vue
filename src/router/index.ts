@@ -13,8 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "ali" */ "@/views/Ali.vue")
+    component: () => import(/* webpackChunkName: "ali" */ "@/views/Ali.vue")
   },
   {
     path: "/mohammad",
@@ -31,8 +30,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "zia" */ "@/views/Zia.vue")
+    component: () => import(/* webpackChunkName: "zia" */ "@/views/Zia.vue")
   }
 ];
 

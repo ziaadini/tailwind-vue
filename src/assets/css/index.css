@@ -31,3 +31,20 @@
 .fade-height-leave-active {
   transition: all 0.3s ease;
 }
+
+.ripple{
+  overflow: hidden;
+  @apply relative text-white px-5 py-3 bg-red-400 rounded-sm cursor-pointer outline-none
+}
+.ripple::after {
+  content: '';
+  transform:scale(10,10);
+  background-image: radial-gradient( circle , #fff 10%, transparent 10%);
+  transition: transform 0.3s ,opacity 1s;
+  @apply block absolute w-full h-full top-0 left-0  opacity-0
+}
+.ripple:active::after{
+  transform: scale(0,0);
+  opacity: .3;
+  transition: 0s;
+}
