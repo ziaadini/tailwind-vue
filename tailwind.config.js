@@ -1,6 +1,15 @@
 const colors = require("tailwindcss/colors");
 module.exports = {
-  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  purge: {
+    content: ['./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}'],
+
+    // These options are passed through directly to PurgeCSS
+    options: {
+      safelist: {
+        standard: [/primary/, /warning/, /danger/, /success/],
+      },
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
