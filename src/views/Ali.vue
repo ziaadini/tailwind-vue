@@ -95,12 +95,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
-import TButton from "@/components/TButton.vue";
-import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
-import TModal from "@/components/modal/TModal.vue";
-import TDropdown from "@/components/dropdown/TDropdown.vue";
-import TAlert from "@/components/alert/TAlert.vue";
-import TBreadcrumb from "@/components/breadcrumb/TBreadcrumb.vue";
+import TButton from "@/components/tailwind/TButton.vue";
+import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
+import TModal from "@/components/tailwind/modal/TModal.vue";
+import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
+import TAlert from "@/components/tailwind/alert/TAlert.vue";
+import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
 import { BreadCrumb } from "@/types/base-component-types";
 
 export default defineComponent({
