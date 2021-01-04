@@ -1,10 +1,11 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/ali">Ali</router-link> | 
+    <router-link to="/ali">Ali</router-link> |
+    <router-link to="/mohammad">mohammad</router-link> |
     <router-link to="/zia">zia</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
