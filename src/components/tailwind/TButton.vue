@@ -3,6 +3,7 @@
   <button
     :class="{
       'rounded-full': rounded,
+      ripple: ripple,
       [variantClasses]: true
     }"
     class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
@@ -40,6 +41,10 @@ export default defineComponent({
       default: ""
     },
     outline: {
+      type: Boolean,
+      default: false
+    },
+    ripple: {
       type: Boolean,
       default: false
     }

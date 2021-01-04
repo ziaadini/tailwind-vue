@@ -23,7 +23,7 @@ module.exports = {
           A100: "#ffffff",
           A200: "#fcfcff",
           A400: "#c9d4ff",
-          A700: "#afbfff",
+          A700: "#afbfff"
         },
         success: {
           light: "#8be77b",
@@ -43,7 +43,7 @@ module.exports = {
           A100: "#c3ffc5",
           A200: "#90ff93",
           A400: "#5dff61",
-          A700: "#44ff48",
+          A700: "#44ff48"
         },
         danger: {
           light: "#f16484",
@@ -63,7 +63,7 @@ module.exports = {
           A100: "#ffffff",
           A200: "#ffeef0",
           A400: "#ffbbc3",
-          A700: "#ffa1ac",
+          A700: "#ffa1ac"
         },
         warning: {
           light: "#ec9f76",
@@ -83,14 +83,14 @@ module.exports = {
           A100: "#ffffff",
           A200: "#ffe9e2",
           A400: "#ffc2af",
-          A700: "#ffaf96",
-        },
+          A700: "#ffaf96"
+        }
       },
       ringColor: {
         primary: "#9ab4e5",
         success: "#a0eb93",
         danger: "#f48ba3",
-        warning: "#f3c0a5",
+        warning: "#f3c0a5"
       },
       fontSize: {
         xs: "12px",
@@ -101,7 +101,7 @@ module.exports = {
         "2xl": "22px",
         "3xl": "24px",
         "4xl": "26px",
-        "5xl": "28px",
+        "5xl": "28px"
       },
       borderRadius: {
         none: "0",
@@ -110,15 +110,15 @@ module.exports = {
         md: "20px",
         lg: "26px",
         large: "32px",
-        full: "9999px",
-      },
-    },
+        full: "9999px"
+      }
+    }
   },
   variants: {
     extend: {
       backgroundColor: ["disabled"],
-      ringWidth: ["hover"],
-    },
+      ringWidth: ["hover"]
+    }
   },
-  plugins: [],
+  plugins: []
 };

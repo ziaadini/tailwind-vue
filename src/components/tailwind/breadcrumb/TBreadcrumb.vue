@@ -30,13 +30,13 @@ export default defineComponent({
       type: Object as PropType<BreadCrumb.Root>,
       default: () => {
         return [];
-      },
-    },
+      }
+    }
   },
   computed: {
     returnValues(): BreadCrumb.Root {
       return this.modelValue?.length > 0 ? this.modelValue : [];
-    },
-  },
+    }
+  }
 });
 </script>

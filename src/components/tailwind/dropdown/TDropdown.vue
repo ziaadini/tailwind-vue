@@ -41,28 +41,28 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
-      open: false,
+      open: false
     };
   },
   props: {
     placement: {
       type: String,
       default: "right",
-      validator: (value) => ["right", "left"].indexOf(value) !== -1,
-    },
+      validator: value => ["right", "left"].indexOf(value) !== -1
+    }
   },
   methods: {
-    onEscape: (e) => {
+    onEscape: e => {
       if (e.key === "Esc" || e.key === "Escape") {
         this.open = false;
       }
-    },
+    }
   },
   mounted() {
     document.addEventListener("keydown", this.onEscape);
   },
   beforeUnmount() {
     document.removeEventListener("keydown", this.onEscape);
-  },
+  }
 });
 </script>
