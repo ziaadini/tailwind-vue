@@ -15,7 +15,7 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-modal v-model="modal" :close-callback="modalCloseCallback">
+      <t-modal teleport-to="#modal-content" v-model="modal" :close-callback="modalCloseCallback">
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
