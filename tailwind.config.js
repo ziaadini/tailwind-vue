@@ -117,6 +117,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ["disabled"],
+      opacity: ["disabled"],
       ringWidth: ["hover"]
     }
   },

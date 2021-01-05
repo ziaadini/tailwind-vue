@@ -11,7 +11,11 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
+      <t-number-picker
+        :max="5"
+        :min="2"
+        v-model="numberPickerCount"
+      ></t-number-picker>
     </div>
     <div>
       <div>#zia</div>
