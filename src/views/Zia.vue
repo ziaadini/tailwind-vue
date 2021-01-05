@@ -15,7 +15,11 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-modal teleport-to="#modal-content" v-model="modal" :close-callback="modalCloseCallback">
+      <t-modal
+        teleport-to="#modal-content"
+        v-model="modal"
+        :close-callback="modalCloseCallback"
+      >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
@@ -70,6 +74,10 @@
         label="سامسونگ"
       ></t-checkbox>
     </div>
+    <div class="w-full">
+      <div>#zia</div>
+      <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+    </div>
   </div>
 </template>
 
@@ -82,9 +90,11 @@ import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue"
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
+import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TSkeleton,
     TCheckbox,
     TSwitch,
     TModal,
