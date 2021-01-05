@@ -5,7 +5,7 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <t-button variant="warning" icon="accessible" outline disabled>
+      <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>
       <t-dropdown class="mt-3" placement="right">

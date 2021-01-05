@@ -3,7 +3,7 @@
   <button
     :class="{
       'rounded-full': rounded,
-      [variantClasses]: true
+      [variantClasses]: true,
     }"
     class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
     v-on="$attrs"
@@ -24,7 +24,7 @@ export default defineComponent({
   props: {
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     variant: {
       type: String,
@@ -33,47 +33,55 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      }
+      },
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     outline: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    AppIcon
+    AppIcon,
   },
   setup(props) {
     const variantClasses = computed((): string => {
-      switch (props.variant) {
-        case variants.primary:
-          return !props.outline
-            ? "bg-primary hover:opacity-80 transition text-white disabled:opacity-50"
-            : "bg-white transition ring-primary ring-4 text-dark hover:bg-primary hover:opacity-80 disabled:opacity-50";
-        case variants.success:
-          return !props.outline
-            ? "bg-success hover:opacity-80 transition text-white disabled:opacity-50"
-            : "bg-white transition ring-success ring-4 text-dark hover:bg-success hover:opacity-80 disabled:opacity-50";
-        case variants.danger:
-          return !props.outline
-            ? "bg-danger hover:opacity-80 transition text-white disabled:opacity-50"
-            : "bg-white transition ring-danger ring-4 text-dark hover:bg-danger hover:opacity-80 disabled:opacity-50";
-        case variants.warning:
-          return !props.outline
-            ? "bg-warning hover:opacity-80 transition text-white disabled:opacity-50"
-            : "bg-white transition ring-warning ring-4 text-dark hover:bg-warning hover:opacity-80 disabled:opacity-50";
-        default:
-          return "";
-      }
+      const baseClass =
+        " hover:opacity-80 transition text-white disabled:opacity-50";
+      const outlineBaseClass =
+        " transition ring-4 text-dark  hover:opacity-80 disabled:opacity-50";
+      return (
+        (() => {
+          switch (props.variant) {
+            case variants.primary:
+              return !props.outline
+                ? "bg-primary"
+                : "bg-white ring-primary hover:bg-primary";
+            case variants.success:
+              return !props.outline
+                ? "bg-success"
+                : "bg-white ring-success hover:bg-success";
+            case variants.danger:
+              return !props.outline
+                ? "bg-danger"
+                : "bg-white ring-danger hover:bg-danger";
+            case variants.warning:
+              return !props.outline
+                ? "bg-warning"
+                : "bg-white ring-warning hover:bg-warning";
+            default:
+              return "";
+          }
+        })() + (props.outline ? outlineBaseClass : baseClass)
+      );
     });
 
     return {
-      variantClasses
+      variantClasses,
     };
-  }
+  },
 });
 </script>
