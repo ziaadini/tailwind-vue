@@ -1,15 +1,33 @@
 <template>
-  <label class="flex items-center" :class="{ 'cursor-pointer': !disabled }">
-    <input
-      :class="{ 'cursor-pointer': !disabled }"
-      class="w-5 h-5 rounded shadow-sm disabled:opacity-50 disabled:cursor-not-allowed text-blue-500 border-gray-300"
-      type="checkbox"
-      v-bind="$attrs"
-      :disabled="disabled"
-      :checked="isChecked"
-      :value="value"
-      @change="updateInput"
-    />
+  <label
+    class="flex justify-start items-start"
+    :class="{ 'cursor-pointer': !disabled }"
+  >
+    <div
+      :class="
+        isChecked
+          ? `bg-${variant} border-${variant}`
+          : 'bg-white border-gray-400'
+      "
+      class="border-2 rounded-xs w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2"
+    >
+      <input
+        type="checkbox"
+        class="opacity-0 absolute"
+        :class="{ 'cursor-pointer': !disabled }"
+        v-bind="$attrs"
+        :disabled="disabled"
+        :checked="isChecked"
+        :value="value"
+        @change="updateInput"
+      />
+      <svg
+        class="text-white fill-current hidden w-4 h-4 pointer-events-none"
+        viewBox="0 0 20 20"
+      >
+        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
+      </svg>
+    </div>
     <span class="mr-2" :class="{ 'text-gray-500': disabled }">
       {{ label }}
     </span>
@@ -38,3 +56,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+input:checked + svg {
+  display: block;
+}
+</style>

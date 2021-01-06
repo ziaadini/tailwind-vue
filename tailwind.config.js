@@ -1,6 +1,17 @@
 const colors = require("tailwindcss/colors");
 module.exports = {
-  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  purge: {
+    content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+    enable: true,
+    // These options are passed through directly to PurgeCSS
+    options: {
+      safelist: {
+        standard: [/primary/, /danger/, /warning/, /success/],
+        keyframes: true,
+        fontFace: true
+      }
+    }
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -105,6 +116,7 @@ module.exports = {
       },
       borderRadius: {
         none: "0",
+        xs: "4px",
         sm: "8px",
         DEFAULT: "16px",
         md: "20px",
@@ -116,7 +128,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ["disabled"],
+      // backgroundColor: ["disabled", "checked"],
+      borderColor: ["checked"],
       opacity: ["disabled"],
       ringWidth: ["hover"]
     }
