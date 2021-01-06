@@ -82,6 +82,24 @@
       <div>#zia</div>
       <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
     </div>
+
+    <div>
+      <div>#zia</div>
+      <div class="flex w-full space-x-reverse space-x-3 mt-4">
+        <t-radio
+          label="تست ۱"
+          variant="danger"
+          v-model="radioModel"
+          value="test1"
+        ></t-radio>
+        <t-radio
+          label="تست ۲"
+          variant="danger"
+          v-model="radioModel"
+          :value="{ a: 'test2' }"
+        ></t-radio>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -95,9 +113,11 @@ import TModal from "@/components/tailwind/modal/TModal.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
 import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
+import TRadio from "@/components/tailwind/radio/TRadio.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TRadio,
     TSkeleton,
     TCheckbox,
     TSwitch,
@@ -109,6 +129,7 @@ export default defineComponent({
     const numberPickerCount = ref<number>(3);
     const switchModel = ref<any>("");
     const checkboxModel = ref<any>("");
+    const radioModel = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
@@ -118,12 +139,16 @@ export default defineComponent({
       console.log("switchModel", switchModel.value);
       console.log("checkboxModel", checkboxModel.value);
     });
+    watchEffect(() => {
+      console.log("radioModel is : ", radioModel.value);
+    });
     return {
       numberPickerCount,
       switchModel,
       modal,
       modalCloseCallback,
-      checkboxModel
+      checkboxModel,
+      radioModel
     };
   }
 });

@@ -1,14 +1,24 @@
 <template>
   <label class="flex items-center" :class="{ 'cursor-pointer': !disabled }">
-    <input
-      :class="[{ 'cursor-pointer': !disabled }, `checked:bg-${variant}`]"
-      class="appearance-none w-5 h-5 rounded-full border-2 border-gray-500 focus:outline-none  checked:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-      type="radio"
-      v-bind="$attrs"
-      :disabled="disabled"
-      :value="value"
-      v-model="computedValue"
-    />
+    <div
+      :class="isChecked ? `border-${variant}` : 'bg-white border-gray-400'"
+      class="border-2 rounded-full w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2"
+    >
+      <input
+        :class="[{ 'cursor-pointer': !disabled }, `checked:bg-${variant}`]"
+        class="opacity-0 absolute"
+        type="radio"
+        v-bind="$attrs"
+        :disabled="disabled"
+        :value="value"
+        v-model="computedValue"
+      />
+
+      <div
+        class="w-3 h-3 rounded-full"
+        :class="{ [`bg-${variant}`]: isChecked }"
+      ></div>
+    </div>
     <span class="mr-2" :class="{ 'text-gray-500': disabled }">
       {{ label }}
     </span>
@@ -52,13 +62,20 @@ export default defineComponent({
         emit("update:modelValue", val);
       }
     });
+    const isChecked = computed(() => {
+      return (
+        (typeof props.value === "object" &&
+          JSON.stringify(props.value) === JSON.stringify(props.modelValue)) ||
+        props.value === props.modelValue
+      );
+    });
     watch(
       () => props.modelValue,
       val => {
         newValue.value = val;
       }
     );
-    return { computedValue };
+    return { computedValue, isChecked };
   }
 });
 </script>
