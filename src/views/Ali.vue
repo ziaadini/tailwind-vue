@@ -6,11 +6,11 @@
     <div>
       <div>#Ali</div>
       {{text}}
-      <TextInput v-model="text" rounded outline />
+      <TextInput v-model="text" rounded   />
       <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>
-      <t-dropdown class="mt-3" placement="right">
+      <t-dropdown placement="right">
         <!-- Button content -->
         <template v-slot:button>
           <div class="hover:ring-4 shadow transition rounded px-1 py-2 w-full">

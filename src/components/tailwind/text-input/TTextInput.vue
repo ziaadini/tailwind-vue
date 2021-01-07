@@ -1,7 +1,8 @@
 <template>
+{{variant}}
   <div
     :class="{
-      'rounded-full': rounded,
+      ' m-2': outline,
     }"
   >
     <label
@@ -27,12 +28,13 @@
         type="text"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        class="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300"
+        class="block min-h-48 w-full sm:text-sm outline-none"
         :class="{
           ' pr-8': rightPadding,
           ' pr-3': !rightPadding,
           ' pl-8': leftPadding,
           ' pl0-3': !leftPadding,
+          'rounded-full': rounded,
           [variantClasses]: true,
         }"
       />
@@ -115,33 +117,13 @@ export default defineComponent({
     );
 
     const variantClasses = computed((): string => {
-      const baseClass =
-        " hover:opacity-80 transition text-white disabled:opacity-50";
-      const outlineBaseClass =
-        " transition ring-4 text-dark  hover:opacity-80 disabled:opacity-50";
       return (
-        (() => {
-          switch (props.variant) {
-            case variants.primary:
-              return !props.outline
-                ? "bg-primary"
-                : "bg-white ring-primary hover:bg-primary focus:ring-primary-500";
-            case variants.success:
-              return !props.outline
-                ? "bg-success"
-                : "bg-white ring-success hover:bg-success focus:success-indigo-500";
-            case variants.danger:
-              return !props.outline
-                ? "bg-danger"
-                : "bg-white ring-danger hover:bg-danger focus:ring-danger-500";
-            case variants.warning:
-              return !props.outline
-                ? "bg-warning"
-                : "bg-white ring-warning hover:bg-warning focus:ring-warning-500";
-            default:
-              return "";
-          }
-        })() + (props.outline ? outlineBaseClass : baseClass)
+        (!props.outline
+          ? " hover:opacity-80 transition text-white disabled:opacity-50"
+          : " transition hover:opacity-80 disabled:opacity-50 ") +
+        (!props.outline
+          ? `bg-${props.variant}`
+          : `bg-white text-dark ring-4 focus:ring-${props.variant}-500 focus:border-${props.variant}-500`)
       );
     });
 
