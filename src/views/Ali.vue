@@ -122,19 +122,18 @@ export default defineComponent({
       items: [
         {
           text: "تست۱",
-          url: "مقدار ۱",
+          url: "مقدار ۱"
         },
         {
           text: "تست۲",
-          url: "مقدار ۲",
+          url: "مقدار ۲"
         },
         {
           text: "تست۳",
           url: "مقدار ۳",
-          active: true,
-        },
-      ] as BreadCrumb.Root,
-      text: "test",
+          active: true
+        }
+      ] as BreadCrumb.Root
     };
   },
   setup() {
@@ -145,6 +144,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  },
+  }
 });
 </script>
