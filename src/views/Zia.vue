@@ -11,11 +11,19 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
+      <t-number-picker
+        :max="5"
+        :min="2"
+        v-model="numberPickerCount"
+      ></t-number-picker>
     </div>
     <div>
       <div>#zia</div>
-      <t-modal v-model="modal" :close-callback="modalCloseCallback">
+      <t-modal
+        teleport-to="#modal-content"
+        v-model="modal"
+        :close-callback="modalCloseCallback"
+      >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
@@ -40,30 +48,108 @@
       </t-modal>
       <t-button @click="modal = true">open modal</t-button>
     </div>
+    <div>
+      <div>#zia</div>
+      <t-switch
+        v-model="switchModel"
+        :true-value="1"
+        :false-value="0"
+        label="فقط کالاهای موجود"
+      ></t-switch>
+
+      <!--      <t-switch-->
+      <!--        v-model="switchModel"-->
+      <!--        :value="[{ a: 1 }]"-->
+      <!--        label="فقط کالاهای موجود"-->
+      <!--      ></t-switch>-->
+      <!--      <t-switch-->
+      <!--        v-model="switchModel"-->
+      <!--        :value="{ a: 2 }"-->
+      <!--        label="فقط کالاهای موجود"-->
+      <!--      ></t-switch>-->
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-checkbox
+        v-model="checkboxModel"
+        :true-value="1"
+        :false-value="0"
+        label="سامسونگ"
+      ></t-checkbox>
+    </div>
+    <div class="w-full">
+      <div>#zia</div>
+      <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <div class="flex w-full space-x-reverse space-x-3 mt-4">
+        <t-radio
+          label="تست ۱"
+          variant="danger"
+          v-model="radioModel"
+          value="test1"
+        ></t-radio>
+        <t-radio
+          label="تست ۲"
+          variant="danger"
+          v-model="radioModel"
+          :value="{ a: 'test2' }"
+        ></t-radio>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ref } from "vue";
-import TButton from "@/components/button/TButton.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
+import { ref, watchEffect } from "vue";
+
+import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
+import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
+import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
+import TRadio from "@/components/tailwind/radio/TRadio.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TRadio,
+    TSkeleton,
+    TCheckbox,
+    TSwitch,
     TModal,
     TNumberPicker,
-    TButton,
+    TButton
   },
   setup() {
     const numberPickerCount = ref<number>(3);
+    const switchModel = ref<any>("");
+    const checkboxModel = ref<any>("");
+    const radioModel = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
     };
-    return { numberPickerCount, modal, modalCloseCallback };
-  },
+    watchEffect(() => {
+      console.log("switchModel", switchModel.value);
+      console.log("checkboxModel", checkboxModel.value);
+    });
+    watchEffect(() => {
+      console.log("radioModel is : ", radioModel.value);
+    });
+    return {
+      numberPickerCount,
+      switchModel,
+      modal,
+      modalCloseCallback,
+      checkboxModel,
+      radioModel
+    };
+  }
 });
 </script>

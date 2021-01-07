@@ -7,27 +7,23 @@
 @layer base {
     body {
         direction: rtl;
+        -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
     }
 }
 
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
+.ripple{
+  overflow: hidden;
+  @apply relative text-white px-5 py-3 bg-red-400 rounded-sm cursor-pointer outline-none
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease;
+.ripple::after {
+  content: '';
+  transform:scale(10,10);
+  background-image: radial-gradient( circle , #fff 10%, transparent 10%);
+  transition: transform 0.3s ,opacity 1s;
+  @apply block absolute w-full h-full top-0 left-0  opacity-0
 }
-
-.fade-height-enter,
-.fade-height-leave-to {
-  opacity: 0;
-  height: 0px;
-}
-
-.fade-height-enter-active,
-.fade-height-leave-active {
-  transition: all 0.3s ease;
+.ripple:active::after{
+  transform: scale(0,0);
+  opacity: .3;
+  transition: 0s;
 }

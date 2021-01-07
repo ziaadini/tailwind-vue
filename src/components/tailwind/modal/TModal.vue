@@ -1,47 +1,51 @@
 <template>
-  <div class="transition" :class="{ 'opacity-0': !modelValue }">
-    <div
-      class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10 "
-      v-if="eager || modelValue"
-      v-show="!eager || modelValue"
-    >
+  <teleport :to="teleportTo" :disabled="isTeleportDisable">
+    <div class="transition duration-300" :class="{ 'opacity-0': !modelValue }">
       <div
-        class="absolute w-full h-full bg-gray-900 opacity-50"
-        @click="close"
-      ></div>
+        class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10 "
+        v-if="eager || modelValue"
+        v-show="!eager || modelValue"
+      >
+        <div
+          class="absolute w-full h-full bg-gray-900 opacity-50"
+          @click="close"
+        ></div>
 
-      <div class="absolute max-h-full" :class="maxWidth">
-        <div class="container bg-white overflow-hidden md:rounded">
-          <div
-            v-if="showHeader"
-            class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
-          >
-            <div>
-              <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+        <div class="absolute max-h-full" :class="maxWidth">
+          <div class="container bg-white overflow-hidden md:rounded">
+            <div
+              v-if="showHeader"
+              class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+            >
+              <div>
+                <component :is="titleTag" v-if="showTitle">{{
+                  title
+                }}</component>
+                <template v-else>
+                  <slot name="title"></slot>
+                </template>
+              </div>
+
+              <div
+                v-if="showCloseButton"
+                @click="close"
+                class="text-2xl hover:text-gray-600 cursor-pointer"
+              >
+                &#215;
+              </div>
               <template v-else>
-                <slot name="title"></slot>
+                <slot name="closeButton" :onClick="close"></slot>
               </template>
             </div>
 
-            <div
-              v-if="showCloseButton"
-              @click="close"
-              class="text-2xl hover:text-gray-600 cursor-pointer"
-            >
-              &#215;
+            <div class="max-h-full px-4 py-4">
+              <slot></slot>
             </div>
-            <template v-else>
-              <slot name="closeButton" :onClick="close"></slot>
-            </template>
-          </div>
-
-          <div class="max-h-full px-4 py-4">
-            <slot></slot>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -54,26 +58,29 @@ export default defineComponent({
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
-    },
+    }
   },
   props: {
     modelValue: {
       type: [Number, Boolean],
-      default: 0,
+      default: 0
     },
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     titleTag: {
       type: String,
-      default: "h4",
+      default: "h4"
+    },
+    teleportTo: {
+      type: String
     },
     hasCloseButton: {
       type: Boolean,
       default: () => {
         return true;
-      },
+      }
     },
     maxSize: {
       type: String,
@@ -82,20 +89,20 @@ export default defineComponent({
       },
       validator: (propValue: string) => {
         return !!(size as { [key: string]: string })[propValue];
-      },
+      }
     },
     closeCallback: {
       type: Function as PropType<BooleanFunction>,
       default: () => {
         return () => true;
-      },
+      }
     },
     eager: {
       type: Boolean,
       default: (): boolean => {
         return false;
-      },
-    },
+      }
+    }
   },
   setup(props, { emit, slots }) {
     const close = () => {
@@ -107,6 +114,9 @@ export default defineComponent({
       }
     };
     useKeyDown(onEscape);
+    const isTeleportDisable = computed(() => {
+      return props.teleportTo === undefined;
+    });
     const showTitle = computed(() => {
       return props.title && !slots.title;
     });
@@ -142,7 +152,8 @@ export default defineComponent({
       showHeader,
       showCloseButton,
       showTitle,
+      isTeleportDisable
     };
-  },
+  }
 });
 </script>
