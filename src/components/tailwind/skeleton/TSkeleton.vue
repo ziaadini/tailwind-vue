@@ -3,7 +3,7 @@
     <div
       v-bind="$attrs"
       :class="{ 'border border-gray-200': border, shadow }"
-      class="rounded-md p-4 w-full mx-auto"
+      class="rounded-md p-4 w-full mx-auto cursor-wait"
     >
       <div class="animate-pulse flex space-x-reverse space-x-4">
         <div class="rounded-full bg-gray-300 h-12 w-12"></div>
@@ -21,7 +21,7 @@
     <div
       v-bind="$attrs"
       :class="{ 'border border-gray-200': border, shadow }"
-      class="max-w-xs  rounded-sm w-full mx-auto"
+      class="max-w-xs  rounded-sm w-full mx-auto cursor-wait"
     >
       <div class="animate-pulse flex flex-col space-y-5 pb-5">
         <div class="w-full h-60 bg-gray-300 rounded-t-sm"></div>
@@ -39,7 +39,7 @@
     <div
       v-bind="$attrs"
       :class="{ 'border border-gray-200': border, shadow }"
-      class="rounded-md p-4 w-full mx-auto"
+      class="rounded-md p-4 w-full mx-auto cursor-wait"
     >
       <div class="animate-pulse h-4 bg-gray-300 rounded w-full"></div>
     </div>
@@ -48,7 +48,7 @@
     <div
       v-bind="$attrs"
       :class="{ 'border border-gray-200': border, shadow }"
-      class="rounded-md p-4 w-full mx-auto"
+      class="rounded-md p-4 w-full mx-auto cursor-wait"
     >
       <div class="flex-1 space-y-3 py-1 animate-pulse">
         <div class="h-4 bg-gray-300 rounded w-3/4"></div>
