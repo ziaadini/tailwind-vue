@@ -19,7 +19,7 @@
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
-        <p class="text-gray-800">
+        <p class="text-gray-800 w-screen">
           Are you sure you want you delete your account? This action cannot be
           undone.
         </p>
@@ -40,6 +40,23 @@
       </t-modal>
       <t-button @click="modal = true">open modal</t-button>
     </div>
+
+    <div>
+      <div>#zia</div>
+      <t-drawer teleport-to="#modal-content" v-model="drawer">
+        <!--        <template #closeButton="attrs">-->
+        <!--          <t-button v-bind="attrs">close</t-button>-->
+        <!--        </template>-->
+        <div class=" px-6">
+          <p class="text-gray-800">
+            Are you sure you want you delete your account? This action cannot be
+            undone.
+          </p>
+        </div>
+      </t-drawer>
+      <t-button @click="drawer = true" variant="success">open drawer</t-button>
+    </div>
+
     <div>
       <div>#zia</div>
       <t-switch
@@ -82,9 +99,15 @@ import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue"
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
+import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
+import TRadio from "@/components/tailwind/radio/TRadio.vue";
+import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TDrawer,
+    TRadio,
+    TSkeleton,
     TCheckbox,
     TSwitch,
     TModal,
@@ -93,9 +116,12 @@ export default defineComponent({
   },
   setup() {
     const numberPickerCount = ref<number>(3);
-    const switchModel = ref<any>("");
-    const checkboxModel = ref<any>("");
+    const switchModel = ref("");
+    const checkboxModel = ref("");
+    const radioModel = ref<Record<string, any> | string>("");
+
     const modal = ref<boolean>(false);
+    const drawer = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
@@ -108,6 +134,7 @@ export default defineComponent({
       numberPickerCount,
       switchModel,
       modal,
+      drawer,
       modalCloseCallback,
       checkboxModel
     };
