@@ -95,7 +95,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
-import TButton from "@/components/TButton.vue";
+import TButton from "@/components/button/TButton.vue";
 import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
 import TDropdown from "@/components/dropdown/TDropdown.vue";

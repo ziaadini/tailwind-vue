@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import AppButton from "@/components/TButton.vue";
+import AppButton from "@/components/button/TButton.vue";
 export default defineComponent({
   name: "TNumberPicker",
   components: { AppButton },

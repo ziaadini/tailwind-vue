@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import AppIcon from "@/components/TIcon.vue";
+import AppIcon from "@/components/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 export default defineComponent({
   name: "TButton",
