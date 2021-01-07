@@ -54,7 +54,7 @@ export default defineComponent({
   components: {
     TModal,
     TNumberPicker,
-    TButton,
+    TButton
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -64,6 +64,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  },
+  }
 });
 </script>

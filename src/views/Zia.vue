@@ -11,11 +11,19 @@
     </div>
     <div>
       <div>#zia</div>
-      <t-number-picker :max="5" v-model="numberPickerCount"></t-number-picker>
+      <t-number-picker
+        :max="5"
+        :min="2"
+        v-model="numberPickerCount"
+      ></t-number-picker>
     </div>
     <div>
       <div>#zia</div>
-      <t-modal v-model="modal" :close-callback="modalCloseCallback">
+      <t-modal
+        teleport-to="#modal-content"
+        v-model="modal"
+        :close-callback="modalCloseCallback"
+      >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
@@ -87,6 +95,28 @@
         label="سامسونگ"
       ></t-checkbox>
     </div>
+    <div class="w-full">
+      <div>#zia</div>
+      <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <div class="flex w-full space-x-reverse space-x-3 mt-4">
+        <t-radio
+          label="تست ۱"
+          variant="danger"
+          v-model="radioModel"
+          value="test1"
+        ></t-radio>
+        <t-radio
+          label="تست ۲"
+          variant="danger"
+          v-model="radioModel"
+          :value="{ a: 'test2' }"
+        ></t-radio>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -101,6 +131,7 @@ import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
 import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
 import TRadio from "@/components/tailwind/radio/TRadio.vue";
+
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 export default defineComponent({
   name: "App",
@@ -119,7 +150,6 @@ export default defineComponent({
     const switchModel = ref("");
     const checkboxModel = ref("");
     const radioModel = ref<Record<string, any> | string>("");
-
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
     const modalCloseCallback = () => {
@@ -130,13 +160,17 @@ export default defineComponent({
       console.log("switchModel", switchModel.value);
       console.log("checkboxModel", checkboxModel.value);
     });
+    watchEffect(() => {
+      console.log("radioModel is : ", radioModel.value);
+    });
     return {
       numberPickerCount,
       switchModel,
       modal,
       drawer,
       modalCloseCallback,
-      checkboxModel
+      checkboxModel,
+      radioModel
     };
   }
 });
