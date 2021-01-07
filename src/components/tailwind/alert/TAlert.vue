@@ -63,7 +63,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
-      show: true,
+      show: true
     };
   },
   computed: {
@@ -82,10 +82,9 @@ export default defineComponent({
       }
     },
     wrapperColor(): string {
-      return this.shade
+      return this.shade;
     },
     svgColor(): string {
-
       switch (this.variant) {
         case variants.primary:
           return "text-primary-500";
@@ -104,7 +103,7 @@ export default defineComponent({
     closeAlert(): void {
       this.show = false;
       this.$emit("closeClick", true);
-    },
+    }
   },
   props: {
     variant: {
@@ -114,8 +113,8 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
-    },
-  },
+      }
+    }
+  }
 });
 </script>

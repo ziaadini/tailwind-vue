@@ -95,12 +95,21 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
+<<<<<<< HEAD
 import TButton from "@/components/button/TButton.vue";
 import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/modal/TModal.vue";
 import TDropdown from "@/components/dropdown/TDropdown.vue";
 import TAlert from "@/components/alert/TAlert.vue";
 import TBreadcrumb from "@/components/breadcrumb/TBreadcrumb.vue";
+=======
+import TButton from "@/components/tailwind/TButton.vue";
+import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
+import TModal from "@/components/tailwind/modal/TModal.vue";
+import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
+import TAlert from "@/components/tailwind/alert/TAlert.vue";
+import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
+>>>>>>> master
 import { BreadCrumb } from "@/types/base-component-types";
 
 export default defineComponent({
@@ -111,25 +120,25 @@ export default defineComponent({
     TButton,
     TDropdown,
     TAlert,
-    TBreadcrumb,
+    TBreadcrumb
   },
   data() {
     return {
       items: [
         {
           text: "تست۱",
-          url: "مقدار ۱",
+          url: "مقدار ۱"
         },
         {
           text: "تست۲",
-          url: "مقدار ۲",
+          url: "مقدار ۲"
         },
         {
           text: "تست۳",
           url: "مقدار ۳",
-          active: true,
-        },
-      ] as BreadCrumb.Root,
+          active: true
+        }
+      ] as BreadCrumb.Root
     };
   },
   setup() {
@@ -140,6 +149,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  },
+  }
 });
 </script>
