@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
-import TButton from "@/components/tailwind/TButton.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 import TPagination from "@/components/tailwind/paginantion/TPagination.vue";
 export default defineComponent({
   name: "App",

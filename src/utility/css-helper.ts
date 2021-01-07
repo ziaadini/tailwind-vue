@@ -4,6 +4,12 @@ export enum variants {
   danger = "danger",
   warning = "warning"
 }
+
+export enum textInputVariants {
+  number = "number",
+  numeric = "numeric",
+  format = "format"
+}
 export enum size {
   xs = "xs",
   sm = "sm",

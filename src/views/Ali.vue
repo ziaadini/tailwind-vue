@@ -5,6 +5,8 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
+      {{text}}
+      <TextInput v-model="text" rounded outline />
       <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>
@@ -102,6 +104,7 @@ import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
 import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
 import { BreadCrumb } from "@/types/base-component-types";
+import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 
 export default defineComponent({
   name: "App",
@@ -111,25 +114,27 @@ export default defineComponent({
     TButton,
     TDropdown,
     TAlert,
-    TBreadcrumb
+    TBreadcrumb,
+    TextInput,
   },
   data() {
     return {
       items: [
         {
           text: "تست۱",
-          url: "مقدار ۱"
+          url: "مقدار ۱",
         },
         {
           text: "تست۲",
-          url: "مقدار ۲"
+          url: "مقدار ۲",
         },
         {
           text: "تست۳",
           url: "مقدار ۳",
-          active: true
-        }
-      ] as BreadCrumb.Root
+          active: true,
+        },
+      ] as BreadCrumb.Root,
+      text: "test",
     };
   },
   setup() {
@@ -140,6 +145,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  }
+  },
 });
 </script>

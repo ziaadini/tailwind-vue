@@ -106,8 +106,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
-import TNumberPicker from "@/components/numberPicker/TNumberPicker.vue";
-import TModal from "@/components/modal/TModal.vue";
+import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
+import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref, watchEffect } from "vue";
 
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
