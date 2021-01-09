@@ -7,10 +7,13 @@
       <div>#Ali</div>
       {{ text }}
       <TextInput
-        v-model.format:&:3="text"
+        v-model.format:&:4="text"
         variant="warning"
         outline
-        align="center"
+        align="right"
+        leftIcon="add_task"
+        rightIcon="add_task"
+        disabled
       />
       <t-button variant="primary" outline icon="accessible" disabled>
         some text
@@ -139,7 +142,7 @@ export default defineComponent({
           active: true,
         },
       ] as BreadCrumb.Root,
-      text: "ali",
+      text: 12223,
     };
   },
   setup() {
@@ -151,5 +154,10 @@ export default defineComponent({
     };
     return { numberPickerCount, modal, modalCloseCallback };
   },
+  mounted() {
+    setTimeout(() => {
+      this.text = 222222222222
+    }, 4000);
+  }
 });
 </script>
