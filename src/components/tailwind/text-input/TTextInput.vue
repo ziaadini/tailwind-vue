@@ -26,7 +26,7 @@
       <input
         type="text"
         :value="modelValue"
-        @input="emitHandler"
+        @input="emitHandler($event.target.value)"
         class="block min-h-48 w-full sm:text-sm outline-none h-10"
         :class="{
           ' pr-8': rightPadding,
@@ -155,10 +155,16 @@ export default defineComponent({
 
     return { rightPadding, leftPadding, variantClasses };
   },
+  watch: {
+    modelValue: {
+      immediate: true,
+      handler(value: string) {
+        this.emitHandler(value, true);
+      },
+    },
+  },
   methods: {
-    emitHandler(e: { target: { value: string } }) {
-      let value = e.target.value;
-
+    emitHandler(value: string, watchCommitted = false) {
       const [formatFounded, args] = formatHandlerWrapper(
         modifierVariants.format,
         this.modelModifiers
@@ -169,9 +175,10 @@ export default defineComponent({
           separator: args[0],
           digitLength: args[1],
         });
+        watchCommitted && this.$emit("update:modelValue", value);
       }
 
-      this.$emit("update:modelValue", value);
+      !watchCommitted && this.$emit("update:modelValue", value);
     },
   },
 });
