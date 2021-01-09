@@ -10,6 +10,12 @@ export enum textInputVariants {
   numeric = "numeric",
   format = "format"
 }
+
+export enum textInputAlignments {
+  right = "right",
+  center = "center",
+  left = "left"
+}
 export enum size {
   xs = "xs",
   sm = "sm",

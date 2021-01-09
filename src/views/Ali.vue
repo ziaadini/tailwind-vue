@@ -5,8 +5,8 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      {{text}}
-      <TextInput v-model="text" rounded   />
+      {{ text }}
+      <TextInput v-model="text" variant="warning" outline align="center"/>
       <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>
@@ -122,18 +122,19 @@ export default defineComponent({
       items: [
         {
           text: "تست۱",
-          url: "مقدار ۱"
+          url: "مقدار ۱",
         },
         {
           text: "تست۲",
-          url: "مقدار ۲"
+          url: "مقدار ۲",
         },
         {
           text: "تست۳",
           url: "مقدار ۳",
-          active: true
-        }
-      ] as BreadCrumb.Root
+          active: true,
+        },
+      ] as BreadCrumb.Root,
+      text: "ali",
     };
   },
   setup() {
@@ -144,6 +145,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  }
+  },
 });
 </script>

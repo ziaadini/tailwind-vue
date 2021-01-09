@@ -6,19 +6,11 @@ module.exports = {
     // These options are passed through directly to PurgeCSS
     options: {
       safelist: {
-<<<<<<< HEAD
         standard: [/primary/, /danger/, /warning/, /success/, ],
         keyframes: true,
         fontFace: true,
       },
     },
-=======
-        standard: [/primary/, /danger/, /warning/, /success/],
-        keyframes: true,
-        fontFace: true
-      }
-    }
->>>>>>> master
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
