@@ -27,7 +27,7 @@
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
-        <p class="text-gray-800 w-screen">
+        <p class="text-gray-800">
           Are you sure you want you delete your account? This action cannot be
           undone.
         </p>
@@ -60,7 +60,8 @@
           <div class="h-96">bye</div>
           <div class="h-96">تست</div>
           <div class="h-90 text-gray-800 bg-gray-300">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است.
           </div>
         </div>
       </t-drawer>

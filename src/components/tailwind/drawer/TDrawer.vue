@@ -6,7 +6,7 @@
       @click="close"
     ></div>
     <div
-      class="fixed scrollbar-sm h-full overflow-auto top-0  bg-white transform duration-300"
+      class="fixed scrollbar-sm h-full overflow-y-auto top-0  bg-white transform duration-300"
       :class="[
         { [left ? '-translate-x-full' : 'translate-x-full']: !modelValue },
         left ? 'left-0' : 'right-0',
@@ -18,7 +18,7 @@
         :class="{ 'flex-row-reverse': left }"
         class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
       >
-        <div :class="{ 'w-screen': full }">
+        <div>
           <component :is="titleTag" v-if="showTitle">{{ title }}</component>
           <template v-else>
             <slot name="title"></slot>
@@ -37,8 +37,8 @@
         </template>
       </div>
 
-      <div>
-        <div>
+      <div :class="{ 'w-screen': full }">
+        <div class="p-4">
           <slot></slot>
         </div>
       </div>
