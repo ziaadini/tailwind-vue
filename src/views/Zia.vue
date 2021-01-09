@@ -48,6 +48,26 @@
       </t-modal>
       <t-button @click="modal = true">open modal</t-button>
     </div>
+
+    <div>
+      <div>#zia</div>
+      <t-drawer teleport-to="#modal-content" v-model="drawer">
+        <!--        <template #closeButton="attrs">-->
+        <!--          <t-button v-bind="attrs">close</t-button>-->
+        <!--        </template>-->
+        <div>
+          <div class="h-96">hi</div>
+          <div class="h-96">bye</div>
+          <div class="h-96">تست</div>
+          <div class="h-90 text-gray-800 bg-gray-300">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است.
+          </div>
+        </div>
+      </t-drawer>
+      <t-button @click="drawer = true" variant="success">open drawer</t-button>
+    </div>
+
     <div>
       <div>#zia</div>
       <t-switch
@@ -113,9 +133,12 @@ import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
 import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
 import TRadio from "@/components/tailwind/radio/TRadio.vue";
+
+import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TDrawer,
     TRadio,
     TSkeleton,
     TCheckbox,
@@ -126,10 +149,11 @@ export default defineComponent({
   },
   setup() {
     const numberPickerCount = ref<number>(3);
-    const switchModel = ref<any>("");
-    const checkboxModel = ref<any>("");
+    const switchModel = ref("");
+    const checkboxModel = ref("");
     const radioModel = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
+    const drawer = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
@@ -145,6 +169,7 @@ export default defineComponent({
       numberPickerCount,
       switchModel,
       modal,
+      drawer,
       modalCloseCallback,
       checkboxModel,
       radioModel

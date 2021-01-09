@@ -1,47 +1,45 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
-    <div class="transition  duration-300" :class="{ 'opacity-0': !modelValue }">
+    <div
+      :class="{ hidden: !modelValue }"
+      class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
+      @click="close"
+    ></div>
+    <div
+      class="fixed scrollbar-sm h-full overflow-y-auto top-0  bg-white transform duration-300"
+      :class="[
+        { [left ? '-translate-x-full' : 'translate-x-full']: !modelValue },
+        left ? 'left-0' : 'right-0',
+        maxWidth
+      ]"
+    >
       <div
-        :class="{ hidden: !modelValue }"
-        class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
-        @click="close"
-      ></div>
-      <div
-        class="fixed md:w-auto w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
-        :class="[maxWidth]"
+        v-if="showHeader"
+        :class="{ 'flex-row-reverse': left }"
+        class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
       >
         <div>
-          <div v-if="eager || modelValue" v-show="!eager || modelValue">
-            <div
-              v-if="showHeader"
-              class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
-            >
-              <div>
-                <component :is="titleTag" v-if="showTitle">{{
-                  title
-                }}</component>
-                <template v-else>
-                  <slot name="title"></slot>
-                </template>
-              </div>
+          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+          <template v-else>
+            <slot name="title"></slot>
+          </template>
+        </div>
 
-              <div
-                v-if="showCloseButton"
-                @click="close"
-                class="text-2xl hover:text-gray-600 cursor-pointer"
-              >
-                &#215;
-              </div>
-              <template v-else>
-                <slot name="closeButton" :onClick="close"></slot>
-              </template>
-            </div>
-            <div :class="{ 'w-screen': full }">
-              <div class="p-4">
-                <slot></slot>
-              </div>
-            </div>
-          </div>
+        <div
+          v-if="showCloseButton"
+          @click="close"
+          class="text-2xl hover:text-gray-600 cursor-pointer"
+        >
+          &#215;
+        </div>
+        <template v-else>
+          <slot name="closeButton" :onClick="close"></slot>
+        </template>
+      </div>
+
+      <div :class="{ 'w-screen': full }">
+        <div class="p-4">
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -50,11 +48,11 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, PropType, ref, watch } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 type BooleanFunction = () => boolean;
 export default defineComponent({
-  name: "TModal",
+  name: "TDrawer",
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
@@ -98,6 +96,10 @@ export default defineComponent({
       }
     },
     full: {
+      type: Boolean,
+      default: () => false
+    },
+    left: {
       type: Boolean,
       default: () => false
     },
@@ -150,13 +152,24 @@ export default defineComponent({
       }
       return "";
     });
+    const delayModelValue = ref(props.modelValue);
+    watch(
+      () => props.modelValue,
+      () => {
+        console.log("watch working");
+        setTimeout(() => {
+          delayModelValue.value = props.modelValue;
+        });
+      }
+    );
     return {
       maxWidth,
       close,
       showHeader,
       showCloseButton,
       showTitle,
-      isTeleportDisable
+      isTeleportDisable,
+      delayModelValue
     };
   }
 });

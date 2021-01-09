@@ -1,20 +1,21 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
-    <div class="transition  duration-300" :class="{ 'opacity-0': !modelValue }">
+    <div class="transition duration-300" :class="{ 'opacity-0': !modelValue }">
       <div
-        :class="{ hidden: !modelValue }"
-        class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
-        @click="close"
-      ></div>
-      <div
-        class="fixed md:w-auto w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
-        :class="[maxWidth]"
+        class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-10 "
+        v-if="eager || modelValue"
+        v-show="!eager || modelValue"
       >
-        <div>
-          <div v-if="eager || modelValue" v-show="!eager || modelValue">
+        <div
+          class="absolute w-full h-full bg-gray-900 opacity-50"
+          @click="close"
+        ></div>
+
+        <div class="absolute max-h-full" :class="maxWidth">
+          <div class="container bg-white overflow-hidden md:rounded">
             <div
               v-if="showHeader"
-              class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+              class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
             >
               <div>
                 <component :is="titleTag" v-if="showTitle">{{
@@ -36,10 +37,9 @@
                 <slot name="closeButton" :onClick="close"></slot>
               </template>
             </div>
-            <div :class="{ 'w-screen': full }">
-              <div class="p-4">
-                <slot></slot>
-              </div>
+
+            <div class="max-h-full px-4 py-4">
+              <slot></slot>
             </div>
           </div>
         </div>
@@ -96,10 +96,6 @@ export default defineComponent({
       default: () => {
         return () => true;
       }
-    },
-    full: {
-      type: Boolean,
-      default: () => false
     },
     eager: {
       type: Boolean,
