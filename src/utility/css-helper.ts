@@ -16,6 +16,11 @@ export enum textInputAlignments {
   center = "center",
   left = "left"
 }
+
+export enum modifierVariants {
+  format = "format"
+}
+
 export enum size {
   xs = "xs",
   sm = "sm",

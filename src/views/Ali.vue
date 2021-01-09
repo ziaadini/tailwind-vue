@@ -6,7 +6,12 @@
     <div>
       <div>#Ali</div>
       {{ text }}
-      <TextInput v-model="text" variant="warning" outline align="center"/>
+      <TextInput
+        v-model.format:&:3="text"
+        variant="warning"
+        outline
+        align="center"
+      />
       <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>

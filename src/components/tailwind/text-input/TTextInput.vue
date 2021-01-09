@@ -26,7 +26,7 @@
       <input
         type="text"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="emitHandler"
         class="block min-h-48 w-full sm:text-sm outline-none h-10"
         :class="{
           ' pr-8': rightPadding,
@@ -58,12 +58,13 @@
 
 <script lang="ts">
 import {
+  modifierVariants,
   textInputAlignments,
   textInputVariants,
   variants,
 } from "@/utility/css-helper";
 import { computed, defineComponent } from "vue";
-
+import { formatHandler } from "@/helpers/generalHelper";
 export default defineComponent({
   name: "TTextInput",
   props: {
@@ -96,10 +97,6 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    modelValue: {
-      type: String,
-      required: true,
-    },
     rounded: {
       type: Boolean,
       required: false,
@@ -117,6 +114,13 @@ export default defineComponent({
       validator: (propValue: string) => {
         return !!textInputAlignments[propValue];
       },
+    },
+    modelValue: {
+      type: String,
+      required: true,
+    },
+    modelModifiers: {
+      default: () => ({} as any),
     },
   },
   computed: {
@@ -141,8 +145,8 @@ export default defineComponent({
     const variantClasses = computed((): string => {
       return (
         (!props.outline
-          ? " hover:opacity-80 transition text-white disabled:opacity-50 "
-          : " transition hover:opacity-80 disabled:opacity-50 ") +
+          ? "hover:opacity-80 transition text-white disabled:opacity-50 "
+          : "transition hover:opacity-80 disabled:opacity-50 ") +
         (!props.outline
           ? `bg-${props.variant}`
           : `bg-white text-dark hover:bg-${props.variant}-50 ring-4 ring-${props.variant} focus:ring-${props.variant}-500 focus:border-${props.variant}-500`)
@@ -150,6 +154,43 @@ export default defineComponent({
     });
 
     return { rightPadding, leftPadding, variantClasses };
+  },
+  methods: {
+    emitHandler(e: { target: { value: string } }) {
+      const value = e.target.value;
+      const keys = Object.keys(this.modelModifiers);
+      const findKey = (type: modifierVariants) =>
+        keys.findIndex((e) => e.includes(type));
+      const retArgs = (str: string) => {
+        if (str.split(":").length > 1) {
+          const tmp = str.split(":");
+          tmp.splice(0, 1);
+          return tmp.length === 2 ? tmp : [...tmp, 3];
+        }
+        return [",", 3];
+      };
+
+      const callMethod = (str, modifierType: modifierVariants) => {
+        const key = findKey(modifierType);
+        const args = retArgs(keys[key]);
+
+        return [key, args];
+      };
+
+      const [index, args] = callMethod(value, modifierVariants.format);
+      console.log(args, value, keys);
+
+      console.log(args);
+      if (index !== -1) {
+        console.log(args);
+        e.target.value = formatHandler(value, {
+          separator: args[0],
+          digitLength: args[1],
+        });
+      }
+
+      this.$emit("update:modelValue", e.target.value);
+    },
   },
 });
 </script>
