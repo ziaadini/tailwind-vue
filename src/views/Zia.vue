@@ -105,6 +105,11 @@
 
     <div>
       <div>#zia</div>
+      <t-loading></t-loading>
+    </div>
+
+    <div>
+      <div>#zia</div>
       <div class="flex w-full space-x-reverse space-x-3 mt-4">
         <t-radio
           label="تست ۱"
@@ -135,9 +140,11 @@ import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
 import TRadio from "@/components/tailwind/radio/TRadio.vue";
 
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
+import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TLoading,
     TDrawer,
     TRadio,
     TSkeleton,
