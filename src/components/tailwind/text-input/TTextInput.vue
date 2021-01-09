@@ -26,7 +26,7 @@
       <input
         type="text"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="emitHandler($event.target.value)"
         class="block min-h-48 w-full sm:text-sm outline-none h-10"
         :class="{
           ' pr-8': rightPadding,
@@ -58,12 +58,13 @@
 
 <script lang="ts">
 import {
+  modifierVariants,
   textInputAlignments,
   textInputVariants,
   variants,
 } from "@/utility/css-helper";
 import { computed, defineComponent } from "vue";
-
+import { formatHandler, formatHandlerWrapper } from "@/helpers/generalHelper";
 export default defineComponent({
   name: "TTextInput",
   props: {
@@ -96,10 +97,6 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    modelValue: {
-      type: String,
-      required: true,
-    },
     rounded: {
       type: Boolean,
       required: false,
@@ -117,6 +114,13 @@ export default defineComponent({
       validator: (propValue: string) => {
         return !!textInputAlignments[propValue];
       },
+    },
+    modelValue: {
+      type: String,
+      required: true,
+    },
+    modelModifiers: {
+      default: () => ({} as any),
     },
   },
   computed: {
@@ -141,8 +145,8 @@ export default defineComponent({
     const variantClasses = computed((): string => {
       return (
         (!props.outline
-          ? " hover:opacity-80 transition text-white disabled:opacity-50 "
-          : " transition hover:opacity-80 disabled:opacity-50 ") +
+          ? "hover:opacity-80 transition text-white disabled:opacity-50 "
+          : "transition hover:opacity-80 disabled:opacity-50 ") +
         (!props.outline
           ? `bg-${props.variant}`
           : `bg-white text-dark hover:bg-${props.variant}-50 ring-4 ring-${props.variant} focus:ring-${props.variant}-500 focus:border-${props.variant}-500`)
@@ -150,6 +154,32 @@ export default defineComponent({
     });
 
     return { rightPadding, leftPadding, variantClasses };
+  },
+  watch: {
+    modelValue: {
+      immediate: true,
+      handler(value: string) {
+        this.emitHandler(value, true);
+      },
+    },
+  },
+  methods: {
+    emitHandler(value: string, watchCommitted = false) {
+      const [formatFounded, args] = formatHandlerWrapper(
+        modifierVariants.format,
+        this.modelModifiers
+      );
+
+      if (formatFounded) {
+        value = formatHandler(value, {
+          separator: args[0],
+          digitLength: args[1],
+        });
+        watchCommitted && this.$emit("update:modelValue", value);
+      }
+
+      !watchCommitted && this.$emit("update:modelValue", value);
+    },
   },
 });
 </script>

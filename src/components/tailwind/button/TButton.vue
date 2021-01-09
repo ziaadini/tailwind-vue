@@ -4,6 +4,7 @@
     :class="{
       'rounded-full': rounded,
       [variantClasses]: true,
+      ripple
     }"
     class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
     v-on="$attrs"
@@ -43,6 +44,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    ripple: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     AppIcon,
@@ -54,28 +59,8 @@ export default defineComponent({
       const outlineBaseClass =
         " transition ring-4 text-dark  hover:opacity-80 disabled:opacity-50";
       return (
-        (() => {
-          switch (props.variant) {
-            case variants.primary:
-              return !props.outline
-                ? "bg-primary"
-                : "bg-white ring-primary hover:bg-primary";
-            case variants.success:
-              return !props.outline
-                ? "bg-success"
-                : "bg-white ring-success hover:bg-success";
-            case variants.danger:
-              return !props.outline
-                ? "bg-danger"
-                : "bg-white ring-danger hover:bg-danger";
-            case variants.warning:
-              return !props.outline
-                ? "bg-warning"
-                : "bg-white ring-warning hover:bg-warning";
-            default:
-              return "";
-          }
-        })() + (props.outline ? outlineBaseClass : baseClass)
+        `bg-white ring-${props.variant} hover:bg-${props.variant}` +
+        (props.outline ? outlineBaseClass : baseClass)
       );
     });
 

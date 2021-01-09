@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "tailwind-config-viewer": "tailwind-config-viewer -o"
+    "tailwind-config-viewer": "tailwind-config-viewer -o",
+    "view": "serve -s dist"
   },
   "dependencies": {
     "core-js": "^3.6.5",

@@ -63,47 +63,25 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
-      show: true
+      show: true,
     };
   },
   computed: {
     shade(): string {
-      switch (this.variant) {
-        case variants.primary:
-          return "bg-primary-100 text-primary-900 border-primary-50";
-        case variants.success:
-          return "bg-success-100 text-success-900 border-success-50";
-        case variants.danger:
-          return "bg-danger-100 text-danger-900 border-danger-50";
-        case variants.warning:
-          return "bg-warning-100 text-warning-900 border-warning-50";
-        default:
-          return "";
-      }
+      return `bg-${this.variant}-100 text-${this.variant}-900 border-${this.variant}-50`;
     },
     wrapperColor(): string {
       return this.shade;
     },
     svgColor(): string {
-      switch (this.variant) {
-        case variants.primary:
-          return "text-primary-500";
-        case variants.success:
-          return "text-success-500";
-        case variants.danger:
-          return "text-danger-500";
-        case variants.warning:
-          return "text-warning-500";
-        default:
-          return "";
-      }
-    }
+      return `text-${this.variant}-500`;
+    },
   },
   methods: {
     closeAlert(): void {
       this.show = false;
       this.$emit("closeClick", true);
-    }
+    },
   },
   props: {
     variant: {
@@ -113,8 +91,8 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      }
-    }
-  }
+      },
+    },
+  },
 });
 </script>
