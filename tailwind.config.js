@@ -4,13 +4,13 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
     enable: true,
     // These options are passed through directly to PurgeCSS
-    // options: {
-    //   safelist: {
-    //     standard: [/primary/, /danger/, /warning/, /success/, ],
-    //     keyframes: true,
-    //     fontFace: true,
-    //   },
-    // },
+    options: {
+      safelist: {
+        standard: [/(bg|border)-(primary|danger|warning|success)/],
+        keyframes: true,
+        fontFace: true,
+      },
+    },
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
