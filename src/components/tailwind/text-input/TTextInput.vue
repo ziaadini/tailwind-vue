@@ -16,7 +16,11 @@
         v-if="leftPadding"
         class="absolute inset-y-0 left-2 flex items-center"
       >
-        <span v-if="leftIcon" class="material-icons">
+        <span
+          v-if="leftIcon"
+          class="material-icons z-10"
+          :class="{ 'text-gray-200': disabled }"
+        >
           {{ leftIcon }}
         </span>
         <template v-else>
@@ -25,6 +29,8 @@
       </div>
       <input
         type="text"
+        :disabled="disabled"
+        v-bind="$attrs"
         :value="modelValue"
         @input="emitHandler($event.target.value)"
         class="block min-h-48 w-full sm:text-sm outline-none h-10"
@@ -45,7 +51,11 @@
         v-if="rightPadding"
         class="absolute inset-y-0 right-2 flex items-center pointer-events-none"
       >
-        <span v-if="rightIcon" class="material-icons">
+        <span
+          v-if="rightIcon"
+          class="material-icons z-10"
+          :class="{ 'text-gray-200': disabled }"
+        >
           {{ rightIcon }}
         </span>
         <template v-else>
@@ -121,6 +131,11 @@ export default defineComponent({
     },
     modelModifiers: {
       default: () => ({} as any),
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   computed: {
