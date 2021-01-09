@@ -124,11 +124,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ref, watchEffect } from "vue";
-
-import TButton from "@/components/tailwind/TButton.vue";
-import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
+import { ref, watchEffect } from "vue";
+import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
 import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";

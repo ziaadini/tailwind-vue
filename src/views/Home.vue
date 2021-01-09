@@ -46,7 +46,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
-import TButton from "@/components/tailwind/TButton.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 export default defineComponent({

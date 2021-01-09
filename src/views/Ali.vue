@@ -5,10 +5,12 @@
   <div class="flex items-center flex-col space-y-4">
     <div>
       <div>#Ali</div>
-      <t-button variant="warning" icon="accessible" outline disabled>
+      {{ text }}
+      <TextInput v-model="text" variant="warning" outline align="center"/>
+      <t-button variant="primary" outline icon="accessible" disabled>
         some text
       </t-button>
-      <t-dropdown class="mt-3" placement="right">
+      <t-dropdown placement="right">
         <!-- Button content -->
         <template v-slot:button>
           <div class="hover:ring-4 shadow transition rounded px-1 py-2 w-full">
@@ -95,13 +97,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ref } from "vue";
-import TButton from "@/components/tailwind/TButton.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
 import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
 import { BreadCrumb } from "@/types/base-component-types";
+import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 
 export default defineComponent({
   name: "App",
@@ -111,25 +114,27 @@ export default defineComponent({
     TButton,
     TDropdown,
     TAlert,
-    TBreadcrumb
+    TBreadcrumb,
+    TextInput,
   },
   data() {
     return {
       items: [
         {
           text: "تست۱",
-          url: "مقدار ۱"
+          url: "مقدار ۱",
         },
         {
           text: "تست۲",
-          url: "مقدار ۲"
+          url: "مقدار ۲",
         },
         {
           text: "تست۳",
           url: "مقدار ۳",
-          active: true
-        }
-      ] as BreadCrumb.Root
+          active: true,
+        },
+      ] as BreadCrumb.Root,
+      text: "ali",
     };
   },
   setup() {
@@ -140,6 +145,6 @@ export default defineComponent({
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };
-  }
+  },
 });
 </script>

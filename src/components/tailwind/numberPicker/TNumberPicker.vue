@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import AppButton from "@/components/tailwind/TButton.vue";
+import AppButton from "@/components/tailwind/button/TButton.vue";
 export default defineComponent({
   name: "TNumberPicker",
   components: { AppButton },

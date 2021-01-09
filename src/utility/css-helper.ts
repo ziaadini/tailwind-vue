@@ -2,7 +2,19 @@ export enum variants {
   primary = "primary",
   success = "success",
   danger = "danger",
-  warning = "warning"
+  warning = "warning",
+}
+
+export enum textInputVariants {
+  number = "number",
+  numeric = "numeric",
+  format = "format"
+}
+
+export enum textInputAlignments {
+  right = "right",
+  center = "center",
+  left = "left"
 }
 export enum size {
   xs = "xs",
