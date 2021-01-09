@@ -64,7 +64,7 @@ import {
   variants,
 } from "@/utility/css-helper";
 import { computed, defineComponent } from "vue";
-import { formatHandler } from "@/helpers/generalHelper";
+import { formatHandler, formatHandlerWrapper } from "@/helpers/generalHelper";
 export default defineComponent({
   name: "TTextInput",
   props: {
@@ -157,39 +157,21 @@ export default defineComponent({
   },
   methods: {
     emitHandler(e: { target: { value: string } }) {
-      const value = e.target.value;
-      const keys = Object.keys(this.modelModifiers);
-      const findKey = (type: modifierVariants) =>
-        keys.findIndex((e) => e.includes(type));
-      const retArgs = (str: string) => {
-        if (str.split(":").length > 1) {
-          const tmp = str.split(":");
-          tmp.splice(0, 1);
-          return tmp.length === 2 ? tmp : [...tmp, 3];
-        }
-        return [",", 3];
-      };
+      let value = e.target.value;
 
-      const callMethod = (str, modifierType: modifierVariants) => {
-        const key = findKey(modifierType);
-        const args = retArgs(keys[key]);
+      const [formatFounded, args] = formatHandlerWrapper(
+        modifierVariants.format,
+        this.modelModifiers
+      );
 
-        return [key, args];
-      };
-
-      const [index, args] = callMethod(value, modifierVariants.format);
-      console.log(args, value, keys);
-
-      console.log(args);
-      if (index !== -1) {
-        console.log(args);
-        e.target.value = formatHandler(value, {
+      if (formatFounded) {
+        value = formatHandler(value, {
           separator: args[0],
           digitLength: args[1],
         });
       }
 
-      this.$emit("update:modelValue", e.target.value);
+      this.$emit("update:modelValue", value);
     },
   },
 });
