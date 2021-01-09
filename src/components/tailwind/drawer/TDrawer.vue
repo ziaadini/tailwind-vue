@@ -1,40 +1,44 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
-    <div>
-      <div
-        :class="{ hidden: !modelValue }"
-        class="absolute top-0 right-0 w-full h-full bg-gray-900 opacity-50"
-        @click="close"
-      ></div>
-      <div
-        class="absolute top-0 bottom-0 h-full bg-white transform duration-300"
-        :class="{ 'translate-x-full': !modelValue }"
-      >
+    <div class="overflow-auto">
+      <div class="max-h-screen">
         <div
-          v-if="showHeader"
-          class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+          :class="{ hidden: !modelValue }"
+          class="fixed top-0 right-0 w-full h-full bg-gray-900 opacity-50"
+          @click="close"
+        ></div>
+        <div
+          class="fixed top-0  bg-white transform duration-300"
+          :class="[{ 'translate-x-full': !modelValue }, maxWidth]"
         >
-          <div>
-            <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+          <div
+            v-if="showHeader"
+            class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+          >
+            <div :class="{ 'w-screen': full }">
+              <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+              <template v-else>
+                <slot name="title"></slot>
+              </template>
+            </div>
+
+            <div
+              v-if="showCloseButton"
+              @click="close"
+              class="text-2xl hover:text-gray-600 cursor-pointer"
+            >
+              &#215;
+            </div>
             <template v-else>
-              <slot name="title"></slot>
+              <slot name="closeButton" :onClick="close"></slot>
             </template>
           </div>
 
-          <div
-            v-if="showCloseButton"
-            @click="close"
-            class="text-2xl hover:text-gray-600 cursor-pointer"
-          >
-            &#215;
+          <div>
+            <div>
+              <slot></slot>
+            </div>
           </div>
-          <template v-else>
-            <slot name="closeButton" :onClick="close"></slot>
-          </template>
-        </div>
-
-        <div class="max-h-full">
-          <slot></slot>
         </div>
       </div>
     </div>
@@ -89,6 +93,10 @@ export default defineComponent({
       default: () => {
         return () => true;
       }
+    },
+    full: {
+      type: Boolean,
+      default: () => false
     },
     eager: {
       type: Boolean,
