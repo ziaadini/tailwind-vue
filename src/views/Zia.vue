@@ -97,6 +97,12 @@
         :false-value="0"
         label="سامسونگ"
       ></t-checkbox>
+
+      <t-checkbox v-model="checkboxModel" :true-value="1" :false-value="0">
+        <template #label>
+          <div class="mr-2">my custom label</div>
+        </template>
+      </t-checkbox>
     </div>
     <div class="w-full">
       <div>#zia</div>
@@ -124,7 +130,8 @@
           :value="{ a: 'test2' }"
         ></t-radio>
       </div>
-      <div class="flex w-full space-x-reverse space-x-3 mt-4 mb-4">
+      <h3 class="mt-8 mb-2">custom radio</h3>
+      <div class="flex w-full space-x-reverse space-x-3 mb-4">
         <t-radio
           variant="danger"
           v-model="radioModel2"

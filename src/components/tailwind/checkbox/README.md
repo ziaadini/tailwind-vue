@@ -6,3 +6,21 @@
 | falseValue | Array, String, Number, Boolean, Object | - | false value will emit when switch is off and initial of v-model is not an array |
 | variant | string | primary | pass a valid variant color |
 | disabled | boolean | false | to disable input |
+| hideInput | boolean | false | combine it with label slot is useful when you want have a custom radio style |
+| activeClass | string | '' | class when it is checked |
+| inActiveClass | string | '' | class when it is not checked |
+
+### slots
+| name | description
+| ------------ | ------------ |
+| label | for custom styled label|
+
+##### slot example
+
+```vue
+<template #label="{isChecked}">
+  <div class="px-4  py-2 border-2 rounded-xs" :class="{ 'border-success': isChecked }">
+    my custom label
+  </div>
+</template>
+```
