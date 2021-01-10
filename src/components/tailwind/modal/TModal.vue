@@ -88,7 +88,7 @@ export default defineComponent({
         return "full";
       },
       validator: (propValue: string) => {
-        return !!(size as { [key: string]: string })[propValue];
+        return !!size[propValue];
       }
     },
     closeCallback: {

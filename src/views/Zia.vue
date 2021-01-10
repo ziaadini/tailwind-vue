@@ -97,10 +97,21 @@
         :false-value="0"
         label="سامسونگ"
       ></t-checkbox>
+
+      <t-checkbox v-model="checkboxModel" :true-value="1" :false-value="0">
+        <template #label>
+          <div class="mr-2">my custom label</div>
+        </template>
+      </t-checkbox>
     </div>
     <div class="w-full">
       <div>#zia</div>
       <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-loading></t-loading>
     </div>
 
     <div>
@@ -119,6 +130,37 @@
           :value="{ a: 'test2' }"
         ></t-radio>
       </div>
+      <h3 class="mt-8 mb-2">custom radio</h3>
+      <div class="flex w-full space-x-reverse space-x-3 mb-4">
+        <t-radio
+          variant="danger"
+          v-model="radioModel2"
+          value="test1"
+          hide-input
+        >
+          <template #label="{isChecked}">
+            <div
+              class="px-4  py-2 border-2 rounded-xs"
+              :class="{ 'border-success': isChecked }"
+            >
+              تست ۱
+            </div>
+          </template>
+        </t-radio>
+        <t-radio
+          variant="danger"
+          v-model="radioModel2"
+          :value="{ a: 'test2' }"
+          active-class="border-primary"
+          class="px-4 py-2 border-2 rounded-xs"
+        >
+          <template #label>
+            <div class="mr-2">
+              تست ۲
+            </div>
+          </template>
+        </t-radio>
+      </div>
     </div>
   </div>
 </template>
@@ -135,9 +177,11 @@ import TSkeleton from "@/components/tailwind/skeleton/TSkeleton.vue";
 import TRadio from "@/components/tailwind/radio/TRadio.vue";
 
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
+import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TLoading,
     TDrawer,
     TRadio,
     TSkeleton,
@@ -152,6 +196,7 @@ export default defineComponent({
     const switchModel = ref("");
     const checkboxModel = ref("");
     const radioModel = ref<Record<string, any> | string>("");
+    const radioModel2 = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
     const modalCloseCallback = () => {
@@ -172,7 +217,8 @@ export default defineComponent({
       drawer,
       modalCloseCallback,
       checkboxModel,
-      radioModel
+      radioModel,
+      radioModel2
     };
   }
 });
