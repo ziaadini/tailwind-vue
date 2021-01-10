@@ -5,9 +5,9 @@
       'rounded-full': rounded,
       [variantClasses]: true,
       ripple,
+      'w-full': full
     }"
     class="shadow rounded-sm block border-1 focus:outline-none px-4 py-2 hover:text-white flex justify-center align-center "
-    v-on="$attrs"
     v-bind="$attrs"
   >
     <app-icon :name="icon" />
@@ -48,6 +48,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    full: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   components: {
     AppIcon,
