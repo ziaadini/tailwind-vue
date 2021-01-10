@@ -51,7 +51,7 @@ export default defineComponent({
     placement: {
       type: String,
       default: "right",
-      validator: (value) => ["right", "left"].indexOf(value) !== -1,
+      validator: (value: string) => ["right", "left"].indexOf(value) !== -1,
     },
     disabled: {
       type: Boolean,
