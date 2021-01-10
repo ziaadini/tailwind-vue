@@ -2,7 +2,6 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-    enabled: true,
     // These options are passed through directly to PurgeCSS
     options: {
       safelist: {
@@ -12,14 +11,10 @@ module.exports = {
           /bg-danger(-50)?$/,
           /bg-warning(-50)?$/,
           /bg-success(-50)?$/,
-          /ring-primary$/,
-          /ring-danger$/,
-          /ring-warning$/,
-          /ring-success$/,
-          /border-primary$/,
-          /border-danger$/,
-          /border-warning$/,
-          /border-success$/,
+          /border-primary(-50)?$/,
+          /border-danger(-50)?$/,
+          /border-warning(-50)?$/,
+          /border-success(-50)?$/,
         ],
         keyframes: true,
         fontFace: true,
