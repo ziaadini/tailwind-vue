@@ -1,5 +1,15 @@
 <template>
-  <label class="flex items-center" :class="{ 'cursor-pointer': !disabled }">
+  <label
+    class="flex items-center"
+    :class="[
+      $attrs.class,
+      {
+        'cursor-pointer': !disabled,
+        [activeClass]: isChecked,
+        [inActiveClass]: !isChecked
+      }
+    ]"
+  >
     <div
       :class="[
         {
@@ -28,7 +38,7 @@
     <span v-if="label" class="mr-2" :class="{ 'text-gray-500': disabled }">
       {{ label }}
     </span>
-    <slot name="label" :isChecked="isChecked"></slot>
+    <slot name="label" :isChecked="isChecked" :disabled="disabled"></slot>
   </label>
 </template>
 
@@ -39,6 +49,7 @@ import { variants } from "@/utility/css-helper";
 
 export default defineComponent({
   name: "TRadio",
+  inheritAttrs: false,
   props: {
     modelValue: [String, Number, Boolean, Object, Array] as PropType<
       SwitchAndCheckbox.Value
@@ -55,12 +66,13 @@ export default defineComponent({
         return !!variants[propValue];
       }
     },
+    activeClass: { type: String, default: "" },
+    inActiveClass: { type: String, default: "" },
     hideInput: {
       type: Boolean,
       default: () => false
     }
   },
-  inheritAttrs: false,
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const newValue = ref(props.modelValue);

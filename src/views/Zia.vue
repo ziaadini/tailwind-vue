@@ -132,7 +132,10 @@
           hide-input
         >
           <template #label="{isChecked}">
-            <div class="px-4  py-2 border-2 rounded-xs" :class="{ 'border-success': isChecked }">
+            <div
+              class="px-4  py-2 border-2 rounded-xs"
+              :class="{ 'border-success': isChecked }"
+            >
               تست ۱
             </div>
           </template>
@@ -141,10 +144,11 @@
           variant="danger"
           v-model="radioModel2"
           :value="{ a: 'test2' }"
-          hide-input
+          active-class="border-primary"
+          class="px-4 py-2 border-2 rounded-xs"
         >
-          <template #label="{isChecked}">
-            <div class="px-4 py-2 border-2 rounded-xs" :class="{ 'border-primary': isChecked }">
+          <template #label>
+            <div class="mr-2">
               تست ۲
             </div>
           </template>

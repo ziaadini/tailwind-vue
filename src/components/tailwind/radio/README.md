@@ -5,6 +5,8 @@
 | variant | string | primary | pass a valid variant color |
 | disabled | boolean | false | to disable input |
 | hideInput | boolean | false | combine it with label slot is useful when you want have a custom radio style |
+| activeClass | string | '' | class when it is checked |
+| inActiveClass | string | '' | class when it is not checked |
 
 
 ### slots
