@@ -124,6 +124,32 @@
           :value="{ a: 'test2' }"
         ></t-radio>
       </div>
+      <div class="flex w-full space-x-reverse space-x-3 mt-4 mb-4">
+        <t-radio
+          variant="danger"
+          v-model="radioModel2"
+          value="test1"
+          hide-input
+        >
+          <template #label="{isChecked}">
+            <div class="px-4  py-2 border-2 rounded-xs" :class="{ 'border-success': isChecked }">
+              تست ۱
+            </div>
+          </template>
+        </t-radio>
+        <t-radio
+          variant="danger"
+          v-model="radioModel2"
+          :value="{ a: 'test2' }"
+          hide-input
+        >
+          <template #label="{isChecked}">
+            <div class="px-4 py-2 border-2 rounded-xs" :class="{ 'border-primary': isChecked }">
+              تست ۲
+            </div>
+          </template>
+        </t-radio>
+      </div>
     </div>
   </div>
 </template>
@@ -159,6 +185,7 @@ export default defineComponent({
     const switchModel = ref("");
     const checkboxModel = ref("");
     const radioModel = ref<Record<string, any> | string>("");
+    const radioModel2 = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
     const modalCloseCallback = () => {
@@ -179,7 +206,8 @@ export default defineComponent({
       drawer,
       modalCloseCallback,
       checkboxModel,
-      radioModel
+      radioModel,
+      radioModel2
     };
   }
 });

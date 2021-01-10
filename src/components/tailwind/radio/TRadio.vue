@@ -1,8 +1,14 @@
 <template>
   <label class="flex items-center" :class="{ 'cursor-pointer': !disabled }">
     <div
-      :class="isChecked ? `border-${variant}` : 'bg-white border-gray-400'"
-      class="border-2 rounded-full w-6 h-6 flex flex-shrink-0 justify-center items-center mr-2"
+      :class="[
+        {
+          [`border-${variant}`]: isChecked && !hideInput,
+          'bg-white border-gray-400': !isChecked && !hideInput
+        },
+        hideInput ? 'w-0 h-0' : 'w-6 h-6 border-2 mr-2'
+      ]"
+      class="rounded-full flex flex-shrink-0 justify-center items-center"
     >
       <input
         :class="[{ 'cursor-pointer': !disabled }, `checked:bg-${variant}`]"
@@ -16,12 +22,13 @@
 
       <div
         class="w-3 h-3 rounded-full"
-        :class="{ [`bg-${variant}`]: isChecked }"
+        :class="{ [`bg-${variant}`]: isChecked, hidden: hideInput }"
       ></div>
     </div>
-    <span class="mr-2" :class="{ 'text-gray-500': disabled }">
+    <span v-if="label" class="mr-2" :class="{ 'text-gray-500': disabled }">
       {{ label }}
     </span>
+    <slot name="label" :isChecked="isChecked"></slot>
   </label>
 </template>
 
@@ -36,7 +43,7 @@ export default defineComponent({
     modelValue: [String, Number, Boolean, Object, Array] as PropType<
       SwitchAndCheckbox.Value
     >,
-    value: [String, Number, Boolean, Function, Object, Array],
+    value: [String, Number, Boolean, Object, Array],
     disabled: Boolean,
     label: { type: String, default: "" },
     variant: {
@@ -47,6 +54,10 @@ export default defineComponent({
         // @ts-ignore
         return !!variants[propValue];
       }
+    },
+    hideInput: {
+      type: Boolean,
+      default: () => false
     }
   },
   inheritAttrs: false,
