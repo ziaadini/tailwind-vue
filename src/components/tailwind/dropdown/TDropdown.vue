@@ -1,11 +1,11 @@
 <template>
   <div class="relative">
-    <button
-      class="z-10 relative flex items-center focus:outline-none min-w-full select-none"
-      @click="open = !open"
+    <div
+      class=" relative flex items-center focus:outline-none min-w-full "
+      @click="!disabled && (open = !open)"
     >
       <slot name="button"></slot>
-    </button>
+    </div>
 
     <!-- to close when clicked on space around it-->
     <button
@@ -14,7 +14,6 @@
       @click="open = false"
       tabindex="-1"
     ></button>
-
     <!--dropdown menu-->
     <transition
       enter-active-class="transition-all duration-200 ease-out"
@@ -25,9 +24,13 @@
       leave-to-class="opacity-0 scale-75"
     >
       <div
-        class="absolute shadow-lg border w-48 rounded py-1 px-2 text-sm mt-4 bg-white z-10"
-        :class="placement === 'right' ? 'right-0' : 'left-0'"
-        v-if="open"
+        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-10"
+        :class="{
+          'right-0': placement === 'right',
+          'left-0': placement !== 'right',
+          'w-full': full,
+        }"
+        v-if="open && !disabled"
       >
         <slot name="content"></slot>
       </div>
@@ -35,34 +38,44 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
     return {
-      open: false
+      open: false,
     };
   },
   props: {
     placement: {
       type: String,
       default: "right",
-      validator: value => ["right", "left"].indexOf(value) !== -1
-    }
+      validator: (value) => ["right", "left"].indexOf(value) !== -1,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    full: {
+      required: false,
+      default: false,
+      type: Boolean,
+    },
   },
   methods: {
-    onEscape: e => {
+    onEscape(e) {
       if (e.key === "Esc" || e.key === "Escape") {
         this.open = false;
       }
-    }
+    },
   },
   mounted() {
     document.addEventListener("keydown", this.onEscape);
   },
   beforeUnmount() {
     document.removeEventListener("keydown", this.onEscape);
-  }
+  },
 });
 </script>
