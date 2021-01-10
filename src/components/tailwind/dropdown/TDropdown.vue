@@ -24,7 +24,7 @@
       leave-to-class="opacity-0 scale-75"
     >
       <div
-        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-10"
+        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-10 rounded-t-none"
         :class="{
           'right-0': placement === 'right',
           'left-0': placement !== 'right',
