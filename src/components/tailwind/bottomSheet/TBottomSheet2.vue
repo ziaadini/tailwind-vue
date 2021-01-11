@@ -5,20 +5,16 @@
       class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
       @click="close"
     ></div>
-
-    <!--    <div class="relative">-->
     <div
-      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white h-full transform duration-300"
+      class="fixed bottom-0 w-max max-w-full bg-white h-full transform duration-300 right-1/2 translate-x-1/2"
       :class="[{ 'translate-y-full': !modelValue }, maxHeight, $attrs.class]"
     >
       <div
         v-if="showHeader"
-        class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+        class="px-4 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
       >
         <div>
-          <component :is="titleTag" v-if="showTitle">
-            {{ title }}
-          </component>
+          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
           <template v-else>
             <slot name="title"></slot>
           </template>
@@ -35,11 +31,11 @@
           <slot name="closeButton" :onClick="close"></slot>
         </template>
       </div>
-      <div class="bottom-sheet-height overflow-y-auto scrollbar-sm p-4">
+
+      <div class="overflow-y-auto absolute h-full">
         <slot></slot>
       </div>
     </div>
-    <!--    </div>-->
   </teleport>
 </template>
 
@@ -167,8 +163,3 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped>
-.bottom-sheet-height {
-  height: calc(100% - 3.5rem);
-}
-</style>
