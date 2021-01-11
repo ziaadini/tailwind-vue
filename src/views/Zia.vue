@@ -70,6 +70,31 @@
 
     <div>
       <div>#zia</div>
+      <t-bottom-sheet
+        class="rounded-t-md"
+        teleport-to="#modal-content"
+        v-model="bottomSheet"
+      >
+        <!--        <template #closeButton="attrs">-->
+        <!--          <t-button v-bind="attrs">close</t-button>-->
+        <!--        </template>-->
+        <div>
+          <div class="h-96">hi</div>
+          <div class="h-96">bye</div>
+          <div class="h-96">تست</div>
+          <div class="h-90 text-gray-800 bg-gray-300">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است.
+          </div>
+        </div>
+      </t-bottom-sheet>
+      <t-button @click="bottomSheet = true" variant="warning"
+        >open bottomSheet</t-button
+      >
+    </div>
+
+    <div>
+      <div>#zia</div>
       <t-switch
         v-model="switchModel"
         :true-value="1"
@@ -140,7 +165,7 @@
         >
           <template #label="{isChecked}">
             <div
-              class="px-4  py-2 border-2 rounded-xs"
+              class="px-4 py-2 border-2 rounded-xs"
               :class="{ 'border-success': isChecked }"
             >
               تست ۱
@@ -178,9 +203,11 @@ import TRadio from "@/components/tailwind/radio/TRadio.vue";
 
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
+import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TBottomSheet,
     TLoading,
     TDrawer,
     TRadio,
@@ -199,6 +226,7 @@ export default defineComponent({
     const radioModel2 = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
+    const bottomSheet = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
@@ -218,7 +246,8 @@ export default defineComponent({
       modalCloseCallback,
       checkboxModel,
       radioModel,
-      radioModel2
+      radioModel2,
+      bottomSheet
     };
   }
 });
