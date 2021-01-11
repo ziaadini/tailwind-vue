@@ -4,7 +4,7 @@
   </div>
   <div class="flex items-center flex-col space-y-4">
     <div>#Ali</div>
-    {{ text }}
+    <t-dropdown placeholder="تست" rounded :items="['test1', 'test2', 'test3']" />
     <TextInput
       v-model.format:&:4="text"
       variant="warning"
@@ -69,7 +69,7 @@ import TAlert from "@/components/tailwind/alert/TAlert.vue";
 import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
 import { BreadCrumb } from "@/types/base-component-types";
 import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
-
+import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue"
 export default defineComponent({
   name: "App",
   components: {
@@ -78,6 +78,7 @@ export default defineComponent({
     TAlert,
     TBreadcrumb,
     TextInput,
+    TDropdown
   },
   data() {
     return {

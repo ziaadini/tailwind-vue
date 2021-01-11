@@ -7,10 +7,10 @@ module.exports = {
       safelist: {
         // (bg|border)-(primary|danger|warning|success)
         standard: [
-          /bg-primary(-50)?$/,
-          /bg-danger(-50)?$/,
-          /bg-warning(-50)?$/,
-          /bg-success(-50)?$/,
+          /bg-primary(-50|100|200)?$/,
+          /bg-danger(-50|100|200)?$/,
+          /bg-warning(-50|100|200)?$/,
+          /bg-success(-50|100|200)?$/,
           /border-primary(-50)?$/,
           /border-danger(-50)?$/,
           /border-warning(-50)?$/,
