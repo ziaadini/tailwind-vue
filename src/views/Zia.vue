@@ -78,15 +78,12 @@
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
         <!--        </template>-->
-        <div>
-          <div class="h-96">hi</div>
-          <div class="h-96">bye</div>
-          <div class="h-96">تست</div>
+          <div class="h-96">1</div>
+          <div class="h-96">2</div>
+          <div class="h-96">3</div>
           <div class="h-90 text-gray-800 bg-gray-300">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است.
+            4
           </div>
-        </div>
       </t-bottom-sheet>
       <t-button @click="bottomSheet = true" variant="warning"
         >open bottomSheet</t-button
@@ -216,7 +213,7 @@ export default defineComponent({
     TSwitch,
     TModal,
     TNumberPicker,
-    TButton
+    TButton,
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -247,8 +244,8 @@ export default defineComponent({
       checkboxModel,
       radioModel,
       radioModel2,
-      bottomSheet
+      bottomSheet,
     };
-  }
+  },
 });
 </script>

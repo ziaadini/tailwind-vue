@@ -7,13 +7,12 @@
     ></div>
 
     <div
-      class="fixed w-max max-w-full scrollbar-sm overflow-y-auto right-1/2 translate-x-1/2  bottom-0 bg-white transform duration-300"
-      :class="[{ 'translate-y-full': !modelValue }, maxHeight, $attrs.class]"
+      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform duration-300 h-max-64"
+      :class="[{ 'translate-y-full': !modelValue },maxHeight, $attrs.class]"
     >
-      <div>
         <div
           v-if="showHeader"
-          class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+          class="px-4 sticky top-0 bottom-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
         >
           <div>
             <component :is="titleTag" v-if="showTitle">{{ title }}</component>
@@ -22,23 +21,9 @@
             </template>
           </div>
 
-          <div
-            v-if="showCloseButton"
-            @click="close"
-            class="text-2xl hover:text-gray-600 cursor-pointer"
-          >
-            &#215;
-          </div>
-          <template v-else>
-            <slot name="closeButton" :onClick="close"></slot>
-          </template>
-        </div>
-
-        <div>
-          <div class="p-4">
+    </div>
+      <div class="h-48 overflow-y-auto ">
             <slot></slot>
-          </div>
-        </div>
       </div>
     </div>
   </teleport>
@@ -54,29 +39,29 @@ export default defineComponent({
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
-    }
+    },
   },
   props: {
     modelValue: {
       type: [Number, Boolean],
-      default: 0
+      default: 0,
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     titleTag: {
       type: String,
-      default: "h4"
+      default: "h4",
     },
     teleportTo: {
-      type: String
+      type: String,
     },
     hasCloseButton: {
       type: Boolean,
       default: () => {
         return true;
-      }
+      },
     },
     maxSize: {
       type: String,
@@ -85,24 +70,24 @@ export default defineComponent({
       },
       validator: (propValue: string) => {
         return !!(size as { [key: string]: string })[propValue];
-      }
+      },
     },
     closeCallback: {
       type: Function as PropType<BooleanFunction>,
       default: () => {
         return () => true;
-      }
+      },
     },
     full: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
     eager: {
       type: Boolean,
       default: (): boolean => {
         return false;
-      }
-    }
+      },
+    },
   },
   setup(props, { emit, slots }) {
     const close = () => {
@@ -163,8 +148,8 @@ export default defineComponent({
       showCloseButton,
       showTitle,
       isTeleportDisable,
-      delayModelValue
+      delayModelValue,
     };
-  }
+  },
 });
 </script>
