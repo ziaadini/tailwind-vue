@@ -1,67 +1,58 @@
 <template>
-  <div
-    :class="{
-      ' m-2': outline,
-    }"
+  <label
+    v-if="label"
+    for="price"
+    class="block text-sm font-medium text-gray-700 text-right"
   >
-    <label
-      v-if="label"
-      for="price"
-      class="block text-sm font-medium text-gray-700 text-right"
+    {{ label }}
+  </label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <div v-if="leftPadding" class="absolute inset-y-0 left-2 flex items-center">
+      <span
+        v-if="leftIcon"
+        class="material-icons z-10"
+        :class="{ 'text-gray-200': disabled }"
+      >
+        {{ leftIcon }}
+      </span>
+      <template v-else>
+        <slot name="rightSlot" />
+      </template>
+    </div>
+    <input
+      type="text"
+      :disabled="disabled"
+      v-bind="$attrs"
+      :value="modelValue"
+      @input="emitHandler($event.target.value)"
+      class="block min-h-48 w-full sm:text-sm outline-none h-10"
+      :class="{
+        ' pr-8': rightPadding,
+        ' pr-3': !rightPadding,
+        ' pl-8': leftPadding,
+        ' pl0-3': !leftPadding,
+        'rounded-full': rounded,
+        'rounded-sm': !rounded,
+        [variantClasses]: true,
+        'text-right': isRight,
+        'text-center': isCenter,
+        'text-left': isLeft,
+      }"
+    />
+    <div
+      v-if="rightPadding"
+      class="absolute inset-y-0 right-2 flex items-center pointer-events-none"
     >
-      {{ label }}
-    </label>
-    <div class="mt-1 relative rounded-md shadow-sm">
-      <div
-        v-if="leftPadding"
-        class="absolute inset-y-0 left-2 flex items-center"
+      <span
+        v-if="rightIcon"
+        class="material-icons z-10"
+        :class="{ 'text-gray-200': disabled }"
       >
-        <span
-          v-if="leftIcon"
-          class="material-icons z-10"
-          :class="{ 'text-gray-200': disabled }"
-        >
-          {{ leftIcon }}
-        </span>
-        <template v-else>
-          <slot name="rightSlot" />
-        </template>
-      </div>
-      <input
-        type="text"
-        :disabled="disabled"
-        v-bind="$attrs"
-        :value="modelValue"
-        @input="emitHandler($event.target.value)"
-        class="block min-h-48 w-full sm:text-sm outline-none h-10"
-        :class="{
-          ' pr-8': rightPadding,
-          ' pr-3': !rightPadding,
-          ' pl-8': leftPadding,
-          ' pl0-3': !leftPadding,
-          'rounded-full': rounded,
-          'rounded-sm': !rounded,
-          [variantClasses]: true,
-          'text-right': isRight,
-          'text-center': isCenter,
-          'text-left': isLeft,
-        }"
-      />
-      <div
-        v-if="rightPadding"
-        class="absolute inset-y-0 right-2 flex items-center pointer-events-none"
-      >
-        <span
-          v-if="rightIcon"
-          class="material-icons z-10"
-          :class="{ 'text-gray-200': disabled }"
-        >
-          {{ rightIcon }}
-        </span>
-        <template v-else>
-          <slot name="rightSlot" />
-        </template>
-      </div>
+        {{ rightIcon }}
+      </span>
+      <template v-else>
+        <slot name="rightSlot" />
+      </template>
     </div>
   </div>
 </template>
@@ -164,7 +155,7 @@ export default defineComponent({
           : "transition hover:opacity-80 disabled:opacity-50 ") +
         (!props.outline
           ? `bg-${props.variant}`
-          : `bg-white text-dark hover:bg-${props.variant}-50 ring-4 ring-${props.variant} focus:ring-${props.variant}-500 focus:border-${props.variant}-500`)
+          : `bg-white text-dark hover:bg-${props.variant}-50 border-4 border-${props.variant} focus:border-${props.variant}-500 focus:border-${props.variant}-500`)
       );
     });
 
