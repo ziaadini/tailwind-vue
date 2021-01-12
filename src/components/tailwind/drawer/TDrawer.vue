@@ -152,24 +152,13 @@ export default defineComponent({
       }
       return "";
     });
-    const delayModelValue = ref(props.modelValue);
-    watch(
-      () => props.modelValue,
-      () => {
-        console.log("watch working");
-        setTimeout(() => {
-          delayModelValue.value = props.modelValue;
-        });
-      }
-    );
     return {
       maxWidth,
       close,
       showHeader,
       showCloseButton,
       showTitle,
-      isTeleportDisable,
-      delayModelValue
+      isTeleportDisable
     };
   }
 });

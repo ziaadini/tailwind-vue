@@ -8,12 +8,13 @@
 
     <!--    <div class="relative">-->
     <div
-      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform duration-300"
+      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform"
       :class="[
-        { 'translate-y-full': !modelValue },
+        { 'translate-y-full': !modelValue, 'duration-300': !isTouching },
         maxHeight.class,
         $attrs.class
       ]"
+      :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
       <div class="py-2" v-bind="swipeEvents">
         <div
@@ -57,16 +58,12 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import {
-  defineComponent,
-  computed,
-  PropType,
-  ref,
-  watch,
-  onMounted
-} from "vue";
+import { defineComponent, computed, PropType, ref, watch } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { useSwipeElement } from "@/compositionFunctions/swipe";
+import {
+  useSwipeDownToClose,
+  useSwipeElement
+} from "@/compositionFunctions/swipe";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TBottomSheet",
@@ -165,20 +162,11 @@ export default defineComponent({
       }
       return { class: "", variable: "" };
     });
-    const delayModelValue = ref(props.modelValue);
-    watch(
-      () => props.modelValue,
-      () => {
-        console.log("watch working");
-        setTimeout(() => {
-          delayModelValue.value = props.modelValue;
-        });
-      }
-    );
 
-    const swipeEvents = useSwipeElement();
-
+    const { isTouching, swipeY, swipeEvents } = useSwipeDownToClose(close);
     return {
+      isTouching,
+      swipeY,
       swipeEvents,
       maxHeight,
       close,
@@ -186,7 +174,6 @@ export default defineComponent({
       showCloseButton,
       showTitle,
       isTeleportDisable,
-      delayModelValue,
       clickedItem: () => {
         alert("item clicked");
       }
