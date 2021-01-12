@@ -3,9 +3,10 @@ export const useSwipeElement = (disabled = false) => {
   const state = reactive({
     startX: 0,
     xPosition: 0,
-    isEnd: false
+    isDropped: false
   });
   const onDragStart = event => {
+    state.isDropped = false;
     if (event.type === "touchstart") {
       event.clientX = event.touches[0].clientX;
     }
@@ -18,7 +19,7 @@ export const useSwipeElement = (disabled = false) => {
     state.xPosition = event.clientX;
   };
   const onDragEnd = () => {
-    state.isEnd = true;
+    state.isDropped = true;
     if (typeof window !== "undefined") {
       document.removeEventListener("mousemove", onDragging);
       document.removeEventListener("touchmove", onDragging);
