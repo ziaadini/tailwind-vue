@@ -8,17 +8,25 @@
 
     <!--    <div class="relative">-->
     <div
-      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white h-full transform duration-300"
-      :class="[{ 'translate-y-full': !modelValue }, maxHeight, $attrs.class]"
+      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform duration-300"
+      :class="[
+        { 'translate-y-full': !modelValue },
+        maxHeight.class,
+        $attrs.class
+      ]"
     >
+      <div class="py-2" v-bind="swipeEvents">
+        <div
+          class="bg-gray-300 mx-auto rounded-full h-1.5 w-20 cursor-pointer"
+        ></div>
+      </div>
+
       <div
         v-if="showHeader"
         class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
       >
         <div>
-          <component :is="titleTag" v-if="showTitle">
-            {{ title }}
-          </component>
+          <component :is="titleTag" v-if="showTitle"> {{ title }} </component>
           <template v-else>
             <slot name="title"></slot>
           </template>
@@ -35,7 +43,11 @@
           <slot name="closeButton" :onClick="close"></slot>
         </template>
       </div>
-      <div class="bottom-sheet-height overflow-y-auto scrollbar-sm p-4">
+      <div
+        class="overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container"
+        :class="[{ 'bottom-sheet-height': showHeader }]"
+        :style="{ '--max-height': maxHeight.variable }"
+      >
         <slot></slot>
       </div>
     </div>
@@ -45,8 +57,16 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType, ref, watch } from "vue";
+import {
+  defineComponent,
+  computed,
+  PropType,
+  ref,
+  watch,
+  onMounted
+} from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { useSwipeElement } from "@/compositionFunctions/swipe";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TBottomSheet",
@@ -130,20 +150,20 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxHeight = computed((): string => {
+    const maxHeight = computed((): { class: string; variable: string } => {
       switch (props.maxSize) {
         case size.xs:
-          return "max-h-1/4";
+          return { class: "max-h-1/4", variable: "25vh" };
         case size.sm:
-          return "max-h-1/2";
+          return { class: "max-h-1/2", variable: "50vh" };
         case size.md:
-          return "max-h-3/4";
+          return { class: "max-h-3/4", variable: "75vh" };
         case size.lg:
-          return "max-h-9/10";
+          return { class: "max-h-9/10", variable: "90vh" };
         case size.full:
-          return "max-h-full";
+          return { class: "max-h-full", variable: "100vh" };
       }
-      return "";
+      return { class: "", variable: "" };
     });
     const delayModelValue = ref(props.modelValue);
     watch(
@@ -155,20 +175,30 @@ export default defineComponent({
         });
       }
     );
+
+    const swipeEvents = useSwipeElement();
+
     return {
+      swipeEvents,
       maxHeight,
       close,
       showHeader,
       showCloseButton,
       showTitle,
       isTeleportDisable,
-      delayModelValue
+      delayModelValue,
+      clickedItem: () => {
+        alert("item clicked");
+      }
     };
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .bottom-sheet-height {
   height: calc(100% - 3.5rem);
+}
+.bottom-sheet-content-container {
+  max-height: calc(var(--max-height) - 3.5rem);
 }
 </style>

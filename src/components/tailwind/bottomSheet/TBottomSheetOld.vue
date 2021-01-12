@@ -9,20 +9,43 @@
     <!--    <div class="relative">-->
     <div
       class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform duration-300"
-      :class="[{ 'translate-y-full': !modelValue }, maxHeight, $attrs.class]"
+      :class="[
+        { 'translate-y-full': !modelValue },
+        maxHeight.class,
+        $attrs.class
+      ]"
     >
-      <div
-        v-if="showHeader"
-        class="px-4 sticky top-0 bottom-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
-      >
-        <div>
-          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+      <template v-if="showHeader">
+        <div
+          class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+        >
+          <div>
+            <component :is="titleTag" v-if="showTitle">
+              {{ title }}
+            </component>
+            <template v-else>
+              <slot name="title"></slot>
+            </template>
+          </div>
+
+          <div
+            v-if="showCloseButton"
+            @click="close"
+            class="text-2xl hover:text-gray-600 cursor-pointer"
+          >
+            &#215;
+          </div>
           <template v-else>
-            <slot name="title"></slot>
+            <slot name="closeButton" :onClick="close"></slot>
           </template>
         </div>
-      </div>
-      <div class="overflow-y-auto h-full absolute w-screen">
+      </template>
+
+      <div
+        class="overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container"
+        :class="[{ 'bottom-sheet-height': showHeader }]"
+        :style="{ '--max-height': maxHeight.variable }"
+      >
         <slot></slot>
       </div>
     </div>
@@ -117,20 +140,20 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxHeight = computed((): string => {
+    const maxHeight = computed((): { class: string; variable: string } => {
       switch (props.maxSize) {
         case size.xs:
-          return "max-h-1/4";
+          return { class: "max-h-1/4", variable: "25vh" };
         case size.sm:
-          return "max-h-1/2";
+          return { class: "max-h-1/2", variable: "50vh" };
         case size.md:
-          return "max-h-3/4";
+          return { class: "max-h-3/4", variable: "75vh" };
         case size.lg:
-          return "max-h-9/10";
+          return { class: "max-h-9/10", variable: "90vh" };
         case size.full:
-          return "max-h-full";
+          return { class: "max-h-full", variable: "100vh" };
       }
-      return "";
+      return { class: "", variable: "" };
     });
     const delayModelValue = ref(props.modelValue);
     watch(
@@ -154,3 +177,11 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped lang="scss">
+.bottom-sheet-height {
+  height: calc(100% - 3.5rem);
+}
+.bottom-sheet-content-container {
+  max-height: calc(var(--max-height) - 3.5rem);
+}
+</style>

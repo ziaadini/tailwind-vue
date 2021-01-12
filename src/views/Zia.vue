@@ -72,7 +72,7 @@
       <div>#zia</div>
       <t-bottom-sheet
         class="rounded-t-md"
-        title=" تایتل"
+        :has-close-button="false"
         teleport-to="#modal-content"
         v-model="bottomSheet"
       >
@@ -83,7 +83,7 @@
           <div class="h-96">hi</div>
           <div class="h-96">bye</div>
           <div class="h-96">تست</div>
-          <div class="h-90 text-gray-800 bg-gray-300">
+          <div class="text-gray-800 bg-gray-300">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است.
           </div>
