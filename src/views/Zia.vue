@@ -1,10 +1,10 @@
 <template>
   <div class="flex items-center flex-col space-y-4">
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-progress-bar :value="30"></t-progress-bar>
+    </div>
     <div>
-      <div class="w-60 my-2">
-        <div>#zia</div>
-        <t-progress-bar :value="30"></t-progress-bar>
-      </div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
         some text

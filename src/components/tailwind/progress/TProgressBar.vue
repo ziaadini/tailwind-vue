@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full ltr">
     <div class="shadow w-full bg-gray-200 rounded-full" v-bind="$attrs">
       <div
         :class="[`bg-${variant}`, { 'text-white': variant !== 'white' }]"
