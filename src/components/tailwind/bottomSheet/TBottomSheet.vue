@@ -10,13 +10,21 @@
     <div
       class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform"
       :class="[
-        { 'translate-y-full': !modelValue, 'duration-300': !isTouching },
+        {
+          'translate-y-full': !modelValue,
+          'duration-300': !isTouching,
+          'rounded-t-md': rounded
+        },
         maxHeight.class,
         $attrs.class
       ]"
       :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
-      <div class="py-2" v-bind="swipeEvents">
+      <div
+        class="py-2"
+        :class="{ 'absolute right-1/2 transform translate-x-1/2': showHeader }"
+        v-bind="swipeEvents"
+      >
         <div
           class="bg-gray-300 mx-auto rounded-full h-1.5 w-20 cursor-pointer"
         ></div>
@@ -58,12 +66,9 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType, ref, watch } from "vue";
+import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import {
-  useSwipeDownToClose,
-  useSwipeElement
-} from "@/compositionFunctions/swipe";
+import { useSwipeDownToClose } from "@/compositionFunctions/swipe";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TBottomSheet",
@@ -76,6 +81,10 @@ export default defineComponent({
     modelValue: {
       type: [Number, Boolean],
       default: 0
+    },
+    rounded: {
+      type: Boolean,
+      default: () => true
     },
     title: {
       type: String,

@@ -51,10 +51,7 @@
 
     <div>
       <div>#zia</div>
-      <t-drawer teleport-to="#modal-content" v-model="drawer">
-        <!--        <template #closeButton="attrs">-->
-        <!--          <t-button v-bind="attrs">close</t-button>-->
-        <!--        </template>-->
+      <t-drawer :has-close-button="true" max-size="md" teleport-to="#modal-content" v-model="drawer">
         <div>
           <div class="h-96">hi</div>
           <div class="h-96">bye</div>
@@ -71,10 +68,10 @@
     <div>
       <div>#zia</div>
       <t-bottom-sheet
-        class="rounded-t-md"
         :has-close-button="false"
         teleport-to="#modal-content"
         v-model="bottomSheet"
+        title="تست عنوان"
       >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
