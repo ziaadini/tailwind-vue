@@ -5,44 +5,51 @@
       class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
       @click="close"
     ></div>
+
+    <!--    <div class="relative">-->
     <div
-      class="fixed scrollbar-sm h-full overflow-y-auto top-0  bg-white transform duration-300"
+      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform duration-300"
       :class="[
-        { [left ? '-translate-x-full' : 'translate-x-full']: !modelValue },
-        left ? 'left-0' : 'right-0',
-        maxWidth
+        { 'translate-y-full': !modelValue },
+        maxHeight.class,
+        $attrs.class
       ]"
     >
-      <div
-        v-if="showHeader"
-        :class="{ 'flex-row-reverse': left }"
-        class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
-      >
-        <div>
-          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+      <template v-if="showHeader">
+        <div
+          class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+        >
+          <div>
+            <component :is="titleTag" v-if="showTitle">
+              {{ title }}
+            </component>
+            <template v-else>
+              <slot name="title"></slot>
+            </template>
+          </div>
+
+          <div
+            v-if="showCloseButton"
+            @click="close"
+            class="text-2xl hover:text-gray-600 cursor-pointer"
+          >
+            &#215;
+          </div>
           <template v-else>
-            <slot name="title"></slot>
+            <slot name="closeButton" :onClick="close"></slot>
           </template>
         </div>
+      </template>
 
-        <div
-          v-if="showCloseButton"
-          @click="close"
-          class="text-2xl hover:text-gray-600 cursor-pointer"
-        >
-          &#215;
-        </div>
-        <template v-else>
-          <slot name="closeButton" :onClick="close"></slot>
-        </template>
-      </div>
-
-      <div :class="{ 'w-screen': full }">
-        <div class="p-4">
-          <slot></slot>
-        </div>
+      <div
+        class="overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container"
+        :class="[{ 'bottom-sheet-height': showHeader }]"
+        :style="{ '--max-height': maxHeight.variable }"
+      >
+        <slot></slot>
       </div>
     </div>
+    <!--    </div>-->
   </teleport>
 </template>
 
@@ -52,7 +59,7 @@ import { defineComponent, computed, PropType, ref, watch } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 type BooleanFunction = () => boolean;
 export default defineComponent({
-  name: "TDrawer",
+  name: "TBottomSheet",
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
@@ -83,7 +90,7 @@ export default defineComponent({
     maxSize: {
       type: String,
       default: () => {
-        return "full";
+        return "md";
       },
       validator: (propValue: string) => {
         return !!(size as { [key: string]: string })[propValue];
@@ -96,10 +103,6 @@ export default defineComponent({
       }
     },
     full: {
-      type: Boolean,
-      default: () => false
-    },
-    left: {
       type: Boolean,
       default: () => false
     },
@@ -137,29 +140,48 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxWidth = computed((): string => {
+    const maxHeight = computed((): { class: string; variable: string } => {
       switch (props.maxSize) {
         case size.xs:
-          return "max-w-lg";
+          return { class: "max-h-1/4", variable: "25vh" };
         case size.sm:
-          return "max-w-xl";
+          return { class: "max-h-1/2", variable: "50vh" };
         case size.md:
-          return "max-w-2xl";
+          return { class: "max-h-3/4", variable: "75vh" };
         case size.lg:
-          return "max-w-3xl";
+          return { class: "max-h-9/10", variable: "90vh" };
         case size.full:
-          return "max-w-full";
+          return { class: "max-h-full", variable: "100vh" };
       }
-      return "";
+      return { class: "", variable: "" };
     });
+    const delayModelValue = ref(props.modelValue);
+    watch(
+      () => props.modelValue,
+      () => {
+        console.log("watch working");
+        setTimeout(() => {
+          delayModelValue.value = props.modelValue;
+        });
+      }
+    );
     return {
-      maxWidth,
+      maxHeight,
       close,
       showHeader,
       showCloseButton,
       showTitle,
-      isTeleportDisable
+      isTeleportDisable,
+      delayModelValue
     };
   }
 });
 </script>
+<style scoped lang="scss">
+.bottom-sheet-height {
+  height: calc(100% - 3.5rem);
+}
+.bottom-sheet-content-container {
+  max-height: calc(var(--max-height) - 3.5rem);
+}
+</style>

@@ -136,6 +136,7 @@ module.exports = {
         "5xl": "28px"
       },
       borderRadius: {
+        inherit: "inherit",
         none: "0",
         xs: "4px",
         sm: "8px",
