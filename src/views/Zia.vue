@@ -1,4 +1,23 @@
 <template>
+  <div>
+    <div>#zia</div>
+    <t-tabs>
+      <t-tab-item title="تب اول">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب دوم">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب سوم">
+        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+      </t-tab-item>
+      <t-tab-item title="تب چهارم">
+        زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
+      </t-tab-item>
+    </t-tabs>
+  </div>
+
   <div class="flex items-center flex-col space-y-4">
     <div class="w-60 my-2">
       <div>#zia</div>
@@ -210,9 +229,13 @@ import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
 import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
+import TTabs from "@/components/tailwind/tab/TTabs.vue";
+import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTabItem,
+    TTabs,
     TProgressBar,
     TBottomSheet,
     TLoading,
