@@ -1,9 +1,10 @@
 <template>
-  <div class="flex justify-center">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-  </div>
   <div class="flex items-center flex-col space-y-4">
     <div>
+      <div class="w-60 my-2">
+        <div>#zia</div>
+        <t-progress-bar :value="30"></t-progress-bar>
+      </div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
         some text
@@ -52,7 +53,12 @@
 
     <div>
       <div>#zia</div>
-      <t-drawer :has-close-button="true" max-size="md" teleport-to="#modal-content" v-model="drawer">
+      <t-drawer
+        :has-close-button="true"
+        max-size="md"
+        teleport-to="#modal-content"
+        v-model="drawer"
+      >
         <div>
           <div class="h-96">hi</div>
           <div class="h-96">bye</div>
@@ -190,7 +196,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref, watchEffect } from "vue";
@@ -203,9 +209,11 @@ import TRadio from "@/components/tailwind/radio/TRadio.vue";
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
+import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TProgressBar,
     TBottomSheet,
     TLoading,
     TDrawer,
