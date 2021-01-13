@@ -20,6 +20,7 @@
     <div>
       <div>#zia</div>
       <t-modal
+        max-size="lg"
         teleport-to="#modal-content"
         v-model="modal"
         :close-callback="modalCloseCallback"

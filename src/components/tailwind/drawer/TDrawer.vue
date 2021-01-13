@@ -59,6 +59,7 @@
 import { size } from "@/utility/css-helper";
 import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { useMaxWidth } from "@/compositionFunctions/maxSize";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TDrawer",
@@ -99,7 +100,7 @@ export default defineComponent({
         return "full";
       },
       validator: (propValue: string) => {
-        return !!(size as { [key: string]: string })[propValue];
+        return !!size[propValue];
       }
     },
     closeCallback: {
@@ -150,21 +151,7 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxWidth = computed((): string => {
-      switch (props.maxSize) {
-        case size.xs:
-          return "max-w-1/4";
-        case size.sm:
-          return "max-w-1/2";
-        case size.md:
-          return "max-w-3/4";
-        case size.lg:
-          return "max-w-9/10";
-        case size.full:
-          return "max-w-full";
-      }
-      return "";
-    });
+    const maxWidth = useMaxWidth(props.maxSize);
     return {
       maxWidth,
       close,
