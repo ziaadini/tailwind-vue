@@ -98,7 +98,7 @@ export default defineComponent({
     });
 
     const loadingProps = {
-      variant: props.outline ? props.variant : "whtie",
+      variant: props.outline ? props.variant : "white",
     };
     return {
       variantClasses,
