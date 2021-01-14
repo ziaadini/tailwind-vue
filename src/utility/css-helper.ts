@@ -3,6 +3,7 @@ export enum variants {
   success = "success",
   danger = "danger",
   warning = "warning",
+  white = "white",
 }
 
 export enum textInputVariants {

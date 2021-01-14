@@ -41,8 +41,8 @@ export function formatHandlerWrapper(
     }
     return [",", 3];
   };
-  const key = findKey(modifierType);
-  const args = retArgs(keys[key]);
+  const key = findKey(modifierType || "");
+  const args = retArgs(keys[key] || "");
 
   return [key !== -1, args];
 }

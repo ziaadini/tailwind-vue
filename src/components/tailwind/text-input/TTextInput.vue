@@ -154,8 +154,8 @@ export default defineComponent({
           ? "hover:opacity-80 transition text-white disabled:opacity-50 "
           : "transition hover:opacity-80 disabled:opacity-50 ") +
         (!props.outline
-          ? `bg-${props.variant}`
-          : `bg-white text-dark hover:bg-${props.variant}-50 border-4 border-${props.variant} focus:border-${props.variant}-500 focus:border-${props.variant}-500`)
+          ? `bg-${props.variant} text-input-placehoder-white`
+          : `bg-white text-input-placehoder-black text-dark hover:bg-${props.variant}-50 border-4 border-${props.variant} focus:border-${props.variant}-500 focus:border-${props.variant}-500`)
       );
     });
 
@@ -189,3 +189,42 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.text-input-placehoder-white {
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: white;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: white;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: white;
+  }
+}
+.text-input-placehoder-black {
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: black;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: black;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    color: black;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: black;
+  }
+}
+</style>

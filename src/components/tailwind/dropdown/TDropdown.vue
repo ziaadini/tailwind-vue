@@ -1,36 +1,35 @@
 <template>
   <div class="relative">
-<!--    <div-->
-<!--      class="cursor-pointer w-64 h-10 flex items-center justify-center"-->
-<!--      :class="{-->
-<!--        'rounded-full': rounded && !open,-->
-<!--        'rounded-md': rounded && open,-->
-<!--        'rounded-b-none': rounded && open,-->
-<!--        [parentClass]: true,-->
-<!--      }"-->
-<!--      @click="open = !open"-->
-<!--    >-->
-<!--      {{ selected?.label || placeholder }}-->
-<!--    </div>-->
-<!--    <div-->
-<!--      v-show="open"-->
-<!--      :class="{ 'opacity-0': !open, 'rounded-b-md': rounded }"-->
-<!--      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute z-20 bg-white shadow"-->
-<!--    >-->
-<!--      <template v-for="(item, index) in getItems" :key="index">-->
-<!--        <div-->
-<!--          class="py-2"-->
-<!--          :class="{-->
-<!--            [childClass]: true,-->
-<!--            'rounded-b-md': index + 1 === items.length && rounded,-->
-<!--          }"-->
-<!--          @click=""-->
-<!--        >-->
-<!--          {{ item.label }}-->
-<!--        </div>-->
-<!--        <hr v-if="getItems.length !== index + 1" />-->
-<!--      </template>-->
-<!--    </div>-->
+    <div
+      class="cursor-pointer w-64 h-10 flex items-center justify-center"
+      :class="{
+        'rounded-full': rounded && !open,
+        'rounded-md': rounded && open,
+        'rounded-b-none': rounded && open,
+        [parentClass]: true,
+      }"
+      @click="open = !open"
+    >
+      {{ selected?.label || placeholder }}
+    </div>
+    <div
+      v-show="open"
+      :class="{ 'opacity-0': !open, 'rounded-b-md': rounded }"
+      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute z-20 bg-white shadow"
+    >
+      <template v-for="(item, index) in getItems" :key="index">
+        <div
+          class="py-2"
+          :class="{
+            [childClass]: true,
+            'rounded-b-md': index + 1 === items.length && rounded,
+          }"
+        >
+          {{ item.label }}
+        </div>
+        <hr v-if="getItems.length !== index + 1" />
+      </template>
+    </div>
   </div>
 </template>
 
@@ -103,6 +102,8 @@ export default defineComponent({
 
       return newItems;
     };
+
+
     return {
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
