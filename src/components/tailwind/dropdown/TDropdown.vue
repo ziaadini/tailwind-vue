@@ -24,7 +24,6 @@
             [childClass]: true,
             'rounded-b-md': index + 1 === items.length && rounded,
           }"
-          @click=""
         >
           {{ item.label }}
         </div>
@@ -103,6 +102,8 @@ export default defineComponent({
 
       return newItems;
     };
+
+
     return {
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
