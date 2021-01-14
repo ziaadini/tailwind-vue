@@ -6,9 +6,12 @@
       @click="close"
     ></div>
     <div
-      class="fixed scrollbar-sm h-full overflow-y-auto top-0  bg-white transform duration-300"
+      class="fixed top-0  bg-white transform duration-300"
       :class="[
-        { [left ? '-translate-x-full' : 'translate-x-full']: !modelValue },
+        {
+          [left ? '-translate-x-full' : 'translate-x-full']: !modelValue,
+          [left ? 'rounded-r-md' : 'rounded-l-md']: rounded
+        },
         left ? 'left-0' : 'right-0',
         maxWidth
       ]"
@@ -16,7 +19,7 @@
       <div
         v-if="showHeader"
         :class="{ 'flex-row-reverse': left }"
-        class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+        class="px-4 h-12 rounded-inherit  py-4 leading-none flex justify-between items-center font-medium text-sm select-none"
       >
         <div>
           <component :is="titleTag" v-if="showTitle">{{ title }}</component>
@@ -36,20 +39,27 @@
           <slot name="closeButton" :onClick="close"></slot>
         </template>
       </div>
+      <div v-else class="h-2"></div>
 
-      <div :class="{ 'w-screen': full }">
-        <div class="p-4">
-          <slot></slot>
-        </div>
+      <div
+        class="overflow-y-auto scrollbar-sm p-4 max-h-screen bottom-sheet-content-container drawer-max-height"
+        :class="[{ 'drawer-height': showHeader, 'w-screen': full }]"
+      >
+        <slot></slot>
       </div>
+      <div
+        :class="{ [left ? 'rounded-br-md' : 'rounded-bl-lg']: rounded }"
+        class="bg-white h-4 w-full"
+      ></div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType, ref, watch } from "vue";
+import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { useMaxWidth } from "@/compositionFunctions/maxSize";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TDrawer",
@@ -62,6 +72,10 @@ export default defineComponent({
     modelValue: {
       type: [Number, Boolean],
       default: 0
+    },
+    rounded: {
+      type: Boolean,
+      default: () => true
     },
     title: {
       type: String,
@@ -86,7 +100,7 @@ export default defineComponent({
         return "full";
       },
       validator: (propValue: string) => {
-        return !!(size as { [key: string]: string })[propValue];
+        return !!size[propValue];
       }
     },
     closeCallback: {
@@ -137,21 +151,7 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxWidth = computed((): string => {
-      switch (props.maxSize) {
-        case size.xs:
-          return "max-w-lg";
-        case size.sm:
-          return "max-w-xl";
-        case size.md:
-          return "max-w-2xl";
-        case size.lg:
-          return "max-w-3xl";
-        case size.full:
-          return "max-w-full";
-      }
-      return "";
-    });
+    const maxWidth = useMaxWidth(props.maxSize);
     return {
       maxWidth,
       close,
@@ -163,3 +163,11 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped lang="scss">
+.drawer-height {
+  height: calc(100vh - 4rem);
+}
+.drawer-max-height {
+  max-height: calc(100vh - 2rem);
+}
+</style>

@@ -67,7 +67,7 @@ import TButton from "@/components/tailwind/button/TButton.vue";
 import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
 import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
-import { BreadCrumb } from "@/types/base-component-types";
+import { BreadCrumb } from "@/utility/types/base-component-types";
 import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue"
 export default defineComponent({

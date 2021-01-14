@@ -1,8 +1,28 @@
 <template>
-  <div class="flex justify-center">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+  <div>
+    <div>#zia</div>
+    <t-tabs>
+      <t-tab-item title="تب اول">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب دوم">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب سوم">
+        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+      </t-tab-item>
+      <t-tab-item title="تب چهارم">
+        زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
+      </t-tab-item>
+    </t-tabs>
   </div>
+
   <div class="flex items-center flex-col space-y-4">
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-progress-bar :value="30"></t-progress-bar>
+    </div>
     <div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
@@ -20,6 +40,7 @@
     <div>
       <div>#zia</div>
       <t-modal
+        max-size="lg"
         teleport-to="#modal-content"
         v-model="modal"
         :close-callback="modalCloseCallback"
@@ -51,10 +72,12 @@
 
     <div>
       <div>#zia</div>
-      <t-drawer teleport-to="#modal-content" v-model="drawer">
-        <!--        <template #closeButton="attrs">-->
-        <!--          <t-button v-bind="attrs">close</t-button>-->
-        <!--        </template>-->
+      <t-drawer
+        :has-close-button="true"
+        max-size="md"
+        teleport-to="#modal-content"
+        v-model="drawer"
+      >
         <div>
           <div class="h-96">hi</div>
           <div class="h-96">bye</div>
@@ -71,10 +94,10 @@
     <div>
       <div>#zia</div>
       <t-bottom-sheet
-        class="rounded-t-md"
         :has-close-button="false"
         teleport-to="#modal-content"
         v-model="bottomSheet"
+        title="تست عنوان"
       >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
@@ -192,7 +215,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref, watchEffect } from "vue";
@@ -205,9 +228,15 @@ import TRadio from "@/components/tailwind/radio/TRadio.vue";
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
+import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
+import TTabs from "@/components/tailwind/tab/TTabs.vue";
+import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTabItem,
+    TTabs,
+    TProgressBar,
     TBottomSheet,
     TLoading,
     TDrawer,

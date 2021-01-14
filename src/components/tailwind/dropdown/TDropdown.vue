@@ -36,7 +36,7 @@
 <script lang="ts">
 import { variants } from "@/utility/css-helper";
 import { defineComponent, PropType } from "vue";
-import { DropDown } from "@/types/base-component-types";
+import { DropDown } from "@/utility/types/base-component-types";
 export default defineComponent({
   props: {
     variant: {
