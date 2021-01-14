@@ -55,9 +55,11 @@ export default defineComponent({
 
     onBeforeMount(() => {
       if (slots.default) {
-        state.tabs = slots
-          .default()
-          .filter(child => child.type.name === "TTabItem");
+        //@ts-ignore
+        state.tabs = slots.default().filter(child => {
+          //@ts-ignore
+          return child.type.name === "TTabItem";
+        });
       }
     });
 
@@ -65,7 +67,12 @@ export default defineComponent({
       selectTab(0);
     });
 
-    const scrollTo = (element, scrollPixels, duration,direction="scrollLeft") => {
+    const scrollTo = (
+      element,
+      scrollPixels,
+      duration,
+      direction = "scrollLeft"
+    ) => {
       const scrollPos = element[direction];
       // Get the start timestamp
       const startTime =
