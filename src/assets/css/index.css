@@ -29,7 +29,7 @@
 
 .ripple{
   overflow: hidden;
-  @apply relative text-white px-5 py-3 bg-red-400 rounded-sm cursor-pointer outline-none
+  @apply relative cursor-pointer outline-none
 }
 .ripple::after {
   content: '';
