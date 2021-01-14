@@ -7,13 +7,18 @@
         از طراحان گرافیک است.
       </t-tab-item>
       <t-tab-item title="تب دوم">
-        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
       </t-tab-item>
       <t-tab-item title="تب سوم">
-        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
+        دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
       </t-tab-item>
       <t-tab-item title="تب چهارم">
         زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
+      </t-tab-item>
+      <t-tab-item v-if="showLastTab" title="تب پنجم">
+        برای تست resize
       </t-tab-item>
     </t-tabs>
   </div>
@@ -218,7 +223,7 @@
 import { defineComponent, onMounted } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
@@ -261,13 +266,20 @@ export default defineComponent({
       console.log("modal has been closed");
       return true;
     };
-    watchEffect(() => {
-      console.log("switchModel", switchModel.value);
-      console.log("checkboxModel", checkboxModel.value);
+    // watchEffect(() => {
+    //   console.log("switchModel", switchModel.value);
+    //   console.log("checkboxModel", checkboxModel.value);
+    // });
+    // watchEffect(() => {
+    //   console.log("radioModel is : ", radioModel.value);
+    // });
+    const showLastTab = ref(false);
+    onMounted(() => {
+      setTimeout(() => {
+        showLastTab.value = true;
+      }, 1000);
     });
-    watchEffect(() => {
-      console.log("radioModel is : ", radioModel.value);
-    });
+
     return {
       numberPickerCount,
       switchModel,
@@ -277,7 +289,8 @@ export default defineComponent({
       checkboxModel,
       radioModel,
       radioModel2,
-      bottomSheet
+      bottomSheet,
+      showLastTab
     };
   }
 });
