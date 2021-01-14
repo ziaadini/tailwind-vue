@@ -11,6 +11,7 @@ module.exports = {
           /bg-danger(-50|100|200)?$/,
           /bg-warning(-50|100|200)?$/,
           /bg-success(-50|100|200)?$/,
+          /^bg-white$/,
           /border-primary(-50)?$/,
           /border-danger(-50)?$/,
           /border-warning(-50)?$/,
