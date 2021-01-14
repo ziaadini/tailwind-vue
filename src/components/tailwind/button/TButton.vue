@@ -7,7 +7,7 @@
       ripple,
       'w-full': full,
     }"
-    class="shadow relative rounded-sm block border-1 align-se focus:outline-none px-4 py-2  flex justify-center align-center "
+    class="shadow relative rounded-sm block border-1 focus:outline-none flex justify-center align-center "
     v-bind="$attrs"
   >
     <div class="contents">
@@ -31,7 +31,7 @@
         'absolute transform top-1/2 -translate-y-1/2': loading,
       }"
     >
-      <t-loading size="sm" />
+      <t-loading v-bind="{ ...loadingProps }" size="sm" />
     </div>
   </button>
 </template>
@@ -86,9 +86,9 @@ export default defineComponent({
   setup(props) {
     const variantClasses = computed((): string => {
       const baseClass =
-        " hover:opacity-80 transition text-white disabled:opacity-50";
+        " hover:opacity-80 transition text-white disabled:opacity-50 px-4 py-2 ";
       const outlineBaseClass =
-        " transition border-4 text-dark  hover:opacity-80 disabled:opacity-50";
+        " transition border-2 px-4 py-2 text-dark  hover:opacity-80 disabled:opacity-50";
       return props.outline
         ? `bg-white border-${props.variant} hover:bg-${props.variant}-50` +
             outlineBaseClass
@@ -97,8 +97,12 @@ export default defineComponent({
         ` + baseClass;
     });
 
+    const loadingProps = {
+      variant: props.outline ? props.variant : "whtie",
+    };
     return {
       variantClasses,
+      loadingProps,
     };
   },
 });
