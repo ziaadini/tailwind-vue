@@ -1,5 +1,6 @@
 <template>
   <div class="flex justify-center">
+    
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   </div>
   <div class="flex items-center flex-col space-y-4">
@@ -73,14 +74,17 @@ import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 export default defineComponent({
   name: "App",
   components: {
+    
     TButton,
     TMenu,
     TAlert,
     TBreadcrumb,
     TextInput,
+  
   },
   data() {
     return {
+     
       items: [
         {
           text: "تست۱",
