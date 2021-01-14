@@ -1,5 +1,5 @@
 import { PropType } from "vue";
-import { SwitchAndCheckbox } from "@/types/base-component-types";
+import { SwitchAndCheckbox } from "@/utility/types/base-component-types";
 import { variants } from "@/utility/css-helper";
 
 export default {

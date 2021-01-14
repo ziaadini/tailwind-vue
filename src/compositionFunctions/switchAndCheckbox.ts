@@ -1,4 +1,4 @@
-import { SwitchAndCheckbox } from "@/types/base-component-types";
+import { SwitchAndCheckbox } from "@/utility/types/base-component-types";
 import { computed } from "vue";
 
 export const useSwitchAndCheckbox = (props, { emit }) => {
