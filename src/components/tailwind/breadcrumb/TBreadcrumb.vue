@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { BreadCrumb } from "@/types/base-component-types";
+import { BreadCrumb } from "@/utility/types/base-component-types";
 
 export default defineComponent({
   props: {

@@ -38,8 +38,6 @@ export default defineComponent({
       type: String,
       default: "primary",
       validator: (propValue: string) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         return !!variants[propValue];
       }
     }
@@ -50,13 +48,13 @@ export default defineComponent({
         case size.xs:
           return "w-1 h-1";
         case size.sm:
-          return "w-4 h-4";
+          return "w-2 h-2";
         case size.md:
-          return "w-6 h-6";
+          return "w-4 h-4";
         case size.lg:
-          return "w-8 h-8";
+          return "w-6 h-6";
         case size.full:
-          return "w-10 h-10";
+          return "w-8 h-8";
       }
       return "";
     });

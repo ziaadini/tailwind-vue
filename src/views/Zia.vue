@@ -1,8 +1,33 @@
 <template>
-  <div class="flex justify-center">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+  <div>
+    <div>#zia</div>
+    <t-tabs>
+      <t-tab-item title="تب اول">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب دوم">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-tab-item>
+      <t-tab-item title="تب سوم">
+        زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
+        دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+      </t-tab-item>
+      <t-tab-item title="تب چهارم">
+        زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
+      </t-tab-item>
+      <t-tab-item v-if="showLastTab" title="تب پنجم">
+        برای تست resize
+      </t-tab-item>
+    </t-tabs>
   </div>
+
   <div class="flex items-center flex-col space-y-4">
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-progress-bar :value="30"></t-progress-bar>
+    </div>
     <div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
@@ -20,6 +45,7 @@
     <div>
       <div>#zia</div>
       <t-modal
+        max-size="lg"
         teleport-to="#modal-content"
         v-model="modal"
         :close-callback="modalCloseCallback"
@@ -51,10 +77,12 @@
 
     <div>
       <div>#zia</div>
-      <t-drawer teleport-to="#modal-content" v-model="drawer">
-        <!--        <template #closeButton="attrs">-->
-        <!--          <t-button v-bind="attrs">close</t-button>-->
-        <!--        </template>-->
+      <t-drawer
+        :has-close-button="true"
+        max-size="md"
+        teleport-to="#modal-content"
+        v-model="drawer"
+      >
         <div>
           <div class="h-96">hi</div>
           <div class="h-96">bye</div>
@@ -66,6 +94,32 @@
         </div>
       </t-drawer>
       <t-button @click="drawer = true" variant="success">open drawer</t-button>
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-bottom-sheet
+        :has-close-button="false"
+        teleport-to="#modal-content"
+        v-model="bottomSheet"
+        title="تست عنوان"
+      >
+        <!--        <template #closeButton="attrs">-->
+        <!--          <t-button v-bind="attrs">close</t-button>-->
+        <!--        </template>-->
+        <div>
+          <div class="h-96">hi</div>
+          <div class="h-96">bye</div>
+          <div class="h-96">تست</div>
+          <div class="text-gray-800 bg-gray-300">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است.
+          </div>
+        </div>
+      </t-bottom-sheet>
+      <t-button @click="bottomSheet = true" variant="warning"
+        >open bottomSheet</t-button
+      >
     </div>
 
     <div>
@@ -140,7 +194,7 @@
         >
           <template #label="{isChecked}">
             <div
-              class="px-4  py-2 border-2 rounded-xs"
+              class="px-4 py-2 border-2 rounded-xs"
               :class="{ 'border-success': isChecked }"
             >
               تست ۱
@@ -166,10 +220,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import TNumberPicker from "@/components/tailwind/numberPicker/TNumberPicker.vue";
 import TSwitch from "@/components/tailwind/switch/TSwitch.vue";
 import TCheckbox from "@/components/tailwind/checkbox/TCheckbox.vue";
@@ -178,9 +232,17 @@ import TRadio from "@/components/tailwind/radio/TRadio.vue";
 
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
+import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
+import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
+import TTabs from "@/components/tailwind/tab/TTabs.vue";
+import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTabItem,
+    TTabs,
+    TProgressBar,
+    TBottomSheet,
     TLoading,
     TDrawer,
     TRadio,
@@ -199,17 +261,25 @@ export default defineComponent({
     const radioModel2 = ref<Record<string, any> | string>("");
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
+    const bottomSheet = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
     };
-    watchEffect(() => {
-      console.log("switchModel", switchModel.value);
-      console.log("checkboxModel", checkboxModel.value);
+    // watchEffect(() => {
+    //   console.log("switchModel", switchModel.value);
+    //   console.log("checkboxModel", checkboxModel.value);
+    // });
+    // watchEffect(() => {
+    //   console.log("radioModel is : ", radioModel.value);
+    // });
+    const showLastTab = ref(false);
+    onMounted(() => {
+      setTimeout(() => {
+        showLastTab.value = true;
+      }, 1000);
     });
-    watchEffect(() => {
-      console.log("radioModel is : ", radioModel.value);
-    });
+
     return {
       numberPickerCount,
       switchModel,
@@ -218,7 +288,9 @@ export default defineComponent({
       modalCloseCallback,
       checkboxModel,
       radioModel,
-      radioModel2
+      radioModel2,
+      bottomSheet,
+      showLastTab
     };
   }
 });

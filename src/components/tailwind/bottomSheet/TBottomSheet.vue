@@ -5,24 +5,37 @@
       class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
       @click="close"
     ></div>
+
+    <!--    <div class="relative">-->
     <div
-      class="fixed top-0  bg-white transform duration-300"
+      class="fixed w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform"
       :class="[
         {
-          [left ? '-translate-x-full' : 'translate-x-full']: !modelValue,
-          [left ? 'rounded-r-md' : 'rounded-l-md']: rounded
+          'translate-y-full': !modelValue,
+          'duration-300': !isTouching,
+          'rounded-t-md': rounded
         },
-        left ? 'left-0' : 'right-0',
-        maxWidth
+        maxHeight.class,
+        $attrs.class
       ]"
+      :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
       <div
+        class="py-2"
+        :class="{ 'absolute right-1/2 transform translate-x-1/2': showHeader }"
+        v-bind="swipeEvents"
+      >
+        <div
+          class="bg-gray-300 mx-auto rounded-full h-1.5 w-20 cursor-pointer"
+        ></div>
+      </div>
+
+      <div
         v-if="showHeader"
-        :class="{ 'flex-row-reverse': left }"
-        class="px-4 h-12 rounded-inherit  py-4 leading-none flex justify-between items-center font-medium text-sm select-none"
+        class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
       >
         <div>
-          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+          <component :is="titleTag" v-if="showTitle"> {{ title }} </component>
           <template v-else>
             <slot name="title"></slot>
           </template>
@@ -39,19 +52,15 @@
           <slot name="closeButton" :onClick="close"></slot>
         </template>
       </div>
-      <div v-else class="h-2"></div>
-
       <div
-        class="overflow-y-auto scrollbar-sm p-4 max-h-screen bottom-sheet-content-container drawer-max-height"
-        :class="[{ 'drawer-height': showHeader, 'w-screen': full }]"
+        class="overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container"
+        :class="[{ 'bottom-sheet-height': showHeader }]"
+        :style="{ '--max-height': maxHeight.variable }"
       >
         <slot></slot>
       </div>
-      <div
-        :class="{ [left ? 'rounded-br-md' : 'rounded-bl-lg']: rounded }"
-        class="bg-white h-4 w-full"
-      ></div>
     </div>
+    <!--    </div>-->
   </teleport>
 </template>
 
@@ -59,10 +68,10 @@
 import { size } from "@/utility/css-helper";
 import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { useMaxWidth } from "@/compositionFunctions/maxSize";
+import { useSwipeDownToClose } from "@/compositionFunctions/swipe";
 type BooleanFunction = () => boolean;
 export default defineComponent({
-  name: "TDrawer",
+  name: "TBottomSheet",
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
@@ -97,7 +106,7 @@ export default defineComponent({
     maxSize: {
       type: String,
       default: () => {
-        return "full";
+        return "md";
       },
       validator: (propValue: string) => {
         return !!size[propValue];
@@ -110,10 +119,6 @@ export default defineComponent({
       }
     },
     full: {
-      type: Boolean,
-      default: () => false
-    },
-    left: {
       type: Boolean,
       default: () => false
     },
@@ -151,23 +156,45 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxWidth = useMaxWidth(props.maxSize);
+    const maxHeight = computed((): { class: string; variable: string } => {
+      switch (props.maxSize) {
+        case size.xs:
+          return { class: "max-h-1/4", variable: "25vh" };
+        case size.sm:
+          return { class: "max-h-1/2", variable: "50vh" };
+        case size.md:
+          return { class: "max-h-3/4", variable: "75vh" };
+        case size.lg:
+          return { class: "max-h-9/10", variable: "90vh" };
+        case size.full:
+          return { class: "max-h-full", variable: "100vh" };
+      }
+      return { class: "", variable: "" };
+    });
+
+    const { isTouching, swipeY, swipeEvents } = useSwipeDownToClose(close);
     return {
-      maxWidth,
+      isTouching,
+      swipeY,
+      swipeEvents,
+      maxHeight,
       close,
       showHeader,
       showCloseButton,
       showTitle,
-      isTeleportDisable
+      isTeleportDisable,
+      clickedItem: () => {
+        alert("item clicked");
+      }
     };
   }
 });
 </script>
 <style scoped lang="scss">
-.drawer-height {
-  height: calc(100vh - 4rem);
+.bottom-sheet-height {
+  height: calc(100% - 3.5rem);
 }
-.drawer-max-height {
-  max-height: calc(100vh - 2rem);
+.bottom-sheet-content-container {
+  max-height: calc(var(--max-height) - 3.5rem);
 }
 </style>

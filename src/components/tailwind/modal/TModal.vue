@@ -7,7 +7,7 @@
         @click="close"
       ></div>
       <div
-        class="fixed md:w-auto w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
+        class="fixed  w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
         :class="[maxWidth]"
       >
         <div>
@@ -52,6 +52,7 @@
 import { size } from "@/utility/css-helper";
 import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { useMaxWidth } from "@/compositionFunctions/maxSize";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TModal",
@@ -85,7 +86,7 @@ export default defineComponent({
     maxSize: {
       type: String,
       default: () => {
-        return "full";
+        return "lg";
       },
       validator: (propValue: string) => {
         return !!size[propValue];
@@ -135,21 +136,7 @@ export default defineComponent({
         !!slots.title
       );
     });
-    const maxWidth = computed((): string => {
-      switch (props.maxSize) {
-        case size.xs:
-          return "max-w-lg";
-        case size.sm:
-          return "max-w-xl";
-        case size.md:
-          return "max-w-2xl";
-        case size.lg:
-          return "max-w-3xl";
-        case size.full:
-          return "max-w-full";
-      }
-      return "";
-    });
+    const maxWidth = useMaxWidth(props.maxSize);
     return {
       maxWidth,
       close,
