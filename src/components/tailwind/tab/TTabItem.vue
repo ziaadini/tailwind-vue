@@ -1,6 +1,13 @@
 <template>
-  <div v-show="isActive">
-    <slot></slot>
+  <div :class="{ 'h-0 overflow-hidden': !isActive }">
+    <div
+      class="transform transition-all ease-in duration-500"
+      :class="{ 'opacity-0': !isActive }"
+    >
+      <!--      <template v-if="isActive">-->
+      <slot></slot>
+      <!--      </template>-->
+    </div>
   </div>
 </template>
 
@@ -16,8 +23,8 @@ export default defineComponent({
 
     watch(
       () => tabs.selectedIndex,
-      () => {
-        isActive.value = index.value === tabs.selectedIndex;
+      value => {
+        isActive.value = index.value === value;
       }
     );
 

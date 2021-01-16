@@ -1,8 +1,11 @@
 <template>
   <div>
     <div>#zia</div>
-    <t-tabs>
-      <t-tab-item title="تب اول">
+    <t-tabs v-model="tabs">
+<!--      <t-tab-item title="تب صفرم">-->
+<!--        <tab-item-child-test></tab-item-child-test>-->
+<!--      </t-tab-item>-->
+      <t-tab-item value="first-tab" title="تب اول">
         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
         از طراحان گرافیک است.
       </t-tab-item>
@@ -14,11 +17,11 @@
         زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل
         دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
       </t-tab-item>
-      <t-tab-item title="تب چهارم">
-        زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
-      </t-tab-item>
       <t-tab-item v-if="showLastTab" title="تب پنجم">
         برای تست resize
+      </t-tab-item>
+      <t-tab-item title="تب چهارم">
+        زمان مورد نیاز شامل حروفچینی دستامورد استفاده قرار گیرد.
       </t-tab-item>
     </t-tabs>
   </div>
@@ -220,7 +223,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, watchEffect } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref } from "vue";
@@ -236,9 +239,11 @@ import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
 import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
 import TTabs from "@/components/tailwind/tab/TTabs.vue";
 import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
+// import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    // TabItemChildTest,
     TTabItem,
     TTabs,
     TProgressBar,
@@ -273,14 +278,15 @@ export default defineComponent({
     // watchEffect(() => {
     //   console.log("radioModel is : ", radioModel.value);
     // });
-    const showLastTab = ref(false);
-    onMounted(() => {
-      setTimeout(() => {
-        showLastTab.value = true;
-      }, 1000);
+    const tabs = ref<number | string>("first-tab");
+    watchEffect(() => {
+      console.log("tabs", tabs.value);
     });
-
+    // setTimeout(() => {
+    //   tabs.value = 3;
+    // }, 1000);
     return {
+      tabs,
       numberPickerCount,
       switchModel,
       modal,
@@ -289,8 +295,7 @@ export default defineComponent({
       checkboxModel,
       radioModel,
       radioModel2,
-      bottomSheet,
-      showLastTab
+      bottomSheet
     };
   }
 });

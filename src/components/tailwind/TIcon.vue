@@ -1,5 +1,5 @@
 <template>
-  <i v-if="name" class="material-icons pl-1">
+  <i v-if="name" class="material-icons pl-1" :class="{'opacity-40':disabled}">
     {{ name }}
   </i>
 </template>
@@ -12,6 +12,10 @@ export default defineComponent({
     name: {
       type: String,
       default: ""
+    },
+    disabled: {
+      type: Boolean,
+      default: () => false
     }
   }
 });
