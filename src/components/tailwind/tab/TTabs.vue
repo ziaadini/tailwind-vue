@@ -22,7 +22,7 @@
               index === selectedIndex
           }"
         >
-          {{ tab.props.title }} - {{ index }}
+          {{ tab.props.title }}
         </button>
         <div ref="endItem" class="w-1 h-1 px-1"></div>
       </nav>
