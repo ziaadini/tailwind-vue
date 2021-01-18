@@ -93,6 +93,12 @@
       <div>#zia</div>
       <t-progress-bar :value="30"></t-progress-bar>
     </div>
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-toast
+        message="There are many variations of passages of Lorem Ipsum available, but the"
+      ></t-toast>
+    </div>
     <div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
@@ -232,6 +238,21 @@
       <div>#zia</div>
       <t-loading></t-loading>
     </div>
+    <div>
+      <div>#zia</div>
+      <t-toast v-model="toast1">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-toast>
+      <t-toast v-model="toast2">
+        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+        از طراحان گرافیک است.
+      </t-toast>
+      <t-button @click="toast1 = true">
+        show toast1
+      </t-button>
+      <t-button @click="toast2 = true">show toast2</t-button>
+    </div>
 
     <div>
       <div>#zia</div>
@@ -302,10 +323,12 @@ import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
 import TTabs from "@/components/tailwind/tab/TTabs.vue";
 import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 import TabItemChildTest from "@/components/TabItemChildTest.vue";
+import TToast from "@/components/tailwind/toast/TToast.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TToast,
     TabItemChildTest,
     // TabItemChildTest,
     TTabItem,
@@ -331,6 +354,8 @@ export default defineComponent({
     const modal = ref<boolean>(false);
     const drawer = ref<boolean>(false);
     const bottomSheet = ref<boolean>(false);
+    const toast1 = ref<boolean>(false);
+    const toast2 = ref<boolean>(false);
     const modalCloseCallback = () => {
       console.log("modal has been closed");
       return true;
@@ -351,6 +376,8 @@ export default defineComponent({
     //   tabs.value = 3;
     // }, 1000);
     return {
+      toast1,
+      toast2,
       customTab,
       tabs,
       numberPickerCount,
