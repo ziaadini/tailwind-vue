@@ -12,7 +12,22 @@
         class="flex  items-center flex-row max-w-full overflow-x-auto scrollbar-hidden"
       >
         <div ref="startItem" class="w-1 h-1 px-1"></div>
+        <template v-if="hasTitleSlot">
+          <div
+            v-for="(tab, index) in tabs"
+            :key="`${index}-${tab.props.title}`"
+            @click="selectTab(index, tab)"
+          >
+            <slot
+              name="title"
+              :selected="index === selectedIndex"
+              :title="tab.props.title"
+              v-bind="tab.props"
+            ></slot>
+          </div>
+        </template>
         <button
+          v-else
           class="text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none"
           v-for="(tab, index) in tabs"
           :key="`${index}-${tab.props.title}`"
@@ -138,6 +153,7 @@ export default defineComponent({
     );
 
     return {
+      hasTitleSlot: !!slots.title,
       startIntersecting,
       endIntersecting,
       startItem,
