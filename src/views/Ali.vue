@@ -1,5 +1,6 @@
 <template>
   <div class="flex justify-center">
+    
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   </div>
   <div class="flex items-center flex-col space-y-4">
@@ -73,6 +74,7 @@ import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue"
 export default defineComponent({
   name: "App",
   components: {
+    
     TButton,
     TMenu,
     TAlert,
@@ -82,6 +84,7 @@ export default defineComponent({
   },
   data() {
     return {
+     
       items: [
         {
           text: "تست۱",
