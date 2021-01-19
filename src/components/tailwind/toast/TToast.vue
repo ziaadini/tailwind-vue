@@ -1,21 +1,21 @@
 <template>
   <div
-    class="fixed w-max right-1/2 transform translate-x-1/2 transition-all text-white rounded-sm  p-2  max-w-full duration-1000"
+    class="fixed z-20 w-max right-1/2 transform translate-x-1/2 transition-all text-white ease-in-out rounded-sm max-w-9/10  p-2 duration-500"
     :class="[
       `bg-${variant}`,
       {
-        'bottom-10': modelValue,
-        '-bottom-full opacity-0': !modelValue
+        'bottom-10 scale-100 opacity-95': modelValue,
+        '-bottom-full opacity-0 scale-0': !modelValue
       }
     ]"
   >
-    <slot></slot>
+    <slot :close="close"></slot>
     {{ message }}
   </div>
 </template>
 
 <script>
-import { watchEffect, watch, ref } from "vue";
+import { watchEffect } from "vue";
 
 export default {
   name: "TToast",
@@ -46,6 +46,7 @@ export default {
         setTimeout(close, props.duration);
       }
     });
+    return { close };
   }
 };
 </script>
