@@ -3,6 +3,23 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   </div>
   <div class="flex items-center flex-col space-y-4">
+
+    <div class="w-full md:w-1/2">
+      <div>#zia</div>
+      <t-stepper></t-stepper>
+    </div>
+
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-progress-bar :value="30"></t-progress-bar>
+    </div>
+    <div class="w-60 my-2">
+      <div>#zia</div>
+      <t-toast
+        message="There are many variations of passages of Lorem Ipsum available, but the"
+      ></t-toast>
+    </div>
+
     <div>
       <div>#Ali</div>
       <t-button variant="warning" icon="accessible" outline disabled>
@@ -178,9 +195,31 @@ import TRadio from "@/components/tailwind/radio/TRadio.vue";
 
 import TDrawer from "@/components/tailwind/drawer/TDrawer.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
+<<<<<<< Updated upstream
 export default defineComponent({
   name: "App",
   components: {
+=======
+import TBottomSheet from "@/components/tailwind/bottomSheet/TBottomSheet.vue";
+import TProgressBar from "@/components/tailwind/progress/TProgressBar.vue";
+import TTabs from "@/components/tailwind/tab/TTabs.vue";
+import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
+import TabItemChildTest from "@/components/TabItemChildTest.vue";
+import TToast from "@/components/tailwind/toast/TToast.vue";
+import TStepper from "@/components/tailwind/stepper/TStepper.vue";
+// import TabItemChildTest from "@/components/TabItemChildTest.vue";
+export default defineComponent({
+  name: "App",
+  components: {
+    TStepper,
+    TToast,
+    TabItemChildTest,
+    // TabItemChildTest,
+    TTabItem,
+    TTabs,
+    TProgressBar,
+    TBottomSheet,
+>>>>>>> Stashed changes
     TLoading,
     TDrawer,
     TRadio,
