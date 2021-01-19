@@ -2,23 +2,70 @@
   <div class="mx-4 p-4">
     <div class="flex items-center">
       <template v-for="(item, index) in items" :key="`stepper-item-${index}`">
-        <div class="flex items-center text-teal-600 relative">
+        <div
+          class="flex items-center text-gray-400 relative"
+          :class="{ 'cursor-pointer': clickable }"
+          @click="onItemClicked({ item, index })"
+        >
+          <template v-if="hasCircleSlot">
+            <slot
+              name="circle"
+              :isActive="isActive(index)"
+              :isComplete="isComplete(index)"
+              v-bind="item"
+              :index="index"
+            ></slot>
+          </template>
           <div
-            class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600"
+            v-else
+            class="flex items-center justify-center rounded-full transition-all duration-500 ease-in-out h-12 w-12 py-3 border-2"
+            :class="
+              isComplete(index) || isActive(index)
+                ? `border-${variant} text-${variant}`
+                : 'border-gray-400'
+            "
           >
-            {{ item.label }}
+            <template v-if="hasLabelSlot">
+              <slot
+                name="label"
+                :isActive="isActive(index)"
+                :isComplete="isComplete(index)"
+                v-bind="item"
+                :index="index"
+              ></slot>
+            </template>
+            <template v-else>
+              {{ item.label || "" }}
+            </template>
           </div>
           <div
-            class="absolute  right-1/2 transform translate-x-1/2 text-center mt-16 text-xs font-medium  text-teal-600"
+            v-if="item.text"
+            class="absolute right-1/2 transform translate-x-1/2 text-center mt-16 text-xs text-gray-500"
           >
-            <div class="mt-4">
-              {{ item.text }}
-            </div>
+            <template v-if="hasTextSlot">
+              <slot
+                name="text"
+                :isActive="isActive(index)"
+                :isComplete="isComplete(index)"
+                v-bind="item"
+                :index="index"
+              ></slot>
+            </template>
+            <template v-else>
+              <div class="mt-4">
+                {{ item.text }}
+              </div>
+            </template>
           </div>
         </div>
         <template v-if="index !== items.length - 1">
           <div
-            class="flex-auto border-t-2 transition duration-500 ease-in-out border-teal-600"
+            class="flex-auto h-0.5 transition-all duration-400 ease-in-out"
+            :class="
+              isComplete(index + 1) || isActive(index + 1)
+                ? `bg-${variant}`
+                : 'bg-gray-400'
+            "
           ></div>
         </template>
       </template>
@@ -27,7 +74,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType, watchEffect } from "vue";
+import { variants } from "@/utility/css-helper";
 
 export default defineComponent({
   name: "TStepper",
@@ -35,21 +83,58 @@ export default defineComponent({
     modelValue: { type: [String, Number], default: 0 },
     items: {
       type: Array as PropType<Array<{ [key: string]: string }>>,
-      default: () => [
-        { label: "p", text: "personal" },
-        { label: "t", text: "tailwind", value: "t" },
-        { label: "v", text: "vue" }
-      ]
+      default: () => []
+    },
+    variant: {
+      type: String,
+      default: "primary",
+      validator: (propValue: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return !!variants[propValue];
+      }
+    },
+    clickable: {
+      type: Boolean,
+      default: () => false
     }
   },
-  setup(props) {
-    const activeIndex = computed(() => {
+  setup(props, { slots, emit }) {
+    const activeIndex = computed((): number => {
       const index = props.items.findIndex(
         item => item.value === props.modelValue
       );
-      return index === -1 ? props.modelValue : index;
+      if (index != -1) {
+        return index;
+      } else if (typeof props.modelValue === "number") {
+        return props.modelValue;
+      } else {
+        return -1;
+      }
     });
-    return {activeIndex}
+    watchEffect(() => {
+      console.log("activeIndex", activeIndex.value);
+      console.log("modelValue", props.modelValue);
+    });
+    const isActive = computed(() => (index): boolean => {
+      return index === activeIndex.value;
+    });
+
+    const isComplete = computed(() => (index): boolean => {
+      return index < activeIndex.value;
+    });
+    const onItemClicked = ({ item, index }) => {
+      props.clickable && emit("update:modelValue", item.value ?? index);
+    };
+    return {
+      onItemClicked,
+      activeIndex,
+      isActive,
+      isComplete,
+      hasLabelSlot: !!slots.label,
+      hasCircleSlot: !!slots.circle,
+      hasTextSlot: !!slots.text
+    };
   }
 });
 </script>

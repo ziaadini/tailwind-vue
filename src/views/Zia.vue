@@ -91,7 +91,19 @@
   <div class="flex items-center flex-col space-y-4">
     <div class="w-full md:w-1/2">
       <div>#zia</div>
-      <t-stepper></t-stepper>
+      <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
+      <div class="my-2">
+        <div class="mb-1">custom stepper</div>
+        <t-stepper v-model="stepper" :items="stepperItems" clickable>
+          <template #label="{isComplete,isActive}">
+            <div v-if="isComplete" class="mt-1 mr-1"><t-icon name="check"></t-icon></div>
+            <div v-else-if="isActive">
+              <div class="w-4 h-4 bg-primary-400 rounded-full"></div>
+            </div>
+            <div v-else class="mt-1 mr-1"><t-icon name="lock"></t-icon></div>
+          </template>
+        </t-stepper>
+      </div>
     </div>
 
     <div class="w-60 my-2">
@@ -329,10 +341,12 @@ import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 import TabItemChildTest from "@/components/TabItemChildTest.vue";
 import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
+import TIcon from "@/components/tailwind/TIcon.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TIcon,
     TStepper,
     TToast,
     TabItemChildTest,
@@ -381,7 +395,15 @@ export default defineComponent({
     // setTimeout(() => {
     //   tabs.value = 3;
     // }, 1000);
+    const stepper = ref(1);
+    const stepperItems = [
+      { label: "p", text: "personal" },
+      { label: "t", text: "tailwind", value: "t" },
+      { label: "v", text: "vue" }
+    ];
     return {
+      stepper,
+      stepperItems,
       toast1,
       toast2,
       customTab,
