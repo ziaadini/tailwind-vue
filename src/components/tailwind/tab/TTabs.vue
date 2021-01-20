@@ -1,21 +1,37 @@
 <template>
   <div class="flex flex-col items-center space-y-4">
-    <div
-      class="flex flex-1 max-w-full row items-center space-x-reverse space-x-0.5"
-    >
+    <div class="flex max-w-full row items-center">
       <div v-if="showArrows" @click="onScrollRight">
-        <t-icon name="keyboard_arrow_right"></t-icon>
+        <t-icon
+          :disabled="startIntersecting"
+          name="keyboard_arrow_right"
+        ></t-icon>
       </div>
       <nav
-        :key="tabsLength"
         ref="navRef"
-        class="flex flex-1 items-center flex-row max-w-full overflow-x-auto scrollbar-hidden"
+        class="flex  items-center flex-row max-w-full overflow-x-auto scrollbar-hidden"
       >
+        <div ref="startItem" class="w-1 h-1 px-1"></div>
+        <template v-if="hasTitleSlot">
+          <div
+            v-for="(tab, index) in tabs"
+            :key="`${index}-${tab.props.title}`"
+            @click="selectTab(index, tab)"
+          >
+            <slot
+              name="title"
+              :selected="index === selectedIndex"
+              :title="tab.props.title"
+              v-bind="tab.props"
+            ></slot>
+          </div>
+        </template>
         <button
-          class="text-gray-600 min-w-max py-4 px-6 block hover:text-blue-500 focus:outline-none"
+          v-else
+          class="text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none"
           v-for="(tab, index) in tabs"
           :key="`${index}-${tab.props.title}`"
-          @click="selectTab(index)"
+          @click="selectTab(index, tab)"
           :class="{
             'text-blue-500 border-b-2 font-medium border-blue-500':
               index === selectedIndex
@@ -23,12 +39,15 @@
         >
           {{ tab.props.title }}
         </button>
+        <div ref="endItem" class="w-1 h-1 px-1"></div>
       </nav>
       <div v-if="showArrows" @click="onScrollLeft">
-        <t-icon name="keyboard_arrow_left"></t-icon>
+        <t-icon :disabled="endIntersecting" name="keyboard_arrow_left"></t-icon>
       </div>
     </div>
-    <slot></slot>
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -36,33 +55,33 @@
 import {
   computed,
   defineComponent,
-  onBeforeMount,
-  onMounted,
   provide,
   reactive,
   toRefs,
   VNode,
-  onUpdated,
-  watch,
-  watchEffect
+  watchEffect,
+  watch
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import TIcon from "@/components/tailwind/TIcon.vue";
+import { useIntersectElement } from "@/compositionFunctions/intersect";
 
 interface TabProps {
   title: string;
+  value?: string | number;
 }
 
 export default defineComponent({
   name: "TTabs",
   components: { TIcon },
   props: {
+    modelValue: { type: [String, Number], default: 0 },
     arrows: {
       type: Boolean,
       default: true
     }
   },
-  setup(props, { slots }) {
+  setup(props, { slots, emit }) {
     const state = reactive({
       selectedIndex: 0,
       tabs: [] as VNode<TabProps>[],
@@ -71,8 +90,8 @@ export default defineComponent({
 
     provide("TabsProvider", state);
 
-    const selectTab = (i: number) => {
-      state.selectedIndex = i;
+    const selectTab = (i: number, tab) => {
+      emit("update:modelValue", tab.props.value || i);
     };
     const renderChildren = () => {
       if (slots.default) {
@@ -81,6 +100,14 @@ export default defineComponent({
           //@ts-ignore
           return child.type.name === "TTabItem";
         });
+        const selectedIndex = state.tabs.findIndex(
+          item => item?.props?.value === props.modelValue
+        );
+        if (selectedIndex !== -1) {
+          state.selectedIndex = selectedIndex;
+        } else if (typeof props.modelValue === "number") {
+          state.selectedIndex = props.modelValue;
+        }
       }
     };
     watchEffect(() => {
@@ -88,28 +115,50 @@ export default defineComponent({
     });
     const tabsLength = computed(() => state.tabs.length);
 
-    onMounted(() => {
-      selectTab(0);
-    });
+    watch(
+      () => tabsLength.value,
+      (value, oldValue) => {
+        console.warn(
+          "t-tabs : change tabs length is not allowed",
+          `from: ${oldValue} to: ${value}`
+        );
+      }
+    );
 
-    const {
-      elementRef: navRef,
-      scrollLeft,
-      scrollRight,
-      hasHorizontalScrollbar
-    } = useScrollElement();
+    const { elementRef: navRef, scrollLeft, scrollRight } = useScrollElement();
     const onScrollLeft = () => {
-      scrollLeft(50, 200);
+      scrollLeft(navRef.value.clientWidth, 200);
     };
     const onScrollRight = () => {
-      scrollRight(50, 200);
+      scrollRight(navRef.value.clientWidth, 200);
     };
+    const {
+      elementRef: startItem,
+      isIntersecting: startIntersecting
+    } = useIntersectElement({
+      passRef: true,
+      root: navRef.value
+    });
+    const {
+      elementRef: endItem,
+      isIntersecting: endIntersecting
+    } = useIntersectElement({
+      passRef: true,
+      root: navRef.value
+    });
+
     const showArrows = computed(
-      () => props.arrows && hasHorizontalScrollbar.value
+      () =>
+        props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
     );
+
     return {
+      hasTitleSlot: !!slots.title,
+      startIntersecting,
+      endIntersecting,
+      startItem,
+      endItem,
       ...toRefs(state),
-      tabsLength,
       selectTab,
       onScrollLeft,
       onScrollRight,

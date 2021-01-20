@@ -31,13 +31,7 @@
             [childClass]: true,
             'rounded-b-md': index + 1 === items.length && rounded,
           }"
-          @click="selectItem(item.value)"
-        >
-          {{ item.label }}
-        </div>
         <hr v-if="getItems.length !== index + 1" />
-      </template>
-    </div>
   </div>
 </template>
 

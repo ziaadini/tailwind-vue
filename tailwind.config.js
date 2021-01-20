@@ -15,7 +15,12 @@ module.exports = {
           /border-primary(-50)?$/,
           /border-danger(-50)?$/,
           /border-warning(-50)?$/,
-          /border-success(-50)?$/
+          /border-success(-50)?$/,
+          /text-primary/,
+          /text-danger/,
+          /text-warning/,
+          /text-success/,
+          /text-white/
         ],
         keyframes: true,
         fontFace: true
