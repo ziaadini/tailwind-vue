@@ -40,7 +40,6 @@
     "sass-loader": "^10.1.0",
     "tailwind-config-viewer": "^1.4.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "tailwindcss-tooltip-arrow-after": "^1.0.0",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
   }
