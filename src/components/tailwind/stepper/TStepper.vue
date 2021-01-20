@@ -4,7 +4,10 @@
       <template v-for="(item, index) in items" :key="`stepper-item-${index}`">
         <div
           class="flex items-center text-gray-400 relative"
-          :class="{ 'cursor-pointer': clickable }"
+          :class="{
+            'cursor-pointer': clickable && !item.locked,
+            'cursor-not-allowed': item.locked
+          }"
           @click="onItemClicked({ item, index })"
         >
           <template v-if="hasCircleSlot">
@@ -124,7 +127,9 @@ export default defineComponent({
       return index < activeIndex.value;
     });
     const onItemClicked = ({ item, index }) => {
-      props.clickable && emit("update:modelValue", item.value ?? index);
+      props.clickable &&
+        !item.locked &&
+        emit("update:modelValue", item.value ?? index);
     };
     return {
       onItemClicked,

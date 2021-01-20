@@ -96,7 +96,9 @@
         <div class="mb-1">custom stepper</div>
         <t-stepper v-model="stepper" :items="stepperItems" clickable>
           <template #label="{isComplete,isActive}">
-            <div v-if="isComplete" class="mt-1 mr-1"><t-icon name="check"></t-icon></div>
+            <div v-if="isComplete" class="mt-1 mr-1">
+              <t-icon name="check"></t-icon>
+            </div>
             <div v-else-if="isActive">
               <div class="w-4 h-4 bg-primary-400 rounded-full"></div>
             </div>
@@ -399,7 +401,7 @@ export default defineComponent({
     const stepperItems = [
       { label: "p", text: "personal" },
       { label: "t", text: "tailwind", value: "t" },
-      { label: "v", text: "vue" }
+      { label: "v", text: "vue", locked: true }
     ];
     return {
       stepper,
