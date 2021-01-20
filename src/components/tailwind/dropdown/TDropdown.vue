@@ -31,7 +31,13 @@
             [childClass]: true,
             'rounded-b-md': index + 1 === items.length && rounded,
           }"
-        <hr v-if="getItems.length !== index + 1" />
+          <hr
+          key=""
+          v-if="getItems.length !== index + 1"
+        />
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
