@@ -88,13 +88,15 @@
     </t-tabs>
   </div>
 
+  <div>
+    <div>#zia</div>
+    <t-tooltip></t-tooltip>
+  </div>
+
   <div class="flex items-center flex-col space-y-4">
     <div class="w-full md:w-1/2">
       <div>#zia</div>
-      <t-stepper
-        v-model="stepper"
-        :items="stepperItems"
-      ></t-stepper>
+      <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
       <div class="my-2">
         <div class="mb-1">custom stepper</div>
         <t-stepper v-model="stepper" :items="stepperItems" clickable>
@@ -347,10 +349,12 @@ import TabItemChildTest from "@/components/TabItemChildTest.vue";
 import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
 import TIcon from "@/components/tailwind/TIcon.vue";
+import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTooltip,
     TIcon,
     TStepper,
     TToast,

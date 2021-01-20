@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
@@ -152,7 +153,16 @@ module.exports = {
         large: "32px",
         full: "9999px"
       }
-    }
+    },
+    // tooltipArrows: theme => ({
+    //   "danger-arrow": {
+    //     borderColor: theme("colors.red.400"),
+    //     borderWidth: 1,
+    //     backgroundColor: theme("colors.red.200"),
+    //     size: 10,
+    //     offset: 10
+    //   }
+    // })
   },
   variants: {
     extend: {
@@ -162,5 +172,6 @@ module.exports = {
       ringWidth: ["hover"]
     }
   },
-  plugins: []
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // plugins: [require("tailwindcss-tooltip-arrow-after")()]
 };
