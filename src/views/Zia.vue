@@ -88,14 +88,7 @@
     </t-tabs>
   </div>
 
-
   <div class="flex items-center flex-col space-y-4">
-    <div>
-      <div>#zia</div>
-      <t-tooltip>
-        <t-button variant="danger" outline ripple>hover on me</t-button>
-      </t-tooltip>
-    </div>
     <div class="w-full md:w-1/2">
       <div>#zia</div>
       <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
@@ -109,13 +102,21 @@
             <div v-else-if="isActive">
               <div class="w-4 h-4 bg-primary-400 rounded-full"></div>
             </div>
-            <div v-else class="mt-1 mr-1"><t-icon name="lock"></t-icon></div>
+            <div v-else class="mt-1 mr-1">
+              <t-icon name="lock"></t-icon>
+            </div>
           </template>
         </t-stepper>
       </div>
     </div>
 
-    <div class="w-60 my-2">
+    <div>
+      <div>#zia</div>
+      <t-tooltip variant="danger" position="right">
+        <t-button variant="danger" outline ripple>hover on me</t-button>
+      </t-tooltip>
+    </div>
+    <div class="w-60">
       <div>#zia</div>
       <t-progress-bar :value="30"></t-progress-bar>
     </div>
@@ -215,8 +216,8 @@
         </div>
       </t-bottom-sheet>
       <t-button @click="bottomSheet = true" variant="warning"
-        >open bottomSheet</t-button
-      >
+        >open bottomSheet
+      </t-button>
     </div>
 
     <div>
@@ -257,7 +258,7 @@
     </div>
     <div class="w-full">
       <div>#zia</div>
-      <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+      <t-skeleton type="card" class="max-w-sm"></t-skeleton>
     </div>
 
     <div>
@@ -352,6 +353,7 @@ import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
 import TIcon from "@/components/tailwind/TIcon.vue";
 import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
+import set = Reflect.set;
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
