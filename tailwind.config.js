@@ -152,17 +152,14 @@ module.exports = {
         lg: "26px",
         large: "32px",
         full: "9999px"
+      },
+      borderRightColor: {
+        transparent: "transparent"
+      },
+      borderLeftColor: {
+        transparent: "transparent"
       }
-    },
-    // tooltipArrows: theme => ({
-    //   "danger-arrow": {
-    //     borderColor: theme("colors.red.400"),
-    //     borderWidth: 1,
-    //     backgroundColor: theme("colors.red.200"),
-    //     size: 10,
-    //     offset: 10
-    //   }
-    // })
+    }
   },
   variants: {
     extend: {
@@ -172,6 +169,5 @@ module.exports = {
       ringWidth: ["hover"]
     }
   },
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  // plugins: [require("tailwindcss-tooltip-arrow-after")()]
+  plugins: []
 };

@@ -88,12 +88,14 @@
     </t-tabs>
   </div>
 
-  <div>
-    <div>#zia</div>
-    <t-tooltip></t-tooltip>
-  </div>
 
   <div class="flex items-center flex-col space-y-4">
+    <div>
+      <div>#zia</div>
+      <t-tooltip>
+        <t-button variant="danger" outline ripple>hover on me</t-button>
+      </t-tooltip>
+    </div>
     <div class="w-full md:w-1/2">
       <div>#zia</div>
       <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
