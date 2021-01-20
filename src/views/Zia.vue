@@ -91,7 +91,10 @@
   <div class="flex items-center flex-col space-y-4">
     <div class="w-full md:w-1/2">
       <div>#zia</div>
-      <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
+      <t-stepper
+        v-model="stepper"
+        :items="stepperItems"
+      ></t-stepper>
       <div class="my-2">
         <div class="mb-1">custom stepper</div>
         <t-stepper v-model="stepper" :items="stepperItems" clickable>
@@ -397,7 +400,7 @@ export default defineComponent({
     // setTimeout(() => {
     //   tabs.value = 3;
     // }, 1000);
-    const stepper = ref(1);
+    const stepper = ref("t");
     const stepperItems = [
       { label: "p", text: "personal" },
       { label: "t", text: "tailwind", value: "t" },

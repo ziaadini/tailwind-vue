@@ -1,7 +1,7 @@
 # t-tab props
 | Props | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
-| v-model | Array, String, Number, Boolean, Object | - | v-model supported with input |
+| v-model |  String, Number, Boolean | - | v-model supported with input |
 | arrows | Boolean | true | show arrows when scrolling |
 
 # t-tab-item props

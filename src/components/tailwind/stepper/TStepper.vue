@@ -38,11 +38,11 @@
               ></slot>
             </template>
             <template v-else>
-              {{ item.label || "" }}
+              {{ item[label] || "" }}
             </template>
           </div>
           <div
-            v-if="item.text"
+            v-if="item[text]"
             class="absolute right-1/2 transform translate-x-1/2 text-center mt-16 text-xs text-gray-500"
           >
             <template v-if="hasTextSlot">
@@ -56,7 +56,7 @@
             </template>
             <template v-else>
               <div class="mt-4">
-                {{ item.text }}
+                {{ item[text] }}
               </div>
             </template>
           </div>
@@ -88,6 +88,9 @@ export default defineComponent({
       type: Array as PropType<Array<{ [key: string]: string }>>,
       default: () => []
     },
+    label: { type: String, default: "label" },
+    value: { type: String, default: "value" },
+    text: { type: String, default: "text" },
     variant: {
       type: String,
       default: "primary",
@@ -105,7 +108,7 @@ export default defineComponent({
   setup(props, { slots, emit }) {
     const activeIndex = computed((): number => {
       const index = props.items.findIndex(
-        item => item.value === props.modelValue
+        item => item[props.value] === props.modelValue
       );
       if (index != -1) {
         return index;
@@ -129,7 +132,7 @@ export default defineComponent({
     const onItemClicked = ({ item, index }) => {
       props.clickable &&
         !item.locked &&
-        emit("update:modelValue", item.value ?? index);
+        emit("update:modelValue", item[props.value] ?? index);
     };
     return {
       onItemClicked,
