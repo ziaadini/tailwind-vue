@@ -1,21 +1,28 @@
 <template>
-  <div class="relative">
+  <div class="relative" ref="dropdownRef">
+    <!-- <button
+      class="fixed inset-0 h-full w-full cursor-default focus:outline-none"
+      v-if="state.opened"
+      @click="openClose(false)"
+      tabindex="-1"
+    ></button> -->
+    {{ state }}
     <div
       class="cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="{
-        'rounded-full': rounded && !open,
-        'rounded-md': rounded && open,
-        'rounded-b-none': rounded && open,
+        'rounded-full': rounded && !opened,
+        'rounded-md': rounded && opened,
+        'rounded-b-none': rounded && opened,
         [parentClass]: true,
       }"
-      @click="open = !open"
+      @click="openClose(true)"
     >
-      {{ selected?.label || placeholder }}
+      {{ selectedItem.label || placeholder }}
     </div>
     <div
-      v-show="open"
-      :class="{ 'opacity-0': !open, 'rounded-b-md': rounded }"
-      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute z-20 bg-white shadow"
+      v-show="opened"
+      :class="{ 'opacity-0': !opened, 'rounded-b-md': rounded }"
+      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
@@ -24,6 +31,7 @@
             [childClass]: true,
             'rounded-b-md': index + 1 === items.length && rounded,
           }"
+          @click="selectItem(item.value)"
         >
           {{ item.label }}
         </div>
@@ -35,8 +43,20 @@
 
 <script lang="ts">
 import { variants } from "@/utility/css-helper";
-import { defineComponent, PropType } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  toRefs,
+  watch,
+  watchEffect,
+} from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
+import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { useClickOutside } from "@/compositionFunctions/clickEvents";
 export default defineComponent({
   props: {
     variant: {
@@ -71,26 +91,59 @@ export default defineComponent({
       default: [],
       type: Array as PropType<DropDown.Root>,
     },
+    opened: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
-  data() {
-    return {
-      open: false,
-      selected: null,
-    };
-  },
-  setup(props) {
+  setup(props, { emit }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
     const outlineClass = `border-${props.variant} hover:bg-${props.variant}-50 hover:shadow`;
     const childClass = `bg-${props.variant}-100 hover:bg-${props.variant}-200 hover:text-white focus:border-${props.variant} transition`;
 
-    const itemFactory = (items: DropDown.Root) => {
-      if (!items || items.length === 0) return [];
+    const state = reactive({
+      selected: null as any,
+    });
+
+    const {
+      clickedOutside,
+      elementRef: dropdownRef,
+      registerEvent,
+      unRegisterEvent,
+    } = useClickOutside();
+
+    const { modelValue, items, opened } = toRefs(props);
+
+    watchEffect(() => {
+      if (opened.value) {
+        registerEvent();
+      } else {
+        unRegisterEvent();
+      }
+    });
+
+    watch(clickedOutside, (value) => {
+      console.log("watch clickoutside", value);
+      if (value) emit("update:opened", false);
+    });
+
+    const onEscape = (e: any) => {
+      if (e.key === "Esc" || e.key === "Escape") {
+        emit("update:opened", false);
+      }
+    };
+
+    useKeyDown(onEscape);
+
+    const itemFactory = computed(() => {
+      if (!items.value || items.value.length === 0) return [];
 
       const newItems = [] as DropDown.ObjectForm[];
-      const type = typeof items[0];
+      const type = typeof items.value[0];
 
       if (type === "string") {
-        (items as DropDown.stringForm).forEach((item) => {
+        (items.value as DropDown.stringForm).forEach((item) => {
           newItems.push({
             label: item,
             value: item,
@@ -101,20 +154,45 @@ export default defineComponent({
       }
 
       return newItems;
+    });
+
+    const selectItem = (value) => {
+      emit("update:opened", false);
+      state.selected = value;
+      emit("update:modelValue", value);
     };
 
+    const selectedItem = computed(() => {
+      return (
+        itemFactory.value.find((e) => e.value === state.selected) || {
+          label: false,
+        }
+      );
+    });
+
+    watch(modelValue, (value) => {
+      if (value !== state.selected) state.selected = value;
+    });
+
+    const openClose = (value = null as any) => {
+      console.log("openclose called", value);
+      if (value !== null) {
+        emit("update:opened", value);
+      } else {
+        emit("update:opened", !opened.value);
+      }
+    };
 
     return {
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
-      getItems: itemFactory(props.items),
+      getItems: itemFactory,
+      openClose,
+      selectItem,
+      selectedItem,
+      state,
+      dropdownRef,
     };
-  },
-  methods: {
-    selectItem(item: any): void {
-      this.selected = item;
-      this.open = !this.open;
-    },
   },
 });
 </script>

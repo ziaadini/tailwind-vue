@@ -154,9 +154,22 @@
   <h6>
     DROPDOWN
   </h6>
-
+  {{ dropdownModel }}
+  <div ref="triggerDropdown">
+    <t-button
+      ripple
+      variant="warning"
+      icon="bookmarks"
+      @click="dropdownOpened = !dropdownOpened"
+      >trigger dropdown</t-button
+    >
+  </div>
+  dropdownOpened:
+  {{ dropdownOpened }}
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
+      v-model="dropdownModel"
+      v-model:opened="dropdownOpened"
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
@@ -184,7 +197,13 @@ export default defineComponent({
   data() {
     return {
       text: "",
+      dropdownModel: "",
+      dropdownTriggerRef: "" as any,
+      dropdownOpened: false,
     };
+  },
+  mounted() {
+    this.dropdownTriggerRef = this.$refs.triggerDropdown;
   },
 });
 </script>

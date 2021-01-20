@@ -39,14 +39,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  data() {
-    return {
-      open: false,
-    };
-  },
   props: {
     placement: {
       type: String,
@@ -64,18 +60,19 @@ export default defineComponent({
       type: Boolean,
     },
   },
-  methods: {
-    onEscape(e) {
+  setup() {
+    const open = ref(false);
+
+    const onEscape = (e) => {
       if (e.key === "Esc" || e.key === "Escape") {
-        this.open = false;
+        open.value = false;
       }
-    },
-  },
-  mounted() {
-    document.addEventListener("keydown", this.onEscape);
-  },
-  beforeUnmount() {
-    document.removeEventListener("keydown", this.onEscape);
+    };
+    useKeyDown(onEscape);
+
+    return {
+      open,
+    };
   },
 });
 </script>
