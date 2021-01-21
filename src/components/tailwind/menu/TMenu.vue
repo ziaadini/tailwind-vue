@@ -1,9 +1,13 @@
 <template>
-  <div class="relative">
+  <div
+    class="relative"
+    @mouseenter="hover && openClose(true)"
+    @mouseleave="hover && openClose(false)"
+  >
     <div
       ref="menuRef"
       class=" relative flex items-center focus:outline-none min-w-full "
-      @click="!disabled && (open = !open)"
+      @click="openClose"
     >
       <slot name="button"></slot>
     </div>
@@ -54,8 +58,13 @@ export default defineComponent({
       default: false,
       type: Boolean,
     },
+    hover: {
+      type: Boolean,
+      default: false,
+      required: false,
+    }
   },
-  setup() {
+  setup(props) {
     const open = ref(false);
 
     const {
@@ -87,9 +96,17 @@ export default defineComponent({
       }
     });
 
+    const openClose = (value = null as any) => {
+      console.log("open close", value);
+      if (!props.disabled) {
+        open.value = value !== null ? value : !open.value;
+      }
+    };
+
     return {
       open,
-      menuRef
+      menuRef,
+      openClose,
     };
   },
 });
