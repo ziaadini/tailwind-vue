@@ -197,7 +197,6 @@ export default defineComponent({
   data() {
     return {
       text: "",
-<<<<<<< HEAD
       dropdownModel: "",
       dropdownTriggerRef: "" as any,
       dropdownOpened: false,
@@ -206,9 +205,5 @@ export default defineComponent({
   mounted() {
     this.dropdownTriggerRef = this.$refs.triggerDropdown;
   },
-=======
-    };
-  },
->>>>>>> main/master
 });
 </script>
