@@ -1,19 +1,13 @@
 <template>
   <div class="relative">
     <div
+      ref="menuRef"
       class=" relative flex items-center focus:outline-none min-w-full "
       @click="!disabled && (open = !open)"
     >
       <slot name="button"></slot>
     </div>
 
-    <!-- to close when clicked on space around it-->
-    <button
-      class="fixed inset-0 h-full w-full cursor-default focus:outline-none"
-      v-if="open"
-      @click="open = false"
-      tabindex="-1"
-    ></button>
     <!--dropdown menu-->
     <transition
       enter-active-class="transition-all duration-200 ease-out"
@@ -39,8 +33,9 @@
 </template>
 
 <script lang="ts">
+import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
   props: {
@@ -63,6 +58,13 @@ export default defineComponent({
   setup() {
     const open = ref(false);
 
+    const {
+      clickedOutside,
+      elementRef: menuRef,
+      registerEvent,
+      unRegisterEvent,
+    } = useClickOutside();
+
     const onEscape = (e) => {
       if (e.key === "Esc" || e.key === "Escape") {
         open.value = false;
@@ -70,8 +72,24 @@ export default defineComponent({
     };
     useKeyDown(onEscape);
 
+    watch(clickedOutside, (value) => {
+      console.log("watch clickoutside", value);
+      if (value) {
+        open.value = false;
+      }
+    });
+
+    watchEffect(() => {
+      if (open.value) {
+        registerEvent();
+      } else {
+        unRegisterEvent();
+      }
+    });
+
     return {
       open,
+      menuRef
     };
   },
 });
