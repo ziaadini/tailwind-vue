@@ -1,27 +1,21 @@
 <template>
   <div class="relative" ref="dropdownRef">
-    <!-- <button
-      class="fixed inset-0 h-full w-full cursor-default focus:outline-none"
-      v-if="state.opened"
-      @click="openClose(false)"
-      tabindex="-1"
-    ></button> -->
-    {{ state }}
     <div
       class="cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="{
-        'rounded-full': rounded && !opened,
-        'rounded-md': rounded && opened,
-        'rounded-b-none': rounded && opened,
+        'rounded-full': rounded && !state.opened,
+        'rounded-md': rounded && state.opened,
+        'rounded-b-none': rounded && state.opened,
         [parentClass]: true,
       }"
       @click="openClose(true)"
     >
       {{ selectedItem.label || placeholder }}
     </div>
+
     <div
-      v-show="opened"
-      :class="{ 'opacity-0': !opened, 'rounded-b-md': rounded }"
+      v-show="state.opened"
+      :class="{ 'opacity-0': !state.opened, 'rounded-b-md': rounded }"
       class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
@@ -31,11 +25,10 @@
             [childClass]: true,
             'rounded-b-md': index + 1 === items.length && rounded,
           }"
-          <hr
-          key=""
-          v-if="getItems.length !== index + 1"
-        />
+        >
+          {{ item.label }}
         </div>
+        <hr v-if="getItems.length !== index + 1" />
       </template>
     </div>
   </div>
@@ -46,9 +39,9 @@ import { variants } from "@/utility/css-helper";
 import {
   computed,
   defineComponent,
-  onMounted,
   PropType,
   reactive,
+  onMounted,
   ref,
   toRefs,
   watch,
@@ -63,8 +56,6 @@ export default defineComponent({
       type: String,
       default: "primary",
       validator: (propValue: string) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         return !!variants[propValue];
       },
     },
@@ -104,6 +95,7 @@ export default defineComponent({
 
     const state = reactive({
       selected: null as any,
+      opened: props.opened,
     });
 
     const {
@@ -115,22 +107,18 @@ export default defineComponent({
 
     const { modelValue, items, opened } = toRefs(props);
 
-    watchEffect(() => {
-      if (opened.value) {
-        registerEvent();
-      } else {
-        unRegisterEvent();
-      }
-    });
-
     watch(clickedOutside, (value) => {
       console.log("watch clickoutside", value);
-      if (value) emit("update:opened", false);
+      if (value) {
+        emit("update:opened", false);
+        state.opened = false;
+      }
     });
 
     const onEscape = (e: any) => {
       if (e.key === "Esc" || e.key === "Escape") {
         emit("update:opened", false);
+        state.opened = false;
       }
     };
 
@@ -157,6 +145,7 @@ export default defineComponent({
     });
 
     const selectItem = (value) => {
+      state.opened = false;
       emit("update:opened", false);
       state.selected = value;
       emit("update:modelValue", value);
@@ -177,11 +166,22 @@ export default defineComponent({
     const openClose = (value = null as any) => {
       console.log("openclose called", value);
       if (value !== null) {
+        state.opened = value;
         emit("update:opened", value);
       } else {
+        state.opened = !opened.value;
         emit("update:opened", !opened.value);
       }
     };
+
+    watchEffect(() => {
+      if (opened.value || state.opened) {
+        openClose(true);
+        registerEvent();
+      } else {
+        unRegisterEvent();
+      }
+    });
 
     return {
       parentClass: props.outline ? outlineClass : baseClass,
