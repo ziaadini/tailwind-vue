@@ -4,7 +4,8 @@
       <slot></slot>
     </div>
     <div
-      class="absolute w-full text-gray-50 transform transition-all duration-200"
+      v-bind="$attrs"
+      class="absolute w-full text-gray-50 transform transition-all duration-200 ease-out"
       :class="[
         {
           'top-full': isBottom,
@@ -14,7 +15,7 @@
           'right-full': isLeft,
           'bottom-1/2 translate-y-1/2': isRight || isLeft
         },
-        { 'h-0 w-0 overflow-hidden scale-0 opacity-0': !isShow }
+        { 'h-0 w-0 overflow-hidden scale-75 opacity-0': !isShow }
       ]"
     >
       <div
@@ -31,7 +32,8 @@
           :variant="variant"
         ></t-triangle>
         <div class="rounded-xs p-1 w-full" :class="`bg-${variant}`">
-          tooltip
+          {{ message }}
+          <slot name="message" :close="forceClose"></slot>
         </div>
       </div>
     </div>
@@ -39,11 +41,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref } from "vue";
+import { defineComponent, PropType, computed, ref, watchEffect } from "vue";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 import { variants } from "@/utility/css-helper";
 export default defineComponent({
   name: "TTooltip",
+  inheritAttrs: false,
   props: {
     position: {
       type: String as PropType<string>,
@@ -63,19 +66,39 @@ export default defineComponent({
     modelValue: {
       type: Boolean,
       default: false
+    },
+    hover: {
+      type: Boolean,
+      default: () => true
+    },
+    message: {
+      type: String,
+      default: ""
     }
   },
   components: { TTriangle },
   setup(props, { emit }) {
     const isShow = ref(props.modelValue);
     const open = () => {
-      emit("update:modelValue", true);
-      isShow.value = true;
+      if (props.hover) {
+        emit("update:modelValue", true);
+        isShow.value = true;
+      }
     };
     const close = () => {
+      if (props.hover) {
+        emit("update:modelValue", false);
+        isShow.value = false;
+      }
+    };
+    const forceClose = () => {
       emit("update:modelValue", false);
       isShow.value = false;
     };
+
+    watchEffect(() => {
+      isShow.value = props.modelValue;
+    });
     const triangleDirection = computed(() => {
       switch (props.position) {
         case "top":
@@ -97,6 +120,7 @@ export default defineComponent({
       isShow,
       open,
       close,
+      forceClose,
       triangleDirection,
       isTop,
       isRight,

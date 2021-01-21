@@ -112,8 +112,31 @@
 
     <div>
       <div>#zia</div>
-      <t-tooltip variant="danger" position="right">
+
+      <t-tooltip
+        message="test hover message for you"
+        variant="danger"
+        position="right"
+      >
         <t-button variant="danger" outline ripple>hover on me</t-button>
+      </t-tooltip>
+
+      <div class="my-4">with v-model</div>
+      <t-tooltip
+        v-model="tooltip"
+        message="test hover message for you"
+        variant="danger"
+        position="right"
+        :hover="false"
+      >
+        <t-button
+          @mouseover="tooltip = true"
+          @mouseleave="tooltip = false"
+          variant="danger"
+          outline
+          ripple
+          >hover on me</t-button
+        >
       </t-tooltip>
     </div>
     <div class="w-60">
@@ -414,7 +437,9 @@ export default defineComponent({
       { label: "t", text: "tailwind", value: "t" },
       { label: "v", text: "vue", locked: true }
     ];
+    const tooltip = ref(false);
     return {
+      tooltip,
       stepper,
       stepperItems,
       toast1,
