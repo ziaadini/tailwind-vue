@@ -16,7 +16,7 @@
     <div
       v-show="state.opened"
       :class="{ 'opacity-0': !state.opened, 'rounded-b-md': rounded }"
-      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
+      class="duration-500 ease-in-out cursor-pointer z-10 transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
@@ -90,7 +90,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
-    const outlineClass = `border-${props.variant} hover:bg-${props.variant}-50 hover:shadow`;
+    const outlineClass = `border-${props.variant} border-2 hover:bg-${props.variant}-50 hover:shadow`;
     const childClass = `bg-${props.variant}-100 hover:bg-${props.variant}-200 hover:text-white focus:border-${props.variant} transition`;
 
     const state = reactive({
