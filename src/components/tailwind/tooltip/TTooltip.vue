@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div @mouseover="open" @mouseleave="close">
+    <div @mouseenter="open" @mouseleave="close">
       <slot></slot>
     </div>
     <div
