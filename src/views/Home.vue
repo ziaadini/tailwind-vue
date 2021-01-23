@@ -182,17 +182,12 @@
       </template>
     </t-menu>
   </div>
-  <h6>
-    Image
-  </h6>
-  <t-image class="w-32" :src="imgSource" lazy />
-  <t-image class="w-32" :src="imgSource" />
 
   <h6>
     DROPDOWN
   </h6>
   {{ dropdownModel }}
-  <div ref="triggerDropdown">
+  <!-- <div ref="triggerDropdown">
     <t-button
       ripple
       variant="warning"
@@ -200,13 +195,14 @@
       @click="dropdownOpened = !dropdownOpened"
       >trigger dropdown</t-button
     >
-  </div>
+  </div> -->
   dropdownOpened:
   {{ dropdownOpened }}
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
       v-model:opened="dropdownOpened"
+      outline
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
@@ -231,7 +227,7 @@ export default defineComponent({
     TextInput,
     TMenu,
     TDropdown,
-    TImage,
+    // TImage,
   },
   data() {
     return {
