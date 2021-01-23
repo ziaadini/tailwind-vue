@@ -28,14 +28,20 @@
         </template>
         <button
           v-else
-          class="text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none"
           v-for="(tab, index) in tabs"
           :key="`${index}-${tab.props.title}`"
           @click="selectTab(index, tab)"
-          :class="{
-            'text-blue-500 border-b-2 font-medium border-blue-500':
-              index === selectedIndex
-          }"
+          data-name="tabs-header"
+          :class="[
+            renderClass(
+              'text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none',
+              'header'
+            ),
+            {
+              'text-blue-500 border-b-2 font-medium border-blue-500':
+                index === selectedIndex
+            }
+          ]"
         >
           {{ tab.props.title }}
         </button>
@@ -65,6 +71,7 @@ import {
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import TIcon from "@/components/tailwind/TIcon.vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 interface TabProps {
   title: string;
@@ -152,6 +159,7 @@ export default defineComponent({
         props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
     );
 
+    const { renderClass } = useRenderClass("tabs");
     return {
       hasTitleSlot: !!slots.title,
       startIntersecting,
@@ -163,7 +171,8 @@ export default defineComponent({
       onScrollLeft,
       onScrollRight,
       showArrows,
-      navRef
+      navRef,
+      renderClass
     };
   }
 });
