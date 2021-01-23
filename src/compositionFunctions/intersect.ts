@@ -7,10 +7,11 @@ export const useIntersectElement = (
   callbackFunction?: (
     entry: IntersectionObserverEntry,
     observer: IntersectionObserver
-  ) => void
+  ) => void,
+  elementRef = ref(null)
 ) => {
-  const elementRef = ref(null);
   const isIntersecting = ref(false);
+  let observer;
   onMounted(() => {
     const callback = (entries, observer) => {
       if (options.passRef == true) {
@@ -19,11 +20,16 @@ export const useIntersectElement = (
       callbackFunction?.(entries[0], observer);
     };
 
-    const observer = new IntersectionObserver(callback, options);
+    observer = new IntersectionObserver(callback, options);
     observer.observe(elementRef.value!);
   });
+
+  const destroyObserver = () => {
+    observer.disconnect();
+  };
+
   if (options.passRef) {
-    return { elementRef, isIntersecting };
+    return { elementRef, isIntersecting, destroyObserver };
   }
-  return { elementRef };
+  return { elementRef, destroyObserver };
 };
