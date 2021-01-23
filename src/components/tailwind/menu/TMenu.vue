@@ -27,6 +27,7 @@
           'right-0': placement === 'right',
           'left-0': placement !== 'right',
           'w-full': full,
+          'z-20': hover
         }"
         v-if="open && !disabled"
       >
