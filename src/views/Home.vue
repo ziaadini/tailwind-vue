@@ -185,7 +185,8 @@
   <h6>
     Image
   </h6>
-  <t-image :src="imgSource" width="300px" />
+  <t-image class="w-32" :src="imgSource" lazy />
+  <t-image class="w-32" :src="imgSource" />
 
   <h6>
     DROPDOWN
