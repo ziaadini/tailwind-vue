@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 border-r-4 rounded-sm px-4 py-3"
+    class="mb-4 border-r-4 rounded-sm px-4 py-4"
     v-if="show"
     :class="wrapperColor"
     role="alert"
