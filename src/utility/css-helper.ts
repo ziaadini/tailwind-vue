@@ -29,3 +29,18 @@ export enum size {
   lg = "lg",
   full = "full"
 }
+
+
+export enum normalSizes {
+  xs = "xs",
+  sm = "sm",
+  md = "md",
+  lg = "lg",
+}
+
+export enum positionVariant {
+  topLeft = "topLeft",
+  topRight = "topRight",
+  bottomLeft = "bottomLeft",
+  bottomRight = "bottomRight"
+}
