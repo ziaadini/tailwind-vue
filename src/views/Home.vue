@@ -294,6 +294,44 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
   </div>
+  <br />
+  <h6>
+    Rating
+  </h6>
+  <TextInput
+    placeholder="some test placeholder"
+    v-model="text"
+    variant="warning"
+    outline
+    align="center"
+    disabled
+  />
+  rateValue:{{ rateValue }}
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-rate
+      v-model="rateValue"
+      class="w-32"
+      emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
+      fullIcon="https://image.flaticon.com/icons/png/512/130/130188.png"
+    ></t-rate>
+    <t-rate
+      v-model="rateValue"
+      hover
+      class="w-10"
+      :length="8"
+      halfIcon="https://p.kindpng.com/picc/s/11-11q4993_transparent-black-star-png-half-filled-star-icon.png"
+      emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
+      fullIcon="https://image.flaticon.com/icons/png/512/130/130188.png"
+    ></t-rate>
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
 </template>
 
 <script lang="ts">
@@ -305,6 +343,7 @@ import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
 import TBadge from "@/components/tailwind/badge/TBadge.vue";
+import TRate from "@/components/tailwind/rate/TRate.vue";
 export default defineComponent({
   name: "App",
   components: {
@@ -314,6 +353,7 @@ export default defineComponent({
     TMenu,
     TDropdown,
     TBadge,
+    TRate,
     // TImage,
   },
   data() {
@@ -325,6 +365,7 @@ export default defineComponent({
       badgeData: "123",
       imgSource:
         "https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+      rateValue: 1.5,
     };
   },
   mounted() {
