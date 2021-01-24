@@ -209,6 +209,91 @@
     />
     <t-dropdown placeholder="تست" :items="['test1', 'test2', 'test3']" />
   </div>
+
+  <h6>
+    BADGE
+  </h6>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-badge v-model="badgeData" position="bottomRight">
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge v-model="badgeData" position="topRight">
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge v-model="badgeData" position="topLeft">
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge v-model="badgeData" position="bottomLeft">
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+  </div>
+  <br />
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-badge
+      v-model="badgeData"
+      variant="primary"
+      :rounded="false"
+      position="bottomRight"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge
+      v-model="badgeData"
+      variant="danger"
+      :rounded="false"
+      position="topRight"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge
+      v-model="badgeData"
+      variant="success"
+      :rounded="false"
+      position="topLeft"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge
+      v-model="badgeData"
+      variant="warning"
+      :rounded="false"
+      position="bottomLeft"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+  </div>
+  <br />
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-badge
+      v-model="badgeData"
+      variant="primary"
+      size="sm"
+      position="bottomRight"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge v-model="badgeData" variant="danger" size="md" position="topRight">
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge
+      v-model="badgeData"
+      variant="warning"
+      size="lg"
+      :rounded="false"
+      position="topLeft"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+    <t-badge
+      v-model="badgeData"
+      variant="warning"
+      size="xs"
+      :rounded="false"
+      position="bottomLeft"
+    >
+      <t-button loading variant="success">Test</t-button>
+    </t-badge>
+  </div>
 </template>
 
 <script lang="ts">
@@ -219,6 +304,7 @@ import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
+import TBadge from "@/components/tailwind/badge/TBadge.vue";
 export default defineComponent({
   name: "App",
   components: {
@@ -227,6 +313,7 @@ export default defineComponent({
     TextInput,
     TMenu,
     TDropdown,
+    TBadge,
     // TImage,
   },
   data() {
@@ -235,6 +322,7 @@ export default defineComponent({
       dropdownModel: "",
       dropdownTriggerRef: "" as any,
       dropdownOpened: false,
+      badgeData: "123",
       imgSource:
         "https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
     };
