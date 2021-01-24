@@ -18,6 +18,11 @@ export default defineComponent({
           delete: ["py-4"],
           replace: { "text-gray-600": "text-gray-700" }
         }
+      },
+      card: {
+        title: {
+          add: "text-danger"
+        }
       }
     });
   }

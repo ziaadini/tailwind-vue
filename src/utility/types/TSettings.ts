@@ -1,7 +1,11 @@
 export interface TSettings {
   tabs?: {
-    header: TSettingItem;
+    header?: TSettingItem;
   };
+  card?:{
+    title?:TSettingItem;
+    description?:TSettingItem;
+  }
 }
 
 export interface TSettingItem {

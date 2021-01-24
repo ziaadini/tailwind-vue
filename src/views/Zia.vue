@@ -89,6 +89,14 @@
   </div>
 
   <div class="flex items-center flex-col space-y-4">
+    <div class="w-1/2">
+      <div>#zia</div>
+      <t-card
+        title="ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است."
+        description="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربر"
+      >
+      </t-card>
+    </div>
     <div class="w-full md:w-1/2">
       <div>#zia</div>
       <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
@@ -163,6 +171,7 @@
         v-model="numberPickerCount"
       ></t-number-picker>
     </div>
+
     <div>
       <div>#zia</div>
       <t-modal
@@ -376,7 +385,7 @@ import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
 import TIcon from "@/components/tailwind/TIcon.vue";
 import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
-import set = Reflect.set;
+import TCard from "@/components/tailwind/card/TCard.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
@@ -399,7 +408,8 @@ export default defineComponent({
     TSwitch,
     TModal,
     TNumberPicker,
-    TButton
+    TButton,
+    TCard
   },
   setup() {
     const numberPickerCount = ref<number>(3);
