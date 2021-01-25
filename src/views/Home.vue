@@ -312,7 +312,7 @@
       v-model="rateValue"
       class="w-32"
       emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
-      fullIcon="https://image.flaticon.com/icons/png/512/130/130188.png"
+      fullIcon="https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
     ></t-rate>
     <t-rate
       v-model="rateValue"
@@ -321,9 +321,16 @@
       :length="8"
       halfIcon="https://p.kindpng.com/picc/s/11-11q4993_transparent-black-star-png-half-filled-star-icon.png"
       emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
-      fullIcon="https://image.flaticon.com/icons/png/512/130/130188.png"
+      fullIcon="https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
     ></t-rate>
   </div>
+
+  <h6>
+    CAROUSEL
+  </h6>
+  <t-carousel besidesSize="10px" :links="links">
+    test
+  </t-carousel>
 
   <br />
   <br />
@@ -344,6 +351,7 @@ import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
 import TBadge from "@/components/tailwind/badge/TBadge.vue";
 import TRate from "@/components/tailwind/rate/TRate.vue";
+import TCarousel from "@/components/tailwind/carousel/TCarousel.vue";
 export default defineComponent({
   name: "App",
   components: {
@@ -354,7 +362,7 @@ export default defineComponent({
     TDropdown,
     TBadge,
     TRate,
-    // TImage,
+    TCarousel,
   },
   data() {
     return {
@@ -366,6 +374,40 @@ export default defineComponent({
       imgSource:
         "https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
       rateValue: 1.5,
+            links: [
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+      ],
     };
   },
   mounted() {
