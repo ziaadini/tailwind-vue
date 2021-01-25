@@ -14,7 +14,7 @@ export default defineComponent({
     provide("TSettings", {
       tabs: {
         header: {
-          add: "hover:bg-gray-100",
+          add: "hover:bg-gray-100 py-3",
           delete: ["py-4"],
           replace: { "text-gray-600": "text-gray-700" }
         }

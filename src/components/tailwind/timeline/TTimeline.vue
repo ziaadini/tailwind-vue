@@ -28,7 +28,7 @@
         </div>
         <div
           data-name="timeline-circle"
-          class="z-20 flex items-center bg-white text-sm border-2 order-1 shadow-xl  min-w-8 min-h-8 rounded-full"
+          class="z-10 flex items-center bg-white text-sm border-2 order-1 shadow-xl  min-w-8 min-h-8 rounded-full"
           :class="[
             {
               'cursor-pointer': clickable && !item.locked,

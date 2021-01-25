@@ -3,11 +3,11 @@
     <div class="transition  duration-300" :class="{ 'opacity-0': !modelValue }">
       <div
         :class="{ hidden: !modelValue }"
-        class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
+        class="fixed z-20 top-0 w-full h-full bg-gray-900 opacity-50"
         @click="close"
       ></div>
       <div
-        class="fixed  w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
+        class="fixed z-30  w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
         :class="[maxWidth]"
       >
         <div>
