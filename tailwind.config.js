@@ -43,6 +43,12 @@ module.exports = {
         "3/4": "75%",
         "9/10": "90%"
       },
+      minHeight: {
+        "8": "2rem"
+      },
+      minWidth: {
+        "8": "2rem"
+      },
       colors: {
         primary: {
           light: colors.blue,

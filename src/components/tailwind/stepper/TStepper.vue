@@ -38,7 +38,7 @@
               ></slot>
             </template>
             <template v-else>
-              {{ item[label] || "" }}
+              {{ item[label] || index + 1 }}
             </template>
           </div>
           <div
@@ -118,10 +118,10 @@ export default defineComponent({
         return -1;
       }
     });
-    watchEffect(() => {
-      console.log("activeIndex", activeIndex.value);
-      console.log("modelValue", props.modelValue);
-    });
+    // watchEffect(() => {
+    //   console.log("activeIndex", activeIndex.value);
+    //   console.log("modelValue", props.modelValue);
+    // });
     const isActive = computed(() => (index): boolean => {
       return index === activeIndex.value;
     });

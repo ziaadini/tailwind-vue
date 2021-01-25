@@ -118,6 +118,17 @@
       </div>
     </div>
 
+    <div class="my-4 w-full">
+      <div>#zia</div>
+      <div class="bg-gray-100 pl-6 py-5 sm:p-8">
+        <t-timeline
+          v-model="stepper"
+          :items="stepperItems"
+          :clickable="true"
+        ></t-timeline>
+      </div>
+    </div>
+
     <div>
       <div>#zia</div>
 
@@ -147,7 +158,7 @@
         >
       </t-tooltip>
     </div>
-    <div class="w-60">
+    <div class="w-60 my-4">
       <div>#zia</div>
       <t-progress-bar :value="30"></t-progress-bar>
     </div>
@@ -386,6 +397,7 @@ import TStepper from "@/components/tailwind/stepper/TStepper.vue";
 import TIcon from "@/components/tailwind/TIcon.vue";
 import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
 import TCard from "@/components/tailwind/card/TCard.vue";
+import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
@@ -409,7 +421,8 @@ export default defineComponent({
     TModal,
     TNumberPicker,
     TButton,
-    TCard
+    TCard,
+    TTimeline
   },
   setup() {
     const numberPickerCount = ref<number>(3);

@@ -3,14 +3,14 @@
     <div
       v-if="title"
       data-name="card-title"
-      :class="renderClass('p-4 font-bold', 'title')"
+      :class="renderClass('p-2 sm:p-4 font-bold', 'title')"
     >
       {{ title }}
     </div>
     <div
       v-if="description"
       data-name="card-description"
-      :class="renderClass('p-4', 'description')"
+      :class="renderClass('p-2 sm:p-4', 'description')"
     >
       {{ description }}
     </div>
