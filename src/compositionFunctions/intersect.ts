@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import { onMounted, ref } from "vue";
 interface IntersectionObserverConfig extends IntersectionObserverInit {
   passRef?: boolean;
@@ -8,11 +9,13 @@ export const useIntersectElement = (
     entry: IntersectionObserverEntry,
     observer: IntersectionObserver
   ) => void,
-  elementRef = ref(null)
+  elementRef = ref(null),
+  mounted = true
 ) => {
   const isIntersecting = ref(false);
   let observer;
-  onMounted(() => {
+
+  const observeFunc = () => {
     const callback = (entries, observer) => {
       if (options.passRef == true) {
         isIntersecting.value = entries[0].isIntersecting;
@@ -21,8 +24,14 @@ export const useIntersectElement = (
     };
 
     observer = new IntersectionObserver(callback, options);
-    observer.observe(elementRef.value!);
-  });
+    observer.observe(mounted ? elementRef.value: elementRef);
+  };
+  if (mounted)
+    onMounted(() => {
+      observeFunc();
+    });
+  else 
+    observeFunc()
 
   const destroyObserver = () => {
     observer.disconnect();

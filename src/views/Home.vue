@@ -333,6 +333,31 @@
   </t-carousel>
 
   <br />
+
+  <h6>
+    TSlider
+  </h6>
+  <t-slider>
+    <div
+      v-for="i in count"
+      :key="i"
+      class="w-32 h-32 rounded mx-2 bg-primary-50 inline-block"
+    ></div>
+
+    <template #leftButton="{scrollLeft}">
+      <span @click="scrollLeft">
+        left
+      </span>
+    </template>
+
+    <template #rightButton="{scrollRight}">
+      <span @click="scrollRight">
+        right
+      </span>
+    </template>
+  </t-slider>
+
+  <br />
   <br />
   <br />
   <br />
@@ -352,6 +377,7 @@ import TImage from "@/components/tailwind/image/TImage.vue";
 import TBadge from "@/components/tailwind/badge/TBadge.vue";
 import TRate from "@/components/tailwind/rate/TRate.vue";
 import TCarousel from "@/components/tailwind/carousel/TCarousel.vue";
+import TSlider from "@/components/tailwind/slider/TSlider.vue";
 export default defineComponent({
   name: "App",
   components: {
@@ -363,6 +389,7 @@ export default defineComponent({
     TBadge,
     TRate,
     TCarousel,
+    TSlider,
   },
   data() {
     return {
@@ -374,7 +401,7 @@ export default defineComponent({
       imgSource:
         "https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
       rateValue: 1.5,
-            links: [
+      links: [
         "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
         "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
         "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
@@ -408,10 +435,15 @@ export default defineComponent({
         "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
         "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
       ],
+      count: 10,
     };
   },
   mounted() {
     this.dropdownTriggerRef = this.$refs.triggerDropdown;
+
+    setTimeout(() => {
+      // this.count *= 3;
+    }, 5000);
   },
 });
 </script>
