@@ -17,10 +17,22 @@
       />
     </div>
     <div class="absolute transform right-0 top-1/2 -translate-y-1/2">
-      <t-button variant="primary" @click="changeActiveIndex(-1)">-</t-button>
+      <slot
+        name="rightButton"
+        :leftDisabled="leftDisabled"
+        :rightDisabled="rightDisabled"
+        :next="() => changeActiveIndex(+1)"
+        :back="() => changeActiveIndex(-1)"
+      />
     </div>
     <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
-      <t-button variant="primary" @click="changeActiveIndex(+1)">+</t-button>
+      <slot
+        name="leftButton"
+        :leftDisabled="leftDisabled"
+        :rightDisabled="rightDisabled"
+        :next="() => changeActiveIndex(+1)"
+        :back="() => changeActiveIndex(-1)"
+      />
     </div>
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
       <slot />
@@ -29,13 +41,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, toRefs } from "vue";
-import TButton from "@/components/tailwind/button/TButton.vue";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+  toRefs,
+  watchEffect,
+} from "vue";
 
 export default defineComponent({
-  components: {
-    TButton,
-  },
   props: {
     vertical: {
       type: Boolean,
@@ -67,11 +82,21 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    autoPlay: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+    autoPlaceInterval: {
+      type: Number,
+      default: 2000,
+      required: false,
+    },
   },
   setup(props) {
     const activeIndex = ref(0);
 
-    const { vertical, horizontal } = toRefs(props);
+    const { vertical, horizontal, autoPlay, autoPlaceInterval } = toRefs(props);
 
     const verticalClasses = (index: number) =>
       vertical.value && {
@@ -89,11 +114,33 @@ export default defineComponent({
       activeIndex.value = activeIndex.value + value;
     };
 
+    const leftDisabled = computed(() => {
+      return activeIndex.value === 0;
+    });
+
+    const rightDisabled = computed(() => {
+      return activeIndex.value === props.links.length - 1;
+    });
+
+    let interval;
+
+    watchEffect(() => {
+      if (autoPlay.value) {
+        interval = setInterval(() => {
+          activeIndex.value++;
+        }, autoPlaceInterval.value);
+      } else {
+        interval && clearInterval(interval);
+      }
+    });
+
     return {
       verticalClasses,
       horizontalClasses,
       changeActiveIndex,
       activeIndex,
+      leftDisabled,
+      rightDisabled,
     };
   },
 });
