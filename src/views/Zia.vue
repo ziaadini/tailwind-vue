@@ -1,5 +1,20 @@
 <template>
   <div>
+    <div class="my-4 w-full">
+      <div>#zia</div>
+      <div>
+        <t-accordion :items="accourdionItems"></t-accordion>
+      </div>
+      <h3 class="my-3">custom title</h3>
+      <t-accordion :items="accourdionItems">
+        <template #title="{title,show}">
+          <div class="cursor-pointer" :class="{ 'text-danger-500': show }">
+            {{ title }}
+          </div>
+        </template>
+      </t-accordion>
+    </div>
+
     <div>#zia</div>
     <t-tabs v-model="tabs">
       <t-tab-item title="تب صفرم" eager>
@@ -398,6 +413,7 @@ import TIcon from "@/components/tailwind/TIcon.vue";
 import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
 import TCard from "@/components/tailwind/card/TCard.vue";
 import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
+import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
@@ -422,7 +438,8 @@ export default defineComponent({
     TNumberPicker,
     TButton,
     TCard,
-    TTimeline
+    TTimeline,
+    TAccordion
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -461,7 +478,29 @@ export default defineComponent({
       { label: "v", text: "vue", locked: true }
     ];
     const tooltip = ref(false);
+    const accourdionItems = ref([
+      {
+        title: "title is",
+        text:
+          "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
+        selected: true
+      },
+      {
+        title: "title is",
+        text:
+          "o do this, load the v3 site key as documented, and then explicitly renderv2 using grecaptcha.render. You are allowed to hide the badge as long asyou include the reCAPTCHA branding visibly in the user flow. Pleaseinclude the following text: Yes, please use"
+      }
+    ]);
+    // setTimeout(() => {
+    //   accourdionItems.value.push({
+    //     title: "added item is",
+    //     text:
+    //       "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
+    //     selected: true
+    //   });
+    // }, 500);
     return {
+      accourdionItems,
       tooltip,
       stepper,
       stepperItems,
