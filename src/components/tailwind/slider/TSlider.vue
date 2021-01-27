@@ -5,7 +5,7 @@
       ref="slidesContainer"
       class="overflow-auto whitespace-nowrap scroll w-full h-full scroll-smooth"
     >
-      <template class="block" ref="content"> <slot /></template>
+      <template class="contents" ref="content"> <slot /></template>
     </div>
     <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
       <slot name="leftButton" :scrollLeft="onScrollLeft" />
@@ -33,43 +33,46 @@ export default defineComponent({
       scrollRight,
     } = useScrollElement();
 
-    const currentViewStartAndEndIndex = (items: any[]) => {
-      const first = items.findIndex((e) => e.isIntersecting) - 1;
-      const last =
-        items.slice(first).findIndex((e) => !e.isIntersecting) + first + 1;
+    const currentViewStartAndEndIndex = (items: any[]): [number, number] => {
+      const _ = items.findIndex((e) => e.isIntersecting);
+      const first = _ !== 0 ? _ - 1 : 0;
+      let last =
+        items.slice(first + 1).findIndex((e) => !e.isIntersecting) + first + 1;
+
+      if (last - first <= 2) last = items.length - 1;
+
+      console.log("calculated first and last", { first, last, _ });
       return [first, last];
     };
 
     const onScrollLeft = () => {
       console.log(intersectionArray.value);
-      const [first, _] = currentViewStartAndEndIndex(intersectionArray.value);
-      console.log(_, first);
-      if (first !== intersectionArray.value.length - 1) {
-        const notIntersected = intersectionArray.value[first + 1];
+      const [_, last] = currentViewStartAndEndIndex(intersectionArray.value);
+      console.log({ last });
+      if (last !== intersectionArray.value.length - 1) {
+        const notIntersected = intersectionArray.value[last];
         console.log(notIntersected.ref);
-        notIntersected.ref.scrollIntoView();
+        notIntersected.ref.scrollIntoView(null);
       } else scrollLeft(slidesContainer.value.clientWidth, 200);
     };
     const onScrollRight = () => {
-      const [_, last] = currentViewStartAndEndIndex(intersectionArray.value);
-      if (last) {
-        const notIntersected = intersectionArray.value[last - 1];
+      const [first, _] = currentViewStartAndEndIndex(intersectionArray.value);
+      if (first) {
+        const notIntersected = intersectionArray.value[first];
         console.log(notIntersected.ref);
-        notIntersected.ref.scrollIntoView();
+        notIntersected.ref.scrollIntoView(null);
       } else scrollRight(slidesContainer.value.clientWidth, 200);
     };
 
     const disposeIntersectionArray = () => {
-      // intersectionArray.forEach((item) => item.destroyObserver());
       intersectionArray.value = [];
-      console.log("intersection observer disposer");
     };
 
     const intersectionArrayGenerator = async () => {
       const tmp = [] as any[];
       await nextTick();
-      // @ts-ignore
-      (content.value! as HTMLTemplateElement).children.forEach((domItem) => {
+      (((content.value! as HTMLTemplateElement)
+        .children as unknown) as any[]).forEach((domItem) => {
         const intersect = useIntersectElement(
           {
             passRef: true,
@@ -89,8 +92,7 @@ export default defineComponent({
 
     onMounted(() => {
       intersectionArrayGenerator();
-      // @ts-ignore
-      watch(slots.default, (value) => {
+      watch<any>(slots.default, () => {
         disposeIntersectionArray();
         intersectionArrayGenerator();
       });
@@ -106,7 +108,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .scroll-smooth {
   scroll-behavior: smooth;
 }

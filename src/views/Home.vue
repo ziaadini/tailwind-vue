@@ -442,7 +442,7 @@ export default defineComponent({
     this.dropdownTriggerRef = this.$refs.triggerDropdown;
 
     setTimeout(() => {
-      // this.count *= 3;
+      this.count *= 3;
     }, 5000);
   },
 });
