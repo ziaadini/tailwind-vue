@@ -56,6 +56,7 @@ import {
 } from "vue";
 
 export default defineComponent({
+  name: "TAccordion",
   props: {
     items: {
       type: Array as PropType<ReadonlyArray<{ [key: string]: unknown }>>,
