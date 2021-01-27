@@ -123,11 +123,15 @@ export default defineComponent({
     });
 
     let interval;
+    let increment = true;
 
     watchEffect(() => {
       if (autoPlay.value) {
         interval = setInterval(() => {
-          activeIndex.value++;
+          if (rightDisabled.value) increment = false;
+          else if (leftDisabled.value) increment = true;
+          if (increment) activeIndex.value++;
+          else activeIndex.value--;
         }, autoPlaceInterval.value);
       } else {
         interval && clearInterval(interval);
