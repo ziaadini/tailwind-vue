@@ -109,6 +109,8 @@ export default defineComponent({
           return "arrow-left";
         case "left":
           return "arrow-right";
+        default:
+          return "";
       }
     });
 
