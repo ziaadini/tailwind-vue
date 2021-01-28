@@ -1,2 +1,2 @@
-import TAccordion from "./components/tailwind/accoirdion/TAccordion.vue";
+import TAccordion from "./components/tailwind/alert/TAlert.vue";
 export { TAccordion };

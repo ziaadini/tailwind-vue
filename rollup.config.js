@@ -1,6 +1,8 @@
 // import our third party plugins
-import commonjs from "@rollup/plugin-commonjs"
+import commonjs from "@rollup/plugin-commonjs";
+import tsPlugin from "@rollup/plugin-typescript";
 import VuePlugin from "rollup-plugin-vue";
+import resolve from "@rollup/plugin-node-resolve";
 import pkg from "./package.json"; // import our package.json file to re-use the naming
 
 export default {
@@ -29,7 +31,7 @@ export default {
     }
   ],
   // this is an array of the plugins that we are including
-  plugins: [commonjs(), VuePlugin()],
+  plugins: [VuePlugin(), tsPlugin(), resolve(), commonjs()],
   // ask rollup to not bundle Vue in the library
   external: ["vue"]
 };
