@@ -328,8 +328,20 @@
   <h6>
     CAROUSEL
   </h6>
-  <t-carousel besidesSize="10px" :links="links">
+  <t-carousel  :links="links">
     test
+
+    <template #leftButton="{leftDisabled, back}">
+      <t-button variant="primary" :disabled="leftDisabled" @click="back">
+        -</t-button
+      >
+    </template>
+
+    <template #rightButton="{rightDisabled, next}">
+      <t-button variant="primary" :disabled="rightDisabled" @click="next">
+        +</t-button
+      >
+    </template>
   </t-carousel>
 
   <br />
