@@ -11,6 +11,8 @@
     "view": "serve -s dist"
   },
   "module": "dist/tailwind-vue3.esm.js",
+  "main": "dist/tailwind-vue3.cjs.js",
+  "unpkg": "dist/tailwind-vue3.global.js",
   "files": [
     "dist/"
   ],
