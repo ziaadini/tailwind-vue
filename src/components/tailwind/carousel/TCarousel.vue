@@ -46,6 +46,7 @@ import {
   PropType,
   ref,
   toRefs,
+  watch,
   watchEffect,
 } from "vue";
 
@@ -86,6 +87,11 @@ export default defineComponent({
       default: 2000,
       required: false,
     },
+    index: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
   },
   setup(props, { emit }) {
     const activeIndex = ref(0);
@@ -96,6 +102,7 @@ export default defineComponent({
       autoPlay,
       autoPlaceInterval,
       modelValue,
+      index,
     } = toRefs(props);
 
     const verticalClasses = (index: number) =>
@@ -112,7 +119,7 @@ export default defineComponent({
 
     const itemChangedEvent = () => {
       emit(
-        "itemChanged",
+        "update:index",
         modelValue.value[activeIndex.value].value || activeIndex
       );
     };
@@ -128,6 +135,10 @@ export default defineComponent({
 
     const rightDisabled = computed(() => {
       return activeIndex.value === props.modelValue.length - 1;
+    });
+
+    watch(index, (newIndex) => {
+      changeActiveIndex(newIndex - activeIndex.value);
     });
 
     let interval;
