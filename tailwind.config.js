@@ -2,26 +2,27 @@
 const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
+    enabled: true,
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
     // These options are passed through directly to PurgeCSS
     options: {
       safelist: {
         // (bg|border)-(primary|danger|warning|success)
         standard: [
-          /bg-primary(-50)?$/,
-          /bg-danger(-50)?$/,
-          /bg-warning(-50)?$/,
-          /bg-success(-50)?$/,
-          /^bg-white$/,
-          /border-primary(-50)?$/,
-          /border-danger(-50)?$/,
-          /border-warning(-50)?$/,
-          /border-success(-50)?$/,
-          /$text-primary^/,
-          /$text-danger^/,
-          /$text-warning^/,
-          /$text-success^/,
-          /$text-white^/
+          /^(hover:|focus:)?bg-primary(-50)?$/,
+          /^(hover:|focus:)?bg-danger(-50)?$/,
+          /^(hover:|focus:)?bg-warning(-50)?$/,
+          /^(hover:|focus:)?bg-success(-50)?$/,
+          /^(hover:|focus:)?$bg-white$/,
+          /^(hover:|focus:)?border-primary(-50)?$/,
+          /^(hover:|focus:)?border-danger(-50)?$/,
+          /^(hover:|focus:)?border-warning(-50)?$/,
+          /^(hover:|focus:)?border-success(-50)?$/,
+          /^text-primary$/,
+          /^text-danger$/,
+          /^text-warning$/,
+          /^text-success$/,
+          /^text-white$/
         ],
         keyframes: true,
         fontFace: true

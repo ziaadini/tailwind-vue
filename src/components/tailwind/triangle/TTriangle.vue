@@ -1,5 +1,8 @@
 <template>
-  <div class="w-0 h-0" :class="[triangleClassByDirection,`border-${variant}`]"></div>
+  <div
+    class="w-0 h-0"
+    :class="[triangleClassByDirection, `border-${variant}`]"
+  ></div>
 </template>
 
 <script lang="ts">
@@ -16,7 +19,7 @@ export default defineComponent({
           value
         );
       },
-      default: "arrow-left"
+      default: "arrow-left",
     },
     variant: {
       type: String,
@@ -25,8 +28,8 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      }
-    }
+      },
+    },
   },
   setup(props) {
     const triangleClassByDirection = computed(() => {
@@ -39,12 +42,14 @@ export default defineComponent({
           return "border-l-8 border-t-8 border-b-8 border-t-transparent border-b-transparent";
         case "arrow-left":
           return "border-r-8 border-t-8 border-b-8 border-t-transparent border-b-transparent";
+        default:
+          return ""
       }
     });
     return {
-      triangleClassByDirection
+      triangleClassByDirection,
     };
-  }
+  },
 });
 </script>
 
