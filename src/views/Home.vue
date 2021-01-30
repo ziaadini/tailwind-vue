@@ -38,16 +38,59 @@
   </h6>
   <div class="container mx-auto p-4">
     <t-alert variant="primary">
-      This is a Test Message
+      This is a Test Message This is a Test Message This is a Test Message This
+      is a Test Message This is a Test Message This is a Test Message This is a
+      Test Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message
     </t-alert>
     <t-alert variant="success">
       This is a Test Message
+      This is a Test Message This is a Test Message This is a Test Message This
+      is a Test Message This is a Test Message This is a Test Message This is a
+      Test Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message
     </t-alert>
     <t-alert variant="danger" icon="bookmarks">
       This is a Test Message
+      This is a Test Message This is a Test Message This is a Test Message This
+      is a Test Message This is a Test Message This is a Test Message This is a
+      Test Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message
     </t-alert>
     <t-alert variant="warning" icon="bookmarks">
       This is a Test Message
+      This is a Test Message This is a Test Message This is a Test Message This
+      is a Test Message This is a Test Message This is a Test Message This is a
+      Test Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message This is a Test Message This is a Test
+      Message This is a Test Message
     </t-alert>
   </div>
 

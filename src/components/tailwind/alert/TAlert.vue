@@ -48,7 +48,7 @@ export default defineComponent({
   },
   computed: {
     shade(): string {
-      return `bg-${this.variant}-100 text-${this.variant}-900 border-${this.variant}-50`;
+      return `bg-${this.variant}-50 text-${this.variant} border-${this.variant}-50`;
     },
     wrapperColor(): string {
       return this.shade;
