@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
@@ -41,6 +42,12 @@ module.exports = {
         "1/2": "50%",
         "3/4": "75%",
         "9/10": "90%"
+      },
+      minHeight: {
+        "8": "2rem"
+      },
+      minWidth: {
+        "8": "2rem"
       },
       colors: {
         primary: {
@@ -151,6 +158,12 @@ module.exports = {
         lg: "26px",
         large: "32px",
         full: "9999px"
+      },
+      borderRightColor: {
+        transparent: "transparent"
+      },
+      borderLeftColor: {
+        transparent: "transparent"
       }
     }
   },

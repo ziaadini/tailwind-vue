@@ -1,5 +1,20 @@
 <template>
   <div>
+    <div class="my-4 w-full">
+      <div>#zia</div>
+      <div>
+        <t-accordion :items="accourdionItems"></t-accordion>
+      </div>
+      <h3 class="my-3">custom title</h3>
+      <t-accordion :items="accourdionItems">
+        <template #title="{title,show}">
+          <div class="cursor-pointer" :class="{ 'text-danger-500': show }">
+            {{ title }}
+          </div>
+        </template>
+      </t-accordion>
+    </div>
+
     <div>#zia</div>
     <t-tabs v-model="tabs">
       <t-tab-item title="تب صفرم" eager>
@@ -89,12 +104,17 @@
   </div>
 
   <div class="flex items-center flex-col space-y-4">
+    <div class="w-1/2">
+      <div>#zia</div>
+      <t-card
+        title="ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است."
+        description="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربر"
+      >
+      </t-card>
+    </div>
     <div class="w-full md:w-1/2">
       <div>#zia</div>
-      <t-stepper
-        v-model="stepper"
-        :items="stepperItems"
-      ></t-stepper>
+      <t-stepper v-model="stepper" :items="stepperItems"></t-stepper>
       <div class="my-2">
         <div class="mb-1">custom stepper</div>
         <t-stepper v-model="stepper" :items="stepperItems" clickable>
@@ -105,13 +125,55 @@
             <div v-else-if="isActive">
               <div class="w-4 h-4 bg-primary-400 rounded-full"></div>
             </div>
-            <div v-else class="mt-1 mr-1"><t-icon name="lock"></t-icon></div>
+            <div v-else class="mt-1 mr-1">
+              <t-icon name="lock"></t-icon>
+            </div>
           </template>
         </t-stepper>
       </div>
     </div>
 
-    <div class="w-60 my-2">
+    <div class="my-4 w-full">
+      <div>#zia</div>
+      <div class="bg-gray-100 pl-6 py-5 sm:p-8">
+        <t-timeline
+          v-model="stepper"
+          :items="stepperItems"
+          :clickable="true"
+        ></t-timeline>
+      </div>
+    </div>
+
+    <div>
+      <div>#zia</div>
+
+      <t-tooltip
+        message="test hover message for you"
+        variant="danger"
+        position="right"
+      >
+        <t-button variant="danger" outline ripple>hover on me</t-button>
+      </t-tooltip>
+
+      <div class="my-4">with v-model</div>
+      <t-tooltip
+        v-model="tooltip"
+        message="test hover message for you"
+        variant="danger"
+        position="right"
+        :hover="false"
+      >
+        <t-button
+          @mouseover="tooltip = true"
+          @mouseleave="tooltip = false"
+          variant="danger"
+          outline
+          ripple
+          >hover on me</t-button
+        >
+      </t-tooltip>
+    </div>
+    <div class="w-60 my-4">
       <div>#zia</div>
       <t-progress-bar :value="30"></t-progress-bar>
     </div>
@@ -135,6 +197,7 @@
         v-model="numberPickerCount"
       ></t-number-picker>
     </div>
+
     <div>
       <div>#zia</div>
       <t-modal
@@ -211,8 +274,8 @@
         </div>
       </t-bottom-sheet>
       <t-button @click="bottomSheet = true" variant="warning"
-        >open bottomSheet</t-button
-      >
+        >open bottomSheet
+      </t-button>
     </div>
 
     <div>
@@ -253,7 +316,7 @@
     </div>
     <div class="w-full">
       <div>#zia</div>
-      <t-skeleton type="card" class="max-w-sm"> </t-skeleton>
+      <t-skeleton type="card" class="max-w-sm"></t-skeleton>
     </div>
 
     <div>
@@ -347,10 +410,15 @@ import TabItemChildTest from "@/components/TabItemChildTest.vue";
 import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
 import TIcon from "@/components/tailwind/TIcon.vue";
+import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
+import TCard from "@/components/tailwind/card/TCard.vue";
+import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
+import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTooltip,
     TIcon,
     TStepper,
     TToast,
@@ -368,7 +436,10 @@ export default defineComponent({
     TSwitch,
     TModal,
     TNumberPicker,
-    TButton
+    TButton,
+    TCard,
+    TTimeline,
+    TAccordion
   },
   setup() {
     const numberPickerCount = ref<number>(3);
@@ -406,7 +477,31 @@ export default defineComponent({
       { label: "t", text: "tailwind", value: "t" },
       { label: "v", text: "vue", locked: true }
     ];
+    const tooltip = ref(false);
+    const accourdionItems = ref([
+      {
+        title: "title is",
+        text:
+          "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
+        selected: true
+      },
+      {
+        title: "title is",
+        text:
+          "o do this, load the v3 site key as documented, and then explicitly renderv2 using grecaptcha.render. You are allowed to hide the badge as long asyou include the reCAPTCHA branding visibly in the user flow. Pleaseinclude the following text: Yes, please use"
+      }
+    ]);
+    // setTimeout(() => {
+    //   accourdionItems.value.push({
+    //     title: "added item is",
+    //     text:
+    //       "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
+    //     selected: true
+    //   });
+    // }, 500);
     return {
+      accourdionItems,
+      tooltip,
       stepper,
       stepperItems,
       toast1,

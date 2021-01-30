@@ -18,6 +18,18 @@
 .rtl{
     direction: rtl;
 }
+.border-r-transparent{
+    border-right-color: transparent;
+}
+.border-l-transparent{
+    border-left-color: transparent;
+}
+.border-t-transparent{
+    border-top-color: transparent;
+}
+.border-b-transparent{
+    border-bottom-color: transparent;
+}
 .scrollbar-hidden::-webkit-scrollbar {
     width: 0;
     background: transparent; /* make scrollbar transparent */

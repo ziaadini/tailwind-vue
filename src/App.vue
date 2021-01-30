@@ -7,7 +7,27 @@
   </div>
   <router-view />
 </template>
-
+<script lang="ts">
+import { defineComponent, provide } from "vue";
+export default defineComponent({
+  setup() {
+    provide("TSettings", {
+      tabs: {
+        header: {
+          add: "hover:bg-gray-100 py-3",
+          delete: ["py-4"],
+          replace: { "text-gray-600": "text-gray-700" }
+        }
+      },
+      card: {
+        title: {
+          add: "text-danger"
+        }
+      }
+    });
+  }
+});
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

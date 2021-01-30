@@ -2,14 +2,16 @@
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
     <div
       :class="{ hidden: !modelValue }"
-      class="fixed top-0 w-full h-full bg-gray-900 opacity-50"
+      class="fixed z-20 top-0 w-full h-full bg-gray-900 opacity-50"
       @click="close"
     ></div>
     <div
-      class="fixed top-0  bg-white transform duration-300"
+      class="fixed z-30 top-0 bg-white transform duration-300"
       :class="[
         {
-          [left ? '-translate-x-full' : 'translate-x-full']: !modelValue,
+          [left
+            ? '-translate-x-full -right-full'
+            : 'translate-x-full -right-full']: !modelValue,
           [left ? 'rounded-r-md' : 'rounded-l-md']: rounded
         },
         left ? 'left-0' : 'right-0',
