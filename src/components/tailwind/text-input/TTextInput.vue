@@ -37,6 +37,7 @@
         'text-right': isRight,
         'text-center': isCenter,
         'text-left': isLeft,
+        'border-2 border-red-400': error
       }"
     />
     <div
@@ -128,6 +129,12 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    error: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    
   },
   computed: {
     isRight(): boolean {
