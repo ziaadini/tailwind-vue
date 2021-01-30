@@ -51,7 +51,6 @@
       Message This is a Test Message
     </t-alert>
     <t-alert variant="success">
-      This is a Test Message
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -62,10 +61,9 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
-      Message This is a Test Message
+      Message This is a Test Message This is a Test Message
     </t-alert>
     <t-alert variant="danger" icon="bookmarks">
-      This is a Test Message
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -76,10 +74,9 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
-      Message This is a Test Message
+      Message This is a Test Message This is a Test Message
     </t-alert>
     <t-alert variant="warning" icon="bookmarks">
-      This is a Test Message
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -90,7 +87,7 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message This is a Test
-      Message This is a Test Message
+      Message This is a Test Message This is a Test Message
     </t-alert>
   </div>
 
@@ -98,6 +95,15 @@
   <h6>
     TEXT INPUT
   </h6>
+
+  <TextInput
+    placeholder="some test placeholder"
+    v-model="text"
+    :value="'error'"
+    variant="primary"
+    right-icon="bookmarks"
+    error
+  />
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
       placeholder="some test placeholder"
@@ -246,6 +252,7 @@
       v-model="dropdownModel"
       v-model:opened="dropdownOpened"
       outline
+      hover
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
