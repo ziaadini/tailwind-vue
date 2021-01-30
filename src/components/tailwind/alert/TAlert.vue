@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 border-r-4 rounded-sm px-4 py-3"
+    class="mb-4 border-r-4 rounded-sm px-4 py-4"
     v-if="show"
     :class="wrapperColor"
     role="alert"
@@ -48,7 +48,7 @@ export default defineComponent({
   },
   computed: {
     shade(): string {
-      return `bg-${this.variant}-100 text-${this.variant}-900 border-${this.variant}-50`;
+      return `bg-${this.variant}-50 text-${this.variant} border-${this.variant}-50`;
     },
     wrapperColor(): string {
       return this.shade;

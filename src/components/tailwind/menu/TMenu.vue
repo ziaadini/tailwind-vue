@@ -1,19 +1,17 @@
 <template>
-  <div class="relative">
+  <div
+    class="relative"
+    @mouseenter="hover && openClose(true)"
+    @mouseleave="hover && openClose(false)"
+  >
     <div
+      ref="menuRef"
       class=" relative flex items-center focus:outline-none min-w-full "
-      @click="!disabled && (open = !open)"
+      @click="openClose"
     >
       <slot name="button"></slot>
     </div>
 
-    <!-- to close when clicked on space around it-->
-    <button
-      class="fixed inset-0 h-full w-full cursor-default focus:outline-none"
-      v-if="open"
-      @click="open = false"
-      tabindex="-1"
-    ></button>
     <!--dropdown menu-->
     <transition
       enter-active-class="transition-all duration-200 ease-out"
@@ -29,6 +27,7 @@
           'right-0': placement === 'right',
           'left-0': placement !== 'right',
           'w-full': full,
+          'z-20': hover
         }"
         v-if="open && !disabled"
       >
@@ -39,8 +38,9 @@
 </template>
 
 <script lang="ts">
+import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
   props: {
@@ -59,9 +59,21 @@ export default defineComponent({
       default: false,
       type: Boolean,
     },
+    hover: {
+      type: Boolean,
+      default: false,
+      required: false,
+    }
   },
-  setup() {
+  setup(props) {
     const open = ref(false);
+
+    const {
+      clickedOutside,
+      elementRef: menuRef,
+      registerEvent,
+      unRegisterEvent,
+    } = useClickOutside();
 
     const onEscape = (e) => {
       if (e.key === "Esc" || e.key === "Escape") {
@@ -70,8 +82,32 @@ export default defineComponent({
     };
     useKeyDown(onEscape);
 
+    watch(clickedOutside, (value) => {
+      console.log("watch clickoutside", value);
+      if (value) {
+        open.value = false;
+      }
+    });
+
+    watchEffect(() => {
+      if (open.value) {
+        registerEvent();
+      } else {
+        unRegisterEvent();
+      }
+    });
+
+    const openClose = (value = null as any) => {
+      console.log("open close", value);
+      if (!props.disabled) {
+        open.value = value !== null ? value : !open.value;
+      }
+    };
+
     return {
       open,
+      menuRef,
+      openClose,
     };
   },
 });

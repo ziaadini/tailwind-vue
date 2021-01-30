@@ -1,7 +1,7 @@
 <template>
   <div
-    class="w-0 h-0"
-    :class="[triangleClassByDirection, `border-${variant}`]"
+      class="w-0 h-0"
+      :class="[triangleClassByDirection, `border-${variant}`]"
   ></div>
 </template>
 
@@ -16,7 +16,7 @@ export default defineComponent({
       type: String as PropType<string>,
       validator: (value: string) => {
         return ["arrow-up", "arrow-down", "arrow-right", "arrow-left"].includes(
-          value
+            value
         );
       },
       default: "arrow-left"
