@@ -2,7 +2,7 @@
   <div class="relative w-96 h-96 bg-gray-100 overflow-hidden">
     <div class="absolute w-full h-full">
       <img
-        v-for="(link, index) in links"
+        v-for="(link, index) in modelValue"
         :key="index + 'img-link'"
         class="absolute w-full h-full transition transform-gpu origin-center duration-500 delay-150 opacity-0"
         :class="[
@@ -11,9 +11,8 @@
           activeIndex !== index &&
             `${rotate && 'rotate-90'} ${scale && 'scale-150'}`,
         ]"
-        :src="link"
+        :src="link.url"
         alt=""
-        :style="{ '--besides-size': besidesSize }"
       />
     </div>
     <div class="absolute transform right-0 top-1/2 -translate-y-1/2">
@@ -72,16 +71,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-    links: {
-      type: Array as PropType<string[]>,
-      required: true,
-      default: [],
-    },
-    besidesSize: {
-      type: String,
-      required: false,
-      default: null,
-    },
     autoPlay: {
       type: Boolean,
       default: true,
@@ -92,11 +81,22 @@ export default defineComponent({
       default: 2000,
       required: false,
     },
+    modelValue: {
+      type: Array as PropType<{ value: number; url: string }[]>,
+      default: 2000,
+      required: false,
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const activeIndex = ref(0);
 
-    const { vertical, horizontal, autoPlay, autoPlaceInterval } = toRefs(props);
+    const {
+      vertical,
+      horizontal,
+      autoPlay,
+      autoPlaceInterval,
+      modelValue,
+    } = toRefs(props);
 
     const verticalClasses = (index: number) =>
       vertical.value && {
@@ -109,9 +109,17 @@ export default defineComponent({
         "translate-x-full opacity-100": index === activeIndex.value,
         "right-full top-0": true,
       };
-    //  rotate-90
+
+    const itemChangedEvent = () => {
+      emit(
+        "itemChanged",
+        modelValue.value[activeIndex.value].value || activeIndex
+      );
+    };
+
     const changeActiveIndex = (value: number) => {
       activeIndex.value = activeIndex.value + value;
+      itemChangedEvent();
     };
 
     const leftDisabled = computed(() => {
@@ -119,7 +127,7 @@ export default defineComponent({
     });
 
     const rightDisabled = computed(() => {
-      return activeIndex.value === props.links.length - 1;
+      return activeIndex.value === props.modelValue.length - 1;
     });
 
     let interval;
@@ -130,8 +138,8 @@ export default defineComponent({
         interval = setInterval(() => {
           if (rightDisabled.value) increment = false;
           else if (leftDisabled.value) increment = true;
-          if (increment) activeIndex.value++;
-          else activeIndex.value--;
+          if (increment) changeActiveIndex(+1);
+          else changeActiveIndex(-1);
         }, autoPlaceInterval.value);
       } else {
         interval && clearInterval(interval);
