@@ -105,7 +105,7 @@ export default defineComponent({
       const outlineBaseClass =
         " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
       return props.outline
-        ? `bg-white border-${props.variant} hover:bg-${props.variant}-50` +
+        ? `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50` +
             outlineBaseClass
         : `
         bg-${props.variant} hover:bg-${props.variant}
