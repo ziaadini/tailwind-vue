@@ -7,12 +7,14 @@
   >
     <div
       class="cursor-pointer w-64 h-10 flex items-center justify-center"
-      :class="{
-        'rounded-full': rounded && !state.opened,
-        'rounded-md': rounded && state.opened,
-        'rounded-b-none': rounded && state.opened,
-        [parentClass]: true,
-      }"
+      :class="[
+        {
+          'rounded-full': rounded && !state.opened,
+          'rounded-md': rounded && state.opened,
+          'rounded-b-none': rounded && state.opened,
+        },
+        parentClass,
+      ]"
       @click="openClose(true)"
     >
       {{ selectedItem.label || placeholder }}
@@ -20,8 +22,13 @@
 
     <div
       v-show="state.opened"
-      :class="{ 'opacity-0': !state.opened, 'rounded-b-md': rounded }"
-      class="duration-500 ease-in-out cursor-pointer z-10 transition w-64 absolute bg-white shadow"
+      :class="{
+        'opacity-0': !state.opened,
+        'rounded-b-md': rounded,
+        'z-30': !hover,
+        'z-40': hover,
+      }"
+      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
