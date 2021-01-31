@@ -13,9 +13,9 @@
           'right-1/2 translate-x-1/2': isTop || isBottom,
           'left-full': isRight,
           'right-full': isLeft,
-          'bottom-1/2 translate-y-1/2': isRight || isLeft,
+          'bottom-1/2 translate-y-1/2': isRight || isLeft
         },
-        { 'h-0 w-0 overflow-hidden scale-75 opacity-0': !isShow },
+        { 'h-0 w-0 overflow-hidden scale-75 opacity-0': !isShow }
       ]"
     >
       <div
@@ -24,7 +24,7 @@
           'flex-col': isBottom,
           'flex-col-reverse': isTop,
           'flex-row-reverse': isRight,
-          'flex-row': isLeft,
+          'flex-row': isLeft
         }"
       >
         <t-triangle
@@ -44,6 +44,7 @@
 import { defineComponent, PropType, computed, ref, watchEffect } from "vue";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 import { variants } from "@/utility/css-helper";
+
 export default defineComponent({
   name: "TTooltip",
   inheritAttrs: false,
@@ -52,7 +53,7 @@ export default defineComponent({
       type: String as PropType<string>,
       validator: (value: string) =>
         ["right", "left", "top", "bottom"].includes(value),
-      default: "top",
+      default: "top"
     },
     variant: {
       type: String,
@@ -61,20 +62,20 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     modelValue: {
       type: Boolean,
-      default: false,
+      default: false
     },
     hover: {
       type: Boolean,
-      default: () => true,
+      default: () => true
     },
     message: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: { TTriangle },
   setup(props, { emit }) {
@@ -109,6 +110,8 @@ export default defineComponent({
           return "arrow-left";
         case "left":
           return "arrow-right";
+        default:
+          return "";
       }
     });
 
@@ -125,8 +128,8 @@ export default defineComponent({
       isTop,
       isRight,
       isBottom,
-      isLeft,
+      isLeft
     };
-  },
+  }
 });
 </script>

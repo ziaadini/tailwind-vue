@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import TIcon from "@/components/icon/TIcon.vue";
+import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper";
 import { defineComponent } from "vue";
 
