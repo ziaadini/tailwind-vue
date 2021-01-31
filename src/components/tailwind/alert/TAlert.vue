@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 border-r-4 rounded-sm px-4 py-4"
+    class="mb-4 shadow-sm border-r-4 rounded-sm px-4 py-4"
     v-if="show"
     :class="wrapperColor"
     role="alert"
@@ -11,7 +11,7 @@
       </div>
 
       <div>
-        <p class="text-sm">
+        <p class="text-sm text-right">
           <slot></slot>
         </p>
       </div>
