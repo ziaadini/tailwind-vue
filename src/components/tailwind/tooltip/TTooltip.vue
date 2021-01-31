@@ -44,6 +44,7 @@
 import { defineComponent, PropType, computed, ref, watchEffect } from "vue";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 import { variants } from "@/utility/css-helper";
+
 export default defineComponent({
   name: "TTooltip",
   inheritAttrs: false,
