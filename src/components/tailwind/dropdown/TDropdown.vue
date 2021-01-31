@@ -1,7 +1,6 @@
 <template>
   <div
     class="relative"
-    ref="dropdownRef"
     @mouseenter="hover && openClose(true)"
     @mouseleave="hover && openClose(false)"
   >
@@ -21,22 +20,25 @@
     </div>
 
     <div
-      v-show="state.opened"
+      ref="dropdownRef"
       :class="{
-        'opacity-0': !state.opened,
+        'opacity-0 -translate-y-1/2 z-0 scale-y-0': !state.opened,
         'rounded-b-md': rounded,
         'z-30': !hover,
         'z-40': hover,
       }"
-      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
+      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
           class="py-2"
-          :class="{
-            [childClass]: true,
-            'rounded-b-md': index + 1 === items.length && rounded,
-          }"
+          :class="[
+            childClass,
+            {
+              'rounded-b-md': index + 1 === items.length && rounded,
+            },
+          ]"
+          @click="selectItem(item.value)"
         >
           {{ item.label }}
         </div>
@@ -53,8 +55,6 @@ import {
   defineComponent,
   PropType,
   reactive,
-  onMounted,
-  ref,
   toRefs,
   watch,
   watchEffect,
@@ -77,7 +77,7 @@ export default defineComponent({
     },
     outline: {
       type: Boolean,
-      default: false,
+      default: true,
       required: false,
     },
     placeholder: {
@@ -107,7 +107,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
-    const outlineClass = `border-${props.variant} border-2 hover:bg-${props.variant}-50 hover:shadow`;
+    const outlineClass = `border-${props.variant}-50 shadow-sm border hover:bg-${props.variant}-50 hover:shadow`;
     const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:text-white focus:border-${props.variant} transition`;
 
     const state = reactive({
