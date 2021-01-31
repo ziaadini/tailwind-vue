@@ -37,7 +37,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import AppIcon from "@/components/icon/TIcon.vue";
+import AppIcon from "@/components/tailwind/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
