@@ -108,7 +108,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
     const outlineClass = `border-${props.variant}-50 shadow-sm border hover:bg-${props.variant}-50 hover:shadow`;
-    const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:text-white focus:border-${props.variant} transition`;
+    const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:opacity-60 focus:border-${props.variant} transition`;
 
     const state = reactive({
       selected: null as any,
