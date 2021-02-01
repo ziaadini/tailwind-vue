@@ -57,6 +57,7 @@
   transform:scale(10,10);
   background-image: radial-gradient( circle , #fff 10%, transparent 10%);
   transition: transform 0.3s ,opacity 1s;
+  z-index: -1;
   @apply block absolute w-full h-full top-0 left-0  opacity-0
 }
 .ripple:active::after{

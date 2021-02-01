@@ -1,38 +1,43 @@
 <template>
   <!-- This is an example component -->
   <button
-    :class="{
-      'rounded-full': rounded,
-      [variantClasses]: true,
-      ripple,
-      'w-full': full,
-    }"
-    class="shadow relative rounded-sm block border-1 focus:outline-none flex justify-center align-center "
+    :class="[
+      {
+        'rounded-full': rounded,
+        ripple,
+        'w-full': full,
+      },
+      variantClasses,
+    ]"
+    class="shadow relative rounded-sm border-1 focus:outline-none"
     v-bind="$attrs"
   >
-    <div class="contents">
-      <app-icon
-        :name="icon"
-        :class="{
-          'opacity-0': loading,
-        }"
-      />
-      <span
-        :class="{
-          'opacity-0': loading,
-        }"
-      >
-        <slot />
-      </span>
-    </div>
-    <div
-      v-if="loading"
-      :class="{
-        'absolute transform top-1/2 -translate-y-1/2': loading,
-      }"
-    >
-      <t-loading v-bind="{ ...loadingProps }" size="sm" />
-    </div>
+    <component :is="wrapperComponent" :to="to" class="contents">
+      <div class=" flex justify-center align-center px-4 py-2">
+        <app-icon
+          :name="icon"
+          :class="{
+            'opacity-0': loading,
+          }"
+        />
+        <span
+          :class="{
+            'opacity-0': loading,
+          }"
+        >
+          <slot />
+        </span>
+
+        <div
+          v-if="loading"
+          :class="{
+            'absolute transform top-1/2 -translate-y-1/2': loading,
+          }"
+        >
+          <t-loading v-bind="{ ...loadingProps }" size="sm" />
+        </div>
+      </div>
+    </component>
   </button>
 </template>
 <script lang="ts">
@@ -68,6 +73,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    nuxt: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
     full: {
       type: Boolean,
       default: false,
@@ -78,6 +88,11 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    to: {
+      type: String,
+      required: false,
+      default: "",
+    },
   },
   components: {
     AppIcon,
@@ -86,11 +101,11 @@ export default defineComponent({
   setup(props) {
     const variantClasses = computed((): string => {
       const baseClass =
-        " hover:opacity-80 transition text-white disabled:opacity-50 px-4 py-2 ";
+        " hover:opacity-80 transition hover:shadow-md text-white disabled:opacity-50";
       const outlineBaseClass =
-        " transition border-2 px-4 py-2 text-dark  hover:opacity-80 disabled:opacity-50";
+        " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
       return props.outline
-        ? `bg-white border-${props.variant} hover:bg-${props.variant}-50` +
+        ? `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50` +
             outlineBaseClass
         : `
         bg-${props.variant} hover:bg-${props.variant}
@@ -100,9 +115,16 @@ export default defineComponent({
     const loadingProps = {
       variant: props.outline ? props.variant : "white",
     };
+
+    const wrapperComponent = props.to
+      ? props.nuxt
+        ? "nuxt-link"
+        : "router-link"
+      : "template";
     return {
       variantClasses,
       loadingProps,
+      wrapperComponent,
     };
   },
 });
