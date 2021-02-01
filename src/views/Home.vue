@@ -130,6 +130,12 @@
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
+      variant="white"
+      right-icon="bookmarks"
+    />
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
       variant="primary"
       right-icon="bookmarks"
     />
@@ -167,6 +173,13 @@
     raised buttons
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      variant="white"
+      right-icon="bookmarks"
+      :outline="false"
+    />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"

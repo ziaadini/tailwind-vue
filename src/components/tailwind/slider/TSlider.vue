@@ -1,11 +1,10 @@
 <template>
-  {{ content }}
   <div v-bind="$attrs" class="relative">
     <div
       ref="slidesContainer"
-      class="overflow-auto whitespace-nowrap scroll w-full h-full scroll-smooth"
+      class="overflow-auto whitespace-nowrap scrollbar-hidden w-full h-full scroll-smooth"
     >
-      <template class="contents" ref="content"> <slot /></template>
+      <template class="contents " ref="content"> <slot /></template>
     </div>
     <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
       <slot name="leftButton" :scrollLeft="onScrollLeft" />
