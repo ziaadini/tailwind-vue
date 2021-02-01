@@ -278,32 +278,74 @@
     </t-menu>
   </div>
 
+  <br />
   <h6>
     DROPDOWN
   </h6>
-  {{ dropdownModel }}
-  <!-- <div ref="triggerDropdown">
-    <t-button
-      ripple
-      variant="warning"
-      icon="bookmarks"
-      @click="dropdownOpened = !dropdownOpened"
-      >trigger dropdown</t-button
-    >
-  </div> -->
-  dropdownOpened:
-  {{ dropdownOpened }}
+  <small> simple dropdown </small>
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
-      v-model:opened="dropdownOpened"
-      outline
       hover
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
     />
-    <t-dropdown placeholder="تست" :items="['test1', 'test2', 'test3']" />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="danger"
+    />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="success"
+    />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="warning"
+    />
+  </div>
+  <br />
+  <small> raised dropdown </small>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-dropdown
+      v-model="dropdownModel"
+      :outline="false"
+      hover
+      placeholder="this is a test placeholder"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      rounded
+      variant="danger"
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      variant="success"
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      variant="warning"
+      rounded
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
   </div>
 
   <h6>
