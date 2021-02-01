@@ -169,8 +169,8 @@
           variant="danger"
           outline
           ripple
-          >hover on me</t-button
-        >
+          >hover on me
+        </t-button>
       </t-tooltip>
     </div>
     <div class="w-60 my-4">
@@ -325,6 +325,16 @@
     </div>
     <div>
       <div>#zia</div>
+      <t-range-slider
+        :min="0"
+        :max="10000"
+        v-model:max-value="rangeMax"
+        v-model:min-value="rangeMin"
+      ></t-range-slider>
+      min: {{ Math.floor(rangeMin) }} max: {{ Math.floor(rangeMax) }}
+    </div>
+    <div>
+      <div>#zia</div>
       <t-toast v-model="toast1">
         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
         از طراحان گرافیک است.
@@ -414,10 +424,12 @@ import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
 import TCard from "@/components/tailwind/card/TCard.vue";
 import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
 import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
+import TRangeSlider from "@/components/tailwind/rangeSlider/TRangeSlider.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TRangeSlider,
     TTooltip,
     TIcon,
     TStepper,
@@ -499,7 +511,11 @@ export default defineComponent({
     //     selected: true
     //   });
     // }, 500);
+    const rangeMax = ref(8000);
+    const rangeMin = ref(0);
     return {
+      rangeMax,
+      rangeMin,
       accourdionItems,
       tooltip,
       stepper,
