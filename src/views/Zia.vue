@@ -5,13 +5,16 @@
       <div>
         <t-accordion :items="accourdionItems"></t-accordion>
       </div>
-      <h3 class="my-3">custom title</h3>
+      <h3 class="my-3">custom title&text</h3>
       <t-accordion :items="accourdionItems">
         <template #title="{title,show}">
           <div class="cursor-pointer" :class="{ 'text-danger-500': show }">
             {{ title }}
           </div>
         </template>
+        <template #text="{text}"
+          ><div class="text-danger">{{ text }}</div></template
+        >
       </t-accordion>
     </div>
 
