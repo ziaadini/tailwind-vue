@@ -4,9 +4,8 @@
       <img
         v-for="(link, index) in modelValue"
         :key="index + 'img-link'"
-        class="absolute w-full h-full transition transform-gpu origin-center duration-500 delay-150 opacity-0"
+        class="absolute w-full h-full transition transform origin-center duration-500 delay-150"
         :class="[
-          verticalClasses(index),
           horizontalClasses(index),
           activeIndex !== index &&
             `${rotate && 'rotate-90'} ${scale && 'scale-150'}`,
@@ -15,7 +14,7 @@
         alt=""
       />
     </div>
-    <div class="absolute transform right-0 top-1/2 -translate-y-1/2">
+    <div class="absolute transform right-0 top-1/2 -translate-y-1/2 z-20">
       <slot
         name="rightButton"
         :leftDisabled="leftDisabled"
@@ -24,7 +23,7 @@
         :back="() => changeActiveIndex(-1)"
       />
     </div>
-    <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
+    <div class="absolute transform left-0 top-1/2 -translate-y-1/2 z-20">
       <slot
         name="leftButton"
         :leftDisabled="leftDisabled"
@@ -33,7 +32,7 @@
         :back="() => changeActiveIndex(-1)"
       />
     </div>
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
       <slot />
     </div>
   </div>
@@ -52,16 +51,6 @@ import {
 
 export default defineComponent({
   props: {
-    vertical: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    horizontal: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
     scale: {
       type: Boolean,
       required: false,
@@ -96,26 +85,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const activeIndex = ref(0);
 
-    const {
-      vertical,
-      horizontal,
-      autoPlay,
-      autoPlaceInterval,
-      modelValue,
-      index,
-    } = toRefs(props);
+    const { autoPlay, autoPlaceInterval, modelValue, index } = toRefs(props);
 
-    const verticalClasses = (index: number) =>
-      vertical.value && {
-        "translate-y-full opacity-0": index !== activeIndex.value,
-        "translate-y-0  opacity-100": index === activeIndex.value,
-      };
-
-    const horizontalClasses = (index: number) =>
-      horizontal.value && {
-        "translate-x-full opacity-100": index === activeIndex.value,
-        "right-full top-0": true,
-      };
+    const horizontalClasses = (index: number) => ({
+      "translate-x-0 top-0 z-20": index === activeIndex.value,
+      "-translate-x-full top-0": activeIndex.value - index > 0,
+      "translate-x-full top-0": activeIndex.value - index < 0,
+    });
 
     const itemChangedEvent = () => {
       emit(
@@ -158,7 +134,6 @@ export default defineComponent({
     });
 
     return {
-      verticalClasses,
       horizontalClasses,
       changeActiveIndex,
       activeIndex,
