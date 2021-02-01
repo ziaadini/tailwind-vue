@@ -1,5 +1,10 @@
 <template>
-  <div class="relative" ref="dropdownRef">
+  <div
+    class="relative"
+    ref="dropdownRef"
+    @mouseenter="hover && openClose(true)"
+    @mouseleave="hover && openClose(false)"
+  >
     <div
       class="cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="{
@@ -16,7 +21,7 @@
     <div
       v-show="state.opened"
       :class="{ 'opacity-0': !state.opened, 'rounded-b-md': rounded }"
-      class="duration-500 ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
+      class="duration-500 ease-in-out cursor-pointer z-10 transition w-64 absolute bg-white shadow"
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
@@ -78,6 +83,11 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    hover: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
     items: {
       default: [],
       type: Array as PropType<DropDown.Root>,
@@ -90,8 +100,8 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
-    const outlineClass = `border-${props.variant} hover:bg-${props.variant}-50 hover:shadow`;
-    const childClass = `bg-${props.variant}-100 hover:bg-${props.variant}-200 hover:text-white focus:border-${props.variant} transition`;
+    const outlineClass = `border-${props.variant} border-2 hover:bg-${props.variant}-50 hover:shadow`;
+    const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:text-white focus:border-${props.variant} transition`;
 
     const state = reactive({
       selected: null as any,
