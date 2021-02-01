@@ -171,14 +171,24 @@ export default defineComponent({
     const variantClasses = computed((): string => {
       let classes = "";
       if (!props.outline) {
-        classes += `text-white ${
+        classes += `${
+          props.variant === variants.white ? "text-dark" : "text-white"
+        } ${
           props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
-        } text-input-placehoder-white`;
+        } ${
+          props.variant === variants.white
+            ? " placeholder-gray-300"
+            : " placeholder-white"
+        }`;
       } else {
-        classes += `bg-white text-input-placehoder-black text-darkborder ${
+        classes += `bg-white text-input-placehoder-black text-dark border ${
           props.error
-            ? "bg-red-50 border-red-200"
-            : ` border-${props.variant}-50 focus:border-${props.variant} hover:bg-${props.variant}-50 `
+            ? " border-red-500"
+            : ` border-${
+                props.variant === variants.white ? "gray" : props.variant
+              }-50 focus:border-${
+                props.variant === variants.white ? "gray-400" : ""
+              } hover:bg-${props.variant}-50 `
         }`;
       }
 
@@ -219,40 +229,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.text-input-placehoder-white {
-  &::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: white;
-  }
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    color: white;
-  }
-  &:-ms-input-placeholder {
-    /* IE 10+ */
-    color: white;
-  }
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    color: white;
-  }
-}
-.text-input-placehoder-black {
-  &::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: black;
-  }
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    color: black;
-  }
-  &:-ms-input-placeholder {
-    /* IE 10+ */
-    color: black;
-  }
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    color: black;
-  }
-}
 </style>
