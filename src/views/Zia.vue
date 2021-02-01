@@ -326,10 +326,12 @@
     <div>
       <div>#zia</div>
       <t-range-slider
+        :min="0"
+        :max="10000"
         v-model:max-value="rangeMax"
         v-model:min-value="rangeMin"
       ></t-range-slider>
-      min: {{rangeMin}}
+      min: {{ Math.floor(rangeMin) }} max: {{ Math.floor(rangeMax) }}
     </div>
     <div>
       <div>#zia</div>

@@ -6,34 +6,38 @@
       ></div>
 
       <div
-        class="absolute z-20 top-0 bottom-0 rounded-md bg-green-300"
+        class="absolute z-20 top-0 bottom-0 rounded-md"
+        :class="`bg-${variant}`"
         :style="'right:' + maxThumb + '%; left:' + minThumb + '%'"
       ></div>
 
       <div
-        class="absolute z-30 w-6 h-6 top-0 left-0 bg-green-300 rounded-full -mt-2 -ml-1"
+        v-if="!disableMin"
+        class="absolute z-30 w-6 h-6 top-0 left-0 rounded-full cursor-pointer -mt-2 -ml-3"
+        :class="`bg-${variant}`"
         :style="'left: ' + minThumb + '%'"
         v-bind="minEvents"
-      ></div>
+      >
+        <slot name="min-inner" :minValue="minValue"></slot>
+      </div>
 
       <div
-        class="absolute z-30 w-6 h-6 top-0 right-0 bg-green-300 rounded-full -mt-2 -mr-3"
+        v-if="!disableMax"
+        class="absolute z-30 w-6 h-6 top-0 right-0 rounded-full cursor-pointer -mt-2 -mr-3"
+        :class="`bg-${variant}`"
         :style="'right: ' + maxThumb + '%'"
-      ></div>
+        v-bind="maxEvents"
+      >
+        <slot name="max-inner" :maxValue="maxValue"></slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  watch,
-  watchEffect
-} from "vue";
-import { useSwipeElement } from "@/compositionFunctions/swipe";
+import { defineComponent, onMounted, ref } from "vue";
+import { useRangeMax, useRangeMin } from "@/compositionFunctions/rangeSlider";
+import { variants } from "@/utility/css-helper";
 
 export default defineComponent({
   name: "TRangeSlider",
@@ -48,11 +52,11 @@ export default defineComponent({
   props: {
     min: {
       type: Number,
-      default: 100
+      default: 0
     },
     max: {
       type: Number,
-      default: 10000
+      default: 0
     },
     minValue: {
       type: Number,
@@ -61,69 +65,64 @@ export default defineComponent({
     maxValue: {
       type: Number,
       default: 0
+    },
+    disableMin: {
+      type: Boolean,
+      default: () => false
+    },
+    disableMax: {
+      type: Boolean,
+      default: () => false
+    },
+
+    variant: {
+      type: String,
+      default: "success",
+      validator: (propValue: string) => {
+        return !!variants[propValue];
+      }
     }
   },
   setup(props, { emit }) {
-    const range = props.max - props.min;
+    const rangeArea = props.max - props.min;
     const container = ref<any>(null);
-    const containerWith = ref(0);
+    const containerWidth = ref(0);
     onMounted(() => {
-      containerWith.value = container.value?.scrollWidth;
+      if (props.minValue < props.min || props.minValue > props.max) {
+        console.error("t-range-slider : minValue is out of range");
+      }
+      if (props.maxValue < props.min || props.maxValue > props.max) {
+        console.error("t-range-slider : maxvalue is out of range");
+      }
+      if (props.min === props.max) {
+        console.error(
+          "t-range-slider : range area is invalid min and max are equal"
+        );
+      } else if (props.min > props.max) {
+        console.error(
+          "t-range-slider : range area is invalid max is bigger than min"
+        );
+      }
+      containerWidth.value = container.value?.scrollWidth;
     });
-    const minThumb = computed(
-      () => ((props.minValue - props.min) * 100) / range
+    const { minThumb, minEvents } = useRangeMin(
+      containerWidth,
+      rangeArea,
+      props,
+      { emit }
     );
-    const maxThumb = computed(
-      () => ((props.max - props.maxValue) * 100) / range
+    const { maxThumb, maxEvents } = useRangeMax(
+      containerWidth,
+      rangeArea,
+      props,
+      { emit }
     );
-    const {
-      bind: minEvents,
-      state: minState,
-      xDiff: minSwipeDiff,
-      reset: minReset
-    } = useSwipeElement();
 
-    const emitByMaxPercent = pMax => {
-      const maxValue = props.max - (pMax * range) / 100;
-      emit("update:maxValue", maxValue);
-    };
-    const emitByMinPercent = pMin => {
-      //pMin
-      const minValue = (pMin * range) / 100 + props.min;
-      if (minValue <= props.min) {
-        emit("update:minValue", props.min);
-      } else if (minValue >= props.maxValue) {
-        emit("update:minValue", props.maxValue);
-      } else {
-        emit("update:minValue", minValue);
-      }
-    };
-    let initialMin = minThumb.value;
-    watch(
-      () => minState.isTouching,
-      () => {
-        if (minState.isTouching) {
-          initialMin = minThumb.value;
-        } else {
-          initialMin = 0;
-        }
-      }
-    );
-    const getMinPercent = computed(() => {
-      const percent = (minSwipeDiff.value * 100) / containerWith.value;
-      return percent + initialMin;
-    });
-
-    watch(
-      () => minSwipeDiff.value,
-      () => {
-        emitByMinPercent(getMinPercent.value);
-      }
-    );
     return {
       minThumb,
-      maxThumb,
       minEvents,
+      maxThumb,
+      maxEvents,
       container
     };
   }
