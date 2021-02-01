@@ -77,7 +77,7 @@ export default defineComponent({
 
     variant: {
       type: String,
-      default: "success",
+      default: "primary",
       validator: (propValue: string) => {
         return !!variants[propValue];
       }
