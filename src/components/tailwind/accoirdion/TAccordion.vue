@@ -14,10 +14,14 @@
     </template>
     <template v-else>
       <div
-        :class="{
-          'cursor-pointer': !item.disabled,
-          'cursor-not-allowed': item.disabled
-        }"
+        data-name="accordion-title"
+        :class="[
+          {
+            [renderClass('cursor-pointer', 'title-enabled')]: !item.disabled,
+            [renderClass('cursor-not-allowed', 'title-disabled')]: item.disabled
+          },
+          renderClass('', 'title')
+        ]"
         @click="toggle(index)"
       >
         {{ item.title }}
@@ -25,17 +29,37 @@
     </template>
 
     <template v-if="hasTextSlot">
-      <slot
-        name="text"
-        :show="bindToAnimate[index] ? bindToAnimate[index]['data-show'] : false"
-        v-bind="item"
-        :index="index"
-      ></slot>
+      <div
+        data-name="accordion-text"
+        :class="
+          renderClass(
+            'transform transition-all overflow-hidden duration-300',
+            'text'
+          )
+        "
+        v-bind="bindToAnimate[index]"
+        :ref="el => (itemRefs[index] = el)"
+      >
+        <slot
+          name="text"
+          :show="
+            bindToAnimate[index] ? bindToAnimate[index]['data-show'] : false
+          "
+          v-bind="item"
+          :index="index"
+        ></slot>
+      </div>
     </template>
 
     <template v-else>
       <div
-        class="transform transition-all overflow-hidden duration-300"
+        data-name="accordion-text"
+        :class="
+          renderClass(
+            'transform transition-all overflow-hidden duration-300',
+            'text'
+          )
+        "
         v-bind="bindToAnimate[index]"
         :ref="el => (itemRefs[index] = el)"
       >
@@ -54,6 +78,7 @@ import {
   watch,
   nextTick
 } from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TAccordion",
@@ -85,9 +110,6 @@ export default defineComponent({
 
     const initialBinding = () => {
       props.items.forEach((item, index) => {
-        if (item.selected) {
-          console.log("selected", item, index);
-        }
         bindToAnimate.value[index] = getBinding(index, item.selected);
       });
     };
@@ -116,7 +138,9 @@ export default defineComponent({
         bindToAnimate.value[index] = getBinding(index, !dataShow);
       }
     };
+    const { renderClass } = useRenderClass("accordion");
     return {
+      renderClass,
       hasTitleSlot: !!slots.title,
       hasTextSlot: !!slots.text,
       bindToAnimate,

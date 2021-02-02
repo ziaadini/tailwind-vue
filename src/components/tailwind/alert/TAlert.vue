@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 border-r-4 rounded-sm px-4 py-4"
+    class="mb-4 shadow-sm border-r-4 rounded-sm px-4 py-4"
     v-if="show"
     :class="wrapperColor"
     role="alert"
@@ -11,7 +11,7 @@
       </div>
 
       <div>
-        <p class="text-sm">
+        <p class="text-sm text-right">
           <slot></slot>
         </p>
       </div>
@@ -37,31 +37,34 @@
 <script lang="ts">
 import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper";
-import { defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 export default defineComponent({
   components: { TIcon },
-  data() {
-    return {
-      show: true,
+  setup(props, { emit }) {
+    const show = ref(true);
+    const shade = computed(() => {
+      return `bg-${props.variant}-50 text-${props.variant} border-${props.variant}-50`;
+    });
+    const wrapperColor = computed(() => {
+      return shade.value;
+    });
+    const svgColor = () => {
+      return `text-${props.variant}-500`;
     };
-  },
-  computed: {
-    shade(): string {
-      return `bg-${this.variant}-50 text-${this.variant} border-${this.variant}-50`;
-    },
-    wrapperColor(): string {
-      return this.shade;
-    },
-    svgColor(): string {
-      return `text-${this.variant}-500`;
-    },
-  },
-  methods: {
-    closeAlert(): void {
-      this.show = false;
-      this.$emit("closeClick", true);
-    },
+
+    const closeAlert = () => {
+      show.value = false;
+      emit("closeClick", true);
+    };
+
+    return {
+      shade,
+      wrapperColor,
+      svgColor,
+      show,
+      closeAlert
+    };
   },
   props: {
     icon: {
@@ -73,8 +76,6 @@ export default defineComponent({
       type: String,
       default: "primary",
       validator: (propValue: string) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         return !!variants[propValue];
       },
     },

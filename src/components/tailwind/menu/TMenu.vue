@@ -22,12 +22,13 @@
       leave-to-class="opacity-0 scale-75"
     >
       <div
-        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-10 rounded-t-none"
+        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-30 rounded-t-none"
         :class="{
           'right-0': placement === 'right',
           'left-0': placement !== 'right',
           'w-full': full,
-          'z-20': hover
+          'z-30': !hover,
+          'z-40': hover,
         }"
         v-if="open && !disabled"
       >
@@ -63,7 +64,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
-    }
+    },
   },
   setup(props) {
     const open = ref(false);

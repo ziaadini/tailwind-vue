@@ -23,7 +23,11 @@ export default defineComponent({
         title: {
           add: "text-danger"
         }
-      }
+      },
+      // accordion: {
+      //   title: { add: "hover:text-warning" },
+      //   text: { add: "text-primary" }
+      // }
     });
   }
 });

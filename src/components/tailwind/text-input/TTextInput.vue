@@ -1,17 +1,22 @@
 <template>
   <label
     v-if="label"
-    for="price"
     class="block text-sm font-medium text-gray-700 text-right"
   >
     {{ label }}
   </label>
-  <div class="mt-1 relative rounded-md shadow-sm">
+  <div
+    class="mt-1 relative"
+    :class="{
+      'rounded-full': rounded,
+      'rounded-sm': !rounded,
+    }"
+  >
     <div v-if="leftPadding" class="absolute inset-y-0 left-2 flex items-center">
       <span
         v-if="leftIcon"
         class="material-icons z-10"
-        :class="{ 'text-gray-200': disabled }"
+        :class="[{ 'text-gray-200': disabled }, leftIconColor]"
       >
         {{ leftIcon }}
       </span>
@@ -28,16 +33,15 @@
       class="block min-h-48 w-full sm:text-sm outline-none h-10"
       :class="{
         ' pr-8': rightPadding,
+        'rounded-full': rounded,
+        'rounded-sm': !rounded,
         ' pr-3': !rightPadding,
         ' pl-8': leftPadding,
         ' pl0-3': !leftPadding,
-        'rounded-full': rounded,
-        'rounded-sm': !rounded,
         [variantClasses]: true,
         'text-right': isRight,
         'text-center': isCenter,
         'text-left': isLeft,
-        'border-2 border-red-400': error
       }"
     />
     <div
@@ -47,7 +51,7 @@
       <span
         v-if="rightIcon"
         class="material-icons z-10"
-        :class="{ 'text-gray-200': disabled }"
+        :class="[{ 'text-gray-200': disabled }, rightIconColor]"
       >
         {{ rightIcon }}
       </span>
@@ -99,6 +103,16 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    leftIconColor: {
+      required: false,
+      type: String,
+      default: "",
+    },
+    rightIconColor: {
+      required: false,
+      type: String,
+      default: "",
+    },
     rounded: {
       type: Boolean,
       required: false,
@@ -107,7 +121,7 @@ export default defineComponent({
     outline: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
     align: {
       type: String,
@@ -134,7 +148,6 @@ export default defineComponent({
       required: false,
       default: false,
     },
-    
   },
   computed: {
     isRight(): boolean {
@@ -156,14 +169,32 @@ export default defineComponent({
     );
 
     const variantClasses = computed((): string => {
-      return (
-        (!props.outline
-          ? "hover:opacity-80 transition text-white disabled:opacity-50 "
-          : "transition hover:opacity-80 disabled:opacity-50 ") +
-        (!props.outline
-          ? `bg-${props.variant} text-input-placehoder-white`
-          : `bg-white text-input-placehoder-black text-dark hover:bg-${props.variant}-50 border-4 border-${props.variant} focus:border-${props.variant}-500 focus:border-${props.variant}-500`)
-      );
+      let classes = "";
+      if (!props.outline) {
+        classes += `${
+          props.variant === variants.white ? "text-dark" : "text-white"
+        } ${
+          props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
+        } ${
+          props.variant === variants.white
+            ? " placeholder-gray-300"
+            : " placeholder-white"
+        }`;
+      } else {
+        classes += `bg-white text-input-placehoder-black text-dark border ${
+          props.error
+            ? " border-red-500"
+            : ` border-${
+                props.variant === variants.white ? "gray" : props.variant
+              }-50 focus:border-${
+                props.variant === variants.white ? "gray-400" : ""
+              } hover:bg-${props.variant}-50 `
+        }`;
+      }
+
+      classes +=
+        " border transition hover:opacity-80 shadow-sm hover:shadow disabled:opacity-50 ";
+      return classes;
     });
 
     return { rightPadding, leftPadding, variantClasses };
@@ -198,40 +229,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.text-input-placehoder-white {
-  &::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: white;
-  }
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    color: white;
-  }
-  &:-ms-input-placeholder {
-    /* IE 10+ */
-    color: white;
-  }
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    color: white;
-  }
-}
-.text-input-placehoder-black {
-  &::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: black;
-  }
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    color: black;
-  }
-  &:-ms-input-placeholder {
-    /* IE 10+ */
-    color: black;
-  }
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    color: black;
-  }
-}
 </style>

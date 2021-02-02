@@ -2,6 +2,9 @@
   <h6>
     BUTTONS
   </h6>
+  <small>
+    simple button
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <t-button variant="primary">Test</t-button>
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
@@ -9,6 +12,9 @@
     <t-button rounded variant="success">Test</t-button>
   </div>
   <br />
+  <small>
+    outline button
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <t-button outline variant="primary">Test</t-button>
     <t-button outline ripple variant="warning" icon="bookmarks">Test</t-button>
@@ -16,6 +22,9 @@
     <t-button rounded outline variant="success">Test</t-button>
   </div>
   <br />
+  <small>
+    simple loading button
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <t-button loading variant="primary">Test</t-button>
     <t-button loading ripple variant="warning" icon="bookmarks">Test</t-button>
@@ -23,6 +32,9 @@
     <t-button loading rounded variant="success">Test</t-button>
   </div>
   <br />
+  <small>
+    outline loading button
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <t-button loading outline variant="primary">Test</t-button>
     <t-button loading outline ripple variant="warning" icon="bookmarks"
@@ -31,12 +43,27 @@
     <t-button loading rounded outline variant="danger">Test</t-button>
     <t-button loading rounded outline variant="success">Test</t-button>
   </div>
+  <br />
+  <small>
+    outline & primary loading button
+  </small>
+  <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+    <t-button to="zia" outline variant="primary">Test</t-button>
+    <t-button to="zia" outline ripple variant="warning" icon="bookmarks"
+      >Test</t-button
+    >
+    <t-button to="zia" rounded variant="danger">Test</t-button>
+    <t-button to="zia" rounded variant="success">Test</t-button>
+  </div>
 
   <br />
   <h6>
     ALERTS
   </h6>
   <div class="container mx-auto p-4">
+    <small>
+      simple alert
+    </small>
     <t-alert variant="primary">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
@@ -63,6 +90,7 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message
     </t-alert>
+    <small>alert with icon</small>
     <t-alert variant="danger" icon="bookmarks">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
@@ -95,16 +123,16 @@
   <h6>
     TEXT INPUT
   </h6>
-
-  <TextInput
-    placeholder="some test placeholder"
-    v-model="text"
-    :value="'error'"
-    variant="primary"
-    right-icon="bookmarks"
-    error
-  />
+  <small>
+    simple text inputs
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      variant="white"
+      right-icon="bookmarks"
+    />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
@@ -129,37 +157,68 @@
       variant="warning"
       align="center"
       disabled
+    />
+
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      :value="'error'"
+      variant="primary"
+      right-icon="bookmarks"
+      error
     />
   </div>
+  <br />
+  <small>
+    raised buttons
+  </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      variant="white"
+      right-icon="bookmarks"
+      :outline="false"
+    />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
       variant="primary"
       right-icon="bookmarks"
-      outline
+      rightIconColor="text-white"
+      :outline="false"
     />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
       rounded
       variant="success"
-      outline
+      :outline="false"
     />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
       variant="danger"
-      outline
       align="center"
+      :outline="false"
     />
     <TextInput
       placeholder="some test placeholder"
       v-model="text"
       variant="warning"
-      outline
       align="center"
+      :outline="false"
       disabled
+    />
+
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      :value="'error'"
+      variant="primary"
+      right-icon="bookmarks"
+      :outline="false"
+      error
     />
   </div>
 
@@ -232,32 +291,74 @@
     </t-menu>
   </div>
 
+  <br />
   <h6>
     DROPDOWN
   </h6>
-  {{ dropdownModel }}
-  <!-- <div ref="triggerDropdown">
-    <t-button
-      ripple
-      variant="warning"
-      icon="bookmarks"
-      @click="dropdownOpened = !dropdownOpened"
-      >trigger dropdown</t-button
-    >
-  </div> -->
-  dropdownOpened:
-  {{ dropdownOpened }}
+  <small> simple dropdown </small>
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
-      v-model:opened="dropdownOpened"
-      outline
       hover
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
     />
-    <t-dropdown placeholder="تست" :items="['test1', 'test2', 'test3']" />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="danger"
+    />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="success"
+    />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="this is a test placeholder"
+      rounded
+      :items="['test1', 'test2', 'test3']"
+      variant="warning"
+    />
+  </div>
+  <br />
+  <small> raised dropdown </small>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+    <t-dropdown
+      v-model="dropdownModel"
+      :outline="false"
+      hover
+      placeholder="this is a test placeholder"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      rounded
+      variant="danger"
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      variant="success"
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
+    <t-dropdown
+      :outline="false"
+      variant="warning"
+      rounded
+      placeholder="تست"
+      :items="['test1', 'test2', 'test3']"
+    />
   </div>
 
   <h6>
@@ -381,7 +482,6 @@
   itemChange: {{ itemChange }}
   <t-carousel v-model="links" v-model:index="itemChange">
     test
-
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
         -</t-button
@@ -473,123 +573,6 @@ export default defineComponent({
         },
         {
           url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
-        {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
         },
       ],
       count: 10,
