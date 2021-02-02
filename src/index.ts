@@ -21,7 +21,7 @@ import TSwitch from "./components/tailwind/switch/TSwitch.vue";
 import TTabs from "./components/tailwind/tab/TTabs.vue";
 import TTabItem from "./components/tailwind/tab/TTabItem.vue";
 
-export  {
+export default  {
   TAlert,
   TAccordion,
   TBottomSheet,
