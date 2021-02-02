@@ -328,6 +328,10 @@
     </div>
     <div>
       <div>#zia</div>
+      <t-timer v-model="timer"></t-timer>
+    </div>
+    <div>
+      <div>#zia</div>
       <t-range-slider
         :min="0"
         :max="10000"
@@ -428,10 +432,12 @@ import TCard from "@/components/tailwind/card/TCard.vue";
 import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
 import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
 import TRangeSlider from "@/components/tailwind/rangeSlider/TRangeSlider.vue";
+import TTimer from "@/components/tailwind/timer/TTimer.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTimer,
     TRangeSlider,
     TTooltip,
     TIcon,
@@ -514,9 +520,11 @@ export default defineComponent({
     //     selected: true
     //   });
     // }, 500);
+    const timer = ref(60 * 60 * 24+4);
     const rangeMax = ref(8000);
     const rangeMin = ref(0);
     return {
+      timer,
       rangeMax,
       rangeMin,
       accourdionItems,
