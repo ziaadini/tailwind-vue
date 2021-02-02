@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center ltr">
+  <div v-if="!hasSlot" class="flex items-center ltr">
     <div class="min-w-8" v-if="!hideDays">
       {{ day }}
       <span class="mx-1">: </span>
@@ -19,24 +19,34 @@
       <span class="mx-1"></span>
     </div>
   </div>
+  <template v-else>
+    <slot
+      name="default"
+      :day="day"
+      :hideDays="hideDays"
+      :hours="hours"
+      :hideHours="hideHours"
+      :minutes="minutes"
+      :hideMinutes="hideMinutes"
+      :seconds="seconds"
+      :hideSeconds="hideSeconds"
+    ></slot>
+  </template>
 </template>
 
 <script lang="ts">
 import { duration } from "moment";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import { useInterval } from "@/compositionFunctions/interval";
 
 export default defineComponent({
-  name: "TTimer",
+  name: "TCountDownTimer",
   props: {
     modelValue: {
-      type: Number,
+      type: Number as PropType<number>,
       default: 0
     },
     countDown: {
-      validator: value => {
-        return typeof value === "number" || value === null;
-      },
       default: () => 1000
     }
   },
@@ -48,8 +58,8 @@ export default defineComponent({
       return true;
     }
   },
-  setup(props, { emit }) {
-    const getDuration = computed(() => {
+  setup(props, { emit, slots }) {
+    const getDuration = computed((): any => {
       return duration(props.modelValue, "seconds");
     });
     const getDays = computed(() => getDuration.value.days());
@@ -71,7 +81,7 @@ export default defineComponent({
         emit("endTime");
       }
     };
-    useInterval(callback, props.countDown);
+    useInterval(callback, props.countDown as number | null);
     return {
       day: getDays,
       hours: getHours,
@@ -80,7 +90,8 @@ export default defineComponent({
       hideDays,
       hideHours,
       hideMinutes,
-      hideSeconds
+      hideSeconds,
+      hasSlot: !!slots.default
     };
   }
 });
