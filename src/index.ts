@@ -7,6 +7,7 @@ import TCard from "./components/tailwind/card/TCard.vue";
 import TCheckbox from "./components/tailwind/checkbox/TCheckbox.vue";
 import TDrawer from "./components/tailwind/drawer/TDrawer.vue";
 import TDropdown from "./components/tailwind/dropdown/TDropdown.vue";
+import TIcon from "./components/tailwind/icon/TIcon.vue";
 import TLoading from "./components/tailwind/loading/TLoading.vue";
 import TMenu from "./components/tailwind/menu/TMenu.vue";
 import TModal from "./components/tailwind/modal/TModal.vue";
@@ -20,7 +21,7 @@ import TSwitch from "./components/tailwind/switch/TSwitch.vue";
 import TTabs from "./components/tailwind/tab/TTabs.vue";
 import TTabItem from "./components/tailwind/tab/TTabItem.vue";
 
-export {
+export  {
   TAlert,
   TAccordion,
   TBottomSheet,
@@ -30,6 +31,7 @@ export {
   TCheckbox,
   TDrawer,
   TDropdown,
+  TIcon,
   TLoading,
   TMenu,
   TModal,
