@@ -368,31 +368,32 @@
     BADGE
   </h6>
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-badge v-model="badgeData" position="bottomRight">
+    <t-badge :text="badgeData" position="bottomRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="topRight">
+    <t-badge :text="badgeData" position="topRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="topLeft">
+    <t-badge :text="badgeData" position="topLeft">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="bottomLeft">
+    <t-badge :text="badgeData" position="bottomLeft">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
   </div>
   <br />
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="primary"
-      :rounded="false"
+      :rounded="true"
       position="bottomRight"
+      size="lg"
     >
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="danger"
       :rounded="false"
       position="topRight"
@@ -400,7 +401,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="success"
       :rounded="false"
       position="topLeft"
@@ -408,7 +409,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       :rounded="false"
       position="bottomLeft"
@@ -419,18 +420,18 @@
   <br />
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="primary"
-      size="sm"
+      size="md"
       position="bottomRight"
     >
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" variant="danger" size="md" position="topRight">
+    <t-badge :text="badgeData" variant="danger" size="md" position="topRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       size="lg"
       :rounded="false"
@@ -439,7 +440,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       size="xs"
       :rounded="false"
