@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { normalSizes, positionVariant, variants } from "@/utility/css-helper";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
   props: {
     variant: {
@@ -80,11 +80,13 @@ export default defineComponent({
       }`
     );
 
-    setTimeout(() => {
-      baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
-        props.size as normalSizes
-      )}`;
-    }, 1000);
+    onMounted(() => {
+      setTimeout(() => {
+        baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
+          props.size as normalSizes
+        )}`;
+      }, 1000);
+    });
 
     return {
       baseClass,
