@@ -19,8 +19,8 @@
         name="rightButton"
         :leftDisabled="leftDisabled"
         :rightDisabled="rightDisabled"
-        :next="() => changeActiveIndex(+1)"
-        :back="() => changeActiveIndex(-1)"
+        :next="() => buttonClick(+1)"
+        :back="() => buttonClick(-1)"
       />
     </div>
     <div class="absolute transform left-0 top-1/2 -translate-y-1/2 z-20">
@@ -28,8 +28,8 @@
         name="leftButton"
         :leftDisabled="leftDisabled"
         :rightDisabled="rightDisabled"
-        :next="() => changeActiveIndex(+1)"
-        :back="() => changeActiveIndex(-1)"
+        :next="() => buttonClick(+1)"
+        :back="() => buttonClick(-1)"
       />
     </div>
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
@@ -120,18 +120,31 @@ export default defineComponent({
     let interval;
     let increment = true;
 
+    const clearCarouselInterval = (interval) => clearInterval(interval);
+    const setCarouselInterval = () => {
+      interval = setInterval(() => {
+        if (rightDisabled.value) increment = false;
+        else if (leftDisabled.value) increment = true;
+        if (increment) changeActiveIndex(+1);
+        else changeActiveIndex(-1);
+      }, autoPlaceInterval.value);
+    };
+
     watchEffect(() => {
       if (autoPlay.value) {
-        interval = setInterval(() => {
-          if (rightDisabled.value) increment = false;
-          else if (leftDisabled.value) increment = true;
-          if (increment) changeActiveIndex(+1);
-          else changeActiveIndex(-1);
-        }, autoPlaceInterval.value);
+        setCarouselInterval();
       } else {
-        interval && clearInterval(interval);
+        interval && clearCarouselInterval(interval);
       }
     });
+
+    const buttonClick = variance => {
+      changeActiveIndex(variance);
+      if (autoPlay.value) {
+        clearCarouselInterval(interval);
+        setCarouselInterval();
+      }
+    };
 
     return {
       horizontalClasses,
@@ -139,6 +152,7 @@ export default defineComponent({
       activeIndex,
       leftDisabled,
       rightDisabled,
+      buttonClick,
     };
   },
 });
