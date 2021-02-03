@@ -20,6 +20,16 @@ export interface TSettings {
   badge?: {
     container?: TSettingItem;
   };
+  bottomSheet?: {
+    backDrop?: TSettingItem;
+    container?: TSettingItem;
+    swiperContainer?: TSettingItem;
+    swiper?: TSettingItem;
+    header?: TSettingItem;
+    title?: TSettingItem;
+    close?: TSettingItem;
+    contentContainer?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

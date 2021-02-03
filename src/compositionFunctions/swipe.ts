@@ -1,4 +1,11 @@
-import { reactive, computed, watch, onMounted, onUnmounted } from "vue";
+import {
+  reactive,
+  computed,
+  watch,
+  onMounted,
+  onUnmounted,
+  watchEffect
+} from "vue";
 export const useSwipeElement = (disabled = false) => {
   const state = reactive({
     xStart: 0,
@@ -104,7 +111,7 @@ export const useSwipeElement = (disabled = false) => {
   };
 };
 
-export const useSwipeDownToClose = (close, threshold = 80) => {
+export const useSwipeDownToClose = (close, threshold = 80, max = 180) => {
   const { bind: swipeEvents, yDiff, state, reset } = useSwipeElement();
 
   watch(
@@ -116,6 +123,17 @@ export const useSwipeDownToClose = (close, threshold = 80) => {
       reset();
     }
   );
-  const swipeY = computed(() => (yDiff.value > 0 ? yDiff.value : 0));
+  const swipeY = computed(() => {
+    if (yDiff.value > 0) {
+      return yDiff.value > max ? max : yDiff.value;
+    } else {
+      return 0;
+    }
+  });
+  watchEffect(() => {
+    if (yDiff.value >= max) {
+      close();
+    }
+  });
   return { swipeEvents, swipeY, isTouching: computed(() => state.isTouching) };
 };
