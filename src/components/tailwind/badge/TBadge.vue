@@ -9,7 +9,8 @@
 
 <script lang="ts">
 import { normalSizes, positionVariant, variants } from "@/utility/css-helper";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+
 export default defineComponent({
   props: {
     variant: {
@@ -19,7 +20,7 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     position: {
       type: String,
@@ -29,12 +30,12 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!positionVariant[propValue];
-      },
+      }
     },
     rounded: {
       type: Boolean,
       default: true,
-      required: false,
+      required: false
     },
     size: {
       type: String,
@@ -43,13 +44,13 @@ export default defineComponent({
       },
       validator: (propValue: string) => {
         return !!normalSizes[propValue];
-      },
+      }
     },
     modelValue: {
       type: String,
       required: true,
-      default: "",
-    },
+      default: ""
+    }
   },
   setup(props) {
     const retSize = (size: normalSizes): string => {
@@ -80,15 +81,17 @@ export default defineComponent({
       }`
     );
 
-    setTimeout(() => {
-      baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
-        props.size as normalSizes
-      )}`;
-    }, 1000);
+    onMounted(() => {
+      setTimeout(() => {
+        baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
+          props.size as normalSizes
+        )}`;
+      }, 1000);
+    });
 
     return {
-      baseClass,
+      baseClass
     };
-  },
+  }
 });
 </script>

@@ -1,35 +1,45 @@
 <template>
   <div
-    class="mb-4 shadow-sm border-r-4 rounded-sm px-4 py-4"
-    v-if="show"
-    :class="wrapperColor"
+    data-name="alert-container"
+    :class="[
+      renderClass(
+        `${wrapperColor} my-4 shadow-sm border-r-4 rounded-sm transition-opacity duration-500`,
+        'container'
+      ),
+      { 'opacity-0 h-0 w-0 overflow-hidden': !showAlert }
+    ]"
     role="alert"
   >
-    <div class="flex items-start">
-      <div class="" v-if="icon">
-        <t-icon :name="icon"></t-icon>
-      </div>
+    <div class="flex items-center justify-between px-3 py-3">
+      <div class="flex items-center">
+        <div class="self-start" v-if="icon">
+          <t-icon
+            data-name="alert-icon"
+            :class="renderClass(iconClass, 'icon')"
+            :name="icon"
+          ></t-icon>
+        </div>
 
-      <div>
-        <p class="text-sm text-right">
-          <slot></slot>
-        </p>
-      </div>
-
-      <div class="flex-1 flex justify-end items-center">
-        <div class="cursor-pointer" @click="closeAlert">
-          <svg
-            class="fill-current h-4 w-4 mr-4"
-            :class="svgColor + ' hover:' + wrapperColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"
-            />
-          </svg>
+        <div>
+          <div class="text-sm text-right">
+            <slot></slot>
+          </div>
         </div>
       </div>
+
+      <template v-if="!show">
+        <t-icon
+          @click="closeAlert"
+          data-name="alert-close"
+          :class="
+            renderClass('text-3xl cursor-pointer self-start leading-8', 'close')
+          "
+          name="close"
+        >
+        </t-icon>
+      </template>
+
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -37,48 +47,57 @@
 <script lang="ts">
 import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper";
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent } from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   components: { TIcon },
+  emits: ["update:modelValue"],
+  props: {
+    icon: {
+      required: false,
+      default: "",
+      type: String
+    },
+    iconClass: { type: String, default: "" },
+    variant: {
+      type: String,
+      default: "primary",
+      validator: (propValue: string) => {
+        return !!variants[propValue];
+      }
+    },
+    modelValue: {
+      type: [Number, Boolean],
+      default: 0
+    },
+    show: {
+      type: [Number, Boolean],
+      default: 0
+    }
+  },
   setup(props, { emit }) {
-    const show = ref(true);
-    const shade = computed(() => {
-      return `bg-${props.variant}-50 text-${props.variant} border-${props.variant}-50`;
-    });
     const wrapperColor = computed(() => {
-      return shade.value;
+      return `bg-${props.variant}-50 text-${props.variant} border-${props.variant}-50`;
     });
     const svgColor = () => {
       return `text-${props.variant}-500`;
     };
 
     const closeAlert = () => {
-      show.value = false;
-      emit("closeClick", true);
+      emit("update:modelValue", false);
     };
-
+    const showAlert = computed(() => {
+      return props.modelValue || props.show;
+    });
+    const { renderClass } = useRenderClass("alert");
     return {
-      shade,
+      renderClass,
       wrapperColor,
       svgColor,
-      show,
-      closeAlert
+      closeAlert,
+      showAlert
     };
-  },
-  props: {
-    icon: {
-      required: false,
-      default: "",
-      type: String,
-    },
-    variant: {
-      type: String,
-      default: "primary",
-      validator: (propValue: string) => {
-        return !!variants[propValue];
-      },
-    },
-  },
+  }
 });
 </script>
