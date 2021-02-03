@@ -17,6 +17,9 @@ export interface TSettings {
     icon?: TSettingItem;
     close?: TSettingItem;
   };
+  badge?: {
+    container?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

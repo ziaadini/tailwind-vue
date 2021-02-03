@@ -1,7 +1,15 @@
 <template>
   <div class="relative">
-    <div :class="[baseClass, { 'rounded-full': rounded }]" v-bind="$attrs">
-      {{ modelValue }}
+    <div
+      data-name="badge-container"
+      :class="[
+        renderClass(baseClass, 'container'),
+        { 'rounded-full': rounded }
+      ]"
+      v-bind="$attrs"
+    >
+      {{ text }}
+      <slot name="content"></slot>
     </div>
     <slot />
   </div>
@@ -10,6 +18,7 @@
 <script lang="ts">
 import { normalSizes, positionVariant, variants } from "@/utility/css-helper";
 import { defineComponent, onMounted, ref } from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   props: {
@@ -34,7 +43,7 @@ export default defineComponent({
     },
     rounded: {
       type: Boolean,
-      default: true,
+      default: () => true,
       required: false
     },
     size: {
@@ -46,9 +55,8 @@ export default defineComponent({
         return !!normalSizes[propValue];
       }
     },
-    modelValue: {
+    text: {
       type: String,
-      required: true,
       default: ""
     }
   },
@@ -86,10 +94,11 @@ export default defineComponent({
         baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
           props.size as normalSizes
         )}`;
-      }, 1000);
+      }, 500);
     });
-
+    const { renderClass } = useRenderClass("badge");
     return {
+      renderClass,
       baseClass
     };
   }
