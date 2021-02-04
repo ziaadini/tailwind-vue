@@ -5,6 +5,7 @@ export interface TSettings {
   card?: {
     title?: TSettingItem;
     description?: TSettingItem;
+    container?: TSettingItem;
   };
   accordion?: {
     title?: TSettingItem;
