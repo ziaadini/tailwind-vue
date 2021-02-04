@@ -5,9 +5,9 @@
       {
         'rounded-full': rounded,
         ripple,
-        'w-full': full,
+        'w-full': full
       },
-      variantClasses,
+      variantClasses
     ]"
     class="shadow relative rounded-sm border-1 focus:outline-none"
     v-bind="$attrs"
@@ -17,12 +17,12 @@
         <app-icon
           :name="icon"
           :class="{
-            'opacity-0': loading,
+            'opacity-0': loading
           }"
         />
         <span
           :class="{
-            'opacity-0': loading,
+            'opacity-0': loading
           }"
         >
           <slot />
@@ -31,7 +31,7 @@
         <div
           v-if="loading"
           :class="{
-            'absolute transform top-1/2 -translate-y-1/2': loading,
+            'absolute transform top-1/2 -translate-y-1/2': loading
           }"
         >
           <t-loading v-bind="{ ...loadingProps }" size="sm" />
@@ -50,7 +50,7 @@ export default defineComponent({
   props: {
     rounded: {
       type: Boolean,
-      default: false,
+      default: false
     },
     variant: {
       type: String,
@@ -59,44 +59,44 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     icon: {
       type: String,
-      default: "",
+      default: ""
     },
     outline: {
       type: Boolean,
-      default: false,
+      default: false
     },
     ripple: {
       type: Boolean,
-      default: false,
-    },
-    nuxt: {
-      required: false,
-      type: Boolean,
-      default: false,
-    },
-    full: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-      required: false,
+      default: false
     },
     to: {
       type: String,
       required: false,
-      default: "",
+      default: ""
     },
+    nuxt: {
+      required: false,
+      type: Boolean,
+      default: true
+    },
+    full: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   components: {
     AppIcon,
-    TLoading,
+    TLoading
   },
   setup(props) {
     const variantClasses = computed((): string => {
@@ -113,19 +113,23 @@ export default defineComponent({
     });
 
     const loadingProps = {
-      variant: props.outline ? props.variant : "white",
+      variant: props.outline ? props.variant : "white"
     };
 
-    const wrapperComponent = props.to
-      ? props.nuxt
-        ? "nuxt-link"
-        : "router-link"
-      : "template";
+    const wrapperComponent = computed((): string => {
+      if (!props.to) {
+        return "template";
+      }
+      if (props.nuxt) {
+        return "nuxt-link";
+      }
+      return "router-link";
+    });
     return {
       variantClasses,
       loadingProps,
-      wrapperComponent,
+      wrapperComponent
     };
-  },
+  }
 });
 </script>
