@@ -1,14 +1,13 @@
 <template>
   <ol class="flex text-gray-700">
     <template v-for="(item, index) in returnValues" :key="item" class="px-2">
-      <template v-if="!item.active">
-        <li class="px-2">
-          <a href="#" class="hover:underline">{{ item.text }}</a>
-        </li>
-      </template>
-      <template v-else>
-        <li class="px-2 text-indigo-600">{{ item.text }}</li>
-      </template>
+      <li class="px-2" :class="{ 'text-indigo-600': !item.active }">
+        <slot name="beforeLink" />
+        <component class="hover:underline" :to="item.url" :is="linkType">
+          {{ item.text }}</component
+        >
+      </li>
+      <slot name="afterLink" />
       <li
         v-if="index + 1 < returnValues.length"
         class="text-gray-500 select-none"
@@ -20,23 +19,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import { BreadCrumb } from "@/utility/types/base-component-types";
 
 export default defineComponent({
   props: {
+    nuxt: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     modelValue: {
       required: true,
       type: Object as PropType<BreadCrumb.Root>,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
   },
-  computed: {
-    returnValues(): BreadCrumb.Root {
-      return this.modelValue?.length > 0 ? this.modelValue : [];
-    }
-  }
+  setup(props) {
+    const returnValues = computed(
+      (): BreadCrumb.Root => {
+        return props.modelValue?.length > 0 ? props.modelValue : [];
+      }
+    );
+
+    const linkType = computed(() => {
+      if (!props.nuxt) {
+        return "router-link";
+      }
+      return "nuxt-link";
+    });
+
+    return {
+      returnValues,
+      linkType,
+    };
+  },
 });
 </script>

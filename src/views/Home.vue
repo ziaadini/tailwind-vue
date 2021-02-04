@@ -523,6 +523,12 @@
       </span>
     </template>
   </t-slider>
+  <br />
+  <h6>
+    breadcrumb 
+  </h6>
+
+  <t-breadcrumb v-model="items" />
 
   <br />
   <br />
@@ -543,8 +549,10 @@ import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
 import TBadge from "@/components/tailwind/badge/TBadge.vue";
 import TRate from "@/components/tailwind/rate/TRate.vue";
+import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
 import TCarousel from "@/components/tailwind/carousel/TCarousel.vue";
 import TSlider from "@/components/tailwind/slider/TSlider.vue";
+import { BreadCrumb } from "@/utility/types/base-component-types";
 export default defineComponent({
   name: "App",
   components: {
@@ -556,7 +564,8 @@ export default defineComponent({
     TBadge,
     TRate,
     TCarousel,
-    TSlider
+    TSlider,
+    TBreadcrumb,
   },
   data() {
     return {
@@ -570,17 +579,32 @@ export default defineComponent({
       rateValue: 1.5,
       links: [
         {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
+          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
         },
         {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1"
+          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
         },
         {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
-        }
+          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+        },
       ],
       count: 10,
-      itemChange: 0
+      itemChange: 0,
+      items: [
+        {
+          text: "تست۱",
+          url: "مقدار ۱",
+        },
+        {
+          text: "تست۲",
+          url: "مقدار ۲",
+        },
+        {
+          text: "تست۳",
+          url: "مقدار ۳",
+          active: true,
+        },
+      ] as BreadCrumb.Root,
     };
   },
   setup() {
@@ -596,6 +620,6 @@ export default defineComponent({
     setTimeout(() => {
       this.count *= 3;
     }, 5000);
-  }
+  },
 });
 </script>
