@@ -592,15 +592,15 @@ export default defineComponent({
       itemChange: 0,
       items: [
         {
-          text: "تست۱",
+          text: 'test1',
           url: "مقدار ۱",
         },
         {
-          text: "تست۲",
+          text: "test2",
           url: "مقدار ۲",
         },
         {
-          text: "تست۳",
+          text: "test3",
           url: "مقدار ۳",
           active: true,
         },

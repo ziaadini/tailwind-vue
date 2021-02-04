@@ -3,7 +3,13 @@
     <template v-for="(item, index) in returnValues" :key="item" class="px-2">
       <li class="px-2" :class="{ 'text-indigo-600': !item.active }">
         <slot name="beforeLink" />
-        <component class="hover:underline" :to="item.url" :is="linkType">
+        <component
+          :class="[
+            { 'hover:underline': !item.active, 'cursor-default': item.active },
+          ]"
+          :to="item.url"
+          :is="linkType"
+        >
           {{ item.text }}</component
         >
       </li>
