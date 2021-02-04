@@ -10,9 +10,11 @@
 | nuxt | boolean | false | `nuxt-link` instead of `router-link` when passing `to` prop  |
 | full | boolean | false | full width button |
 | loading | boolean | false | to show a loading in button |
+| loadingProps | object | {} | props for loading component |
 
 ### slots
 | name | description 
 | ------------ | ------------ |
 | default | inner text of button |
+| loading | for custom loading |
 

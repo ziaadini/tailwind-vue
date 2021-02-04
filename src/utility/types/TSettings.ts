@@ -36,6 +36,13 @@ export interface TSettings {
     link?: TSettingItem;
     slash?: TSettingItem;
   };
+  button?: {
+    container?: TSettingItem;
+    contentContainer?: TSettingItem;
+    icon?: TSettingItem;
+    loadingContainer?: TSettingItem;
+    loading?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

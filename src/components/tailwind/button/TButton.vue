@@ -1,40 +1,69 @@
 <template>
   <!-- This is an example component -->
   <button
+    data-name="button-container"
     :class="[
       {
         'rounded-full': rounded,
         ripple,
         'w-full': full
       },
-      variantClasses
+      variantClasses,
+      renderClass(
+        'shadow relative rounded-sm border-1 focus:outline-none',
+        'container'
+      )
     ]"
-    class="shadow relative rounded-sm border-1 focus:outline-none"
     v-bind="$attrs"
   >
     <component :is="wrapperComponent" :to="to" class="contents">
-      <div class=" flex justify-center align-center px-4 py-2">
+      <div
+        :class="
+          renderClass(
+            'flex justify-center align-center px-4 py-2',
+            'contentContainer'
+          )
+        "
+        data-name="button-contentContainer"
+      >
         <app-icon
           :name="icon"
-          :class="{
-            'opacity-0': loading
-          }"
+          data-name="button-icon"
+          :class="[
+            {
+              'opacity-0': loading
+            },
+            renderClass('', 'icon')
+          ]"
         />
-        <span
+        <div
           :class="{
             'opacity-0': loading
           }"
         >
           <slot />
-        </span>
+        </div>
 
         <div
           v-if="loading"
+          data-name="button-loadingContainer"
           :class="{
-            'absolute transform top-1/2 -translate-y-1/2': loading
+            [renderClass(
+              'absolute transform top-1/2 -translate-y-1/2',
+              'loadingContainer'
+            )]: loading
           }"
         >
-          <t-loading v-bind="{ ...loadingProps }" size="sm" />
+          <template v-if="hasLoadingSlot">
+            <slot name="loading" v-bind="loadingProps"></slot>
+          </template>
+          <t-loading
+            v-else
+            data-name="button-loading"
+            :class="renderClass('', 'loading')"
+            v-bind="loadingBindingProps"
+            size="sm"
+          />
         </div>
       </div>
     </component>
@@ -45,6 +74,7 @@ import { computed, defineComponent } from "vue";
 import AppIcon from "@/components/tailwind/icon/TIcon.vue";
 import { variants } from "@/utility/css-helper.ts";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   name: "TButton",
   props: {
@@ -92,13 +122,17 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false
+    },
+    loadingProps: {
+      type: Object,
+      default: () => ({})
     }
   },
   components: {
     AppIcon,
     TLoading
   },
-  setup(props) {
+  setup(props, { slots }) {
     const variantClasses = computed((): string => {
       const baseClass =
         " hover:opacity-80 transition hover:shadow-md text-white disabled:opacity-50";
@@ -112,8 +146,9 @@ export default defineComponent({
         ` + baseClass;
     });
 
-    const loadingProps = {
-      variant: props.outline ? props.variant : "white"
+    const loadingBindingProps = {
+      variant: props.outline ? props.variant : "white",
+      ...props.loadingProps
     };
 
     const wrapperComponent = computed((): string => {
@@ -125,9 +160,12 @@ export default defineComponent({
       }
       return "router-link";
     });
+    const { renderClass } = useRenderClass("button");
     return {
+      renderClass,
       variantClasses,
-      loadingProps,
+      loadingBindingProps,
+      hasLoadingSlot: !!slots.loading,
       wrapperComponent
     };
   }
