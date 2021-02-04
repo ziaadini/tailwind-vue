@@ -9,6 +9,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, provide } from "vue";
+import { TSettings } from "@/utility/types/TSettings";
 export default defineComponent({
   setup() {
     provide("TSettings", {
@@ -24,11 +25,14 @@ export default defineComponent({
           add: "text-danger"
         }
       },
+      // alert: {
+      //   container: { add: "py-1" }
+      // }
       // accordion: {
       //   title: { add: "hover:text-warning" },
       //   text: { add: "text-primary" }
       // }
-    });
+    } as TSettings);
   }
 });
 </script>

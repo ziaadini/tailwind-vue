@@ -64,7 +64,7 @@
     <small>
       simple alert
     </small>
-    <t-alert variant="primary">
+    <t-alert show variant="primary">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -77,7 +77,10 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message
     </t-alert>
-    <t-alert variant="success">
+    <t-alert v-model="successAlert" variant="success" icon="home">
+      This is a Test Message This is a Test Message This is a Test Message This
+    </t-alert>
+    <t-alert v-model="successAlert" variant="success" icon="home">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -91,7 +94,7 @@
       Message This is a Test Message This is a Test Message
     </t-alert>
     <small>alert with icon</small>
-    <t-alert variant="danger" icon="bookmarks">
+    <t-alert show variant="danger" icon="bookmarks">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -104,7 +107,7 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message This is a Test Message
     </t-alert>
-    <t-alert variant="warning" icon="bookmarks">
+    <t-alert show variant="warning" icon="bookmarks">
       This is a Test Message This is a Test Message This is a Test Message This
       is a Test Message This is a Test Message This is a Test Message This is a
       Test Message This is a Test Message This is a Test Message This is a Test
@@ -365,31 +368,32 @@
     BADGE
   </h6>
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-badge v-model="badgeData" position="bottomRight">
+    <t-badge :text="badgeData" position="bottomRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="topRight">
+    <t-badge :text="badgeData" position="topRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="topLeft">
+    <t-badge :text="badgeData" position="topLeft">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" position="bottomLeft">
+    <t-badge :text="badgeData" position="bottomLeft">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
   </div>
   <br />
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="primary"
-      :rounded="false"
+      :rounded="true"
       position="bottomRight"
+      size="lg"
     >
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="danger"
       :rounded="false"
       position="topRight"
@@ -397,7 +401,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="success"
       :rounded="false"
       position="topLeft"
@@ -405,7 +409,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       :rounded="false"
       position="bottomLeft"
@@ -416,18 +420,18 @@
   <br />
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="primary"
-      size="sm"
+      size="md"
       position="bottomRight"
     >
       <t-button loading variant="success">Test</t-button>
     </t-badge>
-    <t-badge v-model="badgeData" variant="danger" size="md" position="topRight">
+    <t-badge :text="badgeData" variant="danger" size="md" position="topRight">
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       size="lg"
       :rounded="false"
@@ -436,7 +440,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
     <t-badge
-      v-model="badgeData"
+      :text="badgeData"
       variant="warning"
       size="xs"
       :rounded="false"
@@ -530,7 +534,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
 import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
@@ -552,7 +556,7 @@ export default defineComponent({
     TBadge,
     TRate,
     TCarousel,
-    TSlider,
+    TSlider
   },
   data() {
     return {
@@ -566,18 +570,25 @@ export default defineComponent({
       rateValue: 1.5,
       links: [
         {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
+          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
         },
         {
-          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1",
+          url: "https://cdn.mobit.ir/product/17828/5f227507430bf.jpg?inline=1"
         },
         {
-          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
-        },
+          url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
+        }
       ],
       count: 10,
-      itemChange: 0,
+      itemChange: 0
     };
+  },
+  setup() {
+    const successAlert = ref(false);
+    setTimeout(() => {
+      successAlert.value = true;
+    }, 1000);
+    return { successAlert };
   },
   mounted() {
     this.dropdownTriggerRef = this.$refs.triggerDropdown;
@@ -585,6 +596,6 @@ export default defineComponent({
     setTimeout(() => {
       this.count *= 3;
     }, 5000);
-  },
+  }
 });
 </script>

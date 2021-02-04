@@ -1,7 +1,15 @@
 <template>
   <div class="relative">
-    <div :class="[baseClass, { 'rounded-full': rounded }]" v-bind="$attrs">
-      {{ modelValue }}
+    <div
+      data-name="badge-container"
+      :class="[
+        renderClass(baseClass, 'container'),
+        { 'rounded-full': rounded }
+      ]"
+      v-bind="$attrs"
+    >
+      {{ text }}
+      <slot name="content"></slot>
     </div>
     <slot />
   </div>
@@ -10,6 +18,8 @@
 <script lang="ts">
 import { normalSizes, positionVariant, variants } from "@/utility/css-helper";
 import { defineComponent, onMounted, ref } from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
+
 export default defineComponent({
   props: {
     variant: {
@@ -19,7 +29,7 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     position: {
       type: String,
@@ -29,12 +39,12 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!positionVariant[propValue];
-      },
+      }
     },
     rounded: {
       type: Boolean,
-      default: true,
-      required: false,
+      default: () => true,
+      required: false
     },
     size: {
       type: String,
@@ -43,13 +53,12 @@ export default defineComponent({
       },
       validator: (propValue: string) => {
         return !!normalSizes[propValue];
-      },
+      }
     },
-    modelValue: {
+    text: {
       type: String,
-      required: true,
-      default: "",
-    },
+      default: ""
+    }
   },
   setup(props) {
     const retSize = (size: normalSizes): string => {
@@ -85,12 +94,13 @@ export default defineComponent({
         baseClass.value += ` scale-100 bg-${props.variant} ${retSize(
           props.size as normalSizes
         )}`;
-      }, 1000);
+      }, 500);
     });
-
+    const { renderClass } = useRenderClass("badge");
     return {
-      baseClass,
+      renderClass,
+      baseClass
     };
-  },
+  }
 });
 </script>

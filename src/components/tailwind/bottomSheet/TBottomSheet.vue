@@ -1,18 +1,28 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
     <div
-      :class="{ hidden: !modelValue }"
-      class="fixed z-20 top-0 w-full h-full bg-gray-900 opacity-50"
+      data-name="bottomSheet-backDrop"
+      :class="[
+        { hidden: !modelValue },
+        renderClass(
+          'fixed z-20 top-0 w-full h-full bg-gray-900 opacity-50',
+          'backDrop'
+        )
+      ]"
       @click="close"
     ></div>
 
     <!--    <div class="relative">-->
     <div
-      class="fixed z-30 w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform"
+      data-name="bottomSheet-container"
       :class="[
+        renderClass(
+          'rounded-t-md fixed z-30 w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform',
+          'container'
+        ),
         {
           'translate-y-full': !modelValue,
-          'duration-300': !isTouching,
+          'duration-300': !isTouching || !modelValue,
           'rounded-t-md': rounded
         },
         maxHeight.class,
@@ -21,21 +31,49 @@
       :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
       <div
-        class="py-2"
-        :class="{ 'absolute right-1/2 transform translate-x-1/2': showHeader }"
+        data-name="bottomSheet-swiperContainer"
+        :class="[
+          {
+            [renderClass(
+              'absolute right-1/2 transform translate-x-1/2',
+              'swiperContainer'
+            )]: showHeader
+          },
+          renderClass('py-2', 'swiperContainer')
+        ]"
         v-bind="swipeEvents"
       >
         <div
-          class="bg-gray-300 mx-auto rounded-full h-1.5 w-20 cursor-pointer"
+          data-name="bottomSheet-swiper"
+          :class="
+            renderClass(
+              'bg-gray-300 mx-auto rounded-full h-1.5 w-20 cursor-pointer',
+              'swiper'
+            )
+          "
         ></div>
       </div>
 
       <div
+        v-bind="swipeEvents"
         v-if="showHeader"
-        class="px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+        data-name="bottomSheet-header"
+        :class="
+          renderClass(
+            'px-4 h-14 rounded-inherit top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none',
+            'header'
+          )
+        "
       >
         <div>
-          <component :is="titleTag" v-if="showTitle"> {{ title }} </component>
+          <component
+            :is="titleTag"
+            v-if="showTitle"
+            :class="renderClass('', 'title')"
+            data-name="bottomSheet-title"
+          >
+            {{ title }}
+          </component>
           <template v-else>
             <slot name="title"></slot>
           </template>
@@ -44,7 +82,10 @@
         <div
           v-if="showCloseButton"
           @click="close"
-          class="text-2xl hover:text-gray-600 cursor-pointer"
+          data-name="bottomSheet-close"
+          :class="
+            renderClass('text-2xl hover:text-gray-600 cursor-pointer', 'close')
+          "
         >
           &#215;
         </div>
@@ -53,8 +94,14 @@
         </template>
       </div>
       <div
-        class="overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container"
-        :class="[{ 'bottom-sheet-height': showHeader }]"
+        data-name="bottomSheet-contentContainer"
+        :class="[
+          { 'bottom-sheet-height': showHeader },
+          renderClass(
+            'overflow-y-auto scrollbar-sm p-4 bottom-sheet-content-container',
+            'contentContainer'
+          )
+        ]"
         :style="{ '--max-height': maxHeight.variable }"
       >
         <slot></slot>
@@ -69,6 +116,7 @@ import { size } from "@/utility/css-helper";
 import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useSwipeDownToClose } from "@/compositionFunctions/swipe";
+import { useRenderClass } from "@/compositionFunctions/settings";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TBottomSheet",
@@ -173,7 +221,9 @@ export default defineComponent({
     });
 
     const { isTouching, swipeY, swipeEvents } = useSwipeDownToClose(close);
+    const { renderClass } = useRenderClass("bottomSheet");
     return {
+      renderClass,
       isTouching,
       swipeY,
       swipeEvents,

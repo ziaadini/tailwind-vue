@@ -12,10 +12,28 @@ export interface TSettings {
     "title-disabled"?: TSettingItem;
     text?: TSettingItem;
   };
+  alert?: {
+    container?: TSettingItem;
+    icon?: TSettingItem;
+    close?: TSettingItem;
+  };
+  badge?: {
+    container?: TSettingItem;
+  };
+  bottomSheet?: {
+    backDrop?: TSettingItem;
+    container?: TSettingItem;
+    swiperContainer?: TSettingItem;
+    swiper?: TSettingItem;
+    header?: TSettingItem;
+    title?: TSettingItem;
+    close?: TSettingItem;
+    contentContainer?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
   delete?: string[];
   add?: string;
-  replace: { [key: string]: string };
+  replace?: { [key: string]: string };
 }
