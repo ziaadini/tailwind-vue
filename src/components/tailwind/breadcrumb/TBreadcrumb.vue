@@ -12,8 +12,8 @@
         >
           {{ item.text }}</component
         >
-      </li>
       <slot name="afterLink" />
+      </li>
       <li
         v-if="index + 1 < returnValues.length"
         class="text-gray-500 select-none"
@@ -35,7 +35,7 @@ export default defineComponent({
       required: false,
       default: false,
     },
-    modelValue: {
+    value: {
       required: true,
       type: Object as PropType<BreadCrumb.Root>,
       default: () => {
@@ -46,7 +46,7 @@ export default defineComponent({
   setup(props) {
     const returnValues = computed(
       (): BreadCrumb.Root => {
-        return props.modelValue?.length > 0 ? props.modelValue : [];
+        return props.value?.length > 0 ? props.value : [];
       }
     );
 
