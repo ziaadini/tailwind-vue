@@ -30,6 +30,12 @@ export interface TSettings {
     close?: TSettingItem;
     contentContainer?: TSettingItem;
   };
+  breadcrumb?: {
+    container?: TSettingItem;
+    active?: TSettingItem;
+    link?: TSettingItem;
+    slash?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
