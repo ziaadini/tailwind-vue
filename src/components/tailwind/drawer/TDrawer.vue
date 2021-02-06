@@ -1,10 +1,23 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
-    <div
-      :class="{ hidden: !modelValue }"
-      class="fixed z-20 top-0 w-full h-full bg-gray-900 opacity-50"
-      @click="close"
-    ></div>
+    <t-fade
+      :show="modelValue"
+      :allocate-space="false"
+      opacity-class="opacity-50"
+      class="relative z-30"
+    >
+      <template #default="{className}">
+        <div
+          data-name="bottomSheet-backDrop"
+          :class="[
+            // { hidden: !modelValue },
+            className,
+            renderClass('fixed z-20 top-0 bg-gray-900', 'backDrop')
+          ]"
+          @click="close"
+        ></div>
+      </template>
+    </t-fade>
     <div
       class="fixed z-30 top-0 bg-white transform duration-300"
       :class="[
@@ -62,9 +75,12 @@ import { size } from "@/utility/css-helper";
 import { defineComponent, computed, PropType } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useMaxWidth } from "@/compositionFunctions/maxSize";
+import { useRenderClass } from "@/compositionFunctions/settings";
+import TFade from "@/components/tailwind/fade/TFade.vue";
 type BooleanFunction = () => boolean;
 export default defineComponent({
   name: "TDrawer",
+  components: { TFade },
   emits: {
     "update:modelValue"(value: number | boolean) {
       return typeof value === "number" || typeof value === "boolean";
@@ -154,7 +170,9 @@ export default defineComponent({
       );
     });
     const maxWidth = useMaxWidth(props.maxSize);
+    const { renderClass } = useRenderClass("bottomSheet");
     return {
+      renderClass,
       maxWidth,
       close,
       showHeader,

@@ -18,6 +18,7 @@ module.exports = {
           /^(hover:|focus:)?border-danger(-50)?$/,
           /^(hover:|focus:)?border-warning(-50)?$/,
           /^(hover:|focus:)?border-success(-50)?$/,
+          /^duration-/,
           /^text-primary$/,
           /^text-danger$/,
           /^text-warning$/,
