@@ -5,6 +5,7 @@ export interface TSettings {
   card?: {
     title?: TSettingItem;
     description?: TSettingItem;
+    container?: TSettingItem;
   };
   accordion?: {
     title?: TSettingItem;
@@ -29,6 +30,19 @@ export interface TSettings {
     title?: TSettingItem;
     close?: TSettingItem;
     contentContainer?: TSettingItem;
+  };
+  breadcrumb?: {
+    container?: TSettingItem;
+    active?: TSettingItem;
+    link?: TSettingItem;
+    slash?: TSettingItem;
+  };
+  button?: {
+    container?: TSettingItem;
+    contentContainer?: TSettingItem;
+    icon?: TSettingItem;
+    loadingContainer?: TSettingItem;
+    loading?: TSettingItem;
   };
 }
 

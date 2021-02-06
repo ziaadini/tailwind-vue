@@ -528,7 +528,7 @@
     breadcrumb
   </h6>
 
-  <t-breadcrumb :value="items" />
+  <t-breadcrumb :items="items" />
 
   <br />
   <br />

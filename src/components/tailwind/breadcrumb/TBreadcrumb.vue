@@ -1,22 +1,36 @@
 <template>
-  <ol class="flex text-gray-700">
-    <template v-for="(item, index) in returnValues" :key="item" class="px-2">
-      <li class="px-2" :class="{ 'text-indigo-600': !item.active }">
-        <slot name="beforeLink" />
-        <component
-          :class="[
-            { 'hover:underline': !item.active, 'cursor-default': item.active },
-          ]"
-          :to="item.url"
-          :is="linkType"
-        >
-          {{ item.text }}</component
-        >
-      <slot name="afterLink" />
+  <ol
+    data-name="breadcrumb-container"
+    :class="renderClass('flex text-gray-500', 'container')"
+  >
+    <template v-for="(item, index) in items" :key="item">
+      <li
+        class="px-2"
+        data-name="breadcrumb-active"
+        :class="renderClass(item.active ? 'text-indigo-600' : '', 'active')"
+      >
+        <slot name="beforeLink" v-bind="item" />
+        <slot v-bind="item"></slot>
+        <template v-if="!hasDefaultSlot">
+          <component
+            data-name="breadcrumb-link"
+            :class="[
+              renderClass(!item.active ? 'hover:underline' : '', 'link'),
+              { 'cursor-default': item.active }
+            ]"
+            :to="item.url"
+            :is="linkType"
+          >
+            {{ item.text }}</component
+          >
+        </template>
+
+        <slot name="afterLink" v-bind="item" />
       </li>
       <li
-        v-if="index + 1 < returnValues.length"
-        class="text-gray-500 select-none"
+        data-name="breadcrumb-slash"
+        v-if="index + 1 < items.length"
+        :class="renderClass('text-gray-500 select-none', 'slash')"
       >
         /
       </li>
@@ -27,40 +41,36 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { BreadCrumb } from "@/utility/types/base-component-types";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   props: {
     nuxt: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
-    value: {
+    items: {
       required: true,
-      type: Object as PropType<BreadCrumb.Root>,
+      type: Array as PropType<BreadCrumb.Root>,
       default: () => {
         return [];
-      },
-    },
-  },
-  setup(props) {
-    const returnValues = computed(
-      (): BreadCrumb.Root => {
-        return props.value?.length > 0 ? props.value : [];
       }
-    );
-
+    }
+  },
+  setup(props, { slots }) {
     const linkType = computed(() => {
       if (!props.nuxt) {
         return "router-link";
       }
       return "nuxt-link";
     });
-
+    const { renderClass } = useRenderClass("breadcrumb");
     return {
-      returnValues,
       linkType,
+      hasDefaultSlot: !!slots.default,
+      renderClass
     };
-  },
+  }
 });
 </script>

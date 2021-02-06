@@ -1,5 +1,10 @@
 <template>
-  <div class="shadow-md border border-gray-100 text-right">
+  <div
+    data-name="card-container"
+    :class="
+      renderClass('shadow-md border border-gray-100 text-right', 'container')
+    "
+  >
     <div
       v-if="title"
       data-name="card-title"
