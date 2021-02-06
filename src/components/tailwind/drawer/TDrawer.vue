@@ -8,7 +8,7 @@
     >
       <template #default="{className}">
         <div
-          data-name="bottomSheet-backDrop"
+          data-name="drawer-backDrop"
           :class="[
             // { hidden: !modelValue },
             className,
@@ -19,8 +19,12 @@
       </template>
     </t-fade>
     <div
-      class="fixed z-30 top-0 bg-white transform duration-300"
+      data-name="drawer-container"
       :class="[
+        renderClass(
+          'fixed z-30 top-0 bg-white transform duration-300',
+          'container'
+        ),
         {
           [left
             ? '-translate-x-full -right-full'
@@ -32,12 +36,25 @@
       ]"
     >
       <div
+        data-name="drawer-header"
         v-if="showHeader"
-        :class="{ 'flex-row-reverse': left }"
-        class="px-4 h-12 rounded-inherit  py-4 leading-none flex justify-between items-center font-medium text-sm select-none"
+        :class="[
+          { 'flex-row-reverse': left },
+          renderClass(
+            'px-4 h-12 rounded-inherit  py-4 leading-none flex justify-between items-center font-medium text-sm select-none',
+            'header'
+          )
+        ]"
       >
         <div>
-          <component :is="titleTag" v-if="showTitle">{{ title }}</component>
+          <component
+            :is="titleTag"
+            v-if="showTitle"
+            :class="renderClass('', 'title')"
+            data-name="drawer-title"
+          >
+            {{ title }}
+          </component>
           <template v-else>
             <slot name="title"></slot>
           </template>
@@ -45,8 +62,11 @@
 
         <div
           v-if="showCloseButton"
+          data-name="drawer-close"
           @click="close"
-          class="text-2xl hover:text-gray-600 cursor-pointer"
+          :class="
+            renderClass('text-2xl hover:text-gray-600 cursor-pointer', 'close')
+          "
         >
           &#215;
         </div>
@@ -57,8 +77,14 @@
       <div v-else class="h-2"></div>
 
       <div
-        class="overflow-y-auto scrollbar-sm p-4 max-h-screen bottom-sheet-content-container drawer-max-height"
-        :class="[{ 'drawer-height': showHeader, 'w-screen': full }]"
+        data-name="drawer-contentContainer"
+        :class="[
+          renderClass(
+            'overflow-y-auto scrollbar-sm p-4 max-h-screen bottom-sheet-content-container drawer-max-height',
+            'contentContainer'
+          ),
+          { 'drawer-height': showHeader, 'w-screen': full }
+        ]"
       >
         <slot></slot>
       </div>

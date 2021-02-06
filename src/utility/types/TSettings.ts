@@ -49,6 +49,14 @@ export interface TSettings {
     inputContainer?: TSettingItem;
     label?: TSettingItem;
   };
+  drawer?: {
+    backDrop?: TSettingItem;
+    container?: TSettingItem;
+    header?: TSettingItem;
+    title?: TSettingItem;
+    close?: TSettingItem;
+    contentContainer?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
