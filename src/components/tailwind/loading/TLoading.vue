@@ -1,19 +1,28 @@
 <template>
-  <div class="flex">
+  <div data-name="loading-container" :class="renderClass('flex', 'container')">
     <div
+      data-name="loading-item"
       v-bind="$attrs"
-      :class="`bg-${variant} ${withClass}`"
-      class="rounded-full loader"
+      :class="
+        renderClass(`rounded-full t-loader bg-${variant} ${withClass}`, 'item')
+      "
     ></div>
     <div
+      data-name="loading-item"
       v-bind="$attrs"
-      :class="`bg-${variant} ${withClass}`"
-      class="rounded-full mx-1 loader-middle"
+      :class="
+        renderClass(
+          `rounded-full t-loader-middle mx-1 bg-${variant} ${withClass}`,
+          'item'
+        )
+      "
     ></div>
     <div
+      data-name="loading-item"
       v-bind="$attrs"
-      :class="`bg-${variant} ${withClass}`"
-      class="rounded-full loader"
+      :class="
+        renderClass(`rounded-full t-loader bg-${variant} ${withClass}`, 'item')
+      "
     ></div>
   </div>
 </template>
@@ -21,6 +30,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { size, variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   name: "TLoading",
   inheritAttrs: false,
@@ -58,78 +68,8 @@ export default defineComponent({
       }
       return "";
     });
-    return { withClass };
+    const { renderClass } = useRenderClass("loading");
+    return { withClass, renderClass };
   }
 });
 </script>
-
-<style scoped>
-.loader {
-  -webkit-animation: spinner 0.7s linear infinite;
-  animation: spinner 0.7s linear infinite;
-}
-.loader-middle {
-  -webkit-animation: spinner-middle 0.7s linear infinite;
-  animation: spinner-middle 0.7s linear infinite;
-}
-
-@-webkit-keyframes spinner-middle {
-  0% {
-    -webkit-transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    -webkit-transform: scale(0.8);
-    opacity: 0.3;
-  }
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: scale(0.8);
-    opacity: 0.3;
-  }
-  50% {
-    -webkit-transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.3;
-    -webkit-transform: scale(0.8);
-  }
-}
-
-@keyframes spinner-middle {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(0.8);
-    opacity: 0.3;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes spinner {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-}
-</style>

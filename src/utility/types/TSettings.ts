@@ -60,6 +60,10 @@ export interface TSettings {
   icon?: {
     container?: TSettingItem;
   };
+  loading?: {
+    container?: TSettingItem;
+    item?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
