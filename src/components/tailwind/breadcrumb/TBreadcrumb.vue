@@ -9,14 +9,14 @@
         data-name="breadcrumb-active"
         :class="renderClass(item.active ? 'text-indigo-600' : '', 'active')"
       >
-        <slot name="beforeLink" v-bind="item" />
-        <slot v-bind="item"></slot>
+        <slot name="beforeLink" v-bind="{ item, index }" />
+        <slot v-bind="{ item, index }"></slot>
         <template v-if="!hasDefaultSlot">
           <component
             data-name="breadcrumb-link"
             :class="[
               renderClass(!item.active ? 'hover:underline' : '', 'link'),
-              { 'cursor-default': item.active }
+              { 'cursor-default': item.active },
             ]"
             :to="item.url"
             :is="linkType"
@@ -24,8 +24,7 @@
             {{ item.text }}</component
           >
         </template>
-
-        <slot name="afterLink" v-bind="item" />
+        <slot name="afterLink" v-bind="{ item, index }" />
       </li>
       <li
         data-name="breadcrumb-slash"
@@ -48,15 +47,15 @@ export default defineComponent({
     nuxt: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     items: {
       required: true,
       type: Array as PropType<BreadCrumb.Root>,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
   },
   setup(props, { slots }) {
     const linkType = computed(() => {
@@ -69,8 +68,8 @@ export default defineComponent({
     return {
       linkType,
       hasDefaultSlot: !!slots.default,
-      renderClass
+      renderClass,
     };
-  }
+  },
 });
 </script>
