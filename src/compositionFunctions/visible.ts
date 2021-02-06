@@ -9,7 +9,13 @@ export enum visibilityOverflow {
 }
 export const useIsVisible = (element = ref(null as any)) => {
   const result = ref(null as any);
-  const placement = ref(null as any);
+  const placement = ref(
+    null as {
+      type: visibilityOverflow;
+      px: number;
+    } | null
+  );
+
   const { isIntersecting, destroyObserver } = useIntersectElement(
     {
       passRef: true,
@@ -50,9 +56,8 @@ export const useIsVisible = (element = ref(null as any)) => {
   watch(result, (resultValue) => {
     if (resultValue && isIntersecting?.value) {
       handlePlacement();
-    }
-    else {
-        placement.value = null
+    } else {
+      placement.value = null;
     }
   });
 
