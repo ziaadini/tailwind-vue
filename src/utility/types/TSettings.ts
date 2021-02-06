@@ -57,6 +57,9 @@ export interface TSettings {
     close?: TSettingItem;
     contentContainer?: TSettingItem;
   };
+  icon?: {
+    container?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

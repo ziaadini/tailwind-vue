@@ -196,7 +196,7 @@ export default defineComponent({
       );
     });
     const maxWidth = useMaxWidth(props.maxSize);
-    const { renderClass } = useRenderClass("bottomSheet");
+    const { renderClass } = useRenderClass("drawer");
     return {
       renderClass,
       maxWidth,
