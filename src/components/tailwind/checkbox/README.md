@@ -15,6 +15,8 @@
 | ------------ | ------------ |
 | label | for custom styled label|
 
+ **warning!** don't use block element like `div` inside label slot because component use `label` tag as a container
+ and, it's wrong to use block elements inside non-block elements
 ##### slot example
 
 ```vue

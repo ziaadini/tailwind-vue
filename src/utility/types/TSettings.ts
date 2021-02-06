@@ -44,6 +44,11 @@ export interface TSettings {
     loadingContainer?: TSettingItem;
     loading?: TSettingItem;
   };
+  checkbox?: {
+    container?: TSettingItem;
+    inputContainer?: TSettingItem;
+    label?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

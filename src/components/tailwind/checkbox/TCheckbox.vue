@@ -1,7 +1,8 @@
 <template>
   <label
-    class="flex justify-start items-start"
+    data-name="checkbox-container"
     :class="[
+      renderClass('flex justify-start items-start', 'container'),
       $attrs.class,
       {
         'cursor-pointer': !disabled,
@@ -10,15 +11,19 @@
       }
     ]"
   >
-    <div
+    <span
+      data-name="checkbox-inputContainer"
       :class="[
         {
           [`bg-${variant} border-${variant}`]: isChecked && !hideInput,
           'bg-white border-gray-400': !isChecked && !hideInput
         },
-        hideInput ? 'w-0 h-0' : 'w-6 h-6 border-2 mr-2'
+        hideInput ? 'w-0 h-0' : 'w-6 h-6 border-2 mr-2',
+        renderClass(
+          'rounded-xs flex flex-shrink-0 justify-center items-center',
+          'inputContainer'
+        )
       ]"
-      class="rounded-xs flex flex-shrink-0 justify-center items-center"
     >
       <input
         type="checkbox"
@@ -36,8 +41,12 @@
       >
         <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
       </svg>
-    </div>
-    <span v-if="label" class="mr-2" :class="{ 'text-gray-500': disabled }">
+    </span>
+    <span
+      data-name="checkbox-label"
+      v-if="label"
+      :class="[{ 'text-gray-500': disabled }, renderClass('mr-2', 'label')]"
+    >
       {{ label }}
     </span>
     <slot name="label" :isChecked="isChecked" :disabled="disabled"></slot>
@@ -48,6 +57,7 @@
 import { defineComponent, onMounted } from "vue";
 import SwitchAndCheckboxProps from "@/utility/commonProps/SwitchAndCheckboxProps";
 import { useSwitchAndCheckbox } from "@/compositionFunctions/switchAndCheckbox";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   props: {
@@ -70,7 +80,8 @@ export default defineComponent({
       }
     });
     const { isChecked, updateInput } = useSwitchAndCheckbox(props, context);
-    return { isChecked, updateInput };
+    const { renderClass } = useRenderClass("checkbox");
+    return { isChecked, updateInput, renderClass };
   }
 });
 </script>
