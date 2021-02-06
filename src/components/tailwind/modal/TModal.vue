@@ -27,19 +27,37 @@
       >
         <template #default="{className,delayedShow}">
           <div
-            class="fixed z-30  w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white"
-            :class="[maxWidth, { [className]: !delayedShow }]"
+            data-name="modal-container"
+            :class="[
+              renderClass(
+                maxWidth +
+                  ' fixed z-30  w-max rounded  scrollbar-sm max-h-full overflow-y-auto top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 transform  bg-white',
+                'container'
+              ),
+
+              { [className]: !delayedShow }
+            ]"
           >
             <div>
               <div v-if="eager || delayedShow" v-show="!eager || delayedShow">
                 <div
                   v-if="showHeader"
-                  class="px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none"
+                  data-name="modal-container"
+                  :class="
+                    renderClass(
+                      'px-4 sticky top-0 py-4 leading-none flex justify-between items-center font-medium text-sm bg-gray-100 border-b select-none',
+                      'header'
+                    )
+                  "
                 >
                   <div>
-                    <component :is="titleTag" v-if="showTitle">{{
-                      title
-                    }}</component>
+                    <component
+                      data-name="modal-title"
+                      :is="titleTag"
+                      v-if="showTitle"
+                      :class="renderClass('', 'title')"
+                      >{{ title }}</component
+                    >
                     <template v-else>
                       <slot name="title"></slot>
                     </template>
@@ -48,7 +66,13 @@
                   <div
                     v-if="showCloseButton"
                     @click="close"
-                    class="text-2xl hover:text-gray-600 cursor-pointer"
+                    data-name="modal-close"
+                    :class="
+                      renderClass(
+                        'text-2xl hover:text-gray-600 cursor-pointer',
+                        'close'
+                      )
+                    "
                   >
                     &#215;
                   </div>
@@ -57,7 +81,10 @@
                   </template>
                 </div>
                 <div :class="{ 'w-screen': full }">
-                  <div class="p-4">
+                  <div
+                    data-name="modal-contentContainer"
+                    :class="renderClass('p-4', 'contentContainer')"
+                  >
                     <slot></slot>
                   </div>
                 </div>
