@@ -39,6 +39,7 @@
 </template>
 
 <script lang="ts">
+import { useInterval } from "@/compositionFunctions/interval";
 import {
   computed,
   defineComponent,
@@ -117,31 +118,31 @@ export default defineComponent({
       changeActiveIndex(newIndex - activeIndex.value);
     });
 
-    let interval;
     let increment = true;
 
-    const clearCarouselInterval = (interval) => clearInterval(interval);
+    const { start } = useInterval(() => {
+      if (rightDisabled.value) increment = false;
+      else if (leftDisabled.value) increment = true;
+      if (increment) changeActiveIndex(+1);
+      else changeActiveIndex(-1);
+    }, null);
+
     const setCarouselInterval = () => {
-      interval = setInterval(() => {
-        if (rightDisabled.value) increment = false;
-        else if (leftDisabled.value) increment = true;
-        if (increment) changeActiveIndex(+1);
-        else changeActiveIndex(-1);
-      }, autoPlaceInterval.value);
+      start(autoPlaceInterval.value);
     };
 
     watchEffect(() => {
       if (autoPlay.value) {
         setCarouselInterval();
       } else {
-        interval && clearCarouselInterval(interval);
+        start(null);
       }
     });
 
-    const buttonClick = variance => {
+    const buttonClick = (variance) => {
       changeActiveIndex(variance);
       if (autoPlay.value) {
-        clearCarouselInterval(interval);
+        start(null);
         setCarouselInterval();
       }
     };
