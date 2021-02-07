@@ -79,6 +79,14 @@ export interface TSettings {
     inputContainer?: TSettingItem;
     label?: TSettingItem;
   };
+  rangeSlider?: {
+    container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    pan?: TSettingItem;
+    activePan?: TSettingItem;
+    minCircle?: TSettingItem;
+    maxCircle?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

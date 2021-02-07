@@ -52,7 +52,8 @@ module.exports = {
         "8": "2rem"
       },
       minWidth: {
-        "8": "2rem"
+        "8": "2rem",
+        "48": "12rem"
       },
       colors: {
         primary: {
