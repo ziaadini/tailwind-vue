@@ -104,11 +104,6 @@ export default defineComponent({
       }
     });
 
-    const animateFunction = (callback: any, timeout) => {
-      setTimeout(() => {
-        callback();
-      }, timeout);
-    };
     const openClose = (value = null as any) => {
       console.log("open close", value);
       if (!props.disabled) {
@@ -116,21 +111,10 @@ export default defineComponent({
       }
     };
 
-    const animationClasses = ref("");
-
-    watch(isOpen, (newValue) => {
-      if (newValue) {
-        animateFunction(() => {
-          animationClasses.value = "scale-100 opacity-100";
-        }, 100);
-      } else animationClasses.value = "";
-    });
-
     return {
       menuRef,
       openClose,
       isOpen,
-      animationClasses,
     };
   },
 });
