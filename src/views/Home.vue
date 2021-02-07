@@ -529,7 +529,21 @@
   </h6>
 
   <t-breadcrumb :items="items" />
-
+  <br />
+  <h6>
+    image component
+  </h6>
+  <small>
+    image without lazy loading
+  </small>
+  <t-image :src="imgSource"  :default="defaultImage"/>
+  <br />
+  <br />
+  <br />
+  <small>
+    image with lazy loading
+  </small>
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
   <br />
   <br />
   <br />
@@ -566,6 +580,7 @@ export default defineComponent({
     TCarousel,
     TSlider,
     TBreadcrumb,
+    TImage
   },
   data() {
     return {
@@ -576,6 +591,8 @@ export default defineComponent({
       badgeData: "123",
       imgSource:
         "https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+      imgSource2: 'https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w',
+      defaultImage: 'https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w',
       rateValue: 1.5,
       links: [
         {
