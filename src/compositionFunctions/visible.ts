@@ -31,9 +31,6 @@ export const useIsVisible = (
     element
   );
   const handlePlacement = () => {
-    console.log({
-      parentElement,
-    });
     const childBounding = result.value!.boundingClientRect;
     const parentBounding = parentElement.value!.getBoundingClientRect();
     const windowHeight =
