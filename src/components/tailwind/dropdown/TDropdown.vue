@@ -1,17 +1,23 @@
 <template>
+  {{ selectedItem.value }}
   <div
     class="relative"
     @mouseenter="hover && openClose(true)"
     @mouseleave="hover && openClose(false)"
+    :class="{
+      'rounded-sm': !state.opened,
+    }"
   >
     <div
       ref="dropdownParentRef"
-      class="cursor-pointer w-64 h-10 flex items-center justify-center"
+      class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="[
         {
+          'rounded-sm': !state.opened,
           'rounded-full': rounded && !state.opened,
           'rounded-md': rounded && state.opened,
           'rounded-b-none': rounded && state.opened,
+          'rounded-bl-none rounded-br-none': state.opened,
         },
         parentClass,
       ]"
@@ -27,10 +33,11 @@
       ref="dropdownRef"
       :class="{
         'opacity-0 -translate-y-1/2 z-0 scale-y-0': !state.opened,
-        'rounded-b-md': rounded,
+        'rounded-b-md': rounded && !isBottomOverflowed,
         'z-30': !hover,
         'z-40': hover,
-        '-translate-y-full': !isBottomOverflowed,
+        '-translate-y-full': isBottomOverflowed,
+        'rounded-b-none': rounded && isBottomOverflowed,
       }"
       class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
@@ -40,7 +47,11 @@
           :class="[
             childClass,
             {
-              'rounded-b-md': index + 1 === items.length && rounded,
+              'rounded-b-md':
+                index + 1 === items.length && rounded && !isBottomOverflowed,
+              'rounded-b-none': rounded && isBottomOverflowed,
+              'border border-indigo-200 box-border':
+                selectedItem.value === item.value,
             },
           ]"
           @click="selectItem(item.value)"
@@ -214,7 +225,7 @@ export default defineComponent({
     );
 
     const isBottomOverflowed = computed(() => {
-      return placement.value?.includes(visibilityOverflow.bottom);
+      return !placement.value?.includes(visibilityOverflow.bottom);
     });
 
     return {
