@@ -45,7 +45,6 @@ export const useIsVisible = (
       if (parentBounding.left > childWidth) {
         placementTemporaryValue!.push(visibilityOverflow.left);
       }
-      console.log(windowHeight, parentBounding.bottom, childHeight);
       if (windowHeight - parentBounding.bottom > childHeight) {
         placementTemporaryValue!.push(visibilityOverflow.bottom);
       }
