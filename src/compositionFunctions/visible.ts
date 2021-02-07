@@ -31,9 +31,6 @@ export const useIsVisible = (
     element
   );
   const handlePlacement = () => {
-    console.log({
-      parentElement,
-    });
     const childBounding = result.value!.boundingClientRect;
     const parentBounding = parentElement.value!.getBoundingClientRect();
     const windowHeight =
@@ -48,7 +45,6 @@ export const useIsVisible = (
       if (parentBounding.left > childWidth) {
         placementTemporaryValue!.push(visibilityOverflow.left);
       }
-      console.log(windowHeight, parentBounding.bottom, childHeight);
       if (windowHeight - parentBounding.bottom > childHeight) {
         placementTemporaryValue!.push(visibilityOverflow.bottom);
       }
