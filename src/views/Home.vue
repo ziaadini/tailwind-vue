@@ -302,14 +302,12 @@
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
-      hover
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3']"
     />
     <t-dropdown
       v-model="dropdownModel"
-      hover
       placeholder="this is a test placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
