@@ -230,11 +230,11 @@
     MENU
   </h6>
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-menu placement="right" full>
+    <t-menu placement="left">
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline icon="accessible">
-          test
+          this is some long text content to note here
         </t-button>
       </template>
 

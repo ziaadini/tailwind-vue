@@ -5,7 +5,6 @@
     @mouseleave="hover && openClose(false)"
   >
     <div
-      ref="menuRef"
       class=" relative flex items-center focus:outline-none min-w-full "
       @click="openClose"
     >
@@ -22,6 +21,7 @@
       leave-to-class="opacity-0 scale-75"
     >
       <div
+      ref="menuRef"
         class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-30 rounded-t-none"
         :class="{
           'right-0': placement === 'right',
