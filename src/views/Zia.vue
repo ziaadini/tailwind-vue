@@ -362,6 +362,12 @@
     <div class="w-full">
       <div>#zia</div>
       <t-skeleton type="card" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="avatar-list" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="one-line" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="three-line" class="max-w-sm"></t-skeleton>
     </div>
 
     <div>
