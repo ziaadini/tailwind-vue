@@ -1,8 +1,9 @@
 <template>
   <label
-    class="flex items-center"
+    data-name="radio-container"
     :class="[
       $attrs.class,
+      renderClass('flex items-center', 'container'),
       {
         'cursor-pointer': !disabled,
         [activeClass]: isChecked,
@@ -10,15 +11,19 @@
       }
     ]"
   >
-    <div
+    <span
+      data-name="radio-inputContainer"
       :class="[
+        renderClass(
+          'rounded-full flex flex-shrink-0 justify-center items-center',
+          'inputContainer'
+        ),
         {
           [`border-${variant}`]: isChecked && !hideInput,
           'bg-white border-gray-400': !isChecked && !hideInput
         },
         hideInput ? 'w-0 h-0' : 'w-6 h-6 border-2 mr-2'
       ]"
-      class="rounded-full flex flex-shrink-0 justify-center items-center"
     >
       <input
         :class="[{ 'cursor-pointer': !disabled }, `checked:bg-${variant}`]"
@@ -30,12 +35,16 @@
         v-model="computedValue"
       />
 
-      <div
+      <span
         class="w-3 h-3 rounded-full"
         :class="{ [`bg-${variant}`]: isChecked, hidden: hideInput }"
-      ></div>
-    </div>
-    <span v-if="label" class="mr-2" :class="{ 'text-gray-500': disabled }">
+      ></span>
+    </span>
+    <span
+      data-name="radio-label"
+      v-if="label"
+      :class="[{ 'text-gray-500': disabled }, renderClass('mr-2', 'label')]"
+    >
       {{ label }}
     </span>
     <slot name="label" :isChecked="isChecked" :disabled="disabled"></slot>
@@ -46,6 +55,7 @@
 import { defineComponent, computed, ref, watch, PropType } from "vue";
 import { SwitchAndCheckbox } from "@/utility/types/base-component-types";
 import { variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TRadio",
@@ -98,7 +108,8 @@ export default defineComponent({
         newValue.value = val;
       }
     );
-    return { computedValue, isChecked };
+    const { renderClass } = useRenderClass("radio");
+    return { computedValue, isChecked, renderClass };
   }
 });
 </script>

@@ -74,6 +74,11 @@ export interface TSettings {
     container?: TSettingItem;
     progress?: TSettingItem;
   };
+  radio?: {
+    container?: TSettingItem;
+    inputContainer?: TSettingItem;
+    label?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
