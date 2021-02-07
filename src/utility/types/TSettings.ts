@@ -64,6 +64,12 @@ export interface TSettings {
     container?: TSettingItem;
     item?: TSettingItem;
   };
+  numberPicker?: {
+    plus?: TSettingItem;
+    minus?: TSettingItem;
+    text?: TSettingItem;
+    loading?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
