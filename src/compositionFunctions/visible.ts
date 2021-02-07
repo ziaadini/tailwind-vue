@@ -53,7 +53,7 @@ export const useIsVisible = (
     if (placementTemporaryValue?.length) {
       placement.value = placementTemporaryValue;
     } else {
-      placement.value = null;
+      placement.value = [visibilityOverflow.bottom, visibilityOverflow.left, visibilityOverflow.right, visibilityOverflow.top];
     }
   };
 
@@ -61,7 +61,6 @@ export const useIsVisible = (
     if (isIntersecting?.value) {
       initiateScroll();
     } else {
-      placement.value = null;
       destroyScroll();
     }
   });
