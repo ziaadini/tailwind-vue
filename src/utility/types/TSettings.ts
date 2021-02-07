@@ -44,6 +44,26 @@ export interface TSettings {
     loadingContainer?: TSettingItem;
     loading?: TSettingItem;
   };
+  checkbox?: {
+    container?: TSettingItem;
+    inputContainer?: TSettingItem;
+    label?: TSettingItem;
+  };
+  drawer?: {
+    backDrop?: TSettingItem;
+    container?: TSettingItem;
+    header?: TSettingItem;
+    title?: TSettingItem;
+    close?: TSettingItem;
+    contentContainer?: TSettingItem;
+  };
+  icon?: {
+    container?: TSettingItem;
+  };
+  loading?: {
+    container?: TSettingItem;
+    item?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

@@ -12,11 +12,9 @@
             {{ title }}
           </div>
         </template>
-        <template #text="{text}"
-        >
+        <template #text="{text}">
           <div class="text-danger">{{ text }}</div>
-        </template
-        >
+        </template>
       </t-accordion>
     </div>
 
@@ -47,11 +45,11 @@
     <t-tabs v-model="customTab">
       <template #title="{title,selected,count}">
         <div
-            class="mx-2 cursor-pointer min-w-max"
-            :class="{ 'text-primary': selected }"
+          class="mx-2 cursor-pointer min-w-max"
+          :class="{ 'text-primary': selected }"
         >
           <div
-              class="w-6 h-6  rounded-full items-center justify-center  text-white bg-gray-500"
+            class="w-6 h-6  rounded-full items-center justify-center  text-white bg-gray-500"
           >
             {{ count }}
           </div>
@@ -112,8 +110,8 @@
     <div class="w-1/2">
       <div>#zia</div>
       <t-card
-          title="ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است."
-          description="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربر"
+        title="ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است."
+        description="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربر"
       >
       </t-card>
     </div>
@@ -142,39 +140,48 @@
       <div>#zia</div>
       <div class="bg-gray-100 pl-6 py-5 sm:p-8">
         <t-timeline
-            v-model="stepper"
-            :items="stepperItems"
-            :clickable="true"
+          v-model="stepper"
+          :items="stepperItems"
+          :clickable="true"
         ></t-timeline>
       </div>
+    </div>
+    <div class="my-4 w-full">
+      <div>#zia</div>
+      <t-fade allocate-space :show="fade">
+        <div>
+          متن تصادفی
+        </div>
+      </t-fade>
+      <t-button @click="fade = !fade">fade toggle</t-button>
     </div>
 
     <div>
       <div>#zia</div>
 
       <t-tooltip
-          message="test hover message for you"
-          variant="danger"
-          position="right"
+        message="test hover message for you"
+        variant="danger"
+        position="right"
       >
         <t-button variant="danger" outline ripple>hover on me</t-button>
       </t-tooltip>
 
       <div class="my-4">with v-model</div>
       <t-tooltip
-          v-model="tooltip"
-          message="test hover message for you"
-          variant="danger"
-          position="right"
-          :hover="false"
+        v-model="tooltip"
+        message="test hover message for you"
+        variant="danger"
+        position="right"
+        :hover="false"
       >
         <t-button
-            @mouseover="tooltip = true"
-            @mouseleave="tooltip = false"
-            variant="danger"
-            outline
-            ripple
-        >hover on me
+          @mouseover="tooltip = true"
+          @mouseleave="tooltip = false"
+          variant="danger"
+          outline
+          ripple
+          >hover on me
         </t-button>
       </t-tooltip>
     </div>
@@ -185,7 +192,7 @@
     <div class="w-60 my-2">
       <div>#zia</div>
       <t-toast
-          message="There are many variations of passages of Lorem Ipsum available, but the"
+        message="There are many variations of passages of Lorem Ipsum available, but the"
       ></t-toast>
     </div>
     <div>
@@ -197,19 +204,19 @@
     <div>
       <div>#zia</div>
       <t-number-picker
-          :max="5"
-          :min="2"
-          v-model="numberPickerCount"
+        :max="5"
+        :min="2"
+        v-model="numberPickerCount"
       ></t-number-picker>
     </div>
 
     <div>
       <div>#zia</div>
       <t-modal
-          max-size="lg"
-          teleport-to="#modal-content"
-          v-model="modal"
-          :close-callback="modalCloseCallback"
+        max-size="lg"
+        teleport-to="#modal-content"
+        v-model="modal"
+        :close-callback="modalCloseCallback"
       >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
@@ -221,13 +228,13 @@
 
         <div class="text-right mt-4">
           <button
-              @click="modal = false"
-              class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline"
+            @click="modal = false"
+            class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline"
           >
             Cancel
           </button>
           <button
-              class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400"
+            class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400"
           >
             Delete
           </button>
@@ -239,10 +246,10 @@
     <div>
       <div>#zia</div>
       <t-drawer
-          :has-close-button="true"
-          max-size="md"
-          teleport-to="#modal-content"
-          v-model="drawer"
+        :has-close-button="true"
+        max-size="md"
+        teleport-to="#modal-content"
+        v-model="drawer"
       >
         <div>
           <div class="h-96">hi</div>
@@ -260,10 +267,10 @@
     <div>
       <div>#zia</div>
       <t-bottom-sheet
-          :has-close-button="false"
-          teleport-to="#modal-content"
-          v-model="bottomSheet"
-          title="تست عنوان"
+        :has-close-button="false"
+        teleport-to="#modal-content"
+        v-model="bottomSheet"
+        title="تست عنوان"
       >
         <!--        <template #closeButton="attrs">-->
         <!--          <t-button v-bind="attrs">close</t-button>-->
@@ -279,17 +286,17 @@
         </div>
       </t-bottom-sheet>
       <t-button @click="bottomSheet = true" variant="warning"
-      >open bottomSheet
+        >open bottomSheet
       </t-button>
     </div>
 
     <div>
       <div>#zia</div>
       <t-switch
-          v-model="switchModel"
-          :true-value="1"
-          :false-value="0"
-          label="فقط کالاهای موجود"
+        v-model="switchModel"
+        :true-value="1"
+        :false-value="0"
+        label="فقط کالاهای موجود"
       ></t-switch>
 
       <!--      <t-switch-->
@@ -307,10 +314,10 @@
     <div>
       <div>#zia</div>
       <t-checkbox
-          v-model="checkboxModel"
-          :true-value="1"
-          :false-value="0"
-          label="سامسونگ"
+        v-model="checkboxModel"
+        :true-value="1"
+        :false-value="0"
+        label="سامسونگ"
       ></t-checkbox>
 
       <t-checkbox v-model="checkboxModel" :true-value="1" :false-value="0">
@@ -334,12 +341,12 @@
       <div class="my-2">custom</div>
       <t-count-down-timer v-model="timer">
         <template
-            #default="{day,hideDays,hours,hideHours,minutes,hideMinutes,seconds,hideSeconds}"
+          #default="{day,hideDays,hours,hideHours,minutes,hideMinutes,seconds,hideSeconds}"
         >
           <div class="flex space-x-6 ltr">
             <div class="flex items-center space-x-2" v-if="!hideDays">
               <div
-                  class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
+                class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
               >
                 {{ day }}
               </div>
@@ -348,7 +355,7 @@
 
             <div class="flex items-center space-x-2" v-if="!hideHours">
               <div
-                  class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
+                class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
               >
                 {{ hours }}
               </div>
@@ -357,7 +364,7 @@
 
             <div class="flex items-center space-x-2" v-if="!hideMinutes">
               <div
-                  class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
+                class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
               >
                 {{ minutes }}
               </div>
@@ -366,7 +373,7 @@
 
             <div class="flex items-center space-x-2" v-if="!hideSeconds">
               <div
-                  class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
+                class="bg-primary-400 text-white w-10 h-10 flex justify-center items-center rounded-sm"
               >
                 {{ seconds }}
               </div>
@@ -378,10 +385,10 @@
     <div>
       <div>#zia</div>
       <t-range-slider
-          :min="0"
-          :max="10000"
-          v-model:max-value="rangeMax"
-          v-model:min-value="rangeMin"
+        :min="0"
+        :max="10000"
+        v-model:max-value="rangeMax"
+        v-model:min-value="rangeMin"
       ></t-range-slider>
       min: {{ Math.floor(rangeMin) }} max: {{ Math.floor(rangeMax) }}
     </div>
@@ -405,41 +412,41 @@
       <div>#zia</div>
       <div class="flex w-full space-x-reverse space-x-3 mt-4">
         <t-radio
-            label="تست ۱"
-            variant="danger"
-            v-model="radioModel"
-            value="test1"
+          label="تست ۱"
+          variant="danger"
+          v-model="radioModel"
+          value="test1"
         ></t-radio>
         <t-radio
-            label="تست ۲"
-            variant="danger"
-            v-model="radioModel"
-            :value="{ a: 'test2' }"
+          label="تست ۲"
+          variant="danger"
+          v-model="radioModel"
+          :value="{ a: 'test2' }"
         ></t-radio>
       </div>
       <h3 class="mt-8 mb-2">custom radio</h3>
       <div class="flex w-full space-x-reverse space-x-3 mb-4">
         <t-radio
-            variant="danger"
-            v-model="radioModel2"
-            value="test1"
-            hide-input
+          variant="danger"
+          v-model="radioModel2"
+          value="test1"
+          hide-input
         >
           <template #label="{isChecked}">
             <div
-                class="px-4 py-2 border-2 rounded-xs"
-                :class="{ 'border-success': isChecked }"
+              class="px-4 py-2 border-2 rounded-xs"
+              :class="{ 'border-success': isChecked }"
             >
               تست ۱
             </div>
           </template>
         </t-radio>
         <t-radio
-            variant="danger"
-            v-model="radioModel2"
-            :value="{ a: 'test2' }"
-            active-class="border-primary"
-            class="px-4 py-2 border-2 rounded-xs"
+          variant="danger"
+          v-model="radioModel2"
+          :value="{ a: 'test2' }"
+          active-class="border-primary"
+          class="px-4 py-2 border-2 rounded-xs"
         >
           <template #label>
             <div class="mr-2">
@@ -478,10 +485,12 @@ import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
 import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
 import TRangeSlider from "@/components/tailwind/rangeSlider/TRangeSlider.vue";
 import TCountDownTimer from "@/components/tailwind/timer/TCountDownTimer.vue";
+import TFade from "@/components/tailwind/fade/TFade.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TFade,
     TCountDownTimer,
     TRangeSlider,
     TTooltip,
@@ -548,13 +557,13 @@ export default defineComponent({
       {
         title: "title is",
         text:
-            "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
+          "you include the reCAPTFFCHA branding visibly in the user flow. Please include the following text: Yes, please use",
         selected: true
       },
       {
         title: "title is",
         text:
-            "o do this, load the v3 site key as documented, and then explicitly renderv2 using grecaptcha.render. You are allowed to hide the badge as long asyou include the reCAPTCHA branding visibly in the user flow. Pleaseinclude the following text: Yes, please use"
+          "o do this, load the v3 site key as documented, and then explicitly renderv2 using grecaptcha.render. You are allowed to hide the badge as long asyou include the reCAPTCHA branding visibly in the user flow. Pleaseinclude the following text: Yes, please use"
       }
     ]);
     // setTimeout(() => {
@@ -568,7 +577,9 @@ export default defineComponent({
     const timer = ref(60 * 60 * 24 + 4);
     const rangeMax = ref(8000);
     const rangeMin = ref(0);
+    const fade = ref(0);
     return {
+      fade,
       timer,
       rangeMax,
       rangeMin,

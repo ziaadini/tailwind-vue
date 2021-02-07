@@ -1,31 +1,39 @@
 <template>
   <div class="flex items-center">
-    <app-button
-      :disabled="isPlusDisable"
+    <t-button
+      :disabled="isPlusDisable || loading"
       @click="plus"
       class="w-10"
       v-bind="buttonProps"
     >
       +
-    </app-button>
-    <span class="w-10 text-center">{{ modelValue }}</span>
-    <app-button
-      :disabled="isMinusDisable"
+    </t-button>
+    <div class="w-10 text-center">
+      <template v-if="loading">
+        <t-loading v-bind="loadingProps"></t-loading>
+      </template>
+      <template v-else>
+        {{ modelValue }}
+      </template>
+    </div>
+    <t-button
+      :disabled="isMinusDisable || loading"
       @click="minus"
       class="w-10"
       v-bind="buttonProps"
     >
       -
-    </app-button>
+    </t-button>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import AppButton from "@/components/tailwind/button/TButton.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
+import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
   name: "TNumberPicker",
-  components: { AppButton },
+  components: { TLoading, TButton },
   props: {
     modelValue: {
       type: Number,
@@ -39,8 +47,16 @@ export default defineComponent({
       type: Number
     },
     buttonProps: {
-      type: Object as PropType<{ variant: string }>,
+      type: Object as PropType<{ variant: string; [key: string]: any }>,
       default: () => ({ variant: "primary" })
+    },
+    loadingProps: {
+      type: Object as PropType<{ variant: string; [key: string]: any }>,
+      default: () => ({ variant: "secondary", type: "spinner" })
+    },
+    loading: {
+      type: Boolean,
+      default: true
     }
   },
   emits: {

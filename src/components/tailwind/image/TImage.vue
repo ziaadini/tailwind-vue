@@ -11,18 +11,18 @@ export default defineComponent({
     src: {
       type: String,
       default: "",
-      reqired: true,
+      required: true
     },
     default: {
       type: String,
       default: "",
-      reqired: false,
+      required: false
     },
     lazy: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const { src, default: defaultImage, lazy } = toRefs(props);
@@ -43,7 +43,7 @@ export default defineComponent({
     if (lazy.value) {
       const { isIntersecting, destroyObserver } = useIntersectElement(
         {
-          passRef: true,
+          passRef: true
         },
         () => ({}),
         image
@@ -61,8 +61,8 @@ export default defineComponent({
 
     return {
       imageSrc,
-      image,
+      image
     };
-  },
+  }
 });
 </script>

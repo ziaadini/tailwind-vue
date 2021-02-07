@@ -6,7 +6,7 @@
 | icon | string | "" | material icon name |
 | iconClass | string | "" | css class for icon |
 | variant | string | primary | background variant of alert |
-
+| allocateSpace | Boolean | false | reserve space |
 ### slots
 | name | description
 | ------------ | ------------ |
