@@ -12,36 +12,32 @@
     </div>
 
     <!--dropdown menu-->
-    <transition
-      enter-active-class="transition-all duration-200 ease-out"
-      leave-active-class="transition-all duration-750 ease-in"
-      enter-class="opacity-0 scale-75"
-      enter-to-class="opacity-100 scale-100"
-      leave-class="opacity-100 scale-100"
-      leave-to-class="opacity-0 scale-75"
-    >
-      <div
+    <div
       ref="menuRef"
-        class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-30 rounded-t-none"
-        :class="{
+      class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-30 rounded-t-none transition transform"
+      :class="[
+        {
           'right-0': placement === 'right',
           'left-0': placement !== 'right',
           'w-full': full,
           'z-30': !hover,
           'z-40': hover,
-        }"
-        v-if="open && !disabled"
-      >
-        <slot name="content"></slot>
-      </div>
-    </transition>
+          'origin-top-right scale-0 opacity-0': animate && !isOpen,
+          'scale-100 opacity-1': aniamte && isOpen,
+          'origin-top invisible opacity-0': !animate && !isOpen,
+          'opacity-1 visible': isOpen && !animate,
+        },
+      ]"
+    >
+      <slot name="content"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { defineComponent, ref, watch, watchEffect } from "vue";
+import { computed, defineComponent, ref, watch, watchEffect } from "vue";
 
 export default defineComponent({
   props: {
@@ -65,17 +61,21 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    animate: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props) {
     const open = ref(false);
 
-    const {
-      clickedOutside,
-      elementRef: menuRef,
-      registerEvent,
-      unRegisterEvent,
-    } = useClickOutside();
+    // is menu open
+    const isOpen = computed(() => {
+      return open.value && !props.disabled;
+    });
 
+    // handle escape key
     const onEscape = (e) => {
       if (e.key === "Esc" || e.key === "Escape") {
         open.value = false;
@@ -83,13 +83,19 @@ export default defineComponent({
     };
     useKeyDown(onEscape);
 
+    // handle clickoutside
+    const {
+      clickedOutside,
+      elementRef: menuRef,
+      registerEvent,
+      unRegisterEvent,
+    } = useClickOutside();
     watch(clickedOutside, (value) => {
       console.log("watch clickoutside", value);
       if (value) {
         open.value = false;
       }
     });
-
     watchEffect(() => {
       if (open.value) {
         registerEvent();
@@ -98,6 +104,11 @@ export default defineComponent({
       }
     });
 
+    const animateFunction = (callback: any, timeout) => {
+      setTimeout(() => {
+        callback();
+      }, timeout);
+    };
     const openClose = (value = null as any) => {
       console.log("open close", value);
       if (!props.disabled) {
@@ -105,10 +116,21 @@ export default defineComponent({
       }
     };
 
+    const animationClasses = ref("");
+
+    watch(isOpen, (newValue) => {
+      if (newValue) {
+        animateFunction(() => {
+          animationClasses.value = "scale-100 opacity-100";
+        }, 100);
+      } else animationClasses.value = "";
+    });
+
     return {
-      open,
       menuRef,
       openClose,
+      isOpen,
+      animationClasses,
     };
   },
 });
