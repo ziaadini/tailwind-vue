@@ -1,4 +1,5 @@
-import { onMounted, onUnmounted, watch } from "vue";
+import { useIsScrolling } from "./isScrolling";
+import { onMounted, onUnmounted, watch, watchEffect } from "vue";
 import { ref } from "vue";
 import { useIntersectElement } from "./intersect";
 export enum visibilityOverflow {
@@ -7,14 +8,17 @@ export enum visibilityOverflow {
   top = "top",
   bottom = "bottom",
 }
-export const useIsVisible = (element = ref(null as any)) => {
+export const useIsVisible = (
+  element = ref(null as any),
+  parentElement = ref(null as any)
+) => {
   const result = ref(null as any);
-  const placement = ref(
-    null as {
-      type: visibilityOverflow;
-      px: number;
-    } | null
-  );
+  const placement = ref(null as null | visibilityOverflow[]);
+  const {
+    initiateScroll,
+    destroyScroll,
+    result: isScrolling,
+  } = useIsScrolling();
 
   const { isIntersecting, destroyObserver } = useIntersectElement(
     {
@@ -27,38 +31,47 @@ export const useIsVisible = (element = ref(null as any)) => {
     element
   );
   const handlePlacement = () => {
-    const bounding = result.value!.boundingClientRect;
-    if (bounding.top >= 0) {
-      const windowWidth =
-        window.innerWidth || document.documentElement.clientWidth;
-      const windowHeight =
-        window.innerHeight || document.documentElement.clientHeight;
-      if (bounding.right > windowWidth) {
-        placement.value = {
-          type: visibilityOverflow.right,
-          px: windowWidth - bounding.right,
-        };
-      } else if (bounding.left < 0) {
-        placement.value = {
-          type: visibilityOverflow.left,
-          px: bounding.left - windowHeight,
-        };
-      } else if (bounding.bottom > windowHeight) {
-        placement.value = {
-          type: visibilityOverflow.bottom,
-          px: bounding.bottom - windowHeight,
-        };
-      } else {
-        placement.value = null;
+    console.log({
+      parentElement,
+    });
+    const childBounding = result.value!.boundingClientRect;
+    const parentBounding = parentElement.value!.getBoundingClientRect();
+    const windowHeight =
+      window.innerHeight || document.documentElement.clientHeight;
+    const placementTemporaryValue = [] as visibilityOverflow[] | null;
+    if (childBounding.top >= 0) {
+      const childWidth = childBounding.width;
+      const childHeight = childBounding.height;
+      if (parentBounding.right > childWidth) {
+        placementTemporaryValue!.push(visibilityOverflow.right);
+      }
+      if (parentBounding.left > childWidth) {
+        placementTemporaryValue!.push(visibilityOverflow.left);
+      }
+      console.log(windowHeight, parentBounding.bottom, childHeight);
+      if (windowHeight - parentBounding.bottom > childHeight) {
+        placementTemporaryValue!.push(visibilityOverflow.bottom);
       }
     }
-  };
-  watch(result, (resultValue) => {
-    if (resultValue && isIntersecting?.value) {
-      handlePlacement();
+
+    if (placementTemporaryValue?.length) {
+      placement.value = placementTemporaryValue;
     } else {
       placement.value = null;
     }
+  };
+
+  watchEffect(() => {
+    if (isIntersecting?.value) {
+      initiateScroll();
+    } else {
+      placement.value = null;
+      destroyScroll();
+    }
+  });
+
+  watch(isScrolling, (resultValue) => {
+    handlePlacement();
   });
 
   onUnmounted(() => {
@@ -67,5 +80,6 @@ export const useIsVisible = (element = ref(null as any)) => {
   return {
     element,
     placement,
+    parentElement,
   };
 };

@@ -5,6 +5,7 @@
     @mouseleave="hover && openClose(false)"
   >
     <div
+      ref="dropdownParentRef"
       class="cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="[
         {
@@ -19,6 +20,9 @@
       {{ selectedItem.label || placeholder }}
     </div>
 
+    <!-- :style="{
+        '--tw-translate-y': placement && `${-placement.px}px`,
+      }" -->
     <div
       ref="dropdownRef"
       :class="{
@@ -26,6 +30,7 @@
         'rounded-b-md': rounded,
         'z-30': !hover,
         'z-40': hover,
+        '-translate-y-full': !isBottomOverflowed,
       }"
       class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
@@ -50,6 +55,10 @@
 
 <script lang="ts">
 import { variants } from "@/utility/css-helper";
+import {
+  useIsVisible,
+  visibilityOverflow,
+} from "@/compositionFunctions/visible";
 import {
   computed,
   defineComponent,
@@ -200,6 +209,14 @@ export default defineComponent({
       }
     });
 
+    const { placement, parentElement: dropdownParentRef } = useIsVisible(
+      dropdownRef
+    );
+
+    const isBottomOverflowed = computed(() => {
+      return placement.value?.includes(visibilityOverflow.bottom);
+    });
+
     return {
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
@@ -209,6 +226,9 @@ export default defineComponent({
       selectedItem,
       state,
       dropdownRef,
+      dropdownParentRef,
+      isBottomOverflowed,
+      placement,
     };
   },
 });

@@ -305,7 +305,7 @@
       hover
       placeholder="this is a test placeholder"
       rounded
-      :items="['test1', 'test2', 'test3']"
+      :items="['test1', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3']"
     />
     <t-dropdown
       v-model="dropdownModel"
@@ -360,7 +360,7 @@
       variant="warning"
       rounded
       placeholder="تست"
-      :items="['test1', 'test2', 'test3']"
+      :items="['test1', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3', 'test2', 'test3']"
     />
   </div>
 
