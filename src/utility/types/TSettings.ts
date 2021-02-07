@@ -70,6 +70,10 @@ export interface TSettings {
     text?: TSettingItem;
     loading?: TSettingItem;
   };
+  progressBar?: {
+    container?: TSettingItem;
+    progress?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
