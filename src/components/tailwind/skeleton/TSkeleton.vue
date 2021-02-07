@@ -81,7 +81,7 @@ export default defineComponent({
     }
   },
   setup() {
-    return { SkeletonTypes };
+    return { SkeletonTypes: SkeletonTypes };
   }
 });
 </script>

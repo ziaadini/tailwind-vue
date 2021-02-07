@@ -4,6 +4,7 @@ export enum variants {
   danger = "danger",
   warning = "warning",
   white = "white",
+  secondary = "secondary"
 }
 
 export enum textInputVariants {
@@ -30,12 +31,11 @@ export enum size {
   full = "full"
 }
 
-
 export enum normalSizes {
   xs = "xs",
   sm = "sm",
   md = "md",
-  lg = "lg",
+  lg = "lg"
 }
 
 export enum positionVariant {

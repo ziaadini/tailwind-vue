@@ -13,17 +13,20 @@ module.exports = {
           /^(hover:|focus:)?bg-danger(-50)?$/,
           /^(hover:|focus:)?bg-warning(-50)?$/,
           /^(hover:|focus:)?bg-success(-50)?$/,
+          /^(hover:|focus:)?bg-secondary(-50)?$/,
           /^(hover:|focus:)?$bg-white$/,
           /^(hover:|focus:)?border-primary(-50)?$/,
           /^(hover:|focus:)?border-danger(-50)?$/,
           /^(hover:|focus:)?border-warning(-50)?$/,
           /^(hover:|focus:)?border-success(-50)?$/,
+          /^(hover:|focus:)?border-secondary(-50)?$/,
           /^duration-/,
           /^text-primary$/,
           /^text-danger$/,
           /^text-warning$/,
           /^text-success$/,
-          /^text-white$/
+          /^text-white$/,
+          /^text-secondary$/
         ],
         keyframes: true,
         fontFace: true
@@ -131,8 +134,15 @@ module.exports = {
           A200: "#ffe9e2",
           A400: "#ffc2af",
           A700: "#ffaf96"
+        },
+        secondary: {
+          light: "#E0E0E0",
+          DEFAULT: "#BDBDBD",
+          dark: "#9E9E9E",
+          hover: "#F5F5F5"
         }
       },
+
       ringColor: {
         primary: "#9ab4e5",
         success: "#a0eb93",
