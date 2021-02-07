@@ -1,9 +1,22 @@
 <template>
   <div class="w-full ltr">
-    <div class="shadow w-full bg-gray-200 rounded-full" v-bind="$attrs">
+    <div
+      data-name="progressBar-container"
+      :class="
+        renderClass('shadow w-full bg-gray-200 rounded-full', 'container')
+      "
+      v-bind="$attrs"
+    >
       <div
-        :class="[`bg-${variant}`, { 'text-white': variant !== 'white' }]"
-        class="rounded-inherit text-xs leading-none py-1 text-center  transition"
+        data-name="progressBar-progress"
+        :class="[
+          `bg-${variant}`,
+          { 'text-white': variant !== 'white' },
+          renderClass(
+            'rounded-inherit text-xs leading-none py-1 text-center transition',
+            'progress'
+          )
+        ]"
         :style="{ width: `${percent}%` }"
       >
         <template v-if="showPercent">{{ Math.floor(percent) }}%</template>
@@ -16,6 +29,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   name: "TProgressBar",
   props: {
@@ -43,7 +57,8 @@ export default defineComponent({
   },
   setup(props) {
     const percent = computed(() => (props.value * 100) / props.max);
-    return { percent };
+    const { renderClass } = useRenderClass("progressBar");
+    return { percent, renderClass };
   }
 });
 </script>

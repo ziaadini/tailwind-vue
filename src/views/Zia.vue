@@ -208,6 +208,39 @@
         :min="2"
         v-model="numberPickerCount"
       ></t-number-picker>
+      <h4 class="my-2">custom number picker</h4>
+      <t-number-picker loading :max="5" :min="2" v-model="numberPickerCount">
+        <template #plus="{click}">
+          <div
+            class="cursor-pointer w-10 border-gray-200 rounded-sm border-2"
+            @click="click"
+          >
+            +
+          </div>
+        </template>
+        <template #text="{value,loading}">
+          <template v-if="loading">
+            <div class="p-2">
+              <t-loading
+                type="spinner"
+                size="sm"
+                variant="secondary"
+              ></t-loading>
+            </div>
+          </template>
+          <div v-else class="w-8 font-light text-gray-500">
+            {{ value }}
+          </div>
+        </template>
+        <template #minus="{click}">
+          <div
+            class="cursor-pointer w-10 border-gray-200 rounded-sm border-2"
+            @click="click"
+          >
+            -
+          </div>
+        </template>
+      </t-number-picker>
     </div>
 
     <div>

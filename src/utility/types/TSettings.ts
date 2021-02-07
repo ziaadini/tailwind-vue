@@ -64,6 +64,16 @@ export interface TSettings {
     container?: TSettingItem;
     item?: TSettingItem;
   };
+  numberPicker?: {
+    plus?: TSettingItem;
+    minus?: TSettingItem;
+    text?: TSettingItem;
+    loading?: TSettingItem;
+  };
+  progressBar?: {
+    container?: TSettingItem;
+    progress?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

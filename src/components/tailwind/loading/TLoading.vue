@@ -4,7 +4,7 @@
     :class="renderClass('flex justify-center', 'container')"
   >
     <template v-if="type === LoadingTypes.spinner">
-      <div :class="renderClass(`${withClass} relative`, 'spinnerContainer')">
+      <div v-bind="$attrs" :class="renderClass(`${withClass} relative`, 'spinnerContainer')">
         <div
           :class="
             renderClass(
