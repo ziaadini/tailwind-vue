@@ -71,6 +71,7 @@ export const useIsVisible = (
     observersCount--
     if (observersCount === 0) {
       destroyScroll();
+      isScrolling = null
     }
   });
   return {
