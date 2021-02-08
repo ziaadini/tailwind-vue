@@ -4,7 +4,7 @@
       ref="slidesContainer"
       class="overflow-auto whitespace-nowrap scrollbar-hidden w-full h-full scroll-smooth"
     >
-      <template class="contents " ref="content"> <slot /></template>
+      <div class="contents" ref="content"><slot /></div>
     </div>
     <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
       <slot name="leftButton" :scrollLeft="onScrollLeft" />
@@ -51,7 +51,11 @@ export default defineComponent({
       if (last !== intersectionArray.value.length - 1) {
         const notIntersected = intersectionArray.value[last];
         console.log(notIntersected.ref);
-        notIntersected.ref.scrollIntoView(null);
+        notIntersected.ref.scrollIntoView({
+          block: "nearest",
+          behavior: "smooth",
+        });
+        
       } else scrollLeft(slidesContainer.value.clientWidth, 200);
     };
     const onScrollRight = () => {
@@ -59,7 +63,10 @@ export default defineComponent({
       if (first) {
         const notIntersected = intersectionArray.value[first];
         console.log(notIntersected.ref);
-        notIntersected.ref.scrollIntoView(null);
+        notIntersected.ref.scrollIntoView({
+          block: "nearest",
+          behavior: "smooth",
+        });
       } else scrollRight(slidesContainer.value.clientWidth, 200);
     };
 
