@@ -1,5 +1,4 @@
 <template>
-  {{ selectedItem.value }}
   <div
     class="relative"
     @mouseenter="hover && openClose(true)"
@@ -225,7 +224,9 @@ export default defineComponent({
     );
 
     const isBottomOverflowed = computed(() => {
-      return !placement.value?.includes(visibilityOverflow.bottom);
+      if (placement.value?.includes(visibilityOverflow.top))
+        return !placement.value?.includes(visibilityOverflow.bottom);
+      return false;
     });
 
     return {
