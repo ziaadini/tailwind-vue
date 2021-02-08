@@ -362,6 +362,27 @@
     <div class="w-full">
       <div>#zia</div>
       <t-skeleton type="card" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="avatar-list" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="one-line" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="three-line" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <t-skeleton type="image" class="max-w-sm"></t-skeleton>
+      <div class="my-4"></div>
+      <div class="my-2">custom</div>
+      <t-skeleton
+        type="custom"
+        :border="false"
+        :shadow="false"
+        class="max-w-sm"
+      >
+        <div class="flex items-center space-x-reverse space-x-4">
+          <div class="rounded-full w-12 h-12 bg-gray-300"></div>
+          <div class="rounded-sm w-9/12 h-4 bg-gray-300"></div>
+        </div>
+      </t-skeleton>
     </div>
 
     <div>

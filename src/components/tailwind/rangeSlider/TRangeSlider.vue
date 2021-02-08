@@ -1,20 +1,42 @@
 <template>
-  <div class="w-64" ref="container">
-    <div class="relative z-10 h-2">
+  <div
+    data-name="rangeSlider-container"
+    :class="renderClass('min-w-48', 'container')"
+    ref="container"
+  >
+    <div
+      data-name="rangeSlider-innerContainer"
+      :class="renderClass('relative z-10 h-2', 'innerContainer')"
+    >
       <div
-        class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"
+        data-name="rangeSlider-pan"
+        :class="
+          renderClass(
+            'absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200',
+            'pan'
+          )
+        "
       ></div>
 
       <div
-        class="absolute z-20 top-0 bottom-0 rounded-md"
-        :class="`bg-${variant}`"
+        data-name="rangeSlider-activePan"
+        :class="[
+          `bg-${variant}`,
+          renderClass('absolute z-20 top-0 bottom-0 rounded-md', 'activePan')
+        ]"
         :style="'right:' + maxThumb + '%; left:' + minThumb + '%'"
       ></div>
 
       <div
         v-if="!disableMin"
-        class="absolute z-30 w-6 h-6 top-0 left-0 rounded-full cursor-pointer -mt-2 -ml-3"
-        :class="`bg-${variant}`"
+        data-name="rangeSlider-minCircle"
+        :class="[
+          `bg-${variant}`,
+          renderClass(
+            'absolute z-30 w-6 h-6 top-0 left-0 rounded-full cursor-pointer -mt-2 -ml-3',
+            'minCircle'
+          )
+        ]"
         :style="'left: ' + minThumb + '%'"
         v-bind="minEvents"
       >
@@ -22,9 +44,15 @@
       </div>
 
       <div
+        data-name="rangeSlider-maxCircle"
         v-if="!disableMax"
-        class="absolute z-30 w-6 h-6 top-0 right-0 rounded-full cursor-pointer -mt-2 -mr-3"
-        :class="`bg-${variant}`"
+        :class="[
+          `bg-${variant}`,
+          renderClass(
+            'absolute z-30 w-6 h-6 top-0 right-0 rounded-full cursor-pointer -mt-2 -mr-3',
+            'maxCircle'
+          )
+        ]"
         :style="'right: ' + maxThumb + '%'"
         v-bind="maxEvents"
       >
@@ -38,6 +66,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import { useRangeMax, useRangeMin } from "@/compositionFunctions/rangeSlider";
 import { variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TRangeSlider",
@@ -118,7 +147,9 @@ export default defineComponent({
       { emit }
     );
 
+    const { renderClass } = useRenderClass("rangeSlider");
     return {
+      renderClass,
       minThumb,
       minEvents,
       maxThumb,
