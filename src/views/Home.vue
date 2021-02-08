@@ -544,14 +544,18 @@
       <span class="text-center">{{ i }}</span>
     </div>
 
-    <template #leftButton="{scrollLeft}">
-      <t-button variant="primary" @click="scrollLeft">
+    <template #leftButton="{scrollLeft, leftDisabled}">
+      <t-button variant="primary" @click="scrollLeft" :disabled="leftDisabled">
         left
       </t-button>
     </template>
 
-    <template #rightButton="{scrollRight}">
-      <t-button variant="success" @click="scrollRight">
+    <template #rightButton="{scrollRight, rightDisabled}">
+      <t-button
+        variant="success"
+        @click="scrollRight"
+        :disabled="rightDisabled"
+      >
         right
       </t-button>
     </template>

@@ -6,25 +6,47 @@
     >
       <div class="contents" ref="content"><slot /></div>
     </div>
-    <div class="absolute transform left-0 top-1/2 -translate-y-1/2">
-      <slot name="leftButton" :scrollLeft="onScrollLeft" />
+    <div
+      @click="onScrollLeft"
+      class="absolute transform left-0 top-1/2 -translate-y-1/2"
+    >
+      <slot
+        name="leftButton"
+        :scrollRight="onScrollRight"
+        :scrollLeft="onScrollLeft"
+        :leftDisabled="leftDisabled"
+        :rightDisabled="rightDisabled"
+      />
     </div>
-    <div class="absolute transform right-0 top-1/2 -translate-y-1/2">
-      <slot name="rightButton" :scrollRight="onScrollRight" />
+    <div
+      class="absolute transform right-0 top-1/2 -translate-y-1/2"
+      @click="onScrollRight"
+    >
+      <slot
+        name="rightButton"
+        :scrollRight="onScrollRight"
+        :scrollLeft="onScrollLeft"
+        :leftDisabled="leftDisabled"
+        :rightDisabled="rightDisabled"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { nextTick } from "vue";
+import { computed, nextTick } from "vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import { defineComponent, onMounted, ref, watch } from "vue";
+import { useIsScrolling } from "@/compositionFunctions/isScrolling";
 
 export default defineComponent({
   setup(_, { slots }) {
     const content = ref(null);
     const intersectionArray = ref([] as any[]);
+
+    const leftDisabled = ref(false);
+    const rightDisabled = ref(true);
 
     const {
       elementRef: slidesContainer,
@@ -32,19 +54,35 @@ export default defineComponent({
       scrollRight,
     } = useScrollElement();
 
-    const currentViewStartAndEndIndex = (items: any[]): [number, number] => {
+    const currentViewStartAndEndIndex = (
+      items: any[] = intersectionArray.value
+    ): [number, number] => {
       const _ = items.findIndex((e) => e.isIntersecting);
       const first = _ !== 0 ? _ - 1 : 0;
       let last =
         items.slice(first + 1).findIndex((e) => !e.isIntersecting) + first + 1;
 
       if (last - first <= 2) last = items.length - 1;
-
       return [first, last];
     };
 
+    const { result } = useIsScrolling(true, slidesContainer);
+
+    watch(result, () => {
+      const items = intersectionArray.value;
+      [rightDisabled.value, leftDisabled.value] = [
+        items[0].isIntersecting,
+        items[items.length - 1].isIntersecting,
+      ];
+      console.log([rightDisabled.value, leftDisabled.value])
+    });
+
+    // const leftDisabled = computed(() => {
+    //   console.log(intersectionArray[currentViewStartAndEndIndex()[1]]);
+    // });
+
     const onScrollLeft = () => {
-      const [_, last] = currentViewStartAndEndIndex(intersectionArray.value);
+      const [_, last] = currentViewStartAndEndIndex();
       if (last !== intersectionArray.value.length - 1) {
         const notIntersected = intersectionArray.value[last];
         notIntersected.ref.scrollIntoView({
@@ -54,7 +92,7 @@ export default defineComponent({
       } else scrollLeft(slidesContainer.value.clientWidth, 200);
     };
     const onScrollRight = () => {
-      const [first, _] = currentViewStartAndEndIndex(intersectionArray.value);
+      const [first, _] = currentViewStartAndEndIndex();
       if (first) {
         const notIntersected = intersectionArray.value[first];
         notIntersected.ref.scrollIntoView({
@@ -103,6 +141,8 @@ export default defineComponent({
       onScrollRight,
       slidesContainer,
       content,
+      leftDisabled,
+      rightDisabled
     };
   },
 });
