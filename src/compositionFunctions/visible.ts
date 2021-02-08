@@ -21,7 +21,7 @@ export const useIsVisible = (
 
   const result = ref(null as any);
   const placement = ref(null as null | visibilityOverflow[]);
-  if (!isScrolling) {
+  if (isScrolling === null) {
     const scrollInstance = useIsScrolling();
     isScrolling = scrollInstance.result;
     scrollInstance.initiateScroll();
