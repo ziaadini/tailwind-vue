@@ -7,6 +7,7 @@
       'rounded-sm': !state.opened,
     }"
   >
+    <!-- parent -->
     <div
       ref="dropdownParentRef"
       class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
@@ -15,8 +16,8 @@
           'rounded-sm': !state.opened,
           'rounded-full': rounded && !state.opened,
           'rounded-md': rounded && state.opened,
-          'rounded-b-none': rounded && state.opened,
-          'rounded-bl-none rounded-br-none': state.opened,
+          'rounded-b-none': rounded && state.opened && !isBottomOverflowed,
+          'rounded-t-none': rounded && state.opened && isBottomOverflowed,
         },
         parentClass,
       ]"
@@ -25,9 +26,7 @@
       {{ selectedItem.label || placeholder }}
     </div>
 
-    <!-- :style="{
-        '--tw-translate-y': placement && `${-placement.px}px`,
-      }" -->
+    <!-- items -->
     <div
       ref="dropdownRef"
       :class="{
@@ -35,8 +34,8 @@
         'rounded-b-md': rounded && !isBottomOverflowed,
         'z-30': !hover,
         'z-40': hover,
-        '-translate-y-full': isBottomOverflowed,
         'rounded-b-none': rounded && isBottomOverflowed,
+        '-translate-y-full top-0': isBottomOverflowed,
       }"
       class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
