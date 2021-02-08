@@ -40,17 +40,13 @@ export default defineComponent({
 
       if (last - first <= 2) last = items.length - 1;
 
-      console.log("calculated first and last", { first, last, _ });
       return [first, last];
     };
 
     const onScrollLeft = () => {
-      console.log(intersectionArray.value);
       const [_, last] = currentViewStartAndEndIndex(intersectionArray.value);
-      console.log({ last });
       if (last !== intersectionArray.value.length - 1) {
         const notIntersected = intersectionArray.value[last];
-        console.log(notIntersected.ref);
         notIntersected.ref.scrollIntoView({
           block: "nearest",
           behavior: "smooth",
@@ -62,7 +58,6 @@ export default defineComponent({
       const [first, _] = currentViewStartAndEndIndex(intersectionArray.value);
       if (first) {
         const notIntersected = intersectionArray.value[first];
-        console.log(notIntersected.ref);
         notIntersected.ref.scrollIntoView({
           block: "nearest",
           behavior: "smooth",
