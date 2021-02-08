@@ -116,6 +116,12 @@ export interface TSettings {
     text?: TSettingItem;
     line?: TSettingItem;
   };
+  switch?: {
+    container?: TSettingItem;
+    pan?: TSettingItem;
+    circle?: TSettingItem;
+    label?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
