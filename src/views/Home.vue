@@ -508,18 +508,20 @@
       v-for="i in count"
       :key="i"
       class="w-32 h-32 rounded mx-2 bg-primary-50 inline-block"
-    ></div>
+    >
+      <span class="text-center">{{i}}</span>
+    </div>
 
     <template #leftButton="{scrollLeft}">
-      <span @click="scrollLeft">
+      <t-button variant="primary" @click="scrollLeft">
         left
-      </span>
+      </t-button>
     </template>
 
     <template #rightButton="{scrollRight}">
-      <span @click="scrollRight">
+      <t-button variant="success" @click="scrollRight">
         right
-      </span>
+      </t-button>
     </template>
   </t-slider>
   <br />
