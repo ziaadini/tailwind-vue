@@ -8,18 +8,25 @@ export enum visibilityOverflow {
   top = "top",
   bottom = "bottom",
 }
+
+let isScrolling = null as any;
+let destroyScroll = null as any;
+
+let observersCount = 0;
 export const useIsVisible = (
   element = ref(null as any),
-  parentElement = ref(null as any),
+  parentElement = ref(null as any)
 ) => {
+  observersCount++
+
   const result = ref(null as any);
   const placement = ref(null as null | visibilityOverflow[]);
-  const {
-    initiateScroll,
-    destroyScroll,
-    result: isScrolling,
-  } = useIsScrolling();
-
+  if (!isScrolling) {
+    const scrollInstance = useIsScrolling();
+    isScrolling = scrollInstance.result;
+    scrollInstance.initiateScroll();
+    destroyScroll = scrollInstance.destroyScroll;
+  }
   const { isIntersecting, destroyObserver } = useIntersectElement(
     {
       passRef: true,
@@ -56,24 +63,25 @@ export const useIsVisible = (
     if (placementTemporaryValue?.length) {
       placement.value = placementTemporaryValue;
     } else {
-      placement.value = [visibilityOverflow.bottom, visibilityOverflow.left, visibilityOverflow.right, visibilityOverflow.top];
+      placement.value = [
+        visibilityOverflow.bottom,
+        visibilityOverflow.left,
+        visibilityOverflow.right,
+        visibilityOverflow.top,
+      ];
     }
   };
-
-  watchEffect(() => {
-    if (isIntersecting?.value) {
-      initiateScroll();
-    } else {
-      destroyScroll();
-    }
-  });
 
   watch(isScrolling, (resultValue) => {
     handlePlacement();
   });
 
   onUnmounted(() => {
+    observersCount--
     destroyObserver();
+    if (observersCount === 0) {
+      destroyScroll();
+    }
   });
   return {
     element,
