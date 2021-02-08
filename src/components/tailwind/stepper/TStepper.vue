@@ -1,13 +1,22 @@
 <template>
-  <div class="mx-4 p-4">
+  <div
+    data-name="stepper-container"
+    :class="renderClass('mx-4 p-4', 'container')"
+  >
     <div class="flex items-center">
       <template v-for="(item, index) in items" :key="`stepper-item-${index}`">
         <div
-          class="flex items-center text-gray-400 relative"
-          :class="{
-            'cursor-pointer': clickable && !item.locked,
-            'cursor-not-allowed': item.locked
-          }"
+          data-name="stepper-itemContainer"
+          :class="[
+            {
+              'cursor-pointer': clickable && !item.locked,
+              'cursor-not-allowed': item.locked
+            },
+            renderClass(
+              'flex items-center text-gray-400 relative',
+              'itemContainer'
+            )
+          ]"
           @click="onItemClicked({ item, index })"
         >
           <template v-if="hasCircleSlot">
@@ -21,12 +30,30 @@
           </template>
           <div
             v-else
-            class="flex items-center justify-center rounded-full transition-all duration-500 ease-in-out h-12 w-12 py-3 border-2"
-            :class="
-              isComplete(index) || isActive(index)
-                ? `border-${variant} text-${variant}`
-                : 'border-gray-400'
-            "
+            :class="[
+              renderClass(
+                'flex items-center justify-center rounded-full transition-all duration-500 ease-in-out h-12 w-12 py-3 border-2',
+                'circle'
+              ),
+              renderClass(
+                `${
+                  !isActive(index) && !isComplete(index)
+                    ? 'border-gray-400'
+                    : ''
+                }`,
+                'circle'
+              ),
+              renderClass(
+                `${isActive(index) ? `border-${variant} text-${variant}` : ''}`,
+                'activeCircle'
+              ),
+              renderClass(
+                `${
+                  isComplete(index) ? `border-${variant} text-${variant}` : ''
+                }`,
+                'completeCircle'
+              )
+            ]"
           >
             <template v-if="hasLabelSlot">
               <slot
@@ -43,7 +70,13 @@
           </div>
           <div
             v-if="item[text]"
-            class="absolute right-1/2 transform translate-x-1/2 text-center mt-16 text-xs text-gray-500"
+            data-name="stepper-text"
+            :class="
+              renderClass(
+                'absolute right-1/2 transform translate-x-1/2 text-center mt-16 text-xs text-gray-500',
+                'text'
+              )
+            "
           >
             <template v-if="hasTextSlot">
               <slot
@@ -63,11 +96,16 @@
         </div>
         <template v-if="index !== items.length - 1">
           <div
-            class="flex-auto h-0.5 transition-all duration-400 ease-in-out"
+            data-name="stepper-line"
             :class="
-              isComplete(index + 1) || isActive(index + 1)
-                ? `bg-${variant}`
-                : 'bg-gray-400'
+              renderClass(
+                `${
+                  isComplete(index + 1) || isActive(index + 1)
+                    ? `bg-${variant}`
+                    : 'bg-gray-400'
+                } flex-auto h-0.5 transition-all duration-400 ease-in-out`,
+                'line'
+              )
             "
           ></div>
         </template>
@@ -77,8 +115,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, watchEffect } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import { variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TStepper",
@@ -134,7 +173,9 @@ export default defineComponent({
         !item.locked &&
         emit("update:modelValue", item[props.value] ?? index);
     };
+    const { renderClass } = useRenderClass("bottomSheet");
     return {
+      renderClass,
       onItemClicked,
       activeIndex,
       isActive,

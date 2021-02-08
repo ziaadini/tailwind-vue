@@ -107,6 +107,15 @@ export interface TSettings {
     customContainer?: TSettingItem;
     custom?: TSettingItem;
   };
+  stepper?: {
+    container?: TSettingItem;
+    itemContainer?: TSettingItem;
+    circle?: TSettingItem;
+    activeCircle?: TSettingItem;
+    completeCircle?: TSettingItem;
+    text?: TSettingItem;
+    line?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
