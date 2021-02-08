@@ -51,7 +51,6 @@ export default defineComponent({
           block: "nearest",
           behavior: "smooth",
         });
-        
       } else scrollLeft(slidesContainer.value.clientWidth, 200);
     };
     const onScrollRight = () => {
