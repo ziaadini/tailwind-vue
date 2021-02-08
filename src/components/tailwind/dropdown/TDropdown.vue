@@ -7,6 +7,7 @@
       'rounded-sm': isClosed,
     }"
   >
+
     <!-- parent -->
     <div
       ref="dropdownParentRef"
@@ -109,6 +110,11 @@ export default defineComponent({
       required: false,
     },
     hover: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    top: {
       type: Boolean,
       default: false,
       required: false,
@@ -237,10 +243,26 @@ export default defineComponent({
       dropdownRef
     );
 
+    const hasPlacementPosition = (position: visibilityOverflow) => {
+      return placement.value?.includes(position);
+    };
+
     const isBottomOverflowed = computed(() => {
-      if (placement.value?.includes(visibilityOverflow.top))
-        return !placement.value?.includes(visibilityOverflow.bottom);
-      return false;
+      if (props.top) {
+        if (hasPlacementPosition(visibilityOverflow.top)) return true;
+        else {
+          if (hasPlacementPosition(visibilityOverflow.bottom)) {
+            return false;
+          } else return true;
+        }
+      } else {
+        if (hasPlacementPosition(visibilityOverflow.bottom)) return false;
+        else {
+          if (hasPlacementPosition(visibilityOverflow.top)) {
+            return true;
+          } else return false;
+        }
+      }
     });
 
     return {
