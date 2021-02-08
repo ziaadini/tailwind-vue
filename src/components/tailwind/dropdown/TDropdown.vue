@@ -4,7 +4,7 @@
     @mouseenter="hover && openClose(true)"
     @mouseleave="hover && openClose(false)"
     :class="{
-      'rounded-sm': !state.opened,
+      'rounded-sm': isClosed,
     }"
   >
     <!-- parent -->
@@ -12,12 +12,12 @@
       ref="dropdownParentRef"
       class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
       :class="[
+        isClosed && 'rounded-sm',
         {
-          'rounded-sm': !state.opened,
-          'rounded-full': rounded && !state.opened,
-          'rounded-md': rounded && state.opened,
-          'rounded-b-none': rounded && state.opened && !isBottomOverflowed,
-          'rounded-t-none': rounded && state.opened && isBottomOverflowed,
+          'rounded-full': isClosedRounded,
+          'rounded-md': isOpenedRounded,
+          'rounded-b-none': isOpenedRounded && !isBottomOverflowed,
+          'rounded-t-none': isOpenedRounded && isBottomOverflowed,
         },
         parentClass,
       ]"
@@ -30,12 +30,12 @@
     <div
       ref="dropdownRef"
       :class="{
-        'opacity-0 -translate-y-1/2 z-0 scale-y-0': !state.opened,
+        'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
         'rounded-b-md': rounded && !isBottomOverflowed,
-        'z-30': !hover,
-        'z-40': hover,
         'rounded-b-none': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
+        'z-30': !hover,
+        'z-40': hover,
       }"
       class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
     >
@@ -131,6 +131,21 @@ export default defineComponent({
     const state = reactive({
       selected: null as any,
       opened: props.opened,
+    });
+
+    const isOpened = computed(() => {
+      return state.opened;
+    });
+
+    const isClosed = computed(() => {
+      return !isOpened.value;
+    });
+
+    const isClosedRounded = computed(() => {
+      return isClosed.value && props.rounded;
+    });
+    const isOpenedRounded = computed(() => {
+      return isOpened.value && props.rounded;
     });
 
     const {
@@ -231,6 +246,10 @@ export default defineComponent({
     return {
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
+      isOpened,
+      isClosed,
+      isClosedRounded,
+      isOpenedRounded,
       getItems: itemFactory,
       openClose,
       selectItem,
