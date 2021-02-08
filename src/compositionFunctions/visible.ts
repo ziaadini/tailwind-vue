@@ -27,16 +27,7 @@ export const useIsVisible = (
     scrollInstance.initiateScroll();
     destroyScroll = scrollInstance.destroyScroll;
   }
-  const { isIntersecting, destroyObserver } = useIntersectElement(
-    {
-      passRef: true,
-      threshold: [...Array(100).keys()].map((x) => x / 100),
-    },
-    (entry) => {
-      result.value = entry;
-    },
-    element
-  );
+  
   const handlePlacement = () => {
     const childBounding = element.value!.getBoundingClientRect();
     const parentBounding = parentElement.value!.getBoundingClientRect();
@@ -78,7 +69,6 @@ export const useIsVisible = (
 
   onUnmounted(() => {
     observersCount--
-    destroyObserver();
     if (observersCount === 0) {
       destroyScroll();
     }
