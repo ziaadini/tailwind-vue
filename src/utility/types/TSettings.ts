@@ -87,6 +87,26 @@ export interface TSettings {
     minCircle?: TSettingItem;
     maxCircle?: TSettingItem;
   };
+  skeleton?: {
+    avatarListContainer?: TSettingItem;
+    avatarListInnerContainer?: TSettingItem;
+    avatarListCircle?: TSettingItem;
+    avatarListLine?: TSettingItem;
+    imageContainer?: TSettingItem;
+    imageInnerContainer?: TSettingItem;
+    image?: TSettingItem;
+    cardContainer?: TSettingItem;
+    cardInnerContainer?: TSettingItem;
+    cardImage?: TSettingItem;
+    cardLine?: TSettingItem;
+    lineContainer?: TSettingItem;
+    line?: TSettingItem;
+    threeLineContainer?: TSettingItem;
+    threeLineInnerContainer?: TSettingItem;
+    threeLine?: TSettingItem;
+    customContainer?: TSettingItem;
+    custom?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
