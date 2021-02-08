@@ -10,7 +10,7 @@ export enum visibilityOverflow {
 }
 export const useIsVisible = (
   element = ref(null as any),
-  parentElement = ref(null as any)
+  parentElement = ref(null as any),
 ) => {
   const result = ref(null as any);
   const placement = ref(null as null | visibilityOverflow[]);
@@ -31,7 +31,7 @@ export const useIsVisible = (
     element
   );
   const handlePlacement = () => {
-    const childBounding = result.value!.boundingClientRect;
+    const childBounding = element.value!.getBoundingClientRect();
     const parentBounding = parentElement.value!.getBoundingClientRect();
     const windowHeight =
       window.innerHeight || document.documentElement.clientHeight;
@@ -39,6 +39,9 @@ export const useIsVisible = (
     if (childBounding.top >= 0) {
       const childWidth = childBounding.width;
       const childHeight = childBounding.height;
+      if (parentBounding.top > childHeight) {
+        placementTemporaryValue!.push(visibilityOverflow.top);
+      }
       if (parentBounding.right > childWidth) {
         placementTemporaryValue!.push(visibilityOverflow.right);
       }
