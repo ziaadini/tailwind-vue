@@ -8,29 +8,30 @@
       class=" relative flex items-center focus:outline-none min-w-full "
       @click="openClose"
     >
-      <slot name="button"></slot>
+      <slot name="button" :isOpen="isOpen"></slot>
     </div>
 
     <!--dropdown menu-->
-    <div
-      ref="menuRef"
-      class="absolute shadow-lg border rounded py-1 px-2 text-sm bg-white z-30 rounded-t-none transition transform"
-      :class="[
-        {
-          'right-0': placement === 'right',
-          'left-0': placement !== 'right',
-          'w-full': full,
-          'z-30': !hover,
-          'z-40': hover,
-          'origin-top-right scale-0 opacity-0': animate && !isOpen,
-          'scale-100 opacity-1': aniamte && isOpen,
-          'origin-top invisible opacity-0': !animate && !isOpen,
-          'opacity-1 visible': isOpen && !animate,
-        },
-      ]"
-    >
-      <slot name="content"></slot>
-    </div>
+    <transition :name="!animate && 'fade'" mode="out-in">
+      <div
+        v-if="animate || notAnimatedOpened"
+        ref="menuRef"
+        class="absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right "
+        :class="[
+          {
+            'right-0': placement === 'right',
+            'left-0': placement !== 'right',
+            'w-full': full,
+            'z-30': !hover,
+            'z-40': hover,
+            'scale-0 opacity-0': animatedClosed,
+            'scale-100 opacity-1': animatedOpened,
+          },
+        ]"
+      >
+        <slot name="content"></slot>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -105,16 +106,30 @@ export default defineComponent({
     });
 
     const openClose = (value = null as any) => {
-      console.log("open close", value);
       if (!props.disabled) {
         open.value = value !== null ? value : !open.value;
       }
     };
 
+    const animatedOpened = computed(() => {
+      return props.animate && isOpen.value;
+    });
+
+    const animatedClosed = computed(() => {
+      return props.animate && !isOpen.value;
+    });
+
+    const notAnimatedOpened = computed(() => {
+      return !props.animate && isOpen.value;
+    });
+
     return {
       menuRef,
       openClose,
       isOpen,
+      animatedOpened,
+      animatedClosed,
+      notAnimatedOpened
     };
   },
 });
