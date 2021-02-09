@@ -1,6 +1,6 @@
 import { modifierVariants } from "@/utility/css-helper";
 
-const numberFormat = (number, separator = ",", digitLength = 3) => {
+export const numberFormat = (number, separator = ",", digitLength = 3) => {
   if (number === undefined) {
     return "";
   }
