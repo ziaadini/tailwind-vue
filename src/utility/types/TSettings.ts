@@ -1,6 +1,6 @@
 export interface TSettings {
   tabs?: {
-    container?:TSettingItem;
+    container?: TSettingItem;
     headerContainer?: TSettingItem;
     arrow?: TSettingItem;
     nav?: TSettingItem;
@@ -119,6 +119,16 @@ export interface TSettings {
     completeCircle?: TSettingItem;
     text?: TSettingItem;
     line?: TSettingItem;
+  };
+  timeline?: {
+    container?: TSettingItem;
+    line?: TSettingItem;
+    itemContainer?: TSettingItem;
+    emptySpace?: TSettingItem;
+    circle?: TSettingItem;
+    activeCircle?: TSettingItem;
+    completeCircle?: TSettingItem;
+    item?: TSettingItem;
   };
   switch?: {
     container?: TSettingItem;
