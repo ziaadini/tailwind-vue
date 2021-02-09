@@ -5,33 +5,44 @@
     </div>
     <div
       v-bind="$attrs"
-      class="absolute w-full text-gray-50 transform transition-all duration-200 ease-out"
-      :class="[
-        {
-          'top-full': isBottom,
-          'bottom-full': isTop,
-          'right-1/2 translate-x-1/2': isTop || isBottom,
-          'left-full': isRight,
-          'right-full': isLeft,
-          'bottom-1/2 translate-y-1/2': isRight || isLeft
-        },
-        { 'h-0 w-0 overflow-hidden scale-75 opacity-0': !isShow }
-      ]"
+      data-name="tooltip-container"
+      :class="
+        renderClass(
+          'absolute w-full text-gray-50 transform transition-all duration-200 ease-out',
+          'container',
+          {
+            'top-full': isBottom,
+            'bottom-full': isTop,
+            'right-1/2 translate-x-1/2': isTop || isBottom,
+            'left-full': isRight,
+            'right-full': isLeft,
+            'bottom-1/2 translate-y-1/2': isRight || isLeft,
+            'h-0 w-0 overflow-hidden scale-75 opacity-0': !isShow
+          }
+        )
+      "
     >
       <div
-        class="flex justify-center items-center"
-        :class="{
-          'flex-col': isBottom,
-          'flex-col-reverse': isTop,
-          'flex-row-reverse': isRight,
-          'flex-row': isLeft
-        }"
+        data-name="tooltip-innerContainer"
+        :class="
+          renderClass('flex justify-center items-center', 'innerContainer', {
+            'flex-col': isBottom,
+            'flex-col-reverse': isTop,
+            'flex-row-reverse': isRight,
+            'flex-row': isLeft
+          })
+        "
       >
         <t-triangle
+          data-name="tooltip-triangle"
           :direction="triangleDirection"
           :variant="variant"
+          :class="renderClass('tooltip-triangle', 'triangle')"
         ></t-triangle>
-        <div class="rounded-xs p-1 w-full" :class="`bg-${variant}`">
+        <div
+          data-name="tooltip-message"
+          :class="renderClass(`bg-${variant} rounded-xs p-1 w-full`, 'message')"
+        >
           {{ message }}
           <slot name="message" :close="forceClose"></slot>
         </div>
@@ -44,6 +55,7 @@
 import { defineComponent, PropType, computed, ref, watchEffect } from "vue";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 import { variants } from "@/utility/css-helper";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TTooltip",
@@ -119,7 +131,9 @@ export default defineComponent({
     const isBottom = computed(() => props.position === "bottom");
     const isRight = computed(() => props.position === "right");
     const isLeft = computed(() => props.position === "left");
+    const { renderClass } = useRenderClass("tooltip");
     return {
+      renderClass,
       isShow,
       open,
       close,

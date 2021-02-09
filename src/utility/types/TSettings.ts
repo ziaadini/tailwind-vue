@@ -141,6 +141,17 @@ export interface TSettings {
     digit?: TSettingItem;
     separator?: TSettingItem;
   };
+  toast?: {
+    container?: TSettingItem;
+    show?: TSettingItem;
+    hide?: TSettingItem;
+  };
+  tooltip?: {
+    container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    triangle?: TSettingItem;
+    message?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
