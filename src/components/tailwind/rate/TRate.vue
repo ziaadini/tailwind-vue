@@ -1,19 +1,34 @@
 <template>
   <div class="flex flex-row-reverse flex-wrap space-x-reverse space-x-1 w-full">
-    <template v-for="i in length" :key="i + 'rating'">
+    <div v-for="i in length" :key="i + 'rating'">
       <img
-        @mouseenter="hover && selectStar(i)"
-        @click="selectStar(i)"
+        @mouseenter="hover && selectStar(i, $event)"
+        @click="selectStar(j)"
         v-bind="$attrs"
-        :src="returnImageSrc(i)"
+        :src="fullIcon"
+        v-show="returnImageSrc(i) === 1"
       />
-    </template>
+      <img
+        @mouseenter="hover && selectStar(i, $event)"
+        @click="selectStar(j)"
+        v-bind="$attrs"
+        :src="halfIcon"
+        v-show="returnImageSrc(i) === 2"
+      />
+      <img
+        @mouseenter="hover && selectStar(i, $event)"
+        @click="selectStar(j)"
+        v-bind="$attrs"
+        :src="emptyIcon"
+        v-show="returnImageSrc(i) === 3"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { normalSizes } from "@/utility/css-helper";
-import { computed, defineComponent, ref, toRefs, watch } from "vue";
+import { useImageDownloader } from "@/compositionFunctions/image";
+import { computed, defineComponent, onMounted, ref, toRefs, watch } from "vue";
 
 export default defineComponent({
   props: {
@@ -49,9 +64,15 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const parent = ref(null);
+
     const { modelValue } = toRefs(props);
     const selectedIndex = ref(modelValue.value || -1);
-    const selectStar = (starIndex: number) => {
+
+    const selectStar = (starIndex: number, e?) => {
+      console.log({
+        event: e,
+      });
       selectedIndex.value = starIndex;
     };
     watch(selectedIndex, (value) => {
@@ -70,17 +91,22 @@ export default defineComponent({
       );
 
       if (index <= selectedIndex.value) {
-        return props.fullIcon;
+        return 1;
       } else if (selectedIndex.value - index === -0.5) {
-        return props.halfIcon;
+        return 2;
       }
 
-      return props.emptyIcon;
+      return 3;
+    });
+
+    onMounted(() => {
+      console.log({ parent });
     });
 
     return {
       selectStar,
       returnImageSrc,
+      parent,
     };
   },
 });

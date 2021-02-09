@@ -261,11 +261,11 @@
         >
       </template>
     </t-menu>
-    <t-menu hover placement="right" full animate>
+    <t-menu hover placement="right" animate>
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline icon="accessible">
-          test
+          test test test test test 
         </t-button>
       </template>
 
@@ -497,17 +497,17 @@
     <t-rate
       v-model="rateValue"
       class="w-32"
-      emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
-      fullIcon="https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
+      emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
+      fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
     ></t-rate>
     <t-rate
       v-model="rateValue"
       hover
       class="w-10"
       :length="8"
-      halfIcon="https://p.kindpng.com/picc/s/11-11q4993_transparent-black-star-png-half-filled-star-icon.png"
-      emptyIcon="https://lh3.googleusercontent.com/proxy/8GG-0KeJvTeodpW_doSy75fiZlT51YUeZ4TjZefIxNGOYBPD2PPUJzhmVyD8doCTQnpxZHGqH4wMbl4e3XdZveVa"
-      fullIcon="https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
+      emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
+      fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
+      halfIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Half_Star_Yellow.svg/1024px-Half_Star_Yellow.svg.png"
     ></t-rate>
   </div>
 
@@ -573,7 +573,7 @@
   <small>
     image without lazy loading
   </small>
-  <t-image :src="imgSource" :default="defaultImage" />
+  <t-image :src="imgSource" />
   <br />
   <br />
   <br />
