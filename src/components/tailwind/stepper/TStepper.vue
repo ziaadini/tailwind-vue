@@ -33,16 +33,12 @@
             :class="[
               renderClass(
                 'flex items-center justify-center rounded-full transition-all duration-500 ease-in-out h-12 w-12 py-3 border-2',
-                'circle'
+                'circle',
+                {
+                  'border-gray-400': !isActive(index) && !isComplete(index)
+                }
               ),
-              renderClass(
-                `${
-                  !isActive(index) && !isComplete(index)
-                    ? 'border-gray-400'
-                    : ''
-                }`,
-                'circle'
-              ),
+
               renderClass(
                 `${isActive(index) ? `border-${variant} text-${variant}` : ''}`,
                 'activeCircle'

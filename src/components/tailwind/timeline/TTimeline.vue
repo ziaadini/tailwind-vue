@@ -1,5 +1,8 @@
 <template>
-  <div data-name="timeline-container" :class="renderClass('container mx-auto w-full h-full', 'container')">
+  <div
+    data-name="timeline-container"
+    :class="renderClass('container mx-auto w-full h-full', 'container')"
+  >
     <div class="relative flex-wrap  h-full">
       <div
         data-name="timeline-line"
@@ -46,19 +49,15 @@
           :class="[
             renderClass(
               `${getCircleByDirection} z-10 flex items-center bg-white text-sm border-2 order-1 shadow-xl  min-w-8 min-h-8 rounded-full`,
-              'circle'
+              'circle',
+              {
+                'border-gray-400': !isActive(index) && !isComplete(index)
+              }
             ),
             {
               'cursor-pointer': clickable && !item.locked,
               'cursor-not-allowed': item.locked
             },
-
-            renderClass(
-              `${
-                !isActive(index) && !isComplete(index) ? 'border-gray-400' : ''
-              }`,
-              'circle'
-            ),
             renderClass(
               `${isActive(index) ? `border-${variant} text-${variant}` : ''}`,
               'activeCircle'
