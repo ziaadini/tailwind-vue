@@ -137,7 +137,6 @@ export default defineComponent({
     provide("TabsProvider", state);
 
     const selectTab = (i: number, tab, e) => {
-      console.log("event target", e.target);
       e.target.scrollIntoView({
         behavior: "smooth",
         block: "nearest"
