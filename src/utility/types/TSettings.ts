@@ -1,5 +1,9 @@
 export interface TSettings {
   tabs?: {
+    container?:TSettingItem;
+    headerContainer?: TSettingItem;
+    arrow?: TSettingItem;
+    nav?: TSettingItem;
     header?: TSettingItem;
   };
   card?: {
