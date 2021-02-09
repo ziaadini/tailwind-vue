@@ -136,6 +136,11 @@ export interface TSettings {
     circle?: TSettingItem;
     label?: TSettingItem;
   };
+  countDownTimer?: {
+    container?: TSettingItem;
+    digit?: TSettingItem;
+    separator?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
