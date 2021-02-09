@@ -1,49 +1,63 @@
 <template>
-  <img v-bind="$attrs" ref="image" :src="imageSrc" />
+  <img v-bind="$attrs" ref="image" />
 </template>
 
 <script lang="ts">
 import { useIntersectElement } from "@/compositionFunctions/intersect";
-import { defineComponent, ref, toRefs, watchEffect } from "vue";
-
+import { useImageDownloader } from "@/compositionFunctions/image";
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  toRefs,
+  watch,
+  watchEffect,
+} from "vue";
 export default defineComponent({
   props: {
     src: {
       type: String,
       default: "",
-      required: true
+      required: true,
     },
     default: {
       type: String,
       default: "",
-      required: false
+      required: false,
     },
     lazy: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props) {
     const { src, default: defaultImage, lazy } = toRefs(props);
-    const downloadingImage = new Image();
-
     const image = ref(null);
 
-    const imageSrc = ref(defaultImage.value || "");
+    const {
+      image: imageDownloaded,
+      setImage,
+      downloadImage,
+    } = useImageDownloader();
 
-    const downloadImage = () => {
-      downloadingImage.onload = function() {
-        // @ts-ignore
-        imageSrc.value = props.src;
-      };
-      downloadingImage.src = src.value;
-    };
+    // watch for src changes
+    watch(src, (newSrc) => {
+      if (newSrc) {
+        downloadImage(newSrc);
+      }
+    });
 
+    // if new images downloaded set them
+    watch(imageDownloaded, () => {
+      setImage(image);
+    });
+
+    // hanlde lazy loading
     if (lazy.value) {
       const { isIntersecting, destroyObserver } = useIntersectElement(
         {
-          passRef: true
+          passRef: true,
         },
         () => ({}),
         image
@@ -51,18 +65,22 @@ export default defineComponent({
 
       watchEffect(() => {
         if (isIntersecting?.value) {
-          downloadImage();
+          downloadImage(src.value);
           destroyObserver();
         }
       });
     } else {
-      imageSrc.value = src.value;
+      downloadImage(src.value);
     }
 
+    onMounted(() => {
+      // @ts-ignore
+      image.value.src = defaultImage.value;
+    });
+
     return {
-      imageSrc,
-      image
+      image,
     };
-  }
+  },
 });
 </script>
