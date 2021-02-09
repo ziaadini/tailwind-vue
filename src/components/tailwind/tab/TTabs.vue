@@ -1,22 +1,42 @@
 <template>
-  <div class="flex flex-col items-center space-y-4">
-    <div class="flex max-w-full row items-center">
+  <div
+    data-name="tabs-container"
+    :class="renderClass('flex flex-col items-center space-y-4', 'container')"
+  >
+    <div
+      data-name="tabs-headerContainer"
+      :class="
+        renderClass('flex max-w-full row items-center', 'headerContainer')
+      "
+    >
       <div v-if="showArrows" @click="onScrollRight">
+        <template v-if="hasRightArrowSlot">
+          <slot name="arrowRight" :disabled="endIntersecting"></slot>
+        </template>
         <t-icon
+          v-else
           :disabled="startIntersecting"
           name="keyboard_arrow_right"
+          data-name="tabs-arrow"
+          :class="renderClass('tab-arrow', 'arrow')"
         ></t-icon>
       </div>
       <nav
         ref="navRef"
-        class="flex  items-center flex-row max-w-full overflow-x-auto scrollbar-hidden"
+        data-name="tabs-nav"
+        :class="
+          renderClass(
+            'flex items-center flex-row max-w-full overflow-x-auto scrollbar-hidden',
+            'nav'
+          )
+        "
       >
         <div ref="startItem" class="w-1 h-1 px-1"></div>
         <template v-if="hasTitleSlot">
           <div
             v-for="(tab, index) in tabs"
             :key="`${index}-${tab.props.title}`"
-            @click="selectTab(index, tab)"
+            @click="selectTab(index, tab, $event)"
           >
             <slot
               name="title"
@@ -30,17 +50,17 @@
           v-else
           v-for="(tab, index) in tabs"
           :key="`${index}-${tab.props.title}`"
-          @click="selectTab(index, tab)"
+          @click="selectTab(index, tab, $event)"
           data-name="tabs-header"
           :class="[
             renderClass(
-              'text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none',
-              'header'
-            ),
-            {
-              'text-blue-500 border-b-2 font-medium border-blue-500':
+              `${
                 index === selectedIndex
-            }
+                  ? `text-${variant} border-b-2 font-medium border-${variant}`
+                  : ''
+              } text-gray-600 min-w-max py-4 px-6 block  md:hover:text-blue-500 focus:outline-none`,
+              'header'
+            )
           ]"
         >
           {{ tab.props.title }}
@@ -48,7 +68,16 @@
         <div ref="endItem" class="w-1 h-1 px-1"></div>
       </nav>
       <div v-if="showArrows" @click="onScrollLeft">
-        <t-icon :disabled="endIntersecting" name="keyboard_arrow_left"></t-icon>
+        <template v-if="hasLeftArrowSlot">
+          <slot name="arrowLeft" :disabled="endIntersecting"></slot>
+        </template>
+        <t-icon
+          v-else
+          :disabled="endIntersecting"
+          name="keyboard_arrow_left"
+          data-name="tabs-arrow"
+          :class="renderClass('tab-arrow', 'arrow')"
+        ></t-icon>
       </div>
     </div>
     <div>
@@ -72,6 +101,7 @@ import { useScrollElement } from "@/compositionFunctions/scroll";
 import TIcon from "@/components/tailwind/TIcon.vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useRenderClass } from "@/compositionFunctions/settings";
+import { variants } from "@/utility/css-helper";
 
 interface TabProps {
   title: string;
@@ -86,6 +116,15 @@ export default defineComponent({
     arrows: {
       type: Boolean,
       default: true
+    },
+    variant: {
+      type: String,
+      default: "primary",
+      validator: (propValue: string) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        return !!variants[propValue];
+      }
     }
   },
   setup(props, { slots, emit }) {
@@ -97,7 +136,11 @@ export default defineComponent({
 
     provide("TabsProvider", state);
 
-    const selectTab = (i: number, tab) => {
+    const selectTab = (i: number, tab, e) => {
+      e.target.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
       emit("update:modelValue", tab.props.value || i);
     };
     const renderChildren = () => {
@@ -172,7 +215,9 @@ export default defineComponent({
       onScrollRight,
       showArrows,
       navRef,
-      renderClass
+      renderClass,
+      hasRightArrowSlot: !!slots.arrowRight,
+      hasLeftArrowSlot: !!slots.arrowLeft
     };
   }
 });

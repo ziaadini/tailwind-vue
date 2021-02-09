@@ -15,6 +15,8 @@
 | name | description
 | ------------ | ------------ |
 | title | slot for render tab header passed data is : selected and all props passed to t-tab-item|
+| arrowLeft | slot for custom arrow style|
+| arrowRight | slot for custom arrow style|
 
 
 ```vue
