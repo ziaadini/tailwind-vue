@@ -31,18 +31,20 @@
       :value="modelValue"
       @input="emitHandler($event.target.value)"
       class="block min-h-48 w-full sm:text-sm outline-none h-10"
-      :class="{
-        ' pr-8': rightPadding,
-        'rounded-full': rounded,
-        'rounded-sm': !rounded,
-        ' pr-3': !rightPadding,
-        ' pl-8': leftPadding,
-        ' pl0-3': !leftPadding,
-        [variantClasses]: true,
-        'text-right': isRight,
-        'text-center': isCenter,
-        'text-left': isLeft,
-      }"
+      :class="[
+        {
+          'pr-8': rightPadding,
+          'rounded-full': rounded,
+          'rounded-sm': !rounded,
+          'pr-3': !rightPadding,
+          'pl-8': leftPadding,
+          'pl0-3': !leftPadding,
+          'text-right': isRight,
+          'text-center': isCenter,
+          'text-left': isLeft,
+        },
+        variantClasses,
+      ]"
     />
     <div
       v-if="rightPadding"
@@ -177,23 +179,23 @@ export default defineComponent({
           props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
         } ${
           props.variant === variants.white
-            ? " placeholder-gray-300"
-            : " placeholder-white"
+            ? "placeholder-gray-300"
+            : "placeholder-white"
         }`;
       } else {
         classes += `bg-white text-input-placehoder-black text-dark border ${
           props.error
-            ? " border-red-500"
-            : ` border-${
+            ? "border-red-500"
+            : `border-${
                 props.variant === variants.white ? "gray" : props.variant
               }-50 focus:border-${
                 props.variant === variants.white ? "gray-400" : ""
-              } hover:bg-${props.variant}-50 `
+              } hover:bg-${props.variant}-50`
         }`;
       }
 
       classes +=
-        " border transition hover:opacity-80 shadow-sm hover:shadow disabled:opacity-50 ";
+        " border transition hover:opacity-80 shadow-sm hover:shadow disabled:opacity-50";
       return classes;
     });
 
@@ -228,5 +230,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
