@@ -34,7 +34,6 @@ export const useIsVisible = (
     const windowHeight =
       window.innerHeight || document.documentElement.clientHeight;
     const placementTemporaryValue = [] as visibilityOverflow[] | null;
-    if (childBounding.top >= 0) {
       const childWidth = childBounding.width;
       const childHeight = childBounding.height;
       if (parentBounding.top > childHeight) {
@@ -49,7 +48,6 @@ export const useIsVisible = (
       if (windowHeight - parentBounding.bottom > childHeight) {
         placementTemporaryValue!.push(visibilityOverflow.bottom);
       }
-    }
 
     if (placementTemporaryValue?.length) {
       placement.value = placementTemporaryValue;
