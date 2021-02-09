@@ -152,6 +152,9 @@ export interface TSettings {
     triangle?: TSettingItem;
     message?: TSettingItem;
   };
+  triangle?: {
+    triangle?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {
