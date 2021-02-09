@@ -7,7 +7,6 @@
       'rounded-sm': isClosed,
     }"
   >
-
     <!-- parent -->
     <div
       ref="dropdownParentRef"
@@ -17,8 +16,8 @@
         {
           'rounded-full': isClosedRounded,
           'rounded-md': isOpenedRounded,
-          'rounded-b-none': isOpenedRounded && !isBottomOverflowed,
-          'rounded-t-none': isOpenedRounded && isBottomOverflowed,
+          'rounded-b-none': isOpened && !isBottomOverflowed,
+          'rounded-t-none': isOpened && isBottomOverflowed,
         },
         parentClass,
       ]"
@@ -32,13 +31,14 @@
       ref="dropdownRef"
       :class="{
         'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
+        shadow: isBottomOverflowed,
         'rounded-b-md': rounded && !isBottomOverflowed,
         'rounded-b-none': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
         'z-30': !hover,
         'z-40': hover,
       }"
-      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white shadow"
+      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white "
     >
       <template v-for="(item, index) in getItems" :key="index">
         <div
