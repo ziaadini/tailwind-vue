@@ -1,5 +1,12 @@
 <template>
-  <div class="relative w-96 h-96 bg-gray-100 overflow-hidden">
+  <div
+    class="relative bg-gray-100 overflow-hidden"
+    v-bind="{
+      ...$attrs,
+      onMouseDown: swipeEnabled && onMouseDown,
+      onTouchstart: swipeEnabled && onTouchstart,
+    }"
+  >
     <div class="absolute w-full h-full">
       <img
         v-for="(link, index) in modelValue"
@@ -40,6 +47,7 @@
 
 <script lang="ts">
 import { useInterval } from "@/compositionFunctions/interval";
+import { useSwipeElement } from "@/compositionFunctions/swipe";
 import {
   computed,
   defineComponent,
@@ -80,6 +88,16 @@ export default defineComponent({
     index: {
       type: Number,
       default: 0,
+      required: false,
+    },
+    swipeThreshold: {
+      type: Number,
+      default: 50,
+      required: false,
+    },
+    swipeEnabled: {
+      type: Boolean,
+      default: true,
       required: false,
     },
   },
@@ -140,13 +158,29 @@ export default defineComponent({
     });
 
     const buttonClick = (variance) => {
+      start(null);
       changeActiveIndex(variance);
       if (autoPlay.value) {
-        start(null);
         setCarouselInterval();
       }
     };
 
+    const {
+      bind: swipeEvent,
+      state: state,
+      xDiff: swipeDiff,
+    } = useSwipeElement();
+
+    if (props.swipeEnabled)
+      watchEffect(() => {
+        if (state.isDropped) {
+          if (swipeDiff.value > props.swipeThreshold) {
+            !leftDisabled.value && buttonClick(-1);
+          } else if (swipeDiff.value < -props.swipeThreshold) {
+            !rightDisabled.value && buttonClick(1);
+          }
+        }
+      });
     return {
       horizontalClasses,
       changeActiveIndex,
@@ -154,6 +188,8 @@ export default defineComponent({
       leftDisabled,
       rightDisabled,
       buttonClick,
+      onMouseDown: swipeEvent.onMousedown,
+      onTouchstart: swipeEvent.onTouchstart,
     };
   },
 });

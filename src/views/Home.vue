@@ -517,7 +517,7 @@
     CAROUSEL
   </h6>
   itemChange: {{ itemChange }}
-  <t-carousel v-model="links" v-model:index="itemChange">
+  <t-carousel v-model="links" v-model:index="itemChange" class="w-96 h-96">
     test
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
