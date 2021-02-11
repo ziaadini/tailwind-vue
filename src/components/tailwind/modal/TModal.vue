@@ -9,7 +9,7 @@
       >
         <template #default="{className}">
           <div
-            data-name="bottomSheet-backDrop"
+            data-name="modal-backDrop"
             :class="[
               // { hidden: !modelValue },
               className,

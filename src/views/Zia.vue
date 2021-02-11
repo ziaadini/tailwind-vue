@@ -540,6 +540,23 @@
       </t-animate>
       <t-button @click="animate = !animate">show</t-button>
     </div>
+
+    <div>
+      <div>#zia</div>
+      <t-table
+        :items="[
+          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]"
+        :fields="[
+          { key: 'first_name', label: 'first name' },
+          { key: 'last_name', label: 'last name', sortable: true },
+          { key: 'age', label: 'age', sortable: true }
+        ]"
+      ></t-table>
+    </div>
   </div>
 </template>
 
@@ -574,10 +591,12 @@ import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
 import { useFormatRef } from "@/compositionFunctions/expose/format";
 import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
+import TTable from "@/components/tailwind/table/TTable.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTable,
     TAnimate,
     TTextInput,
     TFade,

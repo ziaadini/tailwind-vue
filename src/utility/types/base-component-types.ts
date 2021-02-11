@@ -6,10 +6,24 @@ export namespace SwitchAndCheckbox {
 }
 
 export namespace DropDown {
-  export type stringForm = string[]
+  export type stringForm = string[];
   export interface ObjectForm {
-    label: string; value: any 
+    label: string;
+    value: any;
   }
 
-  export type Root = stringForm | ObjectForm[]
+  export type Root = stringForm | ObjectForm[];
+}
+
+export namespace Table {
+  export interface HeaderItem {
+    key?: string;
+    label?: string;
+    sortable?: boolean;
+    variant?: string;
+  }
+  export enum SortEnum {
+    ASC = "asc",
+    DESC = "desc"
+  }
 }
