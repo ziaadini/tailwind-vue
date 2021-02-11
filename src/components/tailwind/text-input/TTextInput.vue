@@ -30,7 +30,9 @@
     </div>
     <!-- input element -->
     <input
-      :type="inputType"
+      ref="textInputRef"
+      :inputmode="inputMode"
+      :type="type"
       :disabled="disabled"
       v-bind="$attrs"
       :value="modelValue"
@@ -77,7 +79,7 @@ import {
   textInputVariants,
   variants,
 } from "@/utility/css-helper";
-import { computed, defineComponent, toRefs, watch } from "vue";
+import { computed, defineComponent, nextTick, ref, toRefs, watch } from "vue";
 import { formatHandlerWrapper, numberFormat } from "@/helpers/generalHelper";
 import TIcon from "@/components/tailwind/icon/TIcon.vue";
 export default defineComponent({
@@ -91,12 +93,15 @@ export default defineComponent({
         return !!variants[propValue];
       },
     },
-    inputType: {
+    type: {
+      required: false,
       type: String,
-      default: textInputVariants.text,
-      validator: (propValue: string) => {
-        return !!textInputVariants[propValue];
-      },
+      default: "text",
+    },
+    inputmode: {
+      required: false,
+      type: String,
+      default: "text",
     },
     label: {
       required: false,
@@ -162,6 +167,7 @@ export default defineComponent({
   computed: {},
   setup(props, { slots, emit }) {
     const { modelValue } = toRefs(props);
+    const textInputRef = ref(null);
 
     const [formatFounded, args] = formatHandlerWrapper(
       modifierVariants.format,
@@ -169,11 +175,13 @@ export default defineComponent({
     );
 
     const updateFunction = formatFounded
-      ? (value) => {
-          if (formatFounded) {
-            value = numberFormat(value, args[0], args[1]);
-            emit("update:modelValue", value);
-          }
+      ? async (value) => {
+          value = value.replace(args[0], "");
+          const formattedValue = numberFormat(value, args[0], args[1]);
+          emit("update:modelValue", value);
+          await nextTick();
+          // @ts-ignore
+          textInputRef.value.value = formattedValue;
         }
       : (value) => {
           emit("update:modelValue", value);
@@ -229,6 +237,13 @@ export default defineComponent({
       updateFunction(value);
     });
 
+    const inputMode = computed(() => {
+      if (formatFounded) {
+        return 'numeric';
+      } 
+      return props.inputmode
+    })
+
     return {
       rightPadding,
       leftPadding,
@@ -237,6 +252,8 @@ export default defineComponent({
       isLeft,
       isCenter,
       updateFunction,
+      textInputRef,
+      inputMode
     };
   },
   watch: {},
