@@ -526,11 +526,25 @@
       ></t-text-input>
       textInputValue: {{ textInputFormat }}
     </div>
+
+    <div>
+      <div>#zia</div>
+      <t-animate
+        class="transform"
+        start="translate-x-1/2 opacity-1"
+        end="translate-y-full opacity-0"
+        :show="animate"
+        allocate-space
+      >
+        <div class="w-10 h-10 rounded-full bg-warning"></div>
+      </t-animate>
+      <t-button @click="animate = !animate">show</t-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watchEffect } from "vue";
+import { defineComponent, watchEffect } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref } from "vue";
@@ -559,10 +573,12 @@ import TFade from "@/components/tailwind/fade/TFade.vue";
 import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
 import { useFormatRef } from "@/compositionFunctions/expose/format";
+import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TAnimate,
     TTextInput,
     TFade,
     TCountDownTimer,
@@ -654,7 +670,9 @@ export default defineComponent({
     const fade = ref(0);
     const textInputValue = useDebouncedRef("");
     const textInputFormat = useFormatRef("12345");
+    const animate = ref(false);
     return {
+      animate,
       textInputFormat,
       textInputValue,
       fade,
