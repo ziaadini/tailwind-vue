@@ -8,22 +8,11 @@ export const numberFormat = (number, separator = ",", digitLength = 3) => {
   num = num.replace(/[^\d]/g, "");
 
   if (num.length > digitLength) {
-    const expresion = "\\B(?=(?:\\d{" + digitLength + "})+(?!\\d))";
-    num = num.replace(new RegExp(expresion, "g"), separator);
+    const expression = "\\B(?=(?:\\d{" + digitLength + "})+(?!\\d))";
+    num = num.replace(new RegExp(expression, "g"), separator);
   }
 
   return num;
-};
-
-export const formatHandler = function(
-  value,
-  { separator = ",", digitLength = 3 } = {}
-) {
-  if (value) {
-    return numberFormat(value, separator, digitLength);
-  } else {
-    return numberFormat(value, separator, digitLength);
-  }
 };
 
 export function formatHandlerWrapper(
