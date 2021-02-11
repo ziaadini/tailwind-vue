@@ -136,6 +136,7 @@
       right-icon="bookmarks"
       left-icon="bookmarks"
     />
+    {{text1}}
     <TextInput
       placeholder="some test placeholder"
       v-model.format:,:4="text1"
