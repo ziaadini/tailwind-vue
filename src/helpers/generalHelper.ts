@@ -15,13 +15,6 @@ export const numberFormat = (number, separator = ",", digitLength = 3) => {
   return num;
 };
 
-export const formatHandler = function(
-  value,
-  { separator = ",", digitLength = 3 } = {}
-) {
-  return numberFormat(value, separator, digitLength);
-};
-
 export function formatHandlerWrapper(
   modifierType: modifierVariants,
   modelModifiers

@@ -9,8 +9,8 @@ export enum variants {
 
 export enum textInputVariants {
   number = "number",
-  numeric = "numeric",
-  format = "format"
+  text = "text",
+  tel = "tel",
 }
 
 export enum textInputAlignments {

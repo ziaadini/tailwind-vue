@@ -132,13 +132,14 @@
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
       placeholder="some test placeholder"
-      v-model="text"
       variant="white"
       right-icon="bookmarks"
+      left-icon="bookmarks"
     />
     <TextInput
       placeholder="some test placeholder"
-      v-model="text"
+      v-model.format:,:4="text1"
+      inputType="numeric"
       variant="primary"
       right-icon="bookmarks"
     />
@@ -622,6 +623,7 @@ export default defineComponent({
   data() {
     return {
       text: "",
+      text1: "",
       dropdownModel: "",
       dropdownTriggerRef: "" as any,
       dropdownOpened: false,
