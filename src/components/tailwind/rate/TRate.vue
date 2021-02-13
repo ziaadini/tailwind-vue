@@ -1,23 +1,23 @@
 <template>
-  <div class="flex flex-row-reverse flex-wrap space-x-reverse space-x-1 w-full">
+  <div class="flex justify-center flex-wrap flex-row-reverse flex-wrap space-x-reverse space-x-1 w-full">
     <div v-for="i in length" :key="i + 'rating'">
       <img
-        @mouseenter="hover && selectStar(i, $event)"
-        @click="selectStar(j)"
+        @mousemove="hover && selectStar(i, $event)"
+        @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="fullIcon"
         v-show="returnImageSrc(i) === 1"
       />
       <img
-        @mouseenter="hover && selectStar(i, $event)"
-        @click="selectStar(j)"
+        @mousemove="hover && selectStar(i, $event)"
+        @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="halfIcon"
         v-show="returnImageSrc(i) === 2"
       />
       <img
-        @mouseenter="hover && selectStar(i, $event)"
-        @click="selectStar(j)"
+        @mousemove="hover && selectStar(i, $event)"
+        @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="emptyIcon"
         v-show="returnImageSrc(i) === 3"
@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts">
-import { useImageDownloader } from "@/compositionFunctions/image";
 import { computed, defineComponent, onMounted, ref, toRefs, watch } from "vue";
 
 export default defineComponent({
@@ -70,9 +69,13 @@ export default defineComponent({
     const selectedIndex = ref(modelValue.value || -1);
 
     const selectStar = (starIndex: number, e?) => {
-      console.log({
-        event: e,
-      });
+      if (
+        props.halfIcon &&
+        e.pageX - e.srcElement.offsetLeft < e.srcElement.width / 2
+      ) {
+        starIndex -= 0.5;
+        console.warn("star Index - 0.5", starIndex);
+      }
       selectedIndex.value = starIndex;
     };
     watch(selectedIndex, (value) => {
@@ -80,7 +83,6 @@ export default defineComponent({
     });
 
     watch(modelValue, (value) => {
-      console.log("model value changed", value);
       selectedIndex.value = value;
     });
 

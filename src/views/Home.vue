@@ -136,7 +136,7 @@
       right-icon="bookmarks"
       left-icon="bookmarks"
     />
-    {{text1}}
+    {{ text1 }}
     <TextInput
       placeholder="some test placeholder"
       v-model.format:,:4="text1"
@@ -267,7 +267,7 @@
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline icon="accessible">
-          test test test test test 
+          test test test test test
         </t-button>
       </template>
 
@@ -482,30 +482,43 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
   </div>
-  <br />
+  <br/>
   <h6>
     Rating
   </h6>
-  <TextInput
-    placeholder="some test placeholder"
-    v-model="text"
-    variant="warning"
-    outline
-    align="center"
-    disabled
-  />
-  rateValue:{{ rateValue }}
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+  <div
+    class="flex justify-center items-center w-100 flex-wrap space-x-1 space-x-reverse"
+  >
+    <small>
+      simple rate component
+    </small>
+    <small> rateValue:{{ rateValue }} </small>
     <t-rate
       v-model="rateValue"
       class="w-32"
       emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
       fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
     ></t-rate>
+    <small>
+      simple rate component with half state
+    </small>
+    <small> rateValue:{{ rateValue2 }} </small>
     <t-rate
-      v-model="rateValue"
+      v-model="rateValue2"
+      class="w-28"
+      emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
+      halfIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Half_Star_Yellow.svg/1024px-Half_Star_Yellow.svg.png"
+      fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
+    ></t-rate>
+
+    <small>
+      simple rate component with different size
+    </small>
+    <small> rateValue:{{ rateValue3 }} </small>
+    <t-rate
+      v-model="rateValue3"
       hover
-      class="w-10"
+      class="w-20"
       :length="8"
       emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
       fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
@@ -517,7 +530,7 @@
     CAROUSEL
   </h6>
   itemChange: {{ itemChange }}
-  <t-carousel v-model="links" v-model:index="itemChange" class="w-96 h-96">
+  <t-carousel v-model="links" v-model:index="itemChange" class="w-96 h-96" style="margin: 0 auto;">
     test
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
@@ -635,7 +648,9 @@ export default defineComponent({
         "https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/2166711/pexels-photo-2166711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w",
       defaultImage:
         "https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w",
-      rateValue: 1.5,
+      rateValue: 1,
+      rateValue2: 1.5,
+      rateValue3: 1.5,
       links: [
         {
           url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
