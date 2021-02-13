@@ -141,7 +141,7 @@ export default defineComponent({
     align: {
       type: String,
       required: false,
-      default: "right",
+      default: textInputAlignments.right,
       validator: (propValue: string) => {
         return !!textInputAlignments[propValue];
       },
