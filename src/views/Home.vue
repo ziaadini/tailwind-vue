@@ -591,6 +591,8 @@
   <h6>
     image component
   </h6>
+
+  <TZoom></TZoom>
   <small>
     image without lazy loading
   </small>
@@ -619,6 +621,7 @@ import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
+import TZoom from "@/components/tailwind/zoom/TZoom.vue";
 import TBadge from "@/components/tailwind/badge/TBadge.vue";
 import TRate from "@/components/tailwind/rate/TRate.vue";
 import TBreadcrumb from "@/components/tailwind/breadcrumb/TBreadcrumb.vue";
@@ -639,6 +642,7 @@ export default defineComponent({
     TSlider,
     TBreadcrumb,
     TImage,
+    TZoom
   },
   data() {
     return {
