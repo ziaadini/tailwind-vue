@@ -98,6 +98,9 @@ export default defineComponent({
     const itemRefs = ref<Element[]>([]);
     const getBinding = (index, show) => {
       if (show) {
+        if (!itemRefs.value || !itemRefs.value[index]) {
+          return {};
+        }
         return {
           style: `max-height: ${itemRefs.value[index].scrollHeight}px`,
           "data-show": true

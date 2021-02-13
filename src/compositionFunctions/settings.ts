@@ -1,33 +1,53 @@
-import { computed, inject } from "vue";
+import { computed, inject, getCurrentInstance } from "vue";
 import { TSettings, TSettingItem } from "@/utility/types/TSettings";
 
 export const useRenderClass = (componentName: string) => {
   const TSettings = inject<TSettings>("TSettings");
+  const instance = getCurrentInstance();
+  // console.log("instance",instance.attrs)
   const renderClass = computed(
     () => (className: string, elementName: string, objectBinding = {}) => {
+      const getSettings = computed((): TSettingItem | null => {
+        let s: TSettingItem | undefined =
+          TSettings?.[componentName]?.[elementName];
+        const dataDelete = instance?.attrs?.[`data-${elementName}-delete`];
+        const dataAdd = instance?.attrs?.[`data-${elementName}-add`];
+        if (dataDelete && typeof dataDelete === "string") {
+          console.log("data-delete", dataDelete);
+          if (!s) {
+            s = {};
+          }
+          if (!s.delete) {
+            s.delete = [];
+          }
+          s.delete = [...s.delete, ...dataDelete.split(" ")];
+        }
+        if (dataAdd) {
+          if (!s) {
+            s = {};
+          }
+          if (!s.add) {
+            s.add = "";
+          }
+          s.add += " " + dataAdd;
+        }
+        return s || null;
+      });
       let result = className;
       for (const k in objectBinding) {
-        console.log("objectBinding[k]", k, "->", objectBinding[k]);
         if (objectBinding[k]) {
-          console.log("k is ", k);
           result += " " + k + " ";
         }
       }
-      const settings: TSettingItem | null =
-        TSettings &&
-        TSettings[componentName] &&
-        TSettings[componentName][elementName]
-          ? TSettings[componentName][elementName]
-          : null;
+      const settings = getSettings.value;
       if (settings) {
+        if (settings.add) {
+          result += " " + settings.add;
+        }
         if (settings.delete) {
-          console.log("settings.delete", settings.delete);
           settings.delete.forEach(item => {
             result = result.replace(item, "");
           });
-        }
-        if (settings.add) {
-          result += " " + settings.add;
         }
         if (settings.replace) {
           for (const key in settings.replace) {

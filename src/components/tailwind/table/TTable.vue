@@ -21,19 +21,64 @@
           </template>
         </thead>
         <tbody class="flex-1 sm:flex-none">
-          <tr
-            v-for="i in getLength"
-            :key="`row-item-${i}`"
-            class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0"
-          >
-            <td
-              v-for="(headerItem, index) in getHeaders"
-              :key="`td-item-${index}-${headerItem.key}`"
-              class="border-grey-light border hover:bg-gray-100 p-3"
+          <template v-for="i in getLength" :key="`row-item-${i}`">
+            <tr
+              class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0"
+              :class="getRowVariant(i)"
             >
-              {{ getItems[i - 1][headerItem.key] }}
-            </td>
-          </tr>
+              <td
+                v-for="(headerItem, index) in getHeaders"
+                :key="`td-item-${index}-${headerItem.key}`"
+                class="border-grey-light border hover:bg-gray-100 p-3"
+                :class="getCellVariant(i, headerItem.key)"
+              >
+                <template
+                  v-if="!slots[`cell(${headerItem.key})`] && !hasCellSlot"
+                >
+                  {{ getItems[i - 1][headerItem.key] }}
+                </template>
+                <template v-else-if="slots[`cell(${headerItem.key})`]">
+                  <slot
+                    :name="`cell(${headerItem.key})`"
+                    :column="index"
+                    :row="i - 1"
+                    :item="getItems[i - 1]"
+                    :itemKey="headerItem.key"
+                    :value="getItems[i - 1][headerItem.key]"
+                    :toggleDetails="
+                      () => {
+                        toggleDetails(i);
+                      }
+                    "
+                  ></slot>
+                </template>
+                <template v-else>
+                  <slot
+                    name="cell"
+                    :column="index"
+                    :row="i - 1"
+                    :item="getItems[i - 1]"
+                    :itemKey="headerItem.key"
+                    :value="getItems[i - 1][headerItem.key]"
+                    :toggleDetails="
+                      () => {
+                        toggleDetails(i);
+                      }
+                    "
+                  ></slot>
+                </template>
+              </td>
+            </tr>
+            <template v-if="hasRowDetailsSlot">
+              <tr>
+                <td :colspan="getHeaderLength">
+                  <t-collapsable :show="getShowDetails(i)">
+                    <slot name="rowDetails"></slot>
+                  </t-collapsable>
+                </td>
+              </tr>
+            </template>
+          </template>
         </tbody>
       </table>
     </div>
@@ -41,24 +86,35 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive } from "vue";
+import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTh from "@/components/tailwind/table/TTh.vue";
 import SortEnum = Table.SortEnum;
+import TCollapsable from "@/components/tailwind/collapsable/TCollapsable.vue";
 
 export default defineComponent({
   name: "TTable",
-  components: { TTh },
+  components: { TCollapsable, TTh },
+  emits: {
+    sort(_: { key: string; sort: Table.SortEnum }) {
+      return true;
+    }
+  },
   props: {
     items: {
-      type: Array as PropType<{ [key: string]: any }[]>,
+      type: Array as PropType<Table.Item[]>,
       default: () => []
     },
     fields: {
       type: Array as PropType<Table.HeaderItem[]>
+    },
+    localSort: {
+      type: Boolean,
+      default: () => true
     }
   },
-  setup(props) {
+  setup(props, { emit, slots }) {
+    const itemRefs = ref<Element[]>([]);
     const getHeaders = computed((): Table.HeaderItem[] => {
       if (props.fields) {
         return props.fields;
@@ -78,15 +134,18 @@ export default defineComponent({
       }
       return result;
     });
+    const getHeaderLength = computed(() => getHeaders.value.length);
     const getLength = computed(() => props.items.length);
     const activeSort = reactive({
       key: "",
       sort: "" as Table.SortEnum
     });
     const onSort = ({ key, sort }) => {
-      activeSort.key = key;
-      activeSort.sort = sort;
-      console.log(key, sort);
+      if (props.localSort) {
+        activeSort.key = key;
+        activeSort.sort = sort;
+      }
+      emit("sort", { key, sort });
     };
     const compare = (a, b) => {
       if (a[activeSort.key] < b[activeSort.key]) {
@@ -103,7 +162,47 @@ export default defineComponent({
       }
       return props.items;
     });
-    return { getHeaders, getLength, onSort, getItems };
+    const getRowVariant = computed(() => i => {
+      if (getItems.value[i - 1]?._rowVariant) {
+        return `bg-${getItems.value[i - 1]._rowVariant}`;
+      }
+      return "";
+    });
+    const getCellVariant = computed(() => (i, key) => {
+      if (getItems.value[i - 1]._cellVariants?.[key]) {
+        return `bg-${getItems.value[i - 1]._cellVariants?.[key]}`;
+      }
+      return "";
+    });
+    const showDetailsRef = ref({});
+    const getShowDetails = computed(() => i => {
+      if (showDetailsRef.value[i] !== undefined) {
+        return showDetailsRef.value[i];
+      }
+      return getItems.value[i - 1]._showDetails;
+    });
+    const toggleDetails = i => {
+      if (getShowDetails.value(i)) {
+        showDetailsRef.value[i] = false;
+      } else {
+        showDetailsRef.value[i] = true;
+      }
+    };
+    return {
+      hasRowDetailsSlot: !!slots.rowDetails,
+      hasCellSlot: !!slots.cell,
+      slots,
+      itemRefs,
+      toggleDetails,
+      getShowDetails,
+      getHeaders,
+      getHeaderLength,
+      getLength,
+      onSort,
+      getItems,
+      getRowVariant,
+      getCellVariant
+    };
   }
 });
 </script>

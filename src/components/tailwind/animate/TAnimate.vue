@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="fadeContainer"
     :class="[
       {
         [start]: !show,
@@ -55,7 +54,6 @@ export default {
   },
   setup(props) {
     const delayedShow = ref(props.show);
-    const fadeContainer = ref(null);
     watch(
       () => props.show,
       value => {
@@ -69,7 +67,7 @@ export default {
         }
       }
     );
-    return { delayedShow, fadeContainer };
+    return { delayedShow };
   }
 };
 </script>
