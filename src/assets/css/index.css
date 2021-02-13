@@ -12,6 +12,10 @@
   }
 }
 
+.min-content-height {
+  height: min-content;
+}
+
 .ltr {
   direction: ltr;
 }
