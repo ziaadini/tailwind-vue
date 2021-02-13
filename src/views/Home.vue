@@ -650,7 +650,7 @@ export default defineComponent({
         "https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=650&w=940 940w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260 1260w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940 1880w, https://images.pexels.com/photos/3850251/pexels-photo-3850251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260 2520w",
       rateValue: 1,
       rateValue2: 1.5,
-      rateValue3: 1.5,
+      rateValue3: 3,
       links: [
         {
           url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1",
