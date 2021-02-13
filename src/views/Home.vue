@@ -123,6 +123,7 @@
   </div>
 
   <br />
+
   <h6>
     TEXT INPUT
   </h6>
@@ -131,10 +132,10 @@
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
+      area
       placeholder="some test placeholder"
       variant="white"
-      right-icon="bookmarks"
-      left-icon="bookmarks"
+      class="h-40"
     />
     {{ text1 }}
     <TextInput
@@ -482,7 +483,7 @@
       <t-button loading variant="success">Test</t-button>
     </t-badge>
   </div>
-  <br/>
+  <br />
   <h6>
     Rating
   </h6>
@@ -530,7 +531,12 @@
     CAROUSEL
   </h6>
   itemChange: {{ itemChange }}
-  <t-carousel v-model="links" v-model:index="itemChange" class="w-96 h-96" style="margin: 0 auto;">
+  <t-carousel
+    v-model="links"
+    v-model:index="itemChange"
+    class="w-96 h-96"
+    style="margin: 0 auto;"
+  >
     test
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
