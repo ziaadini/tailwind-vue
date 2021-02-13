@@ -462,7 +462,7 @@
       <t-button @click="toast2 = true">show toast2</t-button>
     </div>
 
-    <div>
+    <div class="my-2">
       <div>#zia</div>
       <div class="flex w-full space-x-reverse space-x-3 mt-4">
         <t-radio
@@ -510,11 +510,58 @@
         </t-radio>
       </div>
     </div>
+    <div>
+      <div>#zia</div>
+      <t-text-input
+        class="mb-4"
+        v-model="textInputValue"
+        placeholder="enter a text for debouncing"
+      ></t-text-input>
+      textInputValue: {{ textInputValue }}
+      <div class="my-4"></div>
+      <t-text-input
+        class="mb-4"
+        v-model="textInputFormat"
+        placeholder="enter a text for debouncing"
+      ></t-text-input>
+      textInputValue: {{ textInputFormat }}
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-animate
+        class="transform"
+        start="translate-x-1/2 opacity-1"
+        end="translate-y-full opacity-0"
+        :show="animate"
+        allocate-space
+      >
+        <div class="w-10 h-10 rounded-full bg-warning"></div>
+      </t-animate>
+      <t-button @click="animate = !animate">show</t-button>
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <t-table
+        :items="[
+          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]"
+        :fields="[
+          { key: 'first_name', label: 'first name' },
+          { key: 'last_name', label: 'last name', sortable: true },
+          { key: 'age', label: 'age', sortable: true }
+        ]"
+      ></t-table>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watchEffect } from "vue";
+import { defineComponent, watchEffect } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TModal from "@/components/tailwind/modal/TModal.vue";
 import { ref } from "vue";
@@ -540,10 +587,18 @@ import TAccordion from "@/components/tailwind/accoirdion/TAccordion.vue";
 import TRangeSlider from "@/components/tailwind/rangeSlider/TRangeSlider.vue";
 import TCountDownTimer from "@/components/tailwind/timer/TCountDownTimer.vue";
 import TFade from "@/components/tailwind/fade/TFade.vue";
+import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
+import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
+import { useFormatRef } from "@/compositionFunctions/expose/format";
+import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
+import TTable from "@/components/tailwind/table/TTable.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TTable,
+    TAnimate,
+    TTextInput,
     TFade,
     TCountDownTimer,
     TRangeSlider,
@@ -632,7 +687,13 @@ export default defineComponent({
     const rangeMax = ref(8000);
     const rangeMin = ref(0);
     const fade = ref(0);
+    const textInputValue = useDebouncedRef("");
+    const textInputFormat = useFormatRef("12345");
+    const animate = ref(false);
     return {
+      animate,
+      textInputFormat,
+      textInputValue,
       fade,
       timer,
       rangeMax,

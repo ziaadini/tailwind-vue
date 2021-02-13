@@ -1,21 +1,39 @@
 <template>
-  <div class="container mx-auto w-full h-full">
+  <div
+    data-name="timeline-container"
+    :class="renderClass('container mx-auto w-full h-full', 'container')"
+  >
     <div class="relative flex-wrap  h-full">
       <div
         data-name="timeline-line"
-        class="absolute border-opacity-20 border-gray-700 h-full border"
-        :class="getLineByDirection"
+        :class="
+          renderClass(
+            `${getLineByDirection} absolute border-opacity-20 border-gray-700 h-full border`,
+            'line'
+          )
+        "
       ></div>
 
       <div
         v-for="(item, index) in items"
+        data-name="timeline-itemContainer"
         :key="`time-line-item-${index}`"
-        class="mb-8 flex justify-between items-center w-full right-timeline"
-        :class="getRowByDirection(index)"
+        :class="
+          renderClass(
+            `${getRowByDirection(
+              index
+            )} mb-8 flex justify-between items-center w-full right-timeline`,
+            'itemContainer'
+          )
+        "
       >
         <div
-          class="order-1 w-5/12"
-          :class="getEmptySpaceByDirection"
+          :class="
+            renderClass(
+              `${getEmptySpaceByDirection} order-1 w-5/12`,
+              'emptySpace'
+            )
+          "
           data-name="timeline-emptySpace"
         >
           <slot
@@ -28,16 +46,26 @@
         </div>
         <div
           data-name="timeline-circle"
-          class="z-10 flex items-center bg-white text-sm border-2 order-1 shadow-xl  min-w-8 min-h-8 rounded-full"
           :class="[
+            renderClass(
+              `${getCircleByDirection} z-10 flex items-center bg-white text-sm border-2 order-1 shadow-xl  min-w-8 min-h-8 rounded-full`,
+              'circle',
+              {
+                'border-gray-400': !isActive(index) && !isComplete(index)
+              }
+            ),
             {
               'cursor-pointer': clickable && !item.locked,
               'cursor-not-allowed': item.locked
             },
-            getCircleByDirection,
-            isComplete(index) || isActive(index)
-              ? `border-${variant} text-${variant}`
-              : 'border-gray-400'
+            renderClass(
+              `${isActive(index) ? `border-${variant} text-${variant}` : ''}`,
+              'activeCircle'
+            ),
+            renderClass(
+              `${isComplete(index) ? `border-${variant} text-${variant}` : ''}`,
+              'completeCircle'
+            )
           ]"
           @click="onItemClicked({ item, index })"
         >
@@ -77,8 +105,7 @@
         <div
           v-else
           data-name="timeline-item"
-          class="order-1 px-4"
-          :class="getItemByDirection"
+          :class="renderClass(`${getItemByDirection} order-1 px-4`, 'item')"
         >
           <t-card
             class="text-sm py-4 bg-white"
@@ -95,6 +122,7 @@
 import { variants } from "@/utility/css-helper";
 import { computed, defineComponent, PropType } from "vue";
 import TCard from "../card/TCard.vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   components: { TCard },
@@ -206,8 +234,9 @@ export default defineComponent({
         !item.locked &&
         emit("update:modelValue", item[props.value] ?? index);
     };
-
+    const { renderClass } = useRenderClass("timeline");
     return {
+      renderClass,
       hasCircleSlot: !!slots.circle,
       hasLabelSlot: !!slots.label,
       hasItemSlot: !!slots.item,

@@ -14,7 +14,7 @@
         data-name="skeleton-avatarListInnerContainer"
         :class="
           renderClass(
-            'relative animate-pulse delay-500 flex space-x-reverse space-x-4',
+            'relative overflow-hidden animate-pulse delay-500 flex space-x-reverse space-x-4',
             'avatarListInnerContainer'
           )
         "
@@ -150,7 +150,7 @@
         data-name="skeleton-line"
         :class="
           renderClass(
-            'relative delay-500 animate-pulse h-4 bg-gray-300 rounded w-full',
+            'relative overflow-hidden delay-500 animate-pulse h-4 bg-gray-300 rounded w-full',
             'line'
           )
         "
@@ -176,7 +176,7 @@
         data-name="skeleton-threeLineInnerContainer"
         :class="
           renderClass(
-            'relative flex-1 space-y-3 py-1 animate-pulse delay-500',
+            'relative overflow-hidden flex-1 space-y-3 py-1 animate-pulse delay-500',
             'threeLineInnerContainer'
           )
         "
@@ -212,7 +212,7 @@
     >
       <div
         data-name="skeleton-custom"
-        :class="renderClass('relative animate-pulse delay-500', 'custom')"
+        :class="renderClass('relative overflow-hidden animate-pulse delay-500', 'custom')"
       >
         <div
           class="skeleton-box absolute top-0 right-0 bottom-0 left-0 transform -translate-x-full"

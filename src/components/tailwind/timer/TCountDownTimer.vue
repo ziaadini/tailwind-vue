@@ -1,22 +1,57 @@
 <template>
-  <div v-if="!hasSlot" class="flex items-center ltr">
-    <div class="min-w-8" v-if="!hideDays">
+  <div
+    data-name="countDownTimer-container"
+    v-if="!hasSlot"
+    :class="renderClass('flex items-center ltr', 'container')"
+  >
+    <div
+      data-name="countDownTimer-digit"
+      :class="renderClass('min-w-8', 'digit')"
+      v-if="!hideDays"
+    >
       {{ day }}
-      <span class="mx-1">: </span>
+      <span
+        data-name="countDownTimer-separator"
+        :class="renderClass('mx-1', 'separator')"
+        >:
+      </span>
     </div>
 
-    <div class="min-w-8" v-if="!hideHours">
+    <div
+      data-name="countDownTimer-digit"
+      :class="renderClass('min-w-8', 'digit')"
+      v-if="!hideHours"
+    >
       {{ hours }}
-      <span class="mx-1">: </span>
+      <span
+        data-name="countDownTimer-separator"
+        :class="renderClass('mx-1', 'separator')"
+        >:
+      </span>
     </div>
-    <div class="min-w-8" v-if="!hideMinutes">
+    <div
+      data-name="countDownTimer-digit"
+      :class="renderClass('min-w-8', 'digit')"
+      v-if="!hideMinutes"
+    >
       {{ minutes }}
-      <span class="mx-1">: </span>
+      <span
+        data-name="countDownTimer-separator"
+        :class="renderClass('mx-1', 'separator')"
+        >:
+      </span>
     </div>
 
-    <div class="min-w-8" v-if="!hideSeconds">
+    <div
+      data-name="countDownTimer-digit"
+      :class="renderClass('min-w-8', 'digit')"
+      v-if="!hideSeconds"
+    >
       {{ seconds }}
-      <span class="mx-1"></span>
+      <span
+        data-name="countDownTimer-separator"
+        :class="renderClass('mx-1', 'separator')"
+      ></span>
     </div>
   </div>
   <template v-else>
@@ -38,6 +73,7 @@
 import { duration } from "moment";
 import { computed, defineComponent, PropType } from "vue";
 import { useInterval } from "@/compositionFunctions/interval";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TCountDownTimer",
@@ -82,7 +118,9 @@ export default defineComponent({
       }
     };
     useInterval(callback, props.countDown as number | null);
+    const { renderClass } = useRenderClass("countDownTimer");
     return {
+      renderClass,
       day: getDays,
       hours: getHours,
       minutes: getMinutes,

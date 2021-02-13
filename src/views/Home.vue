@@ -132,13 +132,15 @@
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
       placeholder="some test placeholder"
-      v-model="text"
       variant="white"
       right-icon="bookmarks"
+      left-icon="bookmarks"
     />
+    {{text1}}
     <TextInput
       placeholder="some test placeholder"
-      v-model="text"
+      v-model.format:,:4="text1"
+      inputType="numeric"
       variant="primary"
       right-icon="bookmarks"
     />
@@ -515,7 +517,7 @@
     CAROUSEL
   </h6>
   itemChange: {{ itemChange }}
-  <t-carousel v-model="links" v-model:index="itemChange">
+  <t-carousel v-model="links" v-model:index="itemChange" class="w-96 h-96">
     test
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
@@ -622,6 +624,7 @@ export default defineComponent({
   data() {
     return {
       text: "",
+      text1: "",
       dropdownModel: "",
       dropdownTriggerRef: "" as any,
       dropdownOpened: false,

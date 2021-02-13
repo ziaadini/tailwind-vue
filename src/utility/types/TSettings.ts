@@ -1,5 +1,9 @@
 export interface TSettings {
   tabs?: {
+    container?: TSettingItem;
+    headerContainer?: TSettingItem;
+    arrow?: TSettingItem;
+    nav?: TSettingItem;
     header?: TSettingItem;
   };
   card?: {
@@ -106,6 +110,50 @@ export interface TSettings {
     threeLine?: TSettingItem;
     customContainer?: TSettingItem;
     custom?: TSettingItem;
+  };
+  stepper?: {
+    container?: TSettingItem;
+    itemContainer?: TSettingItem;
+    circle?: TSettingItem;
+    activeCircle?: TSettingItem;
+    completeCircle?: TSettingItem;
+    text?: TSettingItem;
+    line?: TSettingItem;
+  };
+  timeline?: {
+    container?: TSettingItem;
+    line?: TSettingItem;
+    itemContainer?: TSettingItem;
+    emptySpace?: TSettingItem;
+    circle?: TSettingItem;
+    activeCircle?: TSettingItem;
+    completeCircle?: TSettingItem;
+    item?: TSettingItem;
+  };
+  switch?: {
+    container?: TSettingItem;
+    pan?: TSettingItem;
+    circle?: TSettingItem;
+    label?: TSettingItem;
+  };
+  countDownTimer?: {
+    container?: TSettingItem;
+    digit?: TSettingItem;
+    separator?: TSettingItem;
+  };
+  toast?: {
+    container?: TSettingItem;
+    show?: TSettingItem;
+    hide?: TSettingItem;
+  };
+  tooltip?: {
+    container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    triangle?: TSettingItem;
+    message?: TSettingItem;
+  };
+  triangle?: {
+    triangle?: TSettingItem;
   };
 }
 

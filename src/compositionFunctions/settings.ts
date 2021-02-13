@@ -4,8 +4,15 @@ import { TSettings, TSettingItem } from "@/utility/types/TSettings";
 export const useRenderClass = (componentName: string) => {
   const TSettings = inject<TSettings>("TSettings");
   const renderClass = computed(
-    () => (className: string, elementName: string) => {
+    () => (className: string, elementName: string, objectBinding = {}) => {
       let result = className;
+      for (const k in objectBinding) {
+        console.log("objectBinding[k]", k, "->", objectBinding[k]);
+        if (objectBinding[k]) {
+          console.log("k is ", k);
+          result += " " + k + " ";
+        }
+      }
       const settings: TSettingItem | null =
         TSettings &&
         TSettings[componentName] &&
@@ -27,10 +34,8 @@ export const useRenderClass = (componentName: string) => {
             result = result.replace(key, settings.replace[key]);
           }
         }
-        return result;
-      } else {
-        return className;
       }
+      return result;
     }
   );
 
