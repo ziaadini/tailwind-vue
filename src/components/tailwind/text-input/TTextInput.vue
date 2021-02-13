@@ -6,7 +6,7 @@
     {{ label }}
   </label>
   <div
-    class="mt-1 relative"
+    class="mt-1 relative min-content-height"
     :class="{
       'rounded-full': rounded,
       'rounded-sm': !rounded,
@@ -15,7 +15,7 @@
     <!-- left icon section -->
     <div
       v-if="leftPadding"
-      class="absolute inset-y-0 left-2 flex items-center  pointer-events-none"
+      class="absolute inset-y-0 left-2 flex pointer-events-none items-center"
     >
       <t-icon
         v-if="leftIcon"
@@ -29,7 +29,8 @@
       </template>
     </div>
     <!-- input element -->
-    <input
+    <component
+      :is="inputType"
       ref="textInputRef"
       :inputmode="inputMode"
       :type="type"
@@ -37,7 +38,7 @@
       v-bind="$attrs"
       :value="modelValue"
       @input="updateFunction($event.target.value)"
-      class="block min-h-48 w-full sm:text-sm outline-none h-10"
+      class="block h-12 w-full sm:text-sm outline-none"
       :class="[
         {
           'pr-8': rightPadding,
@@ -56,7 +57,7 @@
     <!-- right icon section -->
     <div
       v-if="rightPadding"
-      class="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+      class="absolute inset-y-0 right-2 flex pointer-events-none items-center"
     >
       <t-icon
         v-if="rightIcon"
@@ -76,7 +77,6 @@
 import {
   modifierVariants,
   textInputAlignments,
-  textInputVariants,
   variants,
 } from "@/utility/css-helper";
 import { computed, defineComponent, nextTick, ref, toRefs, watch } from "vue";
@@ -163,6 +163,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    area: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   computed: {},
   setup(props, { slots, emit }) {
@@ -239,10 +244,19 @@ export default defineComponent({
 
     const inputMode = computed(() => {
       if (formatFounded) {
-        return 'numeric';
-      } 
-      return props.inputmode
-    })
+        return "numeric";
+      }
+      return props.inputmode;
+    });
+
+    enum inputTypes {
+      input = "input",
+      textarea = "textarea",
+    }
+
+    const inputType = computed(() => {
+      return !props.area ? inputTypes.input : inputTypes.textarea;
+    });
 
     return {
       rightPadding,
@@ -253,7 +267,8 @@ export default defineComponent({
       isCenter,
       updateFunction,
       textInputRef,
-      inputMode
+      inputMode,
+      inputType,
     };
   },
   watch: {},
@@ -272,4 +287,30 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+// textarea[type="number"] {
+//   -moz-appearance: textfield;
+// }
+
+// textarea::-webkit-input-placeholder {
+//   line-height: 3rem;
+// }
+// textarea:-moz-placeholder {
+//   /* Firefox 18- */
+//   line-height: 3rem;
+// }
+// textarea::-moz-placeholder {
+//   /* Firefox 19+ */
+//   line-height: 3rem;
+// }
+// textarea:-ms-input-placeholder {
+//   line-height: 2.5rem;
+// }
 </style>
