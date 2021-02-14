@@ -4,7 +4,6 @@ import { TSettings, TSettingItem } from "@/utility/types/TSettings";
 export const useRenderClass = (componentName: string) => {
   const TSettings = inject<TSettings>("TSettings");
   const instance = getCurrentInstance();
-  // console.log("instance",instance.attrs)
   const renderClass = computed(
     () => (className: string, elementName: string, objectBinding = {}) => {
       const getSettings = computed((): TSettingItem | null => {
@@ -13,7 +12,6 @@ export const useRenderClass = (componentName: string) => {
         const dataDelete = instance?.attrs?.[`data-${elementName}-delete`];
         const dataAdd = instance?.attrs?.[`data-${elementName}-add`];
         if (dataDelete && typeof dataDelete === "string") {
-          console.log("data-delete", dataDelete);
           if (!s) {
             s = {};
           }

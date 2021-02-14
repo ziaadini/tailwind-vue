@@ -1,12 +1,13 @@
 <template>
-  <div
+  <component
+    :is="tag"
     ref="itemRefs"
     class="transition-all overflow-hidden"
     :class="`duration-${duration} ${easeClass}`"
     v-bind="getBindingToAnimate"
   >
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -24,6 +25,10 @@ export default {
       type: String,
       default: "ease-in-out"
     },
+    tag: {
+      type: String,
+      default: "div"
+    }
   },
   setup(props) {
     const itemRefs = ref(null);

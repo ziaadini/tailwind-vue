@@ -541,8 +541,9 @@
       <t-button @click="animate = !animate">show</t-button>
     </div>
 
-    <div>
+    <div class="w-full">
       <div>#zia</div>
+
       <t-table
         :items="[
           { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -556,41 +557,80 @@
           {
             age: 89,
             first_name: 'Geneva',
-            last_name: 'Wilson',
-            _showDetails: true
+            last_name: 'Wilson'
           },
           { age: 38, first_name: 'Jami', last_name: 'Carney' }
         ]"
         :fields="[
-          { key: 'showDetails', label: 'show details' },
-          { key: 'first_name', label: 'first name' },
+          { key: 'first_name', label: 'first name', variant: 'danger' },
           { key: 'last_name', label: 'last name', sortable: true },
           { key: 'age', label: 'age', sortable: true }
         ]"
       >
-        <template #cell(showDetails)="{toggleDetails,item}">
-          <t-button class="text-xs" @click="toggleDetails"
-            >toggleDetails ({{ item.age }})</t-button
-          >
-          <!--          <span>row: {{row}}</span>-->
-          <!--          <span>column: {{column}}</span>-->
-        </template>
         <template #cell="{value}">
-          <span class="text-gray-700">
-          {{ value }}
-          </span>
-        </template>
-        <template #rowDetails>
-          <t-card
-            data-container-delete="text-right"
-            data-container-add="text-gray-500"
-            data-title-delete="text-danger"
-            title="hello world"
-            >this is test text</t-card
-          >
+          <div class="p-20">{{ value }}</div>
         </template>
       </t-table>
+
+
+
+
+      <!--      :local-sort="false"-->
+      <!--      @sort="-->
+      <!--      ({ key, sort, setSort }) => {-->
+      <!--      setSort();-->
+      <!--      }-->
+      <!--      "-->
+
+<!--      <t-table-->
+<!--        :items="[-->
+<!--          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },-->
+<!--          {-->
+<!--            age: 21,-->
+<!--            first_name: 'Larsen',-->
+<!--            last_name: 'Shaw',-->
+<!--            _rowVariant: 'warning',-->
+<!--            _cellVariants: { age: 'success' }-->
+<!--          },-->
+<!--          {-->
+<!--            age: 89,-->
+<!--            first_name: 'Geneva',-->
+<!--            last_name: 'Wilson',-->
+<!--            _showDetails: true-->
+<!--          },-->
+<!--          { age: 38, first_name: 'Jami', last_name: 'Carney' }-->
+<!--        ]"-->
+<!--        :fields="[-->
+<!--          { key: 'showDetails', label: 'show details' },-->
+<!--          { key: 'first_name', label: 'first name', variant: 'danger' },-->
+<!--          { key: 'last_name', label: 'last name', sortable: true },-->
+<!--          { key: 'age', label: 'age', sortable: true }-->
+<!--        ]"-->
+<!--      >-->
+<!--        <template #cell(showDetails)="{toggleDetails,item}">-->
+<!--          <t-button class="text-xs" @click="toggleDetails"-->
+<!--            >toggleDetails ({{ item.age }})</t-button-->
+<!--          >-->
+<!--          &lt;!&ndash;          <span>row: {{row}}</span>&ndash;&gt;-->
+<!--          &lt;!&ndash;          <span>column: {{column}}</span>&ndash;&gt;-->
+<!--        </template>-->
+<!--        <template #cell="{value}">-->
+<!--          <span class="text-gray-700 p-12">-->
+<!--            {{ value }}-->
+<!--          </span>-->
+<!--        </template>-->
+<!--        <template #rowDetails>-->
+<!--          <t-card-->
+<!--            data-container-delete="text-right"-->
+<!--            data-container-add="text-gray-500"-->
+<!--            data-title-delete="text-danger"-->
+<!--            title="hello world"-->
+<!--            >this is test text</t-card-->
+<!--          >-->
+<!--        </template>-->
+<!--      </t-table>-->
     </div>
+    <div><h1>test data</h1></div>
   </div>
 </template>
 

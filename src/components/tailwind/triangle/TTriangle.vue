@@ -3,7 +3,7 @@
     data-name="triangle-triangle"
     :class="
       renderClass(
-        `${triangleClassByDirection} border-${variant} w-0 h-0`,
+        `${triangleClassByDirection} ${borderColor} w-0 h-0`,
         'triangle'
       )
     "
@@ -35,6 +35,10 @@ export default defineComponent({
         // @ts-ignore
         return !!variants[propValue];
       }
+    },
+    colorClass: {
+      type: String,
+      default: ""
     }
   },
   setup(props) {
@@ -52,10 +56,17 @@ export default defineComponent({
           return "";
       }
     });
+    const borderColor = computed(() => {
+      if (props.colorClass) {
+        return props.colorClass;
+      }
+      return `border-${props.variant}`;
+    });
     const { renderClass } = useRenderClass("triangle");
     return {
       renderClass,
-      triangleClassByDirection
+      triangleClassByDirection,
+      borderColor
     };
   }
 });

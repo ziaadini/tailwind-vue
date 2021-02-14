@@ -1,22 +1,49 @@
 <template>
   <th
     @click="onClick"
-    :class="[`bg-${item.variant}`,{'cursor-pointer':item.sortable}]"
+    :class="[getVariantClass, { 'cursor-pointer': item.sortable }]"
   >
-    {{ item.label }}
+    <div class="flex flex-row items-center">
+      <div class="ml-2" :class="{ hidden: item.key !== activeSort.key }">
+        <t-triangle
+          direction="arrow-up"
+          class="transform scale-75"
+          :color-class="
+            activeSort.sort === SortEnum.ASC
+              ? 'border-gray-500'
+              : 'border-gray-300'
+          "
+        ></t-triangle>
+        <t-triangle
+          direction="arrow-down"
+          class="mt-0.5 transform scale-75"
+          :color-class="
+            activeSort.sort === SortEnum.DESC
+              ? 'border-gray-500'
+              : 'border-gray-300'
+          "
+        ></t-triangle>
+      </div>
+      {{ item.label }}
+    </div>
   </th>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import { Table } from "@/utility/types/base-component-types";
+import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 export default defineComponent({
   name: "TTh",
+  components: { TTriangle },
   emits: ["sort"],
   props: {
     item: {
       type: Object as PropType<Table.HeaderItem>,
       required: true
+    },
+    activeSort: {
+      type: Object as PropType<{ key: string; sort: Table.SortEnum }>
     }
   },
   setup(props, { emit }) {
@@ -34,7 +61,11 @@ export default defineComponent({
         emit("sort", { key: props.item.key, sort: toggleSort() });
       }
     };
-    return { onClick };
+    const getVariantClass = computed(() => {
+      if (props.item.variant) return `bg-${props.item.variant}`;
+      return "";
+    });
+    return { onClick, getVariantClass, SortEnum: Table.SortEnum };
   }
 });
 </script>
