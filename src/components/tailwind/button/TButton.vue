@@ -1,73 +1,73 @@
 <template>
   <!-- This is an example component -->
-  <button
+  <component
+    :is="wrapperComponent"
+    :to="to"
     data-name="button-container"
     :class="[
       {
         'rounded-full': rounded,
         ripple,
-        'w-full': full
+        'w-full': full,
       },
       variantClasses,
       renderClass(
         'shadow relative rounded-sm border-1 focus:outline-none',
         'container'
-      )
+      ),
     ]"
     v-bind="$attrs"
   >
-    <component :is="wrapperComponent" :to="to" class="contents">
-      <div
-        :class="
-          renderClass(
-            'flex justify-center align-center px-4 py-2',
-            'contentContainer'
-          )
-        "
-        data-name="button-contentContainer"
+    <span
+      :class="
+        renderClass(
+          'flex justify-center align-center px-4 py-2',
+          'contentContainer'
+        )
+      "
+      data-name="button-contentContainer"
+    >
+      <app-icon
+        :name="icon"
+        data-name="button-icon"
+        :class="[
+          {
+            'opacity-0': loading,
+          },
+          renderClass('', 'icon'),
+        ]"
+      />
+      <span
+        :class="{
+          'opacity-0': loading,
+        }"
       >
-        <app-icon
-          :name="icon"
-          data-name="button-icon"
-          :class="[
-            {
-              'opacity-0': loading
-            },
-            renderClass('', 'icon')
-          ]"
-        />
-        <div
-          :class="{
-            'opacity-0': loading
-          }"
-        >
-          <slot />
-        </div>
+        <slot />
+      </span>
 
-        <div
-          v-if="loading"
-          data-name="button-loadingContainer"
-          :class="{
-            [renderClass(
-              'absolute transform top-1/2 -translate-y-1/2',
-              'loadingContainer'
-            )]: loading
-          }"
-        >
-          <template v-if="hasLoadingSlot">
-            <slot name="loading" v-bind="loadingProps"></slot>
-          </template>
-          <t-loading
-            v-else
-            data-name="button-loading"
-            :class="renderClass('', 'loading')"
-            v-bind="loadingBindingProps"
-            size="sm"
-          />
-        </div>
-      </div>
-    </component>
-  </button>
+      <span
+        v-if="loading"
+        data-name="button-loadingContainer"
+        :class="{
+          [renderClass(
+            'absolute transform top-1/2 -translate-y-1/2',
+            'loadingContainer'
+          )]: loading,
+        }"
+      >
+        <template v-if="hasLoadingSlot">
+          <slot name="loading" v-bind="loadingProps"></slot>
+        </template>
+        <t-loading
+          v-else
+          data-name="button-loading"
+          :class="renderClass('', 'loading')"
+          v-bind="loadingBindingProps"
+          size="sm"
+        />
+      </span>
+    </span>
+  </component>
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
@@ -80,7 +80,7 @@ export default defineComponent({
   props: {
     rounded: {
       type: Boolean,
-      default: false
+      default: false,
     },
     variant: {
       type: String,
@@ -89,48 +89,48 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      }
+      },
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     outline: {
       type: Boolean,
-      default: false
+      default: false,
     },
     ripple: {
       type: Boolean,
-      default: false
+      default: false,
     },
     to: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
     nuxt: {
       required: false,
       type: Boolean,
-      default: true
+      default: false,
     },
     full: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     loading: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     loadingProps: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   components: {
     AppIcon,
-    TLoading
+    TLoading,
   },
   setup(props, { slots }) {
     const variantClasses = computed((): string => {
@@ -148,12 +148,12 @@ export default defineComponent({
 
     const loadingBindingProps = {
       variant: props.outline ? props.variant : "white",
-      ...props.loadingProps
+      ...props.loadingProps,
     };
 
     const wrapperComponent = computed((): string => {
       if (!props.to) {
-        return "template";
+        return "button";
       }
       if (props.nuxt) {
         return "nuxt-link";
@@ -166,8 +166,8 @@ export default defineComponent({
       variantClasses,
       loadingBindingProps,
       hasLoadingSlot: !!slots.loading,
-      wrapperComponent
+      wrapperComponent,
     };
-  }
+  },
 });
 </script>
