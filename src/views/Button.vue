@@ -90,6 +90,8 @@
       </div>
       <iframe width="100%" height="150" src="//jsfiddle.net/mohstarsos1/ymr0czbf/1/embedded/html/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
     </div>
+
+    <div class="mt-10 border rounded-sm p-3 w-full shadow-md"><vue3-markdown-it :source="mdFile" /></div>
   </div>
 </template>
 
@@ -104,6 +106,11 @@ export default defineComponent({
   },
   setup() {
     return {};
+  },
+  data() {
+    return {
+      mdFile: "i am a ~~tast~~ **test**.",
+    };
   },
 });
 </script>
