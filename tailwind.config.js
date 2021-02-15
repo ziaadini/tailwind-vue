@@ -185,7 +185,8 @@ module.exports = {
       backgroundColor: ["hover"],
       borderColor: ["checked"],
       opacity: ["disabled"],
-      ringWidth: ["hover"]
+      ringWidth: ["hover"],
+      borderRadius: ["first", "last"]
     }
   },
   plugins: []

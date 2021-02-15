@@ -567,13 +567,16 @@
           { key: 'age', label: 'age', sortable: true }
         ]"
       >
+        <template #card-header="{item}">
+          <div class="text-blue-400">{{ item.label }}</div>
+        </template>
+        <template #header="{item}">
+          <div class="text-blue-400">{{ item.label }}</div>
+        </template>
         <template #cell="{value}">
           <div class="p-20">{{ value }}</div>
         </template>
       </t-table>
-
-
-
 
       <!--      :local-sort="false"-->
       <!--      @sort="-->
@@ -582,53 +585,66 @@
       <!--      }-->
       <!--      "-->
 
-<!--      <t-table-->
-<!--        :items="[-->
-<!--          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },-->
-<!--          {-->
-<!--            age: 21,-->
-<!--            first_name: 'Larsen',-->
-<!--            last_name: 'Shaw',-->
-<!--            _rowVariant: 'warning',-->
-<!--            _cellVariants: { age: 'success' }-->
-<!--          },-->
-<!--          {-->
-<!--            age: 89,-->
-<!--            first_name: 'Geneva',-->
-<!--            last_name: 'Wilson',-->
-<!--            _showDetails: true-->
-<!--          },-->
-<!--          { age: 38, first_name: 'Jami', last_name: 'Carney' }-->
-<!--        ]"-->
-<!--        :fields="[-->
-<!--          { key: 'showDetails', label: 'show details' },-->
-<!--          { key: 'first_name', label: 'first name', variant: 'danger' },-->
-<!--          { key: 'last_name', label: 'last name', sortable: true },-->
-<!--          { key: 'age', label: 'age', sortable: true }-->
-<!--        ]"-->
-<!--      >-->
-<!--        <template #cell(showDetails)="{toggleDetails,item}">-->
-<!--          <t-button class="text-xs" @click="toggleDetails"-->
-<!--            >toggleDetails ({{ item.age }})</t-button-->
-<!--          >-->
-<!--          &lt;!&ndash;          <span>row: {{row}}</span>&ndash;&gt;-->
-<!--          &lt;!&ndash;          <span>column: {{column}}</span>&ndash;&gt;-->
-<!--        </template>-->
-<!--        <template #cell="{value}">-->
-<!--          <span class="text-gray-700 p-12">-->
-<!--            {{ value }}-->
-<!--          </span>-->
-<!--        </template>-->
-<!--        <template #rowDetails>-->
-<!--          <t-card-->
-<!--            data-container-delete="text-right"-->
-<!--            data-container-add="text-gray-500"-->
-<!--            data-title-delete="text-danger"-->
-<!--            title="hello world"-->
-<!--            >this is test text</t-card-->
-<!--          >-->
-<!--        </template>-->
-<!--      </t-table>-->
+      <t-table
+        :items="[
+          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          {
+            age: 21,
+            first_name: 'Larsen',
+            last_name: 'Shaw',
+            _rowVariant: 'warning',
+            _cellVariants: { age: 'success' }
+          },
+          {
+            age: 89,
+            first_name: 'Geneva',
+            last_name: 'Wilson',
+            _showDetails: true
+          },
+          { age: 38, first_name: 'Zia', last_name: 'Zia' },
+          { age: 39, first_name: 'jon', last_name: 'Carney' },
+          { age: 18, first_name: 'max', last_name: 'Carney' },
+          { age: 58, first_name: 'Jami', last_name: 'Carney' }
+        ]"
+        :fields="[
+          { key: 'showDetails', label: 'show details' },
+          { key: 'first_name', label: 'first name', variant: 'danger' },
+          { key: 'last_name', label: 'last name', sortable: true },
+          { key: 'age', label: 'age', sortable: true }
+        ]"
+      >
+        <template #cell(showDetails)="{toggleDetails,item}">
+          <t-button class="text-xs" @click="toggleDetails"
+            >toggleDetails ({{ item.age }})</t-button
+          >
+          <!--          <span>row: {{row}}</span>-->
+          <!--          <span>column: {{column}}</span>-->
+        </template>
+
+        <template #card-cell(showDetails)="{toggleDetails,item}">
+          <t-button class="text-xs" @click="toggleDetails"
+            >toggleDetails ({{ item.age }})</t-button
+          >
+          <!--          <span>row: {{row}}</span>-->
+          <!--          <span>column: {{column}}</span>-->
+        </template>
+
+        <template #cell="{value}">
+          <span class="text-gray-700 p-12">
+            {{ value }}
+          </span>
+        </template>
+        <template #rowDetails="{rowItem}">
+          <t-card
+            data-container-delete="text-right shadow-md border border-gray-100"
+            data-container-add="text-gray-500 bg-gray-100"
+            data-title-delete="text-danger"
+            title="hello world"
+          >
+            <div class="h-16">this is test text ({{ rowItem.age }})</div>
+          </t-card>
+        </template>
+      </t-table>
     </div>
     <div><h1>test data</h1></div>
   </div>

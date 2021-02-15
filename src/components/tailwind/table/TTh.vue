@@ -1,5 +1,6 @@
 <template>
-  <th
+  <component
+    :is="tag"
     @click="onClick"
     :class="[getVariantClass, { 'cursor-pointer': item.sortable }]"
   >
@@ -24,9 +25,14 @@
           "
         ></t-triangle>
       </div>
-      {{ item.label }}
+      <template v-if="hasDefaultSlot">
+        <slot :item="item" :activeSort="activeSort"></slot>
+      </template>
+      <template v-else>
+        {{ item.label }}
+      </template>
     </div>
-  </th>
+  </component>
 </template>
 
 <script lang="ts">
@@ -44,9 +50,13 @@ export default defineComponent({
     },
     activeSort: {
       type: Object as PropType<{ key: string; sort: Table.SortEnum }>
+    },
+    tag: {
+      type: String,
+      default: "th"
     }
   },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const sortRef = ref<Table.SortEnum>(Table.SortEnum.DESC);
     const toggleSort = () => {
       if (sortRef.value === Table.SortEnum.ASC) {
@@ -62,10 +72,17 @@ export default defineComponent({
       }
     };
     const getVariantClass = computed(() => {
-      if (props.item.variant) return `bg-${props.item.variant}`;
-      return "";
+      if (props.item.variant) {
+        return `sm:bg-${props.item.variant}-50 sm:text-gray-700 text-${props.item.variant}`;
+      }
+      return "text-gray-700";
     });
-    return { onClick, getVariantClass, SortEnum: Table.SortEnum };
+    return {
+      onClick,
+      getVariantClass,
+      SortEnum: Table.SortEnum,
+      hasDefaultSlot: !!slots.default
+    };
   }
 });
 </script>
