@@ -6,7 +6,7 @@
     simple button
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
-    <t-button variant="primary">Test</t-button>
+    <t-button color="bg-red-500 text-blue-500" variant="primary">Test</t-button>
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
     <t-button rounded variant="success">Test</t-button>
@@ -642,7 +642,7 @@ export default defineComponent({
     TSlider,
     TBreadcrumb,
     TImage,
-    TZoom
+    TZoom,
   },
   data() {
     return {

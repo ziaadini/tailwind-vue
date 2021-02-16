@@ -10,7 +10,7 @@
         ripple,
         'w-full': full,
       },
-      variantClasses,
+      renderClass(variantClasses, 'container'),
       renderClass(
         'shadow relative rounded-sm border-1 focus:outline-none',
         'container'
@@ -91,6 +91,10 @@ export default defineComponent({
         return !!variants[propValue];
       },
     },
+    color: {
+      type: String,
+      default: "",
+    },
     icon: {
       type: String,
       default: "",
@@ -136,14 +140,15 @@ export default defineComponent({
     const variantClasses = computed((): string => {
       const baseClass =
         " hover:opacity-80 transition hover:shadow-md text-white disabled:opacity-50";
+      const variantClass = `bg-${props.variant} hover:bg-${props.variant}`;
+
+      const outlineVariantClass = `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50`;
       const outlineBaseClass =
         " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
+
       return props.outline
-        ? `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50` +
-            outlineBaseClass
-        : `
-        bg-${props.variant} hover:bg-${props.variant}
-        ` + baseClass;
+        ? (props.color || outlineVariantClass) + outlineBaseClass
+        : (props.color || variantClass) + baseClass;
     });
 
     const loadingBindingProps = {
