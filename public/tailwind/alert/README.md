@@ -1,5 +1,5 @@
 ### props
-| name | Type | Default | Description |
+| Name | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
 | v-model | number or boolean |0| state of alert (close or open) |
 | show | number or boolean |0| state of alert (close or open) when use show close button doesn't appear |
