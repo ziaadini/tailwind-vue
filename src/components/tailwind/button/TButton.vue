@@ -6,15 +6,14 @@
     :disabled="disabled"
     data-name="button-container"
     :class="[
-      {
-        'rounded-full': rounded,
-        ripple: ripple && !disabled,
-        'w-full': full,
-      },
-      renderClass(variantClasses, 'container'),
       renderClass(
-        'shadow relative rounded-sm border-1 focus:outline-none',
-        'container'
+        `${variantClasses} shadow relative rounded-sm border-1 focus:outline-none`,
+        'container',
+        {
+          'rounded-full': rounded,
+          ripple: ripple && !disabled,
+          'w-full': full,
+        }
       ),
     ]"
     v-bind="$attrs"
