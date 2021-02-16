@@ -118,7 +118,6 @@
               name="rowDetails"
               :show="getShowDetails(i)"
               :isCard="false"
-              :column="index"
               :row="i - 1"
               :rowItem="getItems[i - 1]"
               :toggleDetails="
@@ -318,7 +317,6 @@
                             name="rowDetails"
                             :show="getShowDetails(i)"
                             :isCard="false"
-                            :column="index"
                             :row="i - 1"
                             :rowItem="getItems[i - 1]"
                             :toggleDetails="
@@ -373,7 +371,7 @@ export default defineComponent({
     },
     localSort: {
       type: Boolean,
-      default: () => false
+      default: () => true
     },
     rounded: {
       type: Boolean,

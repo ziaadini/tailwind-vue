@@ -2,7 +2,7 @@
 | ------------ | ------------ | ------------ | ------------ |
 | items | Array of Object | [] | any key value you want to render in table there is some special keys in here : `_cellVariants?: { [key: string]: variants }`, `_rowVariant?: string`, `_showDetails?: boolean` |
 | fields | Array of Object  | - | key is the key inside `items` object for example `{ key: 'last_name', label: 'Lastname', sortable: true, variant: 'danger' }` |
-| localSort | Boolean | false | is local sort enable |
+| localSort | Boolean | true | is local sort enable |
 | rounded | Boolean | true | is table rounded |
 | card | Boolean | true | if set true in sm breakpoint will hide the table and show cards instead |
 | renderTable | Boolean | true | if you want avoid table rendering base on userAgent or what ever... |
