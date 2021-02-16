@@ -53,20 +53,35 @@ export const useShowDetails = (getItems, resetFlag = ref(false)) => {
   return { toggleDetails, getShowDetails };
 };
 
-export const useTableVariant = getItems => {
+export const useTableVariant = (getItems, hoverable) => {
+  const hovering = ref<number>(-1);
+  const onMouseenter = i => {
+    if (hoverable) {
+      hovering.value = i;
+    }
+  };
+  const onMouseleave = () => {
+    if (hoverable) {
+      hovering.value = -1;
+    }
+  };
+
   const getRowVariant = computed(() => i => {
     if (getItems.value[i - 1]?._rowVariant) {
-      return `bg-${getItems.value[i - 1]._rowVariant}`;
+      return `bg-${getItems.value[i - 1]._rowVariant}-50`;
     }
     return "";
   });
   const getCellVariant = computed(() => (i, key) => {
+    if (hoverable && hovering.value === i) {
+      return "";
+    }
     if (getItems.value[i - 1]._cellVariants?.[key]) {
-      return `bg-${getItems.value[i - 1]._cellVariants?.[key]}`;
+      return `bg-${getItems.value[i - 1]._cellVariants?.[key]}-50`;
     }
     return "";
   });
-  return { getRowVariant, getCellVariant };
+  return { getRowVariant, getCellVariant, onMouseenter, onMouseleave };
 };
 
 export const useTableSort = (props, { emit }, doneCallback) => {

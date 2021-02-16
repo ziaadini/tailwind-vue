@@ -1,23 +1,25 @@
 <template>
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
-    <t-fade
-      :show="modelValue"
-      :allocate-space="false"
-      opacity-class="opacity-50"
-      class="relative z-30"
-    >
-      <template #default="{className}">
-        <div
-          data-name="drawer-backDrop"
-          :class="[
+    <template v-if="backDrop">
+      <t-fade
+          :show="modelValue"
+          :allocate-space="false"
+          opacity-class="opacity-50"
+          class="relative z-30"
+      >
+        <template #default="{className}">
+          <div
+              data-name="drawer-backDrop"
+              :class="[
             // { hidden: !modelValue },
             className,
             renderClass('fixed z-20 top-0 bg-gray-900', 'backDrop')
           ]"
-          @click="close"
-        ></div>
-      </template>
-    </t-fade>
+              @click="close"
+          ></div>
+        </template>
+      </t-fade>
+    </template>
     <div
       data-name="drawer-container"
       :class="[
@@ -166,6 +168,10 @@ export default defineComponent({
       default: (): boolean => {
         return false;
       }
+    },
+    backDrop: {
+      type: Boolean,
+      default: () => true
     }
   },
   setup(props, { emit, slots }) {

@@ -1,38 +1,90 @@
 <template>
-  <th
+  <component
+    :is="tag"
     @click="onClick"
-    :class="[getVariantClass, { 'cursor-pointer': item.sortable }]"
+    :data-name="isThTag ? 'th-container' : 'th-cardContainer'"
+    :class="[
+      renderClass(
+        getVariantClass,
+        isThTag ? 'th-container' : 'th-cardContainer',
+        { 'cursor-pointer': item.sortable }
+      )
+    ]"
   >
-    <div class="flex flex-row items-center">
-      <div class="ml-2" :class="{ hidden: item.key !== activeSort.key }">
+    <div
+      :data-name="isThTag ? 'th-innerContainer' : 'th-cardInnerContainer'"
+      :class="
+        renderClass(
+          'flex flex-row items-center',
+          isThTag ? 'th-innerContainer' : 'th-cardInnerContainer'
+        )
+      "
+    >
+      <div
+        :data-name="isThTag ? 'th-sort' : 'th-cardSort'"
+        :class="
+          renderClass('ml-2', isThTag ? 'th-sort' : 'th-cardSort', {
+            hidden: item.key !== activeSort.key
+          })
+        "
+      >
         <t-triangle
           direction="arrow-up"
-          class="transform scale-75"
+          :data-name="isThTag ? 'th-arrowUp' : 'th-cardArrowUp'"
+          :class="
+            renderClass(
+              'mt-0.5 transform scale-75',
+              isThTag ? 'th-arrowUp' : 'th-cardArrowUp'
+            )
+          "
           :color-class="
-            activeSort.sort === SortEnum.ASC
-              ? 'border-gray-500'
-              : 'border-gray-300'
+            renderClass(
+              activeSort.sort === SortEnum.ASC
+                ? 'border-gray-500'
+                : 'border-gray-300',
+              isThTag ? 'th-arrowUp' : 'th-cardArrowUp'
+            )
           "
         ></t-triangle>
         <t-triangle
           direction="arrow-down"
-          class="mt-0.5 transform scale-75"
+          :data-name="isThTag ? 'th-arrowDown' : 'th-cardArrowDown'"
+          :class="
+            renderClass(
+              'mt-0.5 transform scale-75',
+              isThTag ? 'th-arrowDown' : 'th-cardArrowDown'
+            )
+          "
           :color-class="
-            activeSort.sort === SortEnum.DESC
-              ? 'border-gray-500'
-              : 'border-gray-300'
+            renderClass(
+              activeSort.sort === SortEnum.DESC
+                ? 'border-gray-500'
+                : 'border-gray-300',
+              isThTag ? 'th-arrowDown' : 'th-cardArrowDown'
+            )
           "
         ></t-triangle>
       </div>
-      {{ item.label }}
+      <template v-if="hasDefaultSlot">
+        <slot :item="item" :activeSort="activeSort"></slot>
+      </template>
+      <template v-else>
+        <div
+          :data-name="isThTag ? 'th-label' : 'th-cardLabel'"
+          :class="renderClass('', isThTag ? 'th-label' : 'th-cardLabel')"
+        >
+          {{ item.label }}
+        </div>
+      </template>
     </div>
-  </th>
+  </component>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   name: "TTh",
   components: { TTriangle },
@@ -44,9 +96,13 @@ export default defineComponent({
     },
     activeSort: {
       type: Object as PropType<{ key: string; sort: Table.SortEnum }>
+    },
+    tag: {
+      type: String,
+      default: "th"
     }
   },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const sortRef = ref<Table.SortEnum>(Table.SortEnum.DESC);
     const toggleSort = () => {
       if (sortRef.value === Table.SortEnum.ASC) {
@@ -62,10 +118,22 @@ export default defineComponent({
       }
     };
     const getVariantClass = computed(() => {
-      if (props.item.variant) return `bg-${props.item.variant}`;
-      return "";
+      if (props.item.variant) {
+        return `sm:bg-${props.item.variant}-50 sm:text-gray-700 text-${props.item.variant}`;
+      }
+      return "text-gray-700";
     });
-    return { onClick, getVariantClass, SortEnum: Table.SortEnum };
+
+    const isThTag = computed(() => props.tag === "th");
+    const { renderClass } = useRenderClass("th");
+    return {
+      renderClass,
+      isThTag,
+      onClick,
+      getVariantClass,
+      SortEnum: Table.SortEnum,
+      hasDefaultSlot: !!slots.default
+    };
   }
 });
 </script>
