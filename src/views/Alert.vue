@@ -1,13 +1,20 @@
 <template>
   <div class="flex flex-col items-start p-1" dir="ltr">
-    <h3 class="text-5xl font-bold mb-2">Button</h3>
-    <p class="mb-2">Small filled buttons in different styles and colors can be used for call to actions in forms and more.</p>
+    <h3 class="text-5xl font-bold mb-2">Alert</h3>
+    <p class="mb-2">The t-alert component is used to convey important information to the user through the use contextual types icons and color. These default types come in in 4 variations: primary, success, warning, and error.</p>
 
     <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
       <h2 class="text-xl font-bold mb-2">Simple (Only Text)</h2>
       <p class="mb-2">Choose this basic button, only with text.</p>
-      <t-button class="mb-2">Simple</t-button>
-      <iframe width="100%" height="100" src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+      <t-alert show class="w-full">
+        This is a single line message...
+      </t-alert>
+      <t-alert show class="w-full">
+        This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a
+        multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line
+        message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message This is a multi line message...
+      </t-alert>
+      <iframe width="100%" height="auto" src="//jsfiddle.net/mohstarsos1/s2xt5p0d/2/embedded/html/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
     </div>
 
     <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
@@ -91,31 +98,28 @@
       <iframe width="100%" height="150" src="//jsfiddle.net/mohstarsos1/ymr0czbf/1/embedded/html/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
     </div>
 
-    <div class="mt-10 border rounded-sm p-3 w-full shadow-md">
-      <article class="prose prose-xl text-left"><vue3-markdown-it :source="mdFile" /></article>
-    </div>
+    <div class="mt-10 border rounded-sm p-3 w-full shadow-md"><vue3-markdown-it :source="mdFile" /></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
+import TAlert from "@/components/tailwind/alert/TAlert.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     TButton,
+    TAlert,
   },
   setup() {
     return {};
   },
   data() {
     return {
-      mdFile: "",
+      mdFile: "i am a ~~tast~~ **test**.",
     };
-  },
-  async mounted() {
-    this.mdFile = await fetch("/tailwind/button/README.md").then((res) => res.text());
   },
 });
 </script>

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "serve": "node ./copy-md-files && vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -11,6 +11,7 @@
     "view": "serve -s dist"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.4.0",
     "core-js": "^3.6.5",
     "moment": "^2.29.1",
     "simple-syntax-highlighter": "^2.0.4",

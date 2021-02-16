@@ -1,5 +1,5 @@
 ### props
-| Name | Type | Default | Description |
+| name | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
 | rounded | Boolean | false | make button rounded |
 | variant | string | primary | background color of the button |
