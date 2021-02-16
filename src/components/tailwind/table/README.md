@@ -18,21 +18,27 @@
 
 
 
+### slots
 
-[comment]: <> (### slots)
+| name        | description             |
+| ----------- | ----------------------- |
+| card-header  | bind: item, activeSort : `{ key: string; sort: asc or desc }`        |
+| card-counter  | bind: `value`       |
+| card-cell(yourItemKey)  | for specific cell bind: `A`        |
+| card-cell  | for all cells bind: `A`        |
+| rowDetails  | expandable details bind: `A` + `isCard`: is inside card or table        |
+| header  | same as card-header slot for table      |
+| counter  | same as card-counter slot for table      |
+| cell(yourItemKey)  | same as card-cell(yourItemKey)        |
+| cell  | same as card-cell        |
 
-[comment]: <> (| name | description)
 
-[comment]: <> (| ------------ | ------------ |)
+ 1. A  ->
+    - column : column number
+    - row : row number
+    - item : current item
+    - itemKey : current item key
+    - value : current item value
+    - toggleDetails : a method for toggle details for collapsable table
+    
 
-[comment]: <> (| title | for custom styled title|)
-
-[comment]: <> (| text | for custom styled text|)
-
-[comment]: <> (component will pass any useful information to slots : )
-
-[comment]: <> ( 1. bind  -> current item)
-
-[comment]: <> ( 2. show  -> if item is showing)
-
-[comment]: <> ( 3. index -> current item index)
