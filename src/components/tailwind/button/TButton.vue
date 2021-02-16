@@ -3,11 +3,12 @@
   <component
     :is="wrapperComponent"
     :to="to"
+    :disabled="disabled"
     data-name="button-container"
     :class="[
       {
         'rounded-full': rounded,
-        ripple,
+        ripple: ripple && !disabled,
         'w-full': full,
       },
       renderClass(variantClasses, 'container'),
@@ -98,6 +99,10 @@ export default defineComponent({
     icon: {
       type: String,
       default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     outline: {
       type: Boolean,

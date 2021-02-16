@@ -6,7 +6,7 @@
     simple button
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
-    <t-button color="bg-red-500 text-blue-500" variant="primary">Test</t-button>
+    <t-button ripple @click="log('clicked')" disabled color="bg-red-500 text-blue-500" variant="primary">Test</t-button>
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
     <t-button rounded variant="success">Test</t-button>
@@ -698,6 +698,11 @@ export default defineComponent({
       successAlert.value = true;
     }, 1000);
     return { successAlert };
+  },
+  methods: {
+    log(str: string): void {
+      console.log(str);
+    }
   },
   mounted() {
     this.dropdownTriggerRef = this.$refs.triggerDropdown;
