@@ -4,7 +4,7 @@
     @mouseenter="hover && triggerMenu(true)"
     @mouseleave="hover && triggerMenu(false)"
     :class="{
-      'rounded-sm': isClosed
+      'rounded-sm': isClosed,
     }"
   >
     <template v-if="hasHeaderSlot">
@@ -30,9 +30,9 @@
             'rounded-full': isClosedRounded,
             'rounded-md': isOpenedRounded,
             'rounded-b-none': isOpened && !isBottomOverflowed,
-            'rounded-t-none': isOpened && isBottomOverflowed
+            'rounded-t-none': isOpened && isBottomOverflowed,
           },
-          parentClass
+          parentClass,
         ]"
         @click="triggerMenu(true)"
       >
@@ -87,8 +87,10 @@
                   index + 1 === items.length && rounded && !isBottomOverflowed,
                 'rounded-t-md': index === 0 && rounded && isBottomOverflowed,
                 'rounded-b-none': rounded && isBottomOverflowed,
-                'bg-gray-100': selectedItem.value === item.value
-              }
+                'bg-gray-100': selectedItem.value === item.value,
+                'border border-indigo-200 box-border':
+                  selectedItem.value === item.value,
+              },
             ]"
             @click="selectItem(item)"
           >
@@ -124,16 +126,17 @@
 import { variants } from "@/utility/css-helper";
 import {
   useIsVisible,
-  visibilityOverflow
+  visibilityOverflow,
 } from "@/compositionFunctions/visible";
 import {
   computed,
   defineComponent,
+  nextTick,
   PropType,
   reactive,
   toRefs,
   watch,
-  watchEffect
+  watchEffect,
 } from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
@@ -145,10 +148,10 @@ export default defineComponent({
       default: "primary",
       validator: (propValue: string) => {
         return !!variants[propValue];
-      }
+      },
     },
     modelValue: {
-      type: String
+      type: String,
     },
     divide: {
       type: Boolean,
@@ -156,54 +159,54 @@ export default defineComponent({
     },
     item: {
       type: Object,
-      default: () => ({ label: undefined, value: undefined })
+      default: () => ({ label: undefined, value: undefined }),
     },
     outline: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     placeholder: {
       type: String,
       default: "",
-      required: false
+      required: false,
     },
     rounded: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     hover: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     top: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     items: {
       default: [],
-      type: Array as PropType<DropDown.Root>
+      type: Array as PropType<DropDown.Root>,
     },
     opened: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     itemValue: {
       type: String,
-      default: "value"
+      default: "value",
     },
     itemText: {
       type: String,
-      default: "label"
+      default: "label",
     },
     searchKey: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   setup(props, { emit, slots }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
@@ -212,7 +215,7 @@ export default defineComponent({
 
     const state = reactive({
       selected: null as any,
-      opened: props.opened
+      opened: props.opened,
     });
 
     const isOpened = computed(() => {
@@ -234,7 +237,7 @@ export default defineComponent({
       clickedOutside,
       elementRef: dropdownRef,
       registerEvent,
-      unRegisterEvent
+      unRegisterEvent,
     } = useClickOutside();
 
     const { items, opened } = toRefs(props);
@@ -242,7 +245,7 @@ export default defineComponent({
     const getModelValue = computed(() =>
       props.item.value !== undefined ? props.item.value : props.modelValue
     );
-    watch(clickedOutside, value => {
+    watch(clickedOutside, (value) => {
       console.log("watch clickoutside", value);
       if (value) {
         emit("update:opened", false);
@@ -259,77 +262,12 @@ export default defineComponent({
 
     useKeyDown(onEscape);
 
-    const itemFactory = computed(() => {
-      if (!items.value || items.value.length === 0) return [];
-
-      const newItems = [] as DropDown.ObjectForm[];
-
-      items.value.forEach(item => {
-        if (typeof item === "string") {
-          newItems.push({
-            label: item,
-            value: item
-          });
-        } else {
-          newItems.push({
-            label: item[props.itemText],
-            value: item[props.itemValue]
-          });
-        }
-      });
-
-      if (props.searchKey) {
-        return newItems.filter(i =>
-          i.label.toLowerCase().includes(props.searchKey.toLowerCase())
-        );
-      }
-
-      return newItems;
-    });
-
-    const selectItem = item => {
-      state.opened = false;
-      emit("update:opened", false);
-      state.selected = item.value;
-      emit("update:modelValue", item.value);
-      emit("update:item", item);
-    };
-
-    const selectedItem = computed(() => {
-      return (
-        itemFactory.value.find(e => e.value === state.selected) || {
-          label: false
-        }
-      );
-    });
-
-    watch(getModelValue, value => {
-      if (value !== state.selected) state.selected = value;
-    },{immediate:true});
-
-    const triggerMenu = (value = null as any) => {
-      console.log("triggerMenu called", value);
-      if (value !== null) {
-        state.opened = value;
-        emit("update:opened", value);
-      } else {
-        state.opened = !opened.value;
-        emit("update:opened", !opened.value);
-      }
-    };
-
-    watchEffect(() => {
-      if (opened.value || state.opened) {
-        triggerMenu(true);
-        registerEvent();
-      } else {
-        unRegisterEvent();
-      }
-    });
-
-    const { placement, parentElement: dropdownParentRef } = useIsVisible(
-      dropdownRef
-    );
+    const {
+      placement,
+      handlePlacement,
+      isOpen: isVisibleWatch,
+      parentElement: dropdownParentRef,
+    } = useIsVisible(dropdownRef);
 
     const hasPlacementPosition = (position: visibilityOverflow) => {
       return placement.value?.includes(position);
@@ -353,6 +291,80 @@ export default defineComponent({
       }
     });
 
+    const itemFactory = computed(() => {
+      if (!items.value || items.value.length === 0) return [];
+
+      const newItems = [] as DropDown.ObjectForm[];
+
+      items.value.forEach((item) => {
+        if (typeof item === "string") {
+          newItems.push({
+            label: item,
+            value: item,
+          });
+        } else {
+          newItems.push({
+            label: item[props.itemText],
+            value: item[props.itemValue],
+          });
+        }
+      });
+
+      if (props.searchKey) {
+        return newItems.filter((i) =>
+          i.label.toLowerCase().includes(props.searchKey.toLowerCase())
+        );
+      }
+
+      return newItems;
+    });
+
+    const selectItem = (item) => {
+      state.opened = false;
+      emit("update:opened", false);
+      state.selected = item.value;
+      emit("update:modelValue", item.value);
+      emit("update:item", item);
+    };
+
+    const selectedItem = computed(() => {
+      return (
+        itemFactory.value.find((e) => e.value === state.selected) || {
+          label: false,
+        }
+      );
+    });
+
+    watch(getModelValue, (value) => {
+      if (value !== state.selected) state.selected = value;
+    },{immediate:true});
+
+    const handleEmitOpened = async () => {
+      emit("update:opened", isVisibleWatch.value);
+      await nextTick();
+      handlePlacement();
+    };
+    const triggerMenu = async (value = null as any) => {
+      if (value !== state.opened) {
+        console.log("triggerMenu called1", value);
+        isVisibleWatch.value = state.opened = value;
+        await handleEmitOpened();
+      } else if (value === null) {
+        console.log("triggerMenu called2", value);
+        isVisibleWatch.value = state.opened = !state.opened;
+        await handleEmitOpened();
+      }
+    };
+
+    watchEffect(() => {
+      if (opened.value || state.opened) {
+        triggerMenu(true);
+        registerEvent();
+      } else {
+        unRegisterEvent();
+      }
+    });
+
     return {
       hasHeaderSlot: !!slots.header,
       hasItemSlot: !!slots.item,
@@ -373,8 +385,8 @@ export default defineComponent({
       dropdownRef,
       dropdownParentRef,
       isBottomOverflowed,
-      placement
+      placement,
     };
-  }
+  },
 });
 </script>
