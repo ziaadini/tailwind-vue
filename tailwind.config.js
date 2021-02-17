@@ -53,7 +53,7 @@ module.exports = {
       },
       minWidth: {
         "8": "2rem",
-        "48": "12rem"
+        "14": "3.5rem"
       },
       colors: {
         primary: {

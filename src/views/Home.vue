@@ -6,10 +6,20 @@
     simple button
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
-    <t-button ripple @click="log('clicked')" disabled color="bg-red-500 text-blue-500" variant="primary">Test</t-button>
+    <t-button
+      to="zia"
+      ripple
+      @click="log('clicked')"
+      disabled
+      color="bg-red-500 text-blue-500"
+      variant="primary"
+      >Test</t-button
+    >
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
-    <t-button rounded variant="success">Test</t-button>
+    <t-button rounded variant="success" size="large">Test</t-button>
+    <t-button rounded variant="success" icon="bookmarks" size="large" fab>
+    </t-button>
   </div>
   <br />
   <small>
@@ -26,7 +36,7 @@
     simple loading button
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
-    <t-button loading variant="primary">Test</t-button>
+    <t-button loading variant="primary"></t-button>
     <t-button loading ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button loading rounded variant="danger">Test</t-button>
     <t-button loading rounded variant="success">Test</t-button>
@@ -77,7 +87,7 @@
       Message This is a Test Message This is a Test Message This is a Test
       Message This is a Test Message
     </t-alert>
-    <t-alert v-model="successAlert" variant="success" icon="home">
+    <t-alert v-model="successAlert" show variant="success" icon="home">
       This is a Test Message This is a Test Message This is a Test Message This
     </t-alert>
     <t-alert v-model="successAlert" variant="success" icon="home">
@@ -702,7 +712,7 @@ export default defineComponent({
   methods: {
     log(str: string): void {
       console.log(str);
-    }
+    },
   },
   mounted() {
     this.dropdownTriggerRef = this.$refs.triggerDropdown;

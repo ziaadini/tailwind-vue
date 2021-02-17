@@ -7,6 +7,13 @@ export enum variants {
   secondary = "secondary"
 }
 
+export enum buttonSizes {
+  normal = "normal",
+  small = "small",
+  large = "large",
+}
+
+
 export enum textInputVariants {
   number = "number",
   text = "text",
