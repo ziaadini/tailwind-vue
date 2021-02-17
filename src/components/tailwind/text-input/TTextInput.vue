@@ -31,7 +31,7 @@
     <!-- input element -->
     <component
       :is="inputType"
-      ref="textInputRef"
+      ref="input"
       :inputmode="inputMode"
       :type="type"
       :disabled="disabled"
@@ -172,7 +172,7 @@ export default defineComponent({
   computed: {},
   setup(props, { slots, emit }) {
     const { modelValue } = toRefs(props);
-    const textInputRef = ref(null);
+    const input = ref(null);
 
     const [formatFounded, args] = formatHandlerWrapper(
       modifierVariants.format,
@@ -185,7 +185,7 @@ export default defineComponent({
           emit("update:modelValue", formattedValue.replace(args[0], ""));
           await nextTick();
           // @ts-ignore
-          textInputRef.value.value = formattedValue;
+          input.value.value = formattedValue;
         }
       : (value) => {
           emit("update:modelValue", value);
@@ -265,7 +265,7 @@ export default defineComponent({
       isLeft,
       isCenter,
       updateFunction,
-      textInputRef,
+      input,
       inputMode,
       inputType,
     };
