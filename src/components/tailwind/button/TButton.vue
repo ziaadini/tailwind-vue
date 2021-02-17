@@ -3,7 +3,7 @@
   <component
     :is="wrapperComponent"
     :to="to"
-    :disabled="isDisabled"
+    :disabled="disabled"
     data-name="button-container"
     :class="[
       renderClass(
