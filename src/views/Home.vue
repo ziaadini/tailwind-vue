@@ -184,7 +184,59 @@
   </div>
   <br />
   <small>
-    raised buttons
+    simple hover text inputs
+  </small>
+  <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+    <TextInput
+      placeholder="some test placeholder"
+      variant="white"
+      hover
+    />
+    {{ text1 }}
+    <TextInput
+      placeholder="some test placeholder"
+      v-model.format:,:4="text1"
+      inputType="numeric"
+      hover
+      variant="primary"
+      right-icon="bookmarks"
+    />
+    <TextInput
+      placeholder="some test placeholder"
+      hover
+      v-model="text"
+      variant="success"
+      rounded
+    />
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      variant="danger"
+      hover
+      align="center"
+    />
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      variant="warning"
+      align="center"
+      disabled
+      hover
+    />
+
+    <TextInput
+      placeholder="some test placeholder"
+      v-model="text"
+      :value="'error'"
+      variant="primary"
+      right-icon="bookmarks"
+      hover
+      error
+    />
+  </div>
+  <br />
+  <!-- <small> -->
+    <!-- raised buttons
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
@@ -234,7 +286,7 @@
       :outline="false"
       error
     />
-  </div>
+  </div> -->
 
   <br />
   <h6>
@@ -319,16 +371,12 @@
         'test1',
         'test2',
         'test3',
-        ,
         'test2',
         'test3',
-        ,
         'test2',
         'test3',
-        ,
         'test2',
         'test3',
-        ,
         'test2',
         'test3',
         'test2',
