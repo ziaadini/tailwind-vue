@@ -38,7 +38,7 @@
       v-bind="$attrs"
       :value="modelValue"
       @input="updateFunction($event.target.value)"
-      class="block h-12 w-full sm:text-sm outline-none"
+      class="block h-9 w-full sm:text-sm outline-none"
       :class="[
         {
           'pr-8': rightPadding,
@@ -93,6 +93,10 @@ export default defineComponent({
         return !!variants[propValue];
       },
     },
+    hover: {
+      type: Boolean,
+      default: false,
+    },
     type: {
       required: false,
       type: String,
@@ -132,11 +136,6 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false,
-    },
-    outline: {
-      type: Boolean,
-      required: false,
-      default: true,
     },
     align: {
       type: String,
@@ -182,7 +181,7 @@ export default defineComponent({
     const updateFunction = formatFounded
       ? async (value) => {
           const formattedValue = numberFormat(value, args[0], args[1]);
-          emit("update:modelValue", formattedValue.replace(args[0], ""));
+          emit("update:modelValue", formattedValue.split(args[0]).join(""));
           await nextTick();
           // @ts-ignore
           input.value.value = formattedValue;
@@ -200,30 +199,31 @@ export default defineComponent({
 
     const variantClasses = computed((): string => {
       let classes = "";
-      if (!props.outline) {
-        classes += `${
-          props.variant === variants.white ? "text-dark" : "text-white"
-        } ${
-          props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
-        } ${
-          props.variant === variants.white
-            ? "placeholder-gray-300"
-            : "placeholder-white"
-        }`;
-      } else {
-        classes += `bg-white text-input-placehoder-black text-dark border ${
-          props.error
-            ? "border-red-500"
-            : `border-${
-                props.variant === variants.white ? "gray" : props.variant
-              }-50 focus:border-${
-                props.variant === variants.white ? "gray-400" : ""
-              } hover:bg-${props.variant}-50`
-        }`;
-      }
+      // if (!props.outline) {
+      // classes += `${
+      //   props.variant === variants.white ? "text-dark" : "text-white"
+      // } ${
+      //   props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
+      // } ${
+      //   props.variant === variants.white
+      //     ? "placeholder-gray-300"
+      //     : "placeholder-white"
+      // }`;
+      // }
+      // else {
+      classes += `bg-white text-input-placehoder-black text-dark border ${
+        props.error
+          ? "border-red-500"
+          : `border-${
+              props.variant === variants.white ? "gray-300" : props.variant
+            }-100 focus:border-${
+              props.variant === variants.white ? "gray-600" : props.variant
+            }`
+      }  ${props.hover ? `hover:bg-${props.variant}-50` : ""}`;
+      // }
 
       classes +=
-        " border transition hover:opacity-80 shadow-sm hover:shadow disabled:opacity-50";
+        " border transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
       return classes;
     });
 
