@@ -1,30 +1,55 @@
 <template>
   <div
     class="relative"
-    @mouseenter="hover && openClose(true)"
-    @mouseleave="hover && openClose(false)"
+    @mouseenter="hover && triggerMenu(true)"
+    @mouseleave="hover && triggerMenu(false)"
     :class="{
-      'rounded-sm': isClosed,
+      'rounded-sm': isClosed
     }"
   >
-    <!-- parent -->
-    <div
-      ref="dropdownParentRef"
-      class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
-      :class="[
-        isClosed && 'rounded-sm',
-        {
-          'rounded-full': isClosedRounded,
-          'rounded-md': isOpenedRounded,
-          'rounded-b-none': isOpened && !isBottomOverflowed,
-          'rounded-t-none': isOpened && isBottomOverflowed,
-        },
-        parentClass,
-      ]"
-      @click="openClose(true)"
-    >
-      {{ selectedItem.label || placeholder }}
-    </div>
+    <template v-if="hasHeaderSlot">
+      <div ref="dropdownParentRef">
+        <slot
+          name="header"
+          :selectedItem="selectedItem"
+          :label="selectedItem.label"
+          :value="selectedItem.value"
+          :selected-text="selectedItem.label || placeholder"
+          :triggerMenu="triggerMenu"
+        ></slot>
+      </div>
+    </template>
+    <template v-else>
+      <!-- parent -->
+      <div
+        ref="dropdownParentRef"
+        class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
+        :class="[
+          isClosed && 'rounded-sm',
+          {
+            'rounded-full': isClosedRounded,
+            'rounded-md': isOpenedRounded,
+            'rounded-b-none': isOpened && !isBottomOverflowed,
+            'rounded-t-none': isOpened && isBottomOverflowed
+          },
+          parentClass
+        ]"
+        @click="triggerMenu(true)"
+      >
+        <template v-if="hasActivatorSlot">
+          <slot
+            name="activator"
+            :selectedItem="selectedItem"
+            :label="selectedItem.label"
+            :value="selectedItem.value"
+            :selected-text="selectedItem.label || placeholder"
+          ></slot>
+        </template>
+        <template v-else>
+          {{ selectedItem.label || placeholder }}
+        </template>
+      </div>
+    </template>
 
     <!-- items -->
     <div
@@ -37,29 +62,58 @@
         'rounded-t-md': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
         'z-30': !hover,
-        'z-40': hover,
+        'z-40': hover
       }"
-      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="divide-y duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
       <template v-for="(item, index) in getItems" :key="index">
-        <div
-          class="py-2"
-          :class="[
-            childClass,
-            {
-              'rounded-b-md':
-                index + 1 === items.length && rounded && !isBottomOverflowed,
-              'rounded-t-md': index === 0 && rounded && isBottomOverflowed,
-              'rounded-b-none': rounded && isBottomOverflowed,
-              'border border-indigo-200 box-border':
-                selectedItem.value === item.value,
-            },
-          ]"
-          @click="selectItem(item.value)"
-        >
-          {{ item.label }}
-        </div>
-        <hr v-if="getItems.length !== index + 1" />
+        <template v-if="hasItemSlot">
+          <slot
+            name="item"
+            :original-item="items[index]"
+            :item="item"
+            :index="index"
+          ></slot>
+        </template>
+        <template v-else>
+          <div
+            class="py-2"
+            :class="[
+              childClass,
+              {
+                'rounded-b-md':
+                  index + 1 === items.length && rounded && !isBottomOverflowed,
+                'rounded-t-md': index === 0 && rounded && isBottomOverflowed,
+                'rounded-b-none': rounded && isBottomOverflowed,
+                'border border-indigo-200 box-border':
+                  selectedItem.value === item.value
+              }
+            ]"
+            @click="selectItem(item)"
+          >
+            <template v-if="hasLabelSlot">
+              <slot
+                name="label"
+                :item="item"
+                :original-item="items[index]"
+                :index="index"
+              ></slot>
+            </template>
+            <template v-else>
+              <template v-if="hasLabelSlot">
+                <slot
+                  name="label"
+                  :item="item"
+                  :original-item="items[index]"
+                  :index="index"
+                ></slot>
+              </template>
+              <template v-else>
+                {{ item.label }}
+              </template>
+            </template>
+          </div>
+        </template>
       </template>
     </div>
   </div>
@@ -69,7 +123,7 @@
 import { variants } from "@/utility/css-helper";
 import {
   useIsVisible,
-  visibilityOverflow,
+  visibilityOverflow
 } from "@/compositionFunctions/visible";
 import {
   computed,
@@ -78,7 +132,7 @@ import {
   reactive,
   toRefs,
   watch,
-  watchEffect,
+  watchEffect
 } from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
@@ -90,55 +144,70 @@ export default defineComponent({
       default: "primary",
       validator: (propValue: string) => {
         return !!variants[propValue];
-      },
+      }
     },
     modelValue: {
-      type: String,
-      required: true,
+      type: String
+    },
+    item: {
+      type: Object,
+      default: () => ({ label: undefined, value: undefined })
     },
     outline: {
       type: Boolean,
       default: true,
-      required: false,
+      required: false
     },
     placeholder: {
       type: String,
       default: "",
-      required: false,
+      required: false
     },
     rounded: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
     hover: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
     top: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
     items: {
       default: [],
-      type: Array as PropType<DropDown.Root>,
+      type: Array as PropType<DropDown.Root>
     },
     opened: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
+    itemValue: {
+      type: String,
+      default: "value"
+    },
+    itemText: {
+      type: String,
+      default: "label"
+    },
+    searchKey: {
+      type: String,
+      default: ""
+    }
   },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
     const outlineClass = `border-${props.variant}-50 shadow-sm border hover:bg-${props.variant}-50 hover:shadow`;
     const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:opacity-60 focus:border-${props.variant} transition`;
 
     const state = reactive({
       selected: null as any,
-      opened: props.opened,
+      opened: props.opened
     });
 
     const isOpened = computed(() => {
@@ -160,12 +229,15 @@ export default defineComponent({
       clickedOutside,
       elementRef: dropdownRef,
       registerEvent,
-      unRegisterEvent,
+      unRegisterEvent
     } = useClickOutside();
 
-    const { modelValue, items, opened } = toRefs(props);
+    const { items, opened } = toRefs(props);
 
-    watch(clickedOutside, (value) => {
+    const getModelValue = computed(() =>
+      props.item.value !== undefined ? props.item.value : props.modelValue
+    );
+    watch(clickedOutside, value => {
       console.log("watch clickoutside", value);
       if (value) {
         emit("update:opened", false);
@@ -186,43 +258,52 @@ export default defineComponent({
       if (!items.value || items.value.length === 0) return [];
 
       const newItems = [] as DropDown.ObjectForm[];
-      const type = typeof items.value[0];
 
-      if (type === "string") {
-        (items.value as DropDown.stringForm).forEach((item) => {
+      items.value.forEach(item => {
+        if (typeof item === "string") {
           newItems.push({
             label: item,
-            value: item,
+            value: item
           });
-        });
+        } else {
+          newItems.push({
+            label: item[props.itemText],
+            value: item[props.itemValue]
+          });
+        }
+      });
 
-        return newItems;
+      if (props.searchKey) {
+        return newItems.filter(i =>
+          i.label.toLowerCase().includes(props.searchKey.toLowerCase())
+        );
       }
 
       return newItems;
     });
 
-    const selectItem = (value) => {
+    const selectItem = item => {
       state.opened = false;
       emit("update:opened", false);
-      state.selected = value;
-      emit("update:modelValue", value);
+      state.selected = item.value;
+      emit("update:modelValue", item.value);
+      emit("update:item", item);
     };
 
     const selectedItem = computed(() => {
       return (
-        itemFactory.value.find((e) => e.value === state.selected) || {
-          label: false,
+        itemFactory.value.find(e => e.value === state.selected) || {
+          label: false
         }
       );
     });
 
-    watch(modelValue, (value) => {
+    watch(getModelValue, value => {
       if (value !== state.selected) state.selected = value;
     });
 
-    const openClose = (value = null as any) => {
-      console.log("openclose called", value);
+    const triggerMenu = (value = null as any) => {
+      console.log("triggerMenu called", value);
       if (value !== null) {
         state.opened = value;
         emit("update:opened", value);
@@ -234,7 +315,7 @@ export default defineComponent({
 
     watchEffect(() => {
       if (opened.value || state.opened) {
-        openClose(true);
+        triggerMenu(true);
         registerEvent();
       } else {
         unRegisterEvent();
@@ -268,6 +349,10 @@ export default defineComponent({
     });
 
     return {
+      hasHeaderSlot: !!slots.header,
+      hasItemSlot: !!slots.item,
+      hasLabelSlot: !!slots.label,
+      hasActivatorSlot: !!slots.activator,
       parentClass: props.outline ? outlineClass : baseClass,
       childClass,
       isOpened,
@@ -275,15 +360,15 @@ export default defineComponent({
       isClosedRounded,
       isOpenedRounded,
       getItems: itemFactory,
-      openClose,
+      triggerMenu,
       selectItem,
       selectedItem,
       state,
       dropdownRef,
       dropdownParentRef,
       isBottomOverflowed,
-      placement,
+      placement
     };
-  },
+  }
 });
 </script>

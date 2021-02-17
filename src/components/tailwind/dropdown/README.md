@@ -2,7 +2,7 @@
 | name | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
 | variant | string | "primary" | sets the bg color |
-| disbaled | boolean | false | when passed caused the dropdown not to open, or close instantly |
+| disabled | boolean | false | when passed caused the dropdown not to open, or close instantly |
 | outline | boolean | false | causes the component to have border and no background |
 | rounded | boolean | false | causes the component to have a rounded border |
 | opened | boolean | false | allows to control dropdown open or close state from outside |

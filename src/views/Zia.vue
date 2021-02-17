@@ -647,6 +647,11 @@
       </t-table>
     </div>
     <div><h1>test data</h1></div>
+
+    <div>
+      <div>#zia</div>
+      <t-searchable></t-searchable>
+    </div>
   </div>
 </template>
 
@@ -682,10 +687,12 @@ import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
 import { useFormatRef } from "@/compositionFunctions/expose/format";
 import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
+import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TSearchable,
     TTable,
     TAnimate,
     TTextInput,
