@@ -155,6 +155,41 @@ export interface TSettings {
   triangle?: {
     triangle?: TSettingItem;
   };
+  table?: {
+    cardBreakpoint?: TSettingItem;
+    cardContainer?: TSettingItem;
+    cardCell?: TSettingItem;
+    cardCellInnerContainer?: TSettingItem;
+    cardCounter?: TSettingItem;
+    cardCollapse?: TSettingItem;
+    breakpoint?: TSettingItem;
+    container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    shadowBox?: TSettingItem;
+    table?: TSettingItem;
+    thead?: TSettingItem;
+    headTr?: TSettingItem;
+    headCounter?: TSettingItem;
+    tbody?: TSettingItem;
+    tr?: TSettingItem;
+    counter?: TSettingItem;
+    detailsTr?: TSettingItem;
+    detailsTd?: TSettingItem;
+  };
+  th?: {
+    container?: TSettingItem;
+    cardContainer?: TSettingItem;
+    innerContainer?: TSettingItem;
+    cardInnerContainer?: TSettingItem;
+    sort?: TSettingItem;
+    cardSort?: TSettingItem;
+    arrowUp?: TSettingItem;
+    cardArrowUp?: TSettingItem;
+    arrowDown?: TSettingItem;
+    cardArrowDown?: TSettingItem;
+    label?: TSettingItem;
+    cardLabel?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

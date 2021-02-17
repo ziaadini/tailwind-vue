@@ -11,6 +11,7 @@
 | full | boolean | false | full-width drawer
 | left | boolean | false | open from left side
 | teleportTo | string | - | for teleport modal content to specific selector for example `'#modal-content'`
+| backDrop | Boolean | true | show backdrop
 
 we strongly recommend use teleport
 

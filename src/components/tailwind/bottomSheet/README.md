@@ -9,7 +9,7 @@
 | eager | boolean | false | mount content even when modal is close set to true when content is useful for seo
 | maxSize | string | full | set max size base on `xs, sm, md, lg, full`
 | teleportTo | string | - | for teleport modal content to specific selector for example `'#modal-content'`
-
+| backDrop | Boolean | true | show backdrop
 we strongly recommend use teleport
 
 ### slots

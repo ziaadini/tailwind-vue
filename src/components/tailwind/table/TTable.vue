@@ -1,23 +1,49 @@
 <template>
-  <template v-if="card">
-    <div class="sm:hidden">
+  <template v-if="card && renderCard">
+    <div
+      data-name="table-cardBreakpoint"
+      :class="renderClass('sm:hidden', 'cardBreakpoint')"
+    >
       <template v-for="i in getLength" :key="`row-item-${i}`">
-        <div class="m-3" :class="[getRowVariant(i), { 'rounded-md': rounded }]">
+        <div
+          data-name="table-cardContainer"
+          :class="
+            renderClass(`${getRowVariant(i)} m-3`, 'cardContainer', {
+              'rounded-md': rounded
+            })
+          "
+        >
           <div
             v-for="(headerItem, index) in getHeaders"
             :key="`td-item-${index}-${headerItem.key}`"
-            class="border-grey-light border p-3"
+            data-name="table-cardCell"
             :class="[
-              getCellVariant(i, headerItem.key),
-              { 'first:rounded-t-inherit last:rounded-b-inherit': rounded },
-              { [hoverClass]: hover },
-              { [stripedClass]: striped && i % 2 !== 0 }
+              renderClass(
+                `${getCellVariant(
+                  i,
+                  headerItem.key
+                )} border-grey-light border p-3`,
+                'cardCell',
+                {
+                  'first:rounded-t-inherit last:rounded-b-inherit': rounded,
+                  [hoverClass]: hover,
+                  [stripedClass]: striped && i % 2 !== 0
+                }
+              )
             ]"
           >
             <template
               v-if="!slots[`card-cell(${headerItem.key})`] && !hasCardCellSlot"
             >
-              <div class="flex justify-between items-center">
+              <div
+                data-name="table-cardCellInnerContainer"
+                :class="
+                  renderClass(
+                    'flex justify-between items-center',
+                    'cardCellInnerContainer'
+                  )
+                "
+              >
                 <t-th
                   tag="div"
                   :key="`header-${index}-${headerItem.key}`"
@@ -33,7 +59,13 @@
                 </t-th>
                 <div
                   v-if="hasCardCounter && index === 0"
-                  class="pl-2 whitespace-nowrap text-sm text-gray-500"
+                  data-name="table-cardCounter"
+                  :class="
+                    renderClass(
+                      'pl-2 whitespace-nowrap text-sm text-gray-500',
+                      'cardCounter'
+                    )
+                  "
                 >
                   {{ i }}
                   <slot name="card-counter" :value="i"></slot>
@@ -77,12 +109,15 @@
           </div>
         </div>
         <template v-if="hasRowDetailsSlot">
-          <t-collapsable :show="getShowDetails(i)">
+          <t-collapsable
+            data-name="table-cardCollapse"
+            :class="renderClass('', 'cardCollapse')"
+            :show="getShowDetails(i)"
+          >
             <slot
               name="rowDetails"
               :show="getShowDetails(i)"
               :isCard="false"
-              :column="index"
               :row="i - 1"
               :rowItem="getItems[i - 1]"
               :toggleDetails="
@@ -97,18 +132,46 @@
     </div>
   </template>
 
-  <div v-bind="$attrs" :class="{ 'hidden sm:block': card }" class="mx-4">
-    <div class="flex flex-col">
-      <div class="overflow-x-auto scrollbar-sm">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+  <template v-if="renderTable">
+    <div
+      data-name="table-breakpoint"
+      :class="renderClass('mx-4', 'breakpoint', { 'hidden sm:block': card })"
+      v-bind="$attrs"
+    >
+      <div
+        data-name="table-container"
+        :class="renderClass('overflow-x-auto scrollbar-sm', 'container')"
+      >
+        <div
+          data-name="table-innerContainer"
+          :class="
+            renderClass(
+              'py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8',
+              'innerContainer'
+            )
+          "
+        >
           <div
-            class="shadow overflow-hidden border-b border-gray-200"
-            :class="{ 'rounded-md': rounded }"
+            data-name="table-shadowBox"
+            :class="
+              renderClass(
+                'shadow overflow-hidden border-b border-gray-200',
+                'shadowBox',
+                { 'rounded-md': rounded }
+              )
+            "
           >
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <!--        <template v-for="i in getLength" :key="`header-item-${i}`">-->
-                <tr>
+            <table
+              data-name="table-table"
+              :class="
+                renderClass('min-w-full divide-y divide-gray-200', 'table')
+              "
+            >
+              <thead
+                data-name="table-thead"
+                :class="renderClass('bg-gray-50', 'thead')"
+              >
+                <tr data-name="table-headTr" :class="renderClass('', 'headTr')">
                   <template v-if="hasCounter">
                     <t-th
                       key="counter"
@@ -116,7 +179,13 @@
                       @sort="onSort"
                       :item="{ key: '#', label: '#', sortable: false }"
                       scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      data-name="table-headCounter"
+                      :class="
+                        renderClass(
+                          'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
+                          'headCounter'
+                        )
+                      "
                     >
                       <template v-if="hasHeaderSlot" #default="data">
                         <div>
@@ -132,7 +201,12 @@
                     @sort="onSort"
                     :item="headerItem"
                     scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    :class="
+                      renderClass(
+                        'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
+                        'headTh'
+                      )
+                    "
                   >
                     <template v-if="hasHeaderSlot" #default="data">
                       <div>
@@ -144,23 +218,35 @@
                 <!--        </template>-->
               </thead>
               <tbody
-                class="bg-white"
-                :class="{ 'divide-y divide-gray-200': divideY }"
+                data-name="table-tbody"
+                :class="
+                  renderClass('bg-white', 'tbody', {
+                    'divide-y divide-gray-200': divideY
+                  })
+                "
               >
                 <template v-for="i in getLength" :key="`row-item-${i}`">
                   <tr
+                    data-name="table-tr"
                     :class="[
-                      getRowVariant(i),
-                      { 'divide-x divide-x-reverse': divideX },
-                      { [hoverClass]: hover },
-                      { [stripedClass]: striped && i % 2 !== 0 }
+                      renderClass(getRowVariant(i), 'tr', {
+                        'divide-x divide-x-reverse': divideX,
+                        [hoverClass]: hover,
+                        [stripedClass]: striped && i % 2 !== 0
+                      })
                     ]"
                     @mouseenter="onMouseenter(i)"
                     @mouseleave="onMouseleave(i)"
                   >
                     <td
                       v-if="hasCounter"
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      data-name="table-counter"
+                      :class="
+                        renderClass(
+                          'px-6 py-4 whitespace-nowrap text-sm text-gray-500',
+                          'counter'
+                        )
+                      "
                     >
                       {{ i }}
                       <slot name="counter" :value="i"></slot>
@@ -169,8 +255,15 @@
                     <td
                       v-for="(headerItem, index) in getHeaders"
                       :key="`td-item-${index}-${headerItem.key}`"
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                      :class="getCellVariant(i, headerItem.key)"
+                      :class="
+                        renderClass(
+                          `${getCellVariant(
+                            i,
+                            headerItem.key
+                          )} px-6 py-4 whitespace-nowrap text-sm text-gray-500`,
+                          'td'
+                        )
+                      "
                     >
                       <template
                         v-if="!slots[`cell(${headerItem.key})`] && !hasCellSlot"
@@ -210,14 +303,20 @@
                     </td>
                   </tr>
                   <template v-if="hasRowDetailsSlot">
-                    <tr>
-                      <td :colspan="getHeaderLength">
+                    <tr
+                      data-name="table-detailsTr"
+                      :class="renderClass('', 'detailsTr')"
+                    >
+                      <td
+                        data-name="table-detailsTd"
+                        :class="renderClass('', 'detailsTd')"
+                        :colspan="getHeaderLength"
+                      >
                         <t-collapsable :show="getShowDetails(i)">
                           <slot
                             name="rowDetails"
                             :show="getShowDetails(i)"
                             :isCard="false"
-                            :column="index"
                             :row="i - 1"
                             :rowItem="getItems[i - 1]"
                             :toggleDetails="
@@ -237,7 +336,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </template>
 </template>
 
 <script lang="ts">
@@ -251,6 +350,7 @@ import {
   useTableVariant,
   useTableSort
 } from "@/compositionFunctions/table";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   name: "TTable",
@@ -281,6 +381,14 @@ export default defineComponent({
       type: Boolean,
       default: () => true
     },
+    renderTable: {
+      type: Boolean,
+      default: () => true
+    },
+    renderCard: {
+      type: Boolean,
+      default: () => true
+    },
     divideX: {
       type: Boolean,
       default: () => true
@@ -307,7 +415,7 @@ export default defineComponent({
     },
     striped: {
       type: Boolean,
-      default: () => true
+      default: () => false
     },
     stripedClass: {
       type: String,
@@ -340,8 +448,9 @@ export default defineComponent({
       getItems,
       resetFlag
     );
-
+    const { renderClass } = useRenderClass("table");
     return {
+      renderClass,
       onMouseenter,
       onMouseleave,
       hasRowDetailsSlot,
