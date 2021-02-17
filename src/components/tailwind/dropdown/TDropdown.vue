@@ -305,7 +305,7 @@ export default defineComponent({
 
     watch(getModelValue, value => {
       if (value !== state.selected) state.selected = value;
-    });
+    },{immediate:true});
 
     const triggerMenu = (value = null as any) => {
       console.log("triggerMenu called", value);

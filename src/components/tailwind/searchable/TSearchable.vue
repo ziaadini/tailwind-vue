@@ -6,11 +6,7 @@
       :divide="false"
       v-model:opened="isOpenMenu"
       :search-key="localSearch ? search : ''"
-      placeholder="select..."
-      :items="[
-        { label: 'zia', value: 'zzz' },
-        { label: 'ali', value: 'aaa' }
-      ]"
+      v-bind="$attrs"
     >
       <template #prepend="{hasItem}">
         <div class="p-2">
@@ -19,15 +15,15 @@
             autocomplete="off"
             v-model="search"
           ></t-text-input>
-          <t-fade :show="isLoading">
+          <div v-if="!localSearch" :class="{ hidden: !isLoading }">
             <t-loading
               class="mt-2"
               color-class="bg-gray-400"
               size="sm"
               variant="primary"
             ></t-loading>
-          </t-fade>
-          <div class="mt-2" v-if="noResult && !hasItem && search !== ''">
+          </div>
+          <div class="mt-2" v-if="showEmptyBox && !hasItem">
             {{ noResult }}
           </div>
         </div>
@@ -40,32 +36,42 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, watch } from "vue";
+import { ref, defineComponent, watch, watchEffect } from "vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
-import TFade from "@/components/tailwind/fade/TFade.vue";
-import postcss from "postcss";
-import comma = postcss.list.comma;
+import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
 export default defineComponent({
   name: "TSearchable",
-  components: { TFade, TLoading, TTextInput, TDropdown },
+  components: { TLoading, TTextInput, TDropdown },
   props: {
     localSearch: {
       type: Boolean,
       default: () => true
     },
+    modelValue: {
+      type: [String, Number]
+    },
     noResult: {
       type: String,
       default: "no result found"
+    },
+    delay: {
+      type: Number,
+      default: 200
     }
   },
   setup(props, { emit }) {
-    const search = ref("");
-    const model = ref("");
-    const isLoading = ref(false);
+    const search = props.localSearch
+      ? ref("")
+      : useDebouncedRef("", props.delay);
+    const model = ref(props.modelValue);
+    const isLoading = ref<number | boolean>(false);
     const isOpenMenu = ref(false);
     const inputRef = ref<any>(null);
+    watchEffect(() => {
+      emit("update:modelValue", model.value);
+    });
     watch(
       () => isOpenMenu.value,
       () => {
@@ -82,11 +88,20 @@ export default defineComponent({
         const setLoading = value => {
           isLoading.value = value;
         };
-        emit("search", { search: search.value, setLoading });
+        if (isOpenMenu.value) {
+          emit("search", { search: search.value, setLoading });
+        }
       }
     );
-
-    return { search, model, isOpenMenu, inputRef, isLoading };
+    const showEmptyBox = ref<boolean>(false);
+    watchEffect(() => {
+      showEmptyBox.value = !!(
+        search.value !== "" &&
+        props.noResult &&
+        !isLoading.value
+      );
+    });
+    return { search, model, isOpenMenu, inputRef, isLoading, showEmptyBox };
   }
 });
 </script>

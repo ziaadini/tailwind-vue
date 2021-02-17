@@ -650,8 +650,32 @@
 
     <div>
       <div>#zia</div>
-      <t-searchable></t-searchable>
+      <t-searchable
+        v-model="searchableModel"
+        placeholder="select..."
+        :items="[
+          { label: 'zia', value: 'zzz' },
+          { label: 'ali', value: 'aaa' }
+        ]"
+      ></t-searchable>
+      {{ searchableModel }}
     </div>
+
+    <div>
+      <div>#zia</div>
+      <div>ajax searchable</div>
+      <t-searchable
+        v-model="searchableModel"
+        placeholder="select..."
+        :items="searchableItems"
+        :local-search="false"
+        item-text="name"
+        item-value="id"
+        @search="searchAjax"
+      ></t-searchable>
+      {{ searchableModel }}
+    </div>
+    <div class="h-10"></div>
   </div>
 </template>
 
@@ -787,7 +811,21 @@ export default defineComponent({
     const textInputValue = useDebouncedRef("");
     const textInputFormat = useFormatRef("12345");
     const animate = ref(false);
+    const searchableModel = ref("");
+    const searchableItems = ref([]);
+    const searchAjax = ({ search, setLoading }) => {
+      setLoading(true);
+      fetch(
+        `https://api.github.com/search/repositories?q=${escape(search)}`
+      ).then(res => {
+        setLoading(false);
+        res.json().then(json => (searchableItems.value = json.items));
+      });
+    };
     return {
+      searchableItems,
+      searchAjax,
+      searchableModel,
       animate,
       textInputFormat,
       textInputValue,
