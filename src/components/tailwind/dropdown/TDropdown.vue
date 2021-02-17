@@ -62,10 +62,12 @@
         'rounded-t-md': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
         'z-30': !hover,
-        'z-40': hover
+        'z-40': hover,
+        'divide-y': divide
       }"
-      class="divide-y duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
+      <slot name="prepend" :hasItem="hasItem"></slot>
       <template v-for="(item, index) in getItems" :key="index">
         <template v-if="hasItemSlot">
           <slot
@@ -85,8 +87,7 @@
                   index + 1 === items.length && rounded && !isBottomOverflowed,
                 'rounded-t-md': index === 0 && rounded && isBottomOverflowed,
                 'rounded-b-none': rounded && isBottomOverflowed,
-                'border border-indigo-200 box-border':
-                  selectedItem.value === item.value
+                'bg-gray-100': selectedItem.value === item.value
               }
             ]"
             @click="selectItem(item)"
@@ -148,6 +149,10 @@ export default defineComponent({
     },
     modelValue: {
       type: String
+    },
+    divide: {
+      type: Boolean,
+      default: true
     },
     item: {
       type: Object,
@@ -360,6 +365,7 @@ export default defineComponent({
       isClosedRounded,
       isOpenedRounded,
       getItems: itemFactory,
+      hasItem: computed(() => !!itemFactory.value.length),
       triggerMenu,
       selectItem,
       selectedItem,
