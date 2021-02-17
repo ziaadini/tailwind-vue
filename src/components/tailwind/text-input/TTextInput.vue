@@ -181,9 +181,8 @@ export default defineComponent({
 
     const updateFunction = formatFounded
       ? async (value) => {
-          value = value.replace(args[0], "");
           const formattedValue = numberFormat(value, args[0], args[1]);
-          emit("update:modelValue", value);
+          emit("update:modelValue", formattedValue.replace(args[0], ""));
           await nextTick();
           // @ts-ignore
           textInputRef.value.value = formattedValue;
