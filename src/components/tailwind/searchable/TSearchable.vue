@@ -1,38 +1,36 @@
 <template>
-  <div class="my-5">
-    <t-dropdown
-      v-model="model"
-      variant="white"
-      :divide="false"
-      v-model:opened="isOpenMenu"
-      :search-key="localSearch ? search : ''"
-      v-bind="$attrs"
-    >
-      <template #prepend="{hasItem}">
-        <div class="p-2">
-          <t-text-input
-            ref="inputRef"
-            autocomplete="off"
-            v-model="search"
-          ></t-text-input>
-          <div v-if="!localSearch" :class="{ hidden: !isLoading }">
-            <t-loading
-              class="mt-2"
-              color-class="bg-gray-400"
-              size="sm"
-              variant="primary"
-            ></t-loading>
-          </div>
-          <div class="mt-2" v-if="showEmptyBox && !hasItem">
-            {{ noResult }}
-          </div>
+  <t-dropdown
+    v-model="model"
+    variant="white"
+    :divide="false"
+    v-model:opened="isOpenMenu"
+    :search-key="localSearch ? search : ''"
+    v-bind="$attrs"
+  >
+    <template #prepend="{hasItem}">
+      <div class="p-2">
+        <t-text-input
+          ref="inputRef"
+          autocomplete="off"
+          v-model="search"
+        ></t-text-input>
+        <div v-if="!localSearch" :class="{ hidden: !isLoading }">
+          <t-loading
+            class="mt-2"
+            color-class="bg-gray-400"
+            size="sm"
+            variant="primary"
+          ></t-loading>
         </div>
-      </template>
-      <template #label="{item}">
-        <div class="text-right px-2">{{ item.label }}</div>
-      </template>
-    </t-dropdown>
-  </div>
+        <div class="mt-2" v-if="showEmptyBox && !hasItem">
+          {{ noResult }}
+        </div>
+      </div>
+    </template>
+    <template #label="{item}">
+      <div class="text-right px-2">{{ item.label }}</div>
+    </template>
+  </t-dropdown>
 </template>
 
 <script lang="ts">
