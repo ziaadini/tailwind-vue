@@ -818,8 +818,10 @@ export default defineComponent({
       fetch(
         `https://api.github.com/search/repositories?q=${escape(search)}`
       ).then(res => {
-        setLoading(false);
-        res.json().then(json => (searchableItems.value = json.items));
+        res.json().then(json => {
+          searchableItems.value = json.items;
+          setLoading(false);
+        });
       });
     };
     return {
