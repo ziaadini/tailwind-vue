@@ -22,10 +22,9 @@
       :name="icon"
       data-name="button-icon"
       :class="[
-        {
+        renderClass('pl-2', 'icon', {
           'opacity-0': loading,
-        },
-        renderClass('', 'icon'),
+        }),
       ]"
     />
     <span
