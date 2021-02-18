@@ -7,12 +7,13 @@
     data-name="button-container"
     :class="[
       renderClass(
-        `${variantClasses} flex justify-center items-center px-4 py-2 min-w-14 shadow relative rounded-sm border-1 focus:outline-none`,
+        `${variantClasses} flex justify-center items-center px-4 py-2 shadow relative rounded-sm border-1 focus:outline-none`,
         'container',
         {
           'rounded-full': rounded,
           ripple: ripple && !isDisabled,
           'w-full': full,
+          'min-w-14': !fab
         }
       ),
     ]"
@@ -22,8 +23,9 @@
       :name="icon"
       data-name="button-icon"
       :class="[
-        renderClass('pl-2', 'icon', {
+        renderClass('', 'icon', {
           'opacity-0': loading,
+          'pl-2': !fab
         }),
       ]"
     />
@@ -154,16 +156,16 @@ export default defineComponent({
       let width;
       switch (props.size) {
         case buttonSizes.small:
+          height = "h-7";
+          width = "w-7";
+          break;
+        case buttonSizes.large:
           height = "h-11";
           width = "w-11";
           break;
-        case buttonSizes.large:
-          height = "h-14";
-          width = "w-14";
-          break;
         default:
-          height = "h-12";
-          width = "w-12";
+          height = "h-9";
+          width = "w-9";
           break;
       }
 
