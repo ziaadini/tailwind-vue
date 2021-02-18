@@ -676,6 +676,15 @@
       {{ searchableModel }}
     </div>
     <div class="h-10"></div>
+
+    <div>
+      <div>#zia</div>
+      <t-pagination
+        v-model="pagination"
+        :total-count="80"
+        :per-page="5"
+      ></t-pagination>
+    </div>
   </div>
 </template>
 
@@ -712,10 +721,12 @@ import { useFormatRef } from "@/compositionFunctions/expose/format";
 import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
 import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
+import TPagination from "@/components/tailwind/pagination/TPagination.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TPagination,
     TSearchable,
     TTable,
     TAnimate,
@@ -824,7 +835,9 @@ export default defineComponent({
         });
       });
     };
+    const pagination = ref(5);
     return {
+      pagination,
       searchableItems,
       searchAjax,
       searchableModel,
