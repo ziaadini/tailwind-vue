@@ -647,6 +647,35 @@
       </t-table>
     </div>
     <div><h1>test data</h1></div>
+
+    <div>
+      <div>#zia</div>
+      <t-searchable
+        v-model="searchableModel"
+        placeholder="select..."
+        :items="[
+          { label: 'zia', value: 'zzz' },
+          { label: 'ali', value: 'aaa' }
+        ]"
+      ></t-searchable>
+      {{ searchableModel }}
+    </div>
+
+    <div>
+      <div>#zia</div>
+      <div>ajax searchable</div>
+      <t-searchable
+        v-model="searchableModel"
+        placeholder="select..."
+        :items="searchableItems"
+        :local-search="false"
+        item-text="name"
+        item-value="id"
+        @search="searchAjax"
+      ></t-searchable>
+      {{ searchableModel }}
+    </div>
+    <div class="h-10"></div>
   </div>
 </template>
 
@@ -682,10 +711,12 @@ import { useDebouncedRef } from "@/compositionFunctions/expose/debounce";
 import { useFormatRef } from "@/compositionFunctions/expose/format";
 import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
+import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TSearchable,
     TTable,
     TAnimate,
     TTextInput,
@@ -780,7 +811,23 @@ export default defineComponent({
     const textInputValue = useDebouncedRef("");
     const textInputFormat = useFormatRef("12345");
     const animate = ref(false);
+    const searchableModel = ref("");
+    const searchableItems = ref([]);
+    const searchAjax = ({ search, setLoading }) => {
+      setLoading(true);
+      fetch(
+        `https://api.github.com/search/repositories?q=${escape(search)}`
+      ).then(res => {
+        res.json().then(json => {
+          searchableItems.value = json.items;
+          setLoading(false);
+        });
+      });
+    };
     return {
+      searchableItems,
+      searchAjax,
+      searchableModel,
       animate,
       textInputFormat,
       textInputValue,

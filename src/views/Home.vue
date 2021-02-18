@@ -132,10 +132,8 @@
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <TextInput
-      area
       placeholder="some test placeholder"
       variant="white"
-      class="h-40"
     />
     {{ text1 }}
     <TextInput
