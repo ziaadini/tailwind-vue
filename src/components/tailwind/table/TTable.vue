@@ -4,7 +4,21 @@
       data-name="table-cardBreakpoint"
       :class="renderClass('sm:hidden', 'cardBreakpoint')"
     >
-      <template v-for="i in getLength" :key="`row-item-${i}`">
+      <template v-if="loading">
+        <template v-if="hasCardLoadingSlot">
+          <slot name="card-loading"></slot>
+        </template>
+        <template v-else>
+          <t-loading v-bind="loadingProps"></t-loading>
+          <p
+            data-name="table-loadingText"
+            :class="renderClass('mt-2 text-sm text-gray-400', 'loadingText')"
+          >
+            {{ loadingText }}
+          </p>
+        </template>
+      </template>
+      <template v-else v-for="i in getLength" :key="`row-item-${i}`">
         <div
           data-name="table-cardContainer"
           :class="
@@ -225,7 +239,32 @@
                   })
                 "
               >
-                <template v-for="i in getLength" :key="`row-item-${i}`">
+                <template v-if="loading">
+                  <td
+                    data-name="table-loadingContainer"
+                    :class="renderClass('py-4', 'loadingContainer')"
+                    :colspan="getHeaderLength"
+                  >
+                    <template v-if="hasLoadingSlot">
+                      <slot name="loading"></slot>
+                    </template>
+                    <template v-else>
+                      <t-loading v-bind="loadingProps"></t-loading>
+                      <p
+                        data-name="table-loadingText"
+                        :class="
+                          renderClass(
+                            'mt-2 text-sm text-gray-400',
+                            'loadingText'
+                          )
+                        "
+                      >
+                        {{ loadingText }}
+                      </p>
+                    </template>
+                  </td>
+                </template>
+                <template v-else v-for="i in getLength" :key="`row-item-${i}`">
                   <tr
                     data-name="table-tr"
                     :class="[
@@ -351,11 +390,12 @@ import {
   useTableSort
 } from "@/compositionFunctions/table";
 import { useRenderClass } from "@/compositionFunctions/settings";
+import TLoading from "@/components/tailwind/loading/TLoading.vue";
 
 export default defineComponent({
   name: "TTable",
   inheritAttrs: false,
-  components: { TCollapsable, TTh },
+  components: { TLoading, TCollapsable, TTh },
   emits: {
     sort(_: { key: string; sort: Table.SortEnum; setSort: Function }) {
       return true;
@@ -388,6 +428,22 @@ export default defineComponent({
     renderCard: {
       type: Boolean,
       default: () => true
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    loadingText: {
+      type: String,
+      default: "Loading"
+    },
+    loadingProps: {
+      type: Object,
+      default: () => ({
+        colorClass: "border-gray-300",
+        size: "md",
+        type: "spinner"
+      })
     },
     divideX: {
       type: Boolean,
@@ -454,6 +510,8 @@ export default defineComponent({
       onMouseenter,
       onMouseleave,
       hasRowDetailsSlot,
+      hasCardLoadingSlot: !!slots["card-loading"],
+      hasLoadingSlot: !!slots["loading"],
       hasCellSlot: !!slots.cell,
       hasCardCellSlot: !!slots["card-cell"],
       hasHeaderSlot: !!slots.header,
