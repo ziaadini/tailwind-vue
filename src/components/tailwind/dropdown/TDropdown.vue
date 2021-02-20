@@ -18,6 +18,7 @@
           :value="selectedItem.value"
           :selected-text="selectedItem.label || placeholder"
           :triggerMenu="triggerMenu"
+          v-bind="$attrs"
         ></slot>
       </div>
     </template>
@@ -197,22 +198,38 @@ export default defineComponent({
       default: false,
       required: false,
     },
-    itemValue: {
-      type: String,
-      default: "value",
-    },
-    itemText: {
-      type: String,
-      default: "label",
-    },
     searchKey: {
       type: String,
       default: "",
     },
+    labelField: {
+      type: String,
+      default: "label",
+    },
+    valueField: {
+      type: String,
+      default: "value",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, { emit, slots }) {
-    const baseClass = `bg-${props.variant} text-white hover:opacity-80 transition`;
-    const outlineClass = `border-${props.variant}-50 shadow-sm border hover:bg-${props.variant}-50 hover:shadow`;
+    const baseClass = computed(
+      () =>
+        `bg-${props.variant} text-white transition ${
+          props.disabled ? "opacity-50" : "hover:opacity-80"
+        }`
+    );
+    const outlineClass = computed(
+      () =>
+        ` border hover:shadow ${
+          props.disabled
+            ? "bg-gray-100"
+            : `border-${props.variant}-50 shadow-sm hover:bg-${props.variant}-50`
+        }`
+    );
     const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:opacity-60 focus:border-${props.variant} transition`;
 
     const state = reactive({
@@ -238,18 +255,13 @@ export default defineComponent({
       return isOpened.value && props.rounded;
     });
 
-    function closeDropdown() {
-      emit("update:opened", false);
-      state.opened = false;
-    }
-
     function updateSelectedValue(item: any) {
       state.selected = item.value;
       emit("update:modelValue", item.value);
       emit("update:item", item);
     }
 
-    // handle clickoutside
+    // init clickoutside
     const {
       clickedOutside,
       elementRef: dropdownRef,
@@ -257,21 +269,7 @@ export default defineComponent({
       unRegisterEvent,
     } = useClickOutside();
 
-    watch(clickedOutside, (value) => {
-      if (value) {
-        closeDropdown();
-      }
-    });
-
-    const onEscape = (e: any) => {
-      if (e.key === "Esc" || e.key === "Escape") {
-        closeDropdown();
-      }
-    };
-
-    useKeyDown(onEscape);
-
-    // handle dropdown visibility
+    // init dropdown visibility
     const {
       placement,
       handlePlacement,
@@ -279,10 +277,10 @@ export default defineComponent({
       parentElement: dropdownParentRef,
     } = useIsVisible(dropdownRef);
 
+    // handle dropdown visibility
     function hasPlacementPosition(position: visibilityOverflow) {
       return placement.value?.includes(position);
     }
-
     const isBottomOverflowed = computed(() => {
       if (props.top) {
         if (hasPlacementPosition(visibilityOverflow.top)) return true;
@@ -301,6 +299,7 @@ export default defineComponent({
       }
     });
 
+    // initialize dropdown items
     const itemFactory = computed(() => {
       if (!items.value || items.value.length === 0) return [];
 
@@ -314,8 +313,8 @@ export default defineComponent({
           });
         } else {
           newItems.push({
-            label: item[props.itemText],
-            value: item[props.itemValue],
+            label: item[props.labelField],
+            value: item[props.valueField],
           });
         }
       });
@@ -328,12 +327,6 @@ export default defineComponent({
 
       return newItems;
     });
-
-    function selectItem(item) {
-      closeDropdown();
-      updateSelectedValue(item);
-    }
-
     const selectedItem = computed(() => {
       return (
         itemFactory.value.find((e) => e.value === state.selected) || {
@@ -341,7 +334,6 @@ export default defineComponent({
         }
       );
     });
-
     const getModelValue = computed(() =>
       props.item.value !== undefined ? props.item.value : props.modelValue
     );
@@ -360,7 +352,10 @@ export default defineComponent({
       handlePlacement();
     };
 
+    // handle open and close state of dropdown
     const triggerMenu = async (value = null as any) => {
+      // handle disabled
+      if (props.disabled) return;
       if (value !== state.opened) {
         isVisibleWatch.value = state.opened = value;
         await handleEmitOpened();
@@ -369,6 +364,24 @@ export default defineComponent({
         await handleEmitOpened();
       }
     };
+
+    function selectItem(item) {
+      triggerMenu(false);
+      updateSelectedValue(item);
+    }
+
+    // handle clickoutside
+    const onEscape = (e: any) => {
+      if (e.key === "Esc" || e.key === "Escape") {
+        triggerMenu(false);
+      }
+    };
+    useKeyDown(onEscape);
+    watch(clickedOutside, (value) => {
+      if (value) {
+        triggerMenu(false);
+      }
+    });
 
     function hoverTriggerMenu(value: boolean) {
       if (props.hover) {
