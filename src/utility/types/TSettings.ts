@@ -190,6 +190,16 @@ export interface TSettings {
     label?: TSettingItem;
     cardLabel?: TSettingItem;
   };
+  pagination?: {
+    container?: TSettingItem;
+    ul?: TSettingItem;
+    li?: TSettingItem;
+    anchor?: TSettingItem;
+    itemContainer?: TSettingItem;
+    iconContainer?: TSettingItem;
+    icon?: TSettingItem;
+    page?: TSettingItem;
+  };
 }
 
 export interface TSettingItem {

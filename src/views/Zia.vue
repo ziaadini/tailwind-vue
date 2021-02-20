@@ -677,9 +677,10 @@
     </div>
     <div class="h-10"></div>
 
-    <div>
+    <div class="w-full">
       <div>#zia</div>
       <t-pagination
+        class="mx-auto"
         v-model="pagination"
         :total-count="80"
         :per-page="5"
