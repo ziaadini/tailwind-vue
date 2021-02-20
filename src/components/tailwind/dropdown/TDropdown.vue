@@ -1,12 +1,14 @@
 <template>
   <div
     class="relative"
-    @mouseenter="hover && triggerMenu(true)"
-    @mouseleave="hover && triggerMenu(false)"
+    @mouseenter="hoverTriggerMenu(true)"
+    @mouseleave="hoverTriggerMenu(false)"
     :class="{
       'rounded-sm': isClosed,
     }"
   >
+    <!-- parent section -->
+    <!-- header slot  -->
     <template v-if="hasHeaderSlot">
       <div ref="dropdownParentRef">
         <slot
@@ -19,8 +21,8 @@
         ></slot>
       </div>
     </template>
+    <!-- default dropdown header & activator slot-->
     <template v-else>
-      <!-- parent -->
       <div
         ref="dropdownParentRef"
         class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
@@ -52,18 +54,18 @@
     </template>
 
     <!-- items -->
+    <!-- slot for prepend items & item slot -->
     <div
       ref="dropdownRef"
       :class="{
         'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-        shadow: isBottomOverflowed,
         'rounded-b-md': rounded,
         'rounded-b-none': rounded && isBottomOverflowed,
         'rounded-t-md': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
         'z-30': !hover,
         'z-40': hover,
-        'divide-y': divide
+        'divide-y': divide,
       }"
       class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
@@ -155,7 +157,7 @@ export default defineComponent({
     },
     divide: {
       type: Boolean,
-      default: true
+      default: true,
     },
     item: {
       type: Object,
@@ -218,6 +220,8 @@ export default defineComponent({
       opened: props.opened,
     });
 
+    const { items, opened } = toRefs(props);
+
     const isOpened = computed(() => {
       return state.opened;
     });
@@ -229,10 +233,23 @@ export default defineComponent({
     const isClosedRounded = computed(() => {
       return isClosed.value && props.rounded;
     });
+
     const isOpenedRounded = computed(() => {
       return isOpened.value && props.rounded;
     });
 
+    function closeDropdown() {
+      emit("update:opened", false);
+      state.opened = false;
+    }
+
+    function updateSelectedValue(item: any) {
+      state.selected = item.value;
+      emit("update:modelValue", item.value);
+      emit("update:item", item);
+    }
+
+    // handle clickoutside
     const {
       clickedOutside,
       elementRef: dropdownRef,
@@ -240,28 +257,21 @@ export default defineComponent({
       unRegisterEvent,
     } = useClickOutside();
 
-    const { items, opened } = toRefs(props);
-
-    const getModelValue = computed(() =>
-      props.item.value !== undefined ? props.item.value : props.modelValue
-    );
     watch(clickedOutside, (value) => {
-      console.log("watch clickoutside", value);
       if (value) {
-        emit("update:opened", false);
-        state.opened = false;
+        closeDropdown();
       }
     });
 
     const onEscape = (e: any) => {
       if (e.key === "Esc" || e.key === "Escape") {
-        emit("update:opened", false);
-        state.opened = false;
+        closeDropdown();
       }
     };
 
     useKeyDown(onEscape);
 
+    // handle dropdown visibility
     const {
       placement,
       handlePlacement,
@@ -269,9 +279,9 @@ export default defineComponent({
       parentElement: dropdownParentRef,
     } = useIsVisible(dropdownRef);
 
-    const hasPlacementPosition = (position: visibilityOverflow) => {
+    function hasPlacementPosition(position: visibilityOverflow) {
       return placement.value?.includes(position);
-    };
+    }
 
     const isBottomOverflowed = computed(() => {
       if (props.top) {
@@ -319,13 +329,10 @@ export default defineComponent({
       return newItems;
     });
 
-    const selectItem = (item) => {
-      state.opened = false;
-      emit("update:opened", false);
-      state.selected = item.value;
-      emit("update:modelValue", item.value);
-      emit("update:item", item);
-    };
+    function selectItem(item) {
+      closeDropdown();
+      updateSelectedValue(item);
+    }
 
     const selectedItem = computed(() => {
       return (
@@ -335,26 +342,39 @@ export default defineComponent({
       );
     });
 
-    watch(getModelValue, (value) => {
-      if (value !== state.selected) state.selected = value;
-    },{immediate:true});
+    const getModelValue = computed(() =>
+      props.item.value !== undefined ? props.item.value : props.modelValue
+    );
+
+    watch(
+      getModelValue,
+      (value) => {
+        if (value !== state.selected) state.selected = value;
+      },
+      { immediate: true }
+    );
 
     const handleEmitOpened = async () => {
       emit("update:opened", isVisibleWatch.value);
       await nextTick();
       handlePlacement();
     };
+
     const triggerMenu = async (value = null as any) => {
       if (value !== state.opened) {
-        console.log("triggerMenu called1", value);
         isVisibleWatch.value = state.opened = value;
         await handleEmitOpened();
       } else if (value === null) {
-        console.log("triggerMenu called2", value);
         isVisibleWatch.value = state.opened = !state.opened;
         await handleEmitOpened();
       }
     };
+
+    function hoverTriggerMenu(value: boolean) {
+      if (props.hover) {
+        triggerMenu(value);
+      }
+    }
 
     watchEffect(() => {
       if (opened.value || state.opened) {
@@ -379,6 +399,7 @@ export default defineComponent({
       getItems: itemFactory,
       hasItem: computed(() => !!itemFactory.value.length),
       triggerMenu,
+      hoverTriggerMenu,
       selectItem,
       selectedItem,
       state,
