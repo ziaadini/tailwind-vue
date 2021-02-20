@@ -72,22 +72,32 @@
             href="#"
             @click.prevent="changePage(1)"
           >
-            <span
-              data-name="pagination-itemContainer"
-              :class="
-                renderClass(
-                  'flex items-center justify-center rounded-full hover:opacity-80 sm:h-10 sm:w-10 h-8 w-8',
-                  'itemContainer'
-                )
-              "
-            >
+            <template v-if="hasItemSlot">
+              <slot name="item" :value="1"></slot>
+            </template>
+            <template v-else>
               <span
-                data-name="pagination-page"
-                :class="renderClass('', 'page')"
+                data-name="pagination-itemContainer"
+                :class="
+                  renderClass(
+                    'flex items-center justify-center rounded-full hover:opacity-80 sm:h-10 sm:w-10 h-8 w-8',
+                    'itemContainer'
+                  )
+                "
               >
-                1
+                <template v-if="hasPageSlot">
+                  <slot name="page" :value="1"></slot>
+                </template>
+                <template v-else>
+                  <span
+                    data-name="pagination-page"
+                    :class="renderClass('', 'page')"
+                  >
+                    1
+                  </span>
+                </template>
               </span>
-            </span>
+            </template>
           </a>
         </li>
         <li
@@ -109,7 +119,9 @@
             href="#"
             @click.prevent="changePage(page)"
           >
-            <template v-if="hasItemSlot"> </template>
+            <template v-if="hasItemSlot">
+              <slot name="item" :value="page"></slot>
+            </template>
             <template v-else>
               <span
                 data-name="pagination-itemContainer"
@@ -117,12 +129,12 @@
                   renderClass(
                     'flex items-center justify-center rounded-full hover:opacity-80  sm:h-10 sm:w-10 h-8 w-8',
                     'itemContainer',
-                    { [`bg-${variant} text-white`]: modelValue === page }
+                    { [`${getColorClass} text-white`]: modelValue === page }
                   )
                 "
               >
                 <template v-if="hasPageSlot">
-                  <slot name="page"></slot>
+                  <slot name="page" :value="page"></slot>
                 </template>
                 <template v-else>
                   <span
@@ -153,22 +165,32 @@
             href="#"
             @click.prevent="changePage(totalPages)"
           >
-            <span
-              data-name="pagination-itemContainer"
-              :class="
-                renderClass(
-                  'flex items-center justify-center rounded-full hover:opacity-80  sm:h-10 sm:w-10 h-8 w-8',
-                  'itemContainer'
-                )
-              "
-            >
+            <template v-if="hasItemSlot">
+              <slot name="item" :value="totalPages"></slot>
+            </template>
+            <template v-else>
               <span
-                data-name="pagination-page"
-                :class="renderClass('', 'page')"
+                data-name="pagination-itemContainer"
+                :class="
+                  renderClass(
+                    'flex items-center justify-center rounded-full hover:opacity-80  sm:h-10 sm:w-10 h-8 w-8',
+                    'itemContainer'
+                  )
+                "
               >
-                {{ totalPages }}
+                <template v-if="hasPageSlot">
+                  <slot name="page" :value="totalPages"></slot>
+                </template>
+                <template v-else>
+                  <span
+                    data-name="pagination-page"
+                    :class="renderClass('', 'page')"
+                  >
+                    {{ totalPages }}
+                  </span>
+                </template>
               </span>
-            </span>
+            </template>
           </a>
         </li>
         <li
@@ -241,7 +263,7 @@ export default defineComponent({
     },
     perPage: {
       type: Number,
-      default: 9
+      default: 20
     },
     pageRange: {
       type: Number,
@@ -253,6 +275,10 @@ export default defineComponent({
       validator: (propValue: string) => {
         return !!variants[propValue];
       }
+    },
+    colorClass: {
+      type: String,
+      default: ""
     }
   },
   setup(props, { emit, slots }) {
@@ -291,12 +317,19 @@ export default defineComponent({
         emit("update:modelValue", page);
       }
     };
+    const getColorClass = computed(() => {
+      if (props.colorClass) {
+        return props.colorClass;
+      }
+      return `bg-${props.variant}`;
+    });
     const { renderClass } = useRenderClass("pagination");
     return {
       hasPrevSlot: !!slots.prev,
       hasNextSlot: !!slots.next,
       hasItemSlot: !!slots.item,
       hasPageSlot: !!slots.page,
+      getColorClass,
       renderClass,
       pages,
       changePage,
