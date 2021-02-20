@@ -60,7 +60,9 @@
       ref="dropdownRef"
       :class="{
         'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-        'rounded-b-md': rounded,
+        'rounded-b-sm': isOpened && !isBottomOverflowed,
+        'border border-gray-200 border-t-0': variant === 'white',
+        'rounded-b-md': rounded && !isBottomOverflowed,
         'rounded-b-none': rounded && isBottomOverflowed,
         'rounded-t-md': rounded && isBottomOverflowed,
         '-translate-y-full top-0': isBottomOverflowed,
@@ -68,7 +70,7 @@
         'z-40': hover,
         'divide-y': divide,
       }"
-      class="duration-200 transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="duration-200 overflow-hidden transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
       <slot name="prepend" :hasItem="hasItem"></slot>
       <template v-for="(item, index) in getItems" :key="index">
@@ -86,13 +88,7 @@
             :class="[
               childClass,
               {
-                'rounded-b-md':
-                  index + 1 === items.length && rounded && !isBottomOverflowed,
-                'rounded-t-md': index === 0 && rounded && isBottomOverflowed,
-                'rounded-b-none': rounded && isBottomOverflowed,
                 'bg-gray-100': selectedItem.value === item.value,
-                'border border-indigo-200 box-border':
-                  selectedItem.value === item.value,
               },
             ]"
             @click="selectItem(item)"
@@ -218,9 +214,11 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const baseClass = computed(
       () =>
-        `bg-${props.variant} text-white transition ${
-          props.disabled ? "opacity-50" : "hover:opacity-80"
-        }`
+        `bg-${
+          props.variant === variants.white
+            ? `${props.variant} text-dark bg-white border border-gray-200`
+            : `${props.variant} text-white`
+        }  transition ${props.disabled ? "opacity-50" : "hover:opacity-80"}`
     );
     const outlineClass = computed(
       () =>
@@ -235,9 +233,10 @@ export default defineComponent({
     const state = reactive({
       selected: null as any,
       opened: props.opened,
+      disabled: false,
     });
 
-    const { items, opened } = toRefs(props);
+    const { items, opened, disabled } = toRefs(props);
 
     const isOpened = computed(() => {
       return state.opened;
@@ -353,9 +352,9 @@ export default defineComponent({
     };
 
     // handle open and close state of dropdown
-    const triggerMenu = async (value = null as any) => {
+    async function triggerMenu(value = null as any) {
       // handle disabled
-      if (props.disabled) return;
+      if (state.disabled) return;
       if (value !== state.opened) {
         isVisibleWatch.value = state.opened = value;
         await handleEmitOpened();
@@ -363,7 +362,13 @@ export default defineComponent({
         isVisibleWatch.value = state.opened = !state.opened;
         await handleEmitOpened();
       }
-    };
+    }
+
+    // handle disabled state
+    watch(disabled, (value) => {
+      if (value) triggerMenu(false);
+      state.disabled = value;
+    });
 
     function selectItem(item) {
       triggerMenu(false);
