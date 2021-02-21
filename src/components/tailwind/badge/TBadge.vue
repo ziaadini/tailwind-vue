@@ -64,13 +64,13 @@ export default defineComponent({
     const retSize = (size: normalSizes): string => {
       switch (size) {
         case normalSizes.xs:
-          return "w-3 h-3 text-xs";
+          return "w-2 h-2 text-xs";
         case normalSizes.sm:
-          return "w-6 h-6 text-sm";
+          return "w-4 h-4 text-sm";
         case normalSizes.md:
-          return "w-7 h-7 text-base";
+          return "w-6 h-6 text-base";
         case normalSizes.lg:
-          return "w-12 h-12 text-lg";
+          return "w-10 h-10 text-lg";
 
         default:
           return "w-3 h-3";

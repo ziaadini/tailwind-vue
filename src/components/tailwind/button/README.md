@@ -9,8 +9,9 @@
 | to | object|string | "" | button as router link  |
 | nuxt | boolean | false | `nuxt-link` instead of `router-link` when passing `to` prop  |
 | full | boolean | false | full width button |
+| full | boolean | false | full width button |
 | loading | boolean | false | to show a loading in button |
-| loadingProps | object | {} | props for loading component |
+| color | string | "" | when used default variant would be ignored and color is used instead |
 
 ### slots
 | name | description 

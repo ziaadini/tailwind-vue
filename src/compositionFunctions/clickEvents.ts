@@ -1,6 +1,5 @@
 import { onUnmounted, ref } from "vue";
-export const useClickOutside = () => {
-  const elementRef = ref(null);
+export const useClickOutside = (elementRef = ref(null)) => {
   const clickedOutside = ref(false);
   const eventHandler = function(event) {
     const isClickInside = (elementRef.value as any).contains(event.target);

@@ -53,6 +53,7 @@
 
 .scrollbar-sm::-webkit-scrollbar {
   @apply w-1 md:w-1.5;
+  @apply h-1 md:h-1.5;
 }
 
 .scrollbar-sm::-webkit-scrollbar-thumb {
