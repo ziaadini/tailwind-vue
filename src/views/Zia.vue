@@ -666,6 +666,7 @@
       <div>ajax searchable</div>
       <t-searchable
         v-model="searchableModel"
+        labelField="name"
         placeholder="select..."
         :items="searchableItems"
         :local-search="false"

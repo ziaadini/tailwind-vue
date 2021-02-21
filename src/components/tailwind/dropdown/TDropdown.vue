@@ -407,9 +407,7 @@ export default defineComponent({
     };
     useKeyDown(onEscape);
     watch(clickedOutside, (value) => {
-      if (value) {
-        triggerMenu(false);
-      }
+      triggerMenu(false);
     });
 
     function hoverTriggerMenu(value: boolean) {
@@ -418,9 +416,16 @@ export default defineComponent({
       }
     }
 
-    watchEffect(() => {
-      if (opened.value || state.opened) {
+    watch(opened, (value) => {
+      if (value) {
         triggerMenu(true);
+      } else {
+        triggerMenu(false);
+      }
+    });
+
+    watch(toRefs(state).opened, (value) => {
+      if (value) {
         registerEvent();
       } else {
         unRegisterEvent();

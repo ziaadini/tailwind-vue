@@ -410,6 +410,7 @@
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
+      v-model:opened="openedDropdown"
       :toggleByHeader="false"
       :outline="false"
       variant="white"
@@ -1227,6 +1228,7 @@ export default defineComponent({
         },
       ] as BreadCrumb.Root,
       disabled: false,
+      openedDropdown: false,
       dropdownItems: [
         {
           title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
@@ -1277,7 +1279,11 @@ export default defineComponent({
     setTimeout(() => {
       this.count *= 3;
       this.disabled = true;
-    }, 5000);
+      this.openedDropdown = true;
+    }, 2000);
+    setTimeout(() => {
+      this.openedDropdown = false;
+    }, 4000);
   },
 });
 </script>
