@@ -413,7 +413,7 @@
       :toggleByHeader="false"
       :outline="false"
       variant="white"
-      placeholder="this is a test placeholder"
+      placeholder="this is a testfsafsdfsdfsdf placeholder"
       labelField="title"
       :items="dropdownItems"
     />
@@ -1228,7 +1228,7 @@ export default defineComponent({
       disabled: false,
       dropdownItems: [
         {
-          title: "ali",
+          title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
           value: {},
         },
         {

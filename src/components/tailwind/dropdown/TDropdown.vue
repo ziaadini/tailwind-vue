@@ -32,8 +32,8 @@
           {
             'rounded-full': isClosedRounded,
             'rounded-md': isOpenedRounded,
-            'rounded-b-none': isOpened && !isBottomOverflowed,
-            'rounded-t-none': isOpened && isBottomOverflowed,
+            'rounded-b-none': isOpened && !isOverflowed,
+            'rounded-t-none': isOpened && isOverflowed,
           },
           parentClass,
         ]"
@@ -49,7 +49,16 @@
           ></slot>
         </template>
         <template v-else>
-          {{ selectedItem.label || placeholder }}
+          <div class="flex flex-row justify-center items-center w-full">
+            <span class="mr-4 ml-2 overflow-ellipsis overflow-hidden h-full word">
+              {{ selectedItem.label || placeholder }}
+            </span>
+            <TTriangle
+              class="mr-auto ml-4"
+              :direction="arrowDirection"
+              :variant="''"
+            />
+          </div>
         </template>
       </div>
     </template>
@@ -60,17 +69,17 @@
       ref="dropdownRef"
       :class="{
         'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-        'rounded-b-sm': isOpened && !isBottomOverflowed,
+        'rounded-b-sm': isOpened && !isOverflowed,
         'border border-gray-200 border-t-0': variant === 'white',
-        'rounded-b-md': rounded && !isBottomOverflowed,
-        'rounded-b-none': rounded && isBottomOverflowed,
-        'rounded-t-md': rounded && isBottomOverflowed,
-        '-translate-y-full top-0': isBottomOverflowed,
+        'rounded-b-md': rounded && !isOverflowed,
+        'rounded-b-none': rounded && isOverflowed,
+        'rounded-t-md': rounded && isOverflowed,
+        '-translate-y-full top-0': isOverflowed,
         'z-30': !hover,
         'z-40': hover,
         'divide-y': divide,
       }"
-      class="duration-200 overflow-hidden transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="duration-200 max-h-48 overflow-y-auto scrollbar-sm transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
       <slot name="prepend" :hasItem="hasItem"></slot>
       <template v-for="(item, index) in getItems" :key="index">
@@ -84,7 +93,7 @@
         </template>
         <template v-else>
           <div
-            class="py-2"
+            class="py-2 overflow-ellipsis overflow-hidden"
             :class="[
               childClass,
               {
@@ -112,7 +121,7 @@
 </template>
 
 <script lang="ts">
-import { variants } from "@/utility/css-helper";
+import { arrowDirections, variants } from "@/utility/css-helper";
 import {
   useIsVisible,
   visibilityOverflow,
@@ -131,6 +140,7 @@ import {
 import { DropDown } from "@/utility/types/base-component-types";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
+import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 export default defineComponent({
   props: {
     variant: {
@@ -206,6 +216,7 @@ export default defineComponent({
       default: true,
     },
   },
+  components: { TTriangle },
   setup(props, { emit, slots }) {
     const baseClass = computed(
       () =>
@@ -278,7 +289,7 @@ export default defineComponent({
     function hasPlacementPosition(position: visibilityOverflow) {
       return placement.value?.includes(position);
     }
-    const isBottomOverflowed = computed(() => {
+    const isOverflowed = computed(() => {
       if (props.top) {
         if (hasPlacementPosition(visibilityOverflow.top)) return true;
         else {
@@ -401,6 +412,28 @@ export default defineComponent({
       }
     });
 
+    // handle arrow direction
+    const arrowDirection = computed(function() {
+      if (props.top) {
+        if (state.opened) {
+          if (isOverflowed.value) {
+            return arrowDirections["arrow-up"];
+          }
+          return arrowDirections["arrow-down"];
+        } else {
+          return arrowDirections["arrow-up"];
+        }
+      } else {
+        if (state.opened) {
+          if (isOverflowed.value) {
+            return arrowDirections["arrow-down"];
+          }
+          return arrowDirections["arrow-up"];
+        }
+        return arrowDirections["arrow-down"];
+      }
+    });
+
     return {
       hasHeaderSlot: !!slots.header,
       hasItemSlot: !!slots.item,
@@ -421,8 +454,9 @@ export default defineComponent({
       state,
       dropdownRef,
       dropdownParentRef,
-      isBottomOverflowed,
+      isOverflowed,
       placement,
+      arrowDirection,
     };
   },
 });
