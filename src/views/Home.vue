@@ -416,6 +416,7 @@
       placeholder="this is a testfsafsdfsdfsdf placeholder"
       labelField="title"
       :items="dropdownItems"
+      animationDelay="1000"
     />
     <t-dropdown
       v-model="dropdownModel"

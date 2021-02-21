@@ -50,7 +50,7 @@
         </template>
         <template v-else>
           <div class="flex flex-row justify-center items-center w-full">
-            <span class="mr-4 ml-2 overflow-ellipsis overflow-hidden h-full word">
+            <span class="mr-4 ml-2 overflow-ellipsis overflow-hidden h-full">
               {{ selectedItem.label || placeholder }}
             </span>
             <TTriangle
@@ -67,19 +67,22 @@
     <!-- slot for prepend items & item slot -->
     <div
       ref="dropdownRef"
-      :class="{
-        'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-        'rounded-b-sm': isOpened && !isOverflowed,
-        'border border-gray-200 border-t-0': variant === 'white',
-        'rounded-b-md': rounded && !isOverflowed,
-        'rounded-b-none': rounded && isOverflowed,
-        'rounded-t-md': rounded && isOverflowed,
-        '-translate-y-full top-0': isOverflowed,
-        'z-30': !hover,
-        'z-40': hover,
-        'divide-y': divide,
-      }"
-      class="duration-200 max-h-48 overflow-y-auto scrollbar-sm transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      :class="[
+        {
+          'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
+          'rounded-b-sm': isOpened && !isOverflowed,
+          'border border-gray-200 border-t-0': variant === 'white',
+          'rounded-b-md': rounded && !isOverflowed,
+          'rounded-b-none': rounded && isOverflowed,
+          'rounded-t-md': rounded && isOverflowed,
+          '-translate-y-full top-0': isOverflowed,
+          'z-30': !hover,
+          'z-40': hover,
+          'divide-y': divide,
+        },
+        `duration-${animationDelay}`,
+      ]"
+      class="max-h-48 overflow-y-auto scrollbar-sm transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
       <slot name="prepend" :hasItem="hasItem"></slot>
       <template v-for="(item, index) in getItems" :key="index">
@@ -214,6 +217,18 @@ export default defineComponent({
     toggleByHeader: {
       type: Boolean,
       default: true,
+    },
+    parentColorClasses: {
+      type: String,
+      default: "",
+    },
+    itemsColorClasses: {
+      type: String,
+      default: "",
+    },
+    animationDelay: {
+      type: String,
+      default: "200",
     },
   },
   components: { TTriangle },
@@ -439,8 +454,9 @@ export default defineComponent({
       hasItemSlot: !!slots.item,
       hasLabelSlot: !!slots.label,
       hasActivatorSlot: !!slots.activator,
-      parentClass: props.outline ? outlineClass : baseClass,
-      childClass,
+      parentClass:
+        props.parentColorClasses || props.outline ? outlineClass : baseClass,
+      childClass: props.itemsColorClasses || childClass,
       isOpened,
       isClosed,
       isClosedRounded,
