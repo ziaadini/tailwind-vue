@@ -702,6 +702,11 @@
         </template>
       </t-pagination>
     </div>
+
+    <div class="w-full">
+      <div>#zia</div>
+      <t-number-transformer :number="number"></t-number-transformer>
+    </div>
   </div>
 </template>
 
@@ -739,10 +744,12 @@ import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
 import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
 import TPagination from "@/components/tailwind/pagination/TPagination.vue";
+import TNumberTransformer from "@/components/tailwind/numberTransformer/TNumberTransformer.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TNumberTransformer,
     TPagination,
     TSearchable,
     TTable,
@@ -853,7 +860,12 @@ export default defineComponent({
       });
     };
     const pagination = ref(5);
+    const number = ref(5);
+    setTimeout(() => {
+      number.value = 10000000;
+    }, 3000);
     return {
+      number,
       pagination,
       searchableItems,
       searchAjax,
