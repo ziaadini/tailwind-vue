@@ -102,17 +102,7 @@
               ></slot>
             </template>
             <template v-else>
-              <template v-if="hasLabelSlot">
-                <slot
-                  name="label"
-                  :item="item"
-                  :original-item="items[index]"
-                  :index="index"
-                ></slot>
-              </template>
-              <template v-else>
-                {{ item.label }}
-              </template>
+              {{ item.label }}
             </template>
           </div>
         </template>
@@ -133,6 +123,7 @@ import {
   nextTick,
   PropType,
   reactive,
+  ref,
   toRefs,
   watch,
   watchEffect,
@@ -144,7 +135,7 @@ export default defineComponent({
   props: {
     variant: {
       type: String,
-      default: "primary",
+      default: variants.white,
       validator: (propValue: string) => {
         return !!variants[propValue];
       },
@@ -210,6 +201,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    toggleByHeader: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props, { emit, slots }) {
     const baseClass = computed(
@@ -238,6 +233,14 @@ export default defineComponent({
 
     const { items, opened, disabled } = toRefs(props);
 
+    // initiate refs
+    const dropdownRef = ref(null);
+    const dropdownParentRef = ref(null);
+
+    const containerRef = computed(function() {
+      return !props.toggleByHeader ? dropdownParentRef : dropdownRef;
+    });
+
     const isOpened = computed(() => {
       return state.opened;
     });
@@ -261,20 +264,15 @@ export default defineComponent({
     }
 
     // init clickoutside
-    const {
-      clickedOutside,
-      elementRef: dropdownRef,
-      registerEvent,
-      unRegisterEvent,
-    } = useClickOutside();
+    const { clickedOutside, registerEvent, unRegisterEvent } = useClickOutside(
+      containerRef.value
+    );
 
     // init dropdown visibility
-    const {
-      placement,
-      handlePlacement,
-      isOpen: isVisibleWatch,
-      parentElement: dropdownParentRef,
-    } = useIsVisible(dropdownRef);
+    const { placement, handlePlacement, isOpen: isVisibleWatch } = useIsVisible(
+      dropdownRef,
+      dropdownParentRef
+    );
 
     // handle dropdown visibility
     function hasPlacementPosition(position: visibilityOverflow) {

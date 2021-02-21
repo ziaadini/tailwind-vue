@@ -398,7 +398,8 @@
     <t-dropdown
       v-model="dropdownModel"
       hover
-      placeholder="this is a test placeholder"
+      :disabled="disabled"
+      placeholder="this is a disabled placeholder"
       rounded
       :items="['test1', 'test2', 'test3']"
       variant="warning"
@@ -409,13 +410,23 @@
   <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-dropdown
       v-model="dropdownModel"
+      :toggleByHeader="false"
       :outline="false"
-      hover
+      variant="white"
+      placeholder="this is a test placeholder"
+      labelField="title"
+      :items="dropdownItems"
+    />
+    <t-dropdown
+      v-model="dropdownModel"
+      :outline="false"
+      variant="white"
       placeholder="this is a test placeholder"
       :items="['test1', 'test2', 'test3']"
     />
     <t-dropdown
       :outline="false"
+      :disabled="disabled"
       rounded
       variant="danger"
       placeholder="تست"
@@ -1214,6 +1225,37 @@ export default defineComponent({
           active: true,
         },
       ] as BreadCrumb.Root,
+      disabled: false,
+      dropdownItems: [
+        {
+          title: "ali",
+          value: {},
+        },
+        {
+          title: "ali2",
+          value: {},
+        },
+        {
+          title: "ali3",
+          value: {},
+        },
+        {
+          title: "ali4",
+          value: {},
+        },
+        {
+          title: "ali5",
+          value: {},
+        },
+        {
+          title: "ali6",
+          value: {},
+        },
+        {
+          title: "ali7",
+          value: {},
+        },
+      ],
     };
   },
   setup() {
@@ -1233,6 +1275,7 @@ export default defineComponent({
 
     setTimeout(() => {
       this.count *= 3;
+      this.disabled = true;
     }, 5000);
   },
 });
