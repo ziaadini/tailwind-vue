@@ -676,6 +676,37 @@
       {{ searchableModel }}
     </div>
     <div class="h-10"></div>
+
+    <div class="w-full">
+      <div>#zia</div>
+      <t-pagination
+        class="mx-auto"
+        v-model="pagination"
+        :total-count="80"
+        :per-page="5"
+      ></t-pagination>
+
+      <div>with custom slot</div>
+      <t-pagination
+        class="mx-auto"
+        v-model="pagination"
+        :total-count="80"
+        :per-page="5"
+      >
+        <!--        <template #page="{value}">-->
+        <!--          <span :class="{ 'text-gray-200': value === pagination, 'text-gray-400': value !== pagination }">{{-->
+        <!--            value-->
+        <!--          }}</span>-->
+        <!--        </template>-->
+        <template #item="{value}">
+          <span
+            class="flex items-center justify-center rounded-full hover:opacity-80  sm:h-9 sm:w-9 h-8 w-8"
+            :class="{ 'bg-danger text-white': value === pagination }"
+            >{{ value }}</span
+          >
+        </template>
+      </t-pagination>
+    </div>
   </div>
 </template>
 
@@ -712,10 +743,12 @@ import { useFormatRef } from "@/compositionFunctions/expose/format";
 import TAnimate from "@/components/tailwind/animate/TAnimate.vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
 import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
+import TPagination from "@/components/tailwind/pagination/TPagination.vue";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
   components: {
+    TPagination,
     TSearchable,
     TTable,
     TAnimate,
@@ -824,7 +857,9 @@ export default defineComponent({
         });
       });
     };
+    const pagination = ref(5);
     return {
+      pagination,
       searchableItems,
       searchAjax,
       searchableModel,
