@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
+// import qs from "qs";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,15 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+// // @ts-ignore
+//   parseQuery(query) {
+//     return qs.parse(query);
+//   },
+//   stringifyQuery(query) {
+//     const result = qs.stringify(query);
+//
+//     return result ? "?" + result : "";
+//   },
   routes
 });
 

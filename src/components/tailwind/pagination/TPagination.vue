@@ -113,14 +113,21 @@
           v-for="(page, index) in pages"
           :key="`page-${index}`"
         >
-          <a
+          <component
             data-name="pagination-anchor"
-            :class="renderClass('', 'anchor')"
-            href="#"
-            @click.prevent="changePage(page)"
+            :is="is"
+            v-bind="dynamicBinding(page)"
+            :class="renderClass('cursor-pointer', 'anchor')"
+            @[eventPrevent].prevent="changePage(page)"
           >
+            <!--            v-bind="dynamicBind"-->
+            <!--            href="#"-->
             <template v-if="hasItemSlot">
-              <slot name="item" :value="page"></slot>
+              <slot
+                name="item"
+                :value="page"
+                :activeValue="getModelValue"
+              ></slot>
             </template>
             <template v-else>
               <span
@@ -129,12 +136,16 @@
                   renderClass(
                     'flex items-center justify-center rounded-full hover:opacity-80  sm:h-10 sm:w-10 h-8 w-8',
                     'itemContainer',
-                    { [`${getColorClass} text-white`]: modelValue === page }
+                    { [`${getColorClass} text-white`]: getModelValue === page }
                   )
                 "
               >
                 <template v-if="hasPageSlot">
-                  <slot name="page" :value="page"></slot>
+                  <slot
+                    name="page"
+                    :value="page"
+                    :activeValue="getModelValue"
+                  ></slot>
                 </template>
                 <template v-else>
                   <span
@@ -145,7 +156,7 @@
                 </template>
               </span>
             </template>
-          </a>
+          </component>
         </li>
         <li
           data-name="pagination-li"
@@ -250,6 +261,7 @@
 import { computed, defineComponent } from "vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
+import { useRoute } from "vue-router";
 export default defineComponent({
   name: "TPagination",
   props: {
@@ -279,18 +291,53 @@ export default defineComponent({
     colorClass: {
       type: String,
       default: ""
+    },
+    nuxt: {
+      type: Boolean,
+      default: false
+    },
+    vue: {
+      type: Boolean,
+      default: false
+    },
+    queryName: {
+      type: String,
+      default: "page"
+    },
+    appendQuery: {
+      type: Boolean,
+      default: true
+    },
+    formName: {
+      type: String,
+      default: ""
     }
   },
   setup(props, { emit, slots }) {
+    const route = useRoute();
+    const getModelValue = computed((): number => {
+      if (props.nuxt || props.vue) {
+        if (route.query[props.queryName]) {
+          if (props.formName) {
+            return +route.query[props.formName]?.[props.queryName] || 1;
+          } else {
+            return +route.query[props.queryName]!;
+          }
+        } else {
+          return 1;
+        }
+      }
+      return props.modelValue;
+    });
     const totalPages = computed(() => {
       return Math.ceil(props.totalCount / props.perPage);
     });
     const rangeStart = computed(() => {
-      const start = props.modelValue - props.pageRange;
+      const start = getModelValue.value - props.pageRange;
       return start > 0 ? start : 1;
     });
     const rangeEnd = computed(() => {
-      const end = props.modelValue + props.pageRange;
+      const end = getModelValue.value + props.pageRange;
       if (end < totalPages.value) {
         return end;
       } else {
@@ -307,11 +354,11 @@ export default defineComponent({
 
     const hasFirst = computed(() => rangeStart.value !== 1);
     const hasLast = computed(() => rangeEnd.value < totalPages.value);
-    const hasPrev = computed(() => props.modelValue > 1);
-    const hasNext = computed(() => props.modelValue < totalPages.value);
+    const hasPrev = computed(() => getModelValue.value > 1);
+    const hasNext = computed(() => getModelValue.value < totalPages.value);
 
-    const nextPage = computed(() => props.modelValue + 1);
-    const prevPage = computed(() => props.modelValue - 1);
+    const nextPage = computed(() => getModelValue.value + 1);
+    const prevPage = computed(() => getModelValue.value - 1);
     const changePage = page => {
       if (page > 0 && page <= totalPages.value) {
         emit("update:modelValue", page);
@@ -323,12 +370,41 @@ export default defineComponent({
       }
       return `bg-${props.variant}`;
     });
+    const is = computed(() => {
+      if (props.nuxt) {
+        return "nuxt-link";
+      } else if (props.vue) {
+        return "router-link";
+      }
+      return "a";
+    });
+    const dynamicBinding = computed(() => page => {
+      if (props.nuxt || props.vue) {
+        const append = props.appendQuery ? route.query : {};
+        const pageQuery = props.formName
+          ? { [props.formName]: { [props.queryName]: page } }
+          : { [props.queryName]: page };
+        return {
+          to: {
+            query: {
+              ...append,
+              ...pageQuery
+            }
+          }
+        };
+      }
+      return { href: "#" };
+    });
     const { renderClass } = useRenderClass("pagination");
     return {
       hasPrevSlot: !!slots.prev,
       hasNextSlot: !!slots.next,
       hasItemSlot: !!slots.item,
       hasPageSlot: !!slots.page,
+      getModelValue,
+      is,
+      dynamicBinding,
+      eventPrevent: props.nuxt || props.vue ? null : "click",
       getColorClass,
       renderClass,
       pages,

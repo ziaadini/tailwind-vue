@@ -686,22 +686,17 @@
         :per-page="5"
       ></t-pagination>
 
-      <div>with custom slot</div>
-      <t-pagination
-        class="mx-auto"
-        v-model="pagination"
-        :total-count="80"
-        :per-page="5"
-      >
+      <div>with custom slot and vue router query</div>
+      <t-pagination class="mx-auto" vue :total-count="80" :per-page="5">
         <!--        <template #page="{value}">-->
         <!--          <span :class="{ 'text-gray-200': value === pagination, 'text-gray-400': value !== pagination }">{{-->
         <!--            value-->
         <!--          }}</span>-->
         <!--        </template>-->
-        <template #item="{value}">
+        <template #item="{value,activeValue}">
           <span
             class="flex items-center justify-center rounded-full hover:opacity-80  sm:h-9 sm:w-9 h-8 w-8"
-            :class="{ 'bg-danger text-white': value === pagination }"
+            :class="{ 'bg-danger text-white': value === activeValue }"
             >{{ value }}</span
           >
         </template>
