@@ -169,7 +169,9 @@ export default defineComponent({
     },
     closeCallback: {
       type: Function as PropType<BooleanFunction>,
-      default: () => inject("t-bottom-sheet-closeCallback", () => true)
+      default: () => {
+        return true;
+      }
     },
     full: {
       type: Boolean,
