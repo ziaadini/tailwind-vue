@@ -34,6 +34,7 @@ export default defineComponent({
       // }
     } as TSettings);
     provide("t-table-localSort", false);
+    provide("t-bottom-sheet-titleTag", "h5");
     // provide("t-table-loading", true);
   }
 });

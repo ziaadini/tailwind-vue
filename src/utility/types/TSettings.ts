@@ -13,12 +13,14 @@ export interface TSettings {
   };
   accordion?: {
     title?: TSettingItem;
-    "title-enabled"?: TSettingItem;
-    "title-disabled"?: TSettingItem;
+    titleEnabled?: TSettingItem;
+    titleDisabled?: TSettingItem;
     text?: TSettingItem;
   };
   alert?: {
     container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    wrapper?: TSettingItem;
     icon?: TSettingItem;
     close?: TSettingItem;
   };
