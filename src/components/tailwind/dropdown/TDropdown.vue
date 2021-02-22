@@ -197,10 +197,6 @@ export default defineComponent({
       type: Boolean,
       default: () => inject(component("divide"), true),
     },
-    item: {
-      type: Object,
-      default: () => ({ label: undefined, value: undefined }),
-    },
     outline: {
       type: Boolean,
       default: () => inject(component("outline"), true),
