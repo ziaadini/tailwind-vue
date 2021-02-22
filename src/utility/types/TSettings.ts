@@ -213,6 +213,13 @@ export interface TSettings {
   },
   rate?: {
     wrapper: TSettingItem;
+  },
+  textinput?: {
+    label: TSettingItem;
+    wrapper: TSettingItem;
+    leftIcon: TSettingItem;
+    input: TSettingItem;
+    rightIcon: TSettingItem;
   }
 }
 
