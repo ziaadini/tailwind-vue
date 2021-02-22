@@ -13,12 +13,14 @@ export interface TSettings {
   };
   accordion?: {
     title?: TSettingItem;
-    "title-enabled"?: TSettingItem;
-    "title-disabled"?: TSettingItem;
+    titleEnabled?: TSettingItem;
+    titleDisabled?: TSettingItem;
     text?: TSettingItem;
   };
   alert?: {
     container?: TSettingItem;
+    innerContainer?: TSettingItem;
+    wrapper?: TSettingItem;
     icon?: TSettingItem;
     close?: TSettingItem;
   };
@@ -190,6 +192,25 @@ export interface TSettings {
     label?: TSettingItem;
     cardLabel?: TSettingItem;
   };
+  pagination?: {
+    container?: TSettingItem;
+    ul?: TSettingItem;
+    li?: TSettingItem;
+    anchor?: TSettingItem;
+    itemContainer?: TSettingItem;
+    iconContainer?: TSettingItem;
+    icon?: TSettingItem;
+    page?: TSettingItem;
+  };
+  dropdown?: {
+    parent: TSettingItem;
+    parentWrapper: TSettingItem;
+    parentWrapperText: TSettingItem;
+    parentWrapperTriangle: TSettingItem;
+    children: TSettingItem;
+    childrenScrollbar: TSettingItem;
+    childrenItem: TSettingItem;
+  }
 }
 
 export interface TSettingItem {

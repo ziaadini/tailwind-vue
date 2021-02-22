@@ -15,12 +15,13 @@ module.exports = {
           /^(hover:|focus:)?bg-success(-50)?$/,
           /^(hover:|focus:)?bg-secondary(-50)?$/,
           /^(hover:|focus:)?$bg-white$/,
-          /^(hover:|focus:)?border-primary(-50)?$/,
-          /^(hover:|focus:)?border-danger(-50)?$/,
-          /^(hover:|focus:)?border-warning(-50)?$/,
-          /^(hover:|focus:)?border-success(-50)?$/,
-          /^(hover:|focus:)?border-secondary(-50)?$/,
+          /^(hover:|focus:)?border-primary(-50|-100)?$/,
+          /^(hover:|focus:)?border-danger(-50|-100)?$/,
+          /^(hover:|focus:)?border-warning(-50|-100)?$/,
+          /^(hover:|focus:)?border-success(-50|-100)?$/,
+          /^(hover:|focus:)?border-secondary(-50|-100)?$/,
           /^duration-/,
+          /^delay-/,
           /^text-primary$/,
           /^text-danger$/,
           /^text-warning$/,
@@ -36,6 +37,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      transitionDelay: {
+        "0": "0ms",
+        "2000": "2000ms",
+      },
+      scale: {
+        "200": "2",
+        "300": "3",
+        "400": "4",
+      },
       maxHeight: {
         "1/4": "25%",
         "1/2": "50%",
@@ -54,6 +64,7 @@ module.exports = {
       minWidth: {
         "8": "2rem",
         "48": "12rem",
+        "14": "3.5rem",
       },
       colors: {
         primary: {

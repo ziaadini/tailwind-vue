@@ -4,7 +4,13 @@ export enum variants {
   danger = "danger",
   warning = "warning",
   white = "white",
-  secondary = "secondary"
+  secondary = "secondary",
+}
+
+export enum buttonSizes {
+  normal = "normal",
+  small = "small",
+  large = "large",
 }
 
 export enum textInputVariants {
@@ -16,11 +22,11 @@ export enum textInputVariants {
 export enum textInputAlignments {
   right = "right",
   center = "center",
-  left = "left"
+  left = "left",
 }
 
 export enum modifierVariants {
-  format = "format"
+  format = "format",
 }
 
 export enum size {
@@ -28,19 +34,32 @@ export enum size {
   sm = "sm",
   md = "md",
   lg = "lg",
-  full = "full"
+  full = "full",
 }
 
 export enum normalSizes {
   xs = "xs",
   sm = "sm",
   md = "md",
-  lg = "lg"
+  lg = "lg",
 }
 
 export enum positionVariant {
   topLeft = "topLeft",
   topRight = "topRight",
   bottomLeft = "bottomLeft",
-  bottomRight = "bottomRight"
+  bottomRight = "bottomRight",
+}
+
+export enum arrowDirections {
+  "arrow-up" = "arrow-up",
+  "arrow-down" = "arrow-down",
+  "arrow-right" = "arrow-right",
+  "arrow-left" = "arrow-left",
+}
+
+export enum delayType {
+  open = "open",
+  close = "close",
+  both = "both"
 }

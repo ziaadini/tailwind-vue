@@ -28,5 +28,5 @@ export const useInterval = (callback: () => void, delay: number | null) => {
       value && start();
     }
   );
-  return { start };
+  return { start, clear };
 };

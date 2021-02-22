@@ -9,7 +9,6 @@
         some text
       </t-button>
     </div>
-    <t-pagination :currentPage="1" :maxPages="12" />
   </div>
 </template>
 
@@ -17,12 +16,10 @@
 import { defineComponent } from "vue";
 import { ref } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
-import TPagination from "@/components/tailwind/paginantion/TPagination.vue";
 export default defineComponent({
   name: "App",
   components: {
-    TButton,
-    TPagination
+    TButton
   },
   setup() {
     const numberPickerCount = ref<number>(3);
