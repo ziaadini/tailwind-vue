@@ -81,8 +81,10 @@
       ref="dropdownRef"
       :class="[
         renderClass(
-          `${handleBorderType} ${
-            variant === 'white' ? 'border border-gray-200' : ''
+          `${
+            variant === 'white'
+              ? 'border border-gray-200 ' + handleBorderType
+              : ''
           } ${roundedClass}
         duration-${animationDuration}
         ${getAnimationDelay}
@@ -163,6 +165,7 @@ import {
 import {
   computed,
   defineComponent,
+  inject,
   nextTick,
   PropType,
   reactive,
@@ -175,13 +178,14 @@ import { useDelayHandler } from "@/compositionFunctions/delayHandler";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useRenderClass } from "@/compositionFunctions/settings";
-
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
+
+const component = (propName: string) => "t-dropdown-" + propName;
 export default defineComponent({
   props: {
     variant: {
       type: String,
-      default: variants.white,
+      default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
       },
@@ -191,7 +195,7 @@ export default defineComponent({
     },
     divide: {
       type: Boolean,
-      default: true,
+      default: () => inject(component("divide"), true),
     },
     item: {
       type: Object,
@@ -199,27 +203,27 @@ export default defineComponent({
     },
     outline: {
       type: Boolean,
-      default: true,
+      default: () => inject(component("outline"), true),
       required: false,
     },
     placeholder: {
       type: String,
-      default: "",
+      default: () => inject(component("placeholder"), ""),
       required: false,
     },
     rounded: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("rounded"), false),
       required: false,
     },
     hover: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("hover"), false),
       required: false,
     },
     top: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("top"), false),
       required: false,
     },
     items: {
@@ -228,7 +232,7 @@ export default defineComponent({
     },
     opened: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("opened"), false),
       required: false,
     },
     searchKey: {
@@ -237,39 +241,39 @@ export default defineComponent({
     },
     labelField: {
       type: String,
-      default: "label",
+      default: () => inject(component("labelField"), "label"),
     },
     valueField: {
       type: String,
-      default: "value",
+      default: () => inject(component("valueField"), "value"),
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("disabled"), false),
     },
     toggleByHeader: {
       type: Boolean,
-      default: true,
+      default: () => inject(component("toggleByHeader"), true),
     },
     parentColorClasses: {
       type: String,
-      default: "",
+      default: () => inject(component("parentColorClasses"), ""),
     },
     itemsColorClasses: {
       type: String,
-      default: "",
+      default: () => inject(component("itemsColorClasses"), ""),
     },
     animationDuration: {
       type: String,
-      default: "200",
+      default: () => inject(component("animationDuration"), "200"),
     },
     animationDelay: {
       type: String,
-      default: "0",
+      default: () => inject(component("animationDelay"), "0"),
     },
     animationDelayType: {
       type: String as PropType<delayType>,
-      default: delayType.both,
+      default: () => inject(component("animationDelayType"), delayType.both),
       validator: (propValue: string) => {
         return !!delayType[propValue];
       },
