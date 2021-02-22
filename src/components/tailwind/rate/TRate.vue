@@ -9,6 +9,7 @@
     ]"
   >
     <div v-for="i in length" :key="i + 'rating'">
+      <slot :name="`before-star-${i}`" />
       <t-image
         @mousemove="hover && selectStar(i, $event)"
         @click="selectStar(i, $event)"
@@ -30,6 +31,7 @@
         :src="emptyIcon"
         v-show="returnImageSrc(i) === 3"
       />
+      <slot :name="`after-star-${i}`" />
     </div>
   </div>
 </template>
@@ -91,11 +93,11 @@ export default defineComponent({
       selectedIndex.value = starIndex;
     };
 
-    watch(selectedIndex, value => {
+    watch(selectedIndex, (value) => {
       emit("update:modelValue", value);
     });
 
-    watch(modelValue, value => {
+    watch(modelValue, (value) => {
       selectedIndex.value = value;
     });
 
@@ -116,8 +118,8 @@ export default defineComponent({
       selectStar,
       returnImageSrc,
       parent,
-      renderClass
+      renderClass,
     };
-  }
+  },
 });
 </script>
