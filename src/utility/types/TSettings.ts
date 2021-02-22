@@ -210,6 +210,9 @@ export interface TSettings {
     children: TSettingItem;
     childrenScrollbar: TSettingItem;
     childrenItem: TSettingItem;
+  },
+  rate?: {
+    wrapper: TSettingItem;
   }
 }
 
