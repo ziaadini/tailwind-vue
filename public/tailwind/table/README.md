@@ -7,6 +7,9 @@
 | card | Boolean | true | if set true in sm breakpoint will hide the table and show cards instead |
 | renderTable | Boolean | true | if you want avoid table rendering base on userAgent or what ever... |
 | renderCard | Boolean | true | if you want avoid card rendering base on userAgent or what ever... |
+| loading | Boolean | false | show loading |
+| loadingText | String | Loading | show text under loading |
+| loadingProps | Object | `{colorClass: "border-gray-300",size: "md",type: "spinner"}` | props for loading component |
 | divideX | Boolean | true | should has border for columns |
 | divideY | Boolean | true | should has border for rows |
 | hasCounter | Boolean | true | row counter in first column |
@@ -26,11 +29,13 @@
 | card-counter  | bind: `value`       |
 | card-cell(yourItemKey)  | for specific cell bind: `A`        |
 | card-cell  | for all cells bind: `A`        |
+| card-loading  | render custom loading        |
 | rowDetails  | expandable details bind: `A` + `isCard`: is inside card or table        |
 | header  | same as card-header slot for table      |
 | counter  | same as card-counter slot for table      |
 | cell(yourItemKey)  | same as card-cell(yourItemKey)        |
 | cell  | same as card-cell        |
+| loading  | render custom loading for table      |
 
 
  1. A  ->

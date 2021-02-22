@@ -4,11 +4,14 @@
     :class="renderClass('flex justify-center', 'container')"
   >
     <template v-if="type === LoadingTypes.spinner">
-      <div v-bind="$attrs" :class="renderClass(`${withClass} relative`, 'spinnerContainer')">
+      <div
+        v-bind="$attrs"
+        :class="renderClass(`${withClass} relative`, 'spinnerContainer')"
+      >
         <div
           :class="
             renderClass(
-              `border-${variant} absolute top-0 left-0 z-0 rounded-full h-full w-full opacity-60 border-2`,
+              `${getBorderVariant} absolute top-0 left-0 z-0 rounded-full h-full w-full opacity-60 border-2`,
               'spinnerCircle'
             )
           "
@@ -16,7 +19,7 @@
         <div
           :class="
             renderClass(
-              `border-${variant} absolute top-0 left-0 h-full w-full  z-10 rounded-full border-gray-50 border-t-2 animate-spin`,
+              `${getBorderVariant} absolute top-0 left-0 h-full w-full  z-10 rounded-full border-gray-50 border-t-2 animate-spin`,
               'spinnerSpin'
             )
           "
@@ -26,31 +29,36 @@
 
     <template v-else>
       <div
-          data-name="loading-item"
-          v-bind="$attrs"
-          :class="
-        renderClass(`rounded-full t-loader bg-${variant} ${withClass}`, 'item')
-      "
+        data-name="loading-item"
+        v-bind="$attrs"
+        :class="
+          renderClass(
+            `rounded-full t-loader ${getBgVariant} ${withClass}`,
+            'item'
+          )
+        "
       ></div>
       <div
-          data-name="loading-item"
-          v-bind="$attrs"
-          :class="
-        renderClass(
-          `rounded-full t-loader-middle mx-1 bg-${variant} ${withClass}`,
-          'item'
-        )
-      "
+        data-name="loading-item"
+        v-bind="$attrs"
+        :class="
+          renderClass(
+            `rounded-full t-loader-middle mx-1 ${getBgVariant} ${withClass}`,
+            'item'
+          )
+        "
       ></div>
       <div
-          data-name="loading-item"
-          v-bind="$attrs"
-          :class="
-        renderClass(`rounded-full t-loader bg-${variant} ${withClass}`, 'item')
-      "
+        data-name="loading-item"
+        v-bind="$attrs"
+        :class="
+          renderClass(
+            `rounded-full t-loader ${getBgVariant} ${withClass}`,
+            'item'
+          )
+        "
       ></div>
     </template>
-
   </div>
 </template>
 
@@ -79,6 +87,10 @@ export default defineComponent({
         return !!variants[propValue];
       }
     },
+    colorClass: {
+      type: String,
+      default: ""
+    },
     type: {
       type: String,
       default: "default",
@@ -103,8 +115,22 @@ export default defineComponent({
       }
       return "";
     });
-    const { renderClass } = useRenderClass("loading");
-    return { withClass, renderClass, LoadingTypes };
+    const getBgVariant = computed(() => {
+      if (props.colorClass) {
+        return props.colorClass;
+      }
+      return `bg-${props.variant}`;
+    });
+    const getBorderVariant = computed(() => {
+      if (props.colorClass) {
+        return props.colorClass;
+      }
+      return `border-${props.variant}`;
+    });
+    const { renderClass } = useRenderClass(
+      "loading"
+    );
+    return { withClass, renderClass, LoadingTypes,getBgVariant, getBorderVariant };
   }
 });
 </script>
