@@ -201,10 +201,13 @@ export interface TSettings {
     page?: TSettingItem;
   };
   dropdown?: {
+    parent: TSettingItem;
     parentWrapper: TSettingItem;
     parentWrapperText: TSettingItem;
     parentWrapperTriangle: TSettingItem;
-    childrenWrapper: TSettingItem;
+    children: TSettingItem;
+    childrenScrollbar: TSettingItem;
+    childrenItem: TSettingItem;
   }
 }
 
