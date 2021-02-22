@@ -10,9 +10,23 @@
       ]"
       role="alert"
     >
-      <div class="flex items-center justify-between px-3 py-3">
-        <div class="flex items-center">
-          <div class="self-start" v-if="icon">
+      <div
+        data-name="alert-innerContainer"
+        :class="
+          renderClass(
+            'flex items-center justify-between px-3 py-3',
+            'innerContainer'
+          )
+        "
+      >
+        <div
+          data-name="alert-wrapper"
+          :class="renderClass('flex items-center', 'wrapper')"
+        >
+          <div class="self-start" v-if="hasIconSlot">
+            <slot name="icon"></slot>
+          </div>
+          <div class="self-start" v-else-if="icon">
             <t-icon
               data-name="alert-icon"
               :class="renderClass(iconClass, 'icon')"
@@ -20,10 +34,11 @@
             ></t-icon>
           </div>
 
-          <div>
-            <div class="text-sm text-right">
-              <slot></slot>
-            </div>
+          <div
+            data-name="alert-text"
+            :class="renderClass('text-sm text-right', 'text')"
+          >
+            <slot></slot>
           </div>
         </div>
 
@@ -85,7 +100,7 @@ export default defineComponent({
       default: () => false
     }
   },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const wrapperColor = computed(() => {
       return `bg-${props.variant}-50 text-${props.variant} border-${props.variant}-50`;
     });
@@ -101,6 +116,7 @@ export default defineComponent({
     });
     const { renderClass } = useRenderClass("alert");
     return {
+      hasIconSlot: slots.icon,
       renderClass,
       wrapperColor,
       svgColor,

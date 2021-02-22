@@ -87,11 +87,6 @@ export default defineComponent({
     });
 
     const returnImageSrc = computed(() => (index: number) => {
-      console.log(
-        selectedIndex.value - index,
-        selectedIndex.value - index === 0.5
-      );
-
       if (index <= selectedIndex.value) {
         return 1;
       } else if (selectedIndex.value - index === -0.5) {
@@ -101,11 +96,7 @@ export default defineComponent({
       return 3;
     });
 
-    onMounted(() => {
-      console.log({ parent });
-    });
-
-    return {
+return {
       selectStar,
       returnImageSrc,
       parent,

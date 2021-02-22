@@ -3,76 +3,67 @@
   <component
     :is="wrapperComponent"
     :to="to"
+    :disabled="disabled"
     data-name="button-container"
     :class="[
-      {
-        'rounded-full': rounded,
-        ripple,
-        'w-full': full,
-      },
-      variantClasses,
       renderClass(
-        'shadow relative rounded-sm border-1 focus:outline-none',
-        'container'
+        `${variantClasses} flex justify-center items-center px-4 py-2 shadow relative rounded-sm border-1 focus:outline-none`,
+        'container',
+        {
+          'rounded-full': rounded,
+          ripple: ripple && !isDisabled,
+          'w-full': full,
+          'min-w-14': !fab
+        }
       ),
     ]"
     v-bind="$attrs"
   >
-    <span
-      :class="
-        renderClass(
-          'flex justify-center align-center px-4 py-2',
-          'contentContainer'
-        )
-      "
-      data-name="button-contentContainer"
-    >
-      <app-icon
-        :name="icon"
-        data-name="button-icon"
-        :class="[
-          {
-            'opacity-0': loading,
-          },
-          renderClass('', 'icon'),
-        ]"
-      />
-      <span
-        :class="{
+    <app-icon
+      :name="icon"
+      data-name="button-icon"
+      :class="[
+        renderClass('', 'icon', {
           'opacity-0': loading,
-        }"
-      >
-        <slot />
-      </span>
+          'pl-2': !fab
+        }),
+      ]"
+    />
+    <span
+      :class="{
+        'opacity-0': loading,
+      }"
+    >
+      <slot />
+    </span>
 
-      <span
-        v-if="loading"
-        data-name="button-loadingContainer"
-        :class="{
-          [renderClass(
-            'absolute transform top-1/2 -translate-y-1/2',
-            'loadingContainer'
-          )]: loading,
-        }"
-      >
-        <template v-if="hasLoadingSlot">
-          <slot name="loading" v-bind="loadingProps"></slot>
-        </template>
-        <t-loading
-          v-else
-          data-name="button-loading"
-          :class="renderClass('', 'loading')"
-          v-bind="loadingBindingProps"
-          size="sm"
-        />
-      </span>
+    <span
+      v-if="loading"
+      data-name="button-loadingContainer"
+      :class="{
+        [renderClass(
+          'absolute transform top-1/2 -translate-y-1/2',
+          'loadingContainer'
+        )]: loading,
+      }"
+    >
+      <template v-if="hasLoadingSlot">
+        <slot name="loading" v-bind="loadingProps"></slot>
+      </template>
+      <t-loading
+        v-else
+        data-name="button-loading"
+        :class="renderClass('', 'loading')"
+        v-bind="loadingBindingProps"
+        size="sm"
+      />
     </span>
   </component>
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import AppIcon from "@/components/tailwind/icon/TIcon.vue";
-import { variants } from "@/utility/css-helper.ts";
+import { buttonSizes, variants } from "@/utility/css-helper.ts";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
@@ -82,18 +73,35 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    fab: {
+      type: Boolean,
+      default: false,
+    },
     variant: {
       type: String,
       default: "primary",
       validator: (propValue: string) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         return !!variants[propValue];
       },
+    },
+    size: {
+      type: String,
+      default: "normal",
+      validator: (propValue: string) => {
+        return !!buttonSizes[propValue];
+      },
+    },
+    color: {
+      type: String,
+      default: "",
     },
     icon: {
       type: String,
       default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     outline: {
       type: Boolean,
@@ -136,14 +144,41 @@ export default defineComponent({
     const variantClasses = computed((): string => {
       const baseClass =
         " hover:opacity-80 transition hover:shadow-md text-white disabled:opacity-50";
+      const variantClass = `bg-${props.variant} hover:bg-${props.variant}`;
+
+      const outlineVariantClass = `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50`;
       const outlineBaseClass =
         " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
-      return props.outline
-        ? `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50` +
-            outlineBaseClass
-        : `
-        bg-${props.variant} hover:bg-${props.variant}
-        ` + baseClass;
+
+      let size = " ";
+
+      let height;
+      let width;
+      switch (props.size) {
+        case buttonSizes.small:
+          height = "h-7";
+          width = "w-7";
+          break;
+        case buttonSizes.large:
+          height = "h-11";
+          width = "w-11";
+          break;
+        default:
+          height = "h-9";
+          width = "w-9";
+          break;
+      }
+
+      size += height + " ";
+      if (props.fab) {
+        size += width;
+      }
+
+      return (
+        (props.outline
+          ? (props.color || outlineVariantClass) + outlineBaseClass
+          : (props.color || variantClass) + baseClass) + size
+      );
     });
 
     const loadingBindingProps = {
@@ -161,12 +196,18 @@ export default defineComponent({
       return "router-link";
     });
     const { renderClass } = useRenderClass("button");
+
+    const isDisabled = computed(() => {
+      return props.loading || props.disabled;
+    });
+
     return {
       renderClass,
       variantClasses,
       loadingBindingProps,
       hasLoadingSlot: !!slots.loading,
       wrapperComponent,
+      isDisabled,
     };
   },
 });

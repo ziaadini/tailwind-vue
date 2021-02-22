@@ -17,14 +17,15 @@
 
 <script lang="ts">
 import { normalSizes, positionVariant, variants } from "@/utility/css-helper";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, inject, onMounted, ref } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
+  name: "TBadge",
   props: {
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-badge-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -33,8 +34,7 @@ export default defineComponent({
     },
     position: {
       type: String,
-      default: positionVariant.topRight,
-      required: false,
+      default: () => inject("t-badge-position", positionVariant.topRight),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -43,14 +43,11 @@ export default defineComponent({
     },
     rounded: {
       type: Boolean,
-      default: () => true,
-      required: false
+      default: () => inject("t-badge-rounded", true)
     },
     size: {
       type: String,
-      default: () => {
-        return normalSizes.md;
-      },
+      default: () => inject("t-badge-size", normalSizes.md),
       validator: (propValue: string) => {
         return !!normalSizes[propValue];
       }
@@ -64,13 +61,13 @@ export default defineComponent({
     const retSize = (size: normalSizes): string => {
       switch (size) {
         case normalSizes.xs:
-          return "w-3 h-3 text-xs";
+          return "w-2 h-2 text-xs";
         case normalSizes.sm:
-          return "w-6 h-6 text-sm";
+          return "w-4 h-4 text-sm";
         case normalSizes.md:
-          return "w-7 h-7 text-base";
+          return "w-6 h-6 text-base";
         case normalSizes.lg:
-          return "w-12 h-12 text-lg";
+          return "w-10 h-10 text-lg";
 
         default:
           return "w-3 h-3";

@@ -1,11 +1,7 @@
 | Props | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
 | items | Array of Object | - | for example : [{title:"my title",text:"text",selected:true},{ title:"my second title",text:"my second text",disabled:true}] |
-| label | string | label | witch key inside object use for label |
-| value | string | value | witch key inside object use for value |
-| text | string | text | witch key inside object use for text |
-| variant | string | primary | pass a valid variant color |
-| clickable | boolean | false | go to next step when user clicking on it |
+| collapse | boolean | false | convert accordion to collapse if `true` other items will not close |
 
 
 

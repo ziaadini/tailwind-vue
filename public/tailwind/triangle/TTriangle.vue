@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind="$attrs"
     data-name="triangle-triangle"
     :class="
       renderClass(
@@ -12,7 +13,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import { variants } from "@/utility/css-helper";
+import { arrowDirections, variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
@@ -21,11 +22,9 @@ export default defineComponent({
     direction: {
       type: String as PropType<string>,
       validator: (value: string) => {
-        return ["arrow-up", "arrow-down", "arrow-right", "arrow-left"].includes(
-          value
-        );
+        return !!arrowDirections[value];
       },
-      default: "arrow-left"
+      default: arrowDirections["arrow-left"],
     },
     variant: {
       type: String,
@@ -34,12 +33,12 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      }
+      },
     },
     colorClass: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   setup(props) {
     const triangleClassByDirection = computed(() => {
@@ -66,9 +65,9 @@ export default defineComponent({
     return {
       renderClass,
       triangleClassByDirection,
-      borderColor
+      borderColor,
     };
-  }
+  },
 });
 </script>
 

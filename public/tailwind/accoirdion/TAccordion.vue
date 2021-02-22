@@ -17,8 +17,8 @@
         data-name="accordion-title"
         :class="[
           {
-            [renderClass('cursor-pointer', 'title-enabled')]: !item.disabled,
-            [renderClass('cursor-not-allowed', 'title-disabled')]: item.disabled
+            [renderClass('cursor-pointer', 'titleEnabled')]: !item.disabled,
+            [renderClass('cursor-not-allowed', 'titleDisabled')]: item.disabled
           },
           renderClass('', 'title')
         ]"
@@ -76,11 +76,13 @@ import {
   PropType,
   ref,
   watch,
-  nextTick
+  nextTick,
+  inject
 } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
+  name: "TAccordion",
   props: {
     items: {
       type: Array as PropType<ReadonlyArray<{ [key: string]: unknown }>>,
@@ -90,7 +92,7 @@ export default defineComponent({
     },
     collapse: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-accordion-collapse", false)
     }
   },
   setup(props, { slots }) {

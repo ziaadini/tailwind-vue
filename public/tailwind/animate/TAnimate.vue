@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { inject, ref, watch } from "vue";
 
 export default {
   name: "TAnimate",
@@ -29,27 +29,27 @@ export default {
     },
     start: {
       type: String,
-      default: "opacity-0"
+      default: () => inject("t-animate-start", "opacity-0")
     },
     end: {
       type: String,
-      default: "opacity-1"
+      default: () => inject("t-animate-end", "opacity-1")
     },
     transitionClass: {
       type: String,
-      default: "transition-all"
+      default: () => inject("t-animate-transitionClass", "transition-all")
     },
     duration: {
       type: Number,
-      default: 300
+      default: () => inject("t-animate-duration", 300)
     },
     easeClass: {
       type: String,
-      default: "ease-out"
+      default: () => inject("t-animate-easeClass", "ease-out")
     },
     allocateSpace: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-animate-allocateSpace", false)
     }
   },
   setup(props) {
