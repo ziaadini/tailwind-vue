@@ -666,12 +666,11 @@
       <div>ajax searchable</div>
       <t-searchable
         v-model="searchableModel"
-        labelField="name"
         placeholder="select..."
         :items="searchableItems"
         :local-search="false"
-        item-text="name"
-        item-value="id"
+        label-field="name"
+        value-field="id"
         @search="searchAjax"
       ></t-searchable>
       {{ searchableModel }}
