@@ -200,6 +200,12 @@ export interface TSettings {
     icon?: TSettingItem;
     page?: TSettingItem;
   };
+  dropdown?: {
+    parentWrapper: TSettingItem;
+    parentWrapperText: TSettingItem;
+    parentWrapperTriangle: TSettingItem;
+    childrenWrapper: TSettingItem;
+  }
 }
 
 export interface TSettingItem {

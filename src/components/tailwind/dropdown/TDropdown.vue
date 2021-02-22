@@ -25,8 +25,13 @@
     <template v-else>
       <div
         ref="dropdownParentRef"
-        class="cursor-pointer w-64 h-10 flex items-center justify-center"
-        :class="[parentRoundedClass, parentClass]"
+        data-name="dropdown-parent"
+        :class="[
+          renderClass(
+            `cursor-pointer w-64 h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
+            'parent'
+          ),
+        ]"
         @click="triggerMenu(true)"
       >
         <template v-if="hasActivatorSlot">
@@ -39,12 +44,29 @@
           ></slot>
         </template>
         <template v-else>
-          <div class="flex flex-row justify-center items-center w-full">
-            <span class="mr-4 ml-2 overflow-ellipsis overflow-hidden h-full">
+          <div
+            data-name="dropdown-parentWrapper"
+            :class="[
+              renderClass(
+                'flex flex-row justify-center items-center w-full',
+                'parentWrapper'
+              ),
+            ]"
+          >
+            <span
+              data-name="dropdown-parentWrapperText"
+              :class="[
+                renderClass(
+                  'mr-4 ml-2 overflow-ellipsis overflow-hidden h-full',
+                  'parentWrapperText'
+                ),
+              ]"
+            >
               {{ selectedItem.label || placeholder }}
             </span>
             <TTriangle
-              class="mr-auto ml-4"
+              :class="[renderClass('mr-auto ml-4', 'parentWrapperTriangle')]"
+              data-name="dropdown-parentWrapperTriangle"
               :direction="arrowDirection"
               :variant="''"
             />
@@ -58,21 +80,35 @@
     <div
       ref="dropdownRef"
       :class="[
-        variant === 'white' && `border border-gray-200 ${handleBorderType}`,
-        {
-          'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-          'z-30': !hover,
-          'z-40': hover,
-          'divide-y': divide,
-        },
-        roundedClass,
-        `duration-${animationDuration}`,
-        getAnimationDelay,
-        handleVerticalTraslate,
+        renderClass(
+          `${handleBorderType} ${
+            variant === 'white' ? 'border border-gray-200' : ''
+          } ${roundedClass}
+        duration-${animationDuration}
+        ${getAnimationDelay}
+        transform
+        ${handleVerticalTraslate}`,
+          'children',
+          {
+            'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
+            'z-30': !hover,
+            'z-40': hover,
+            'divide-y': divide,
+          }
+        ),
       ]"
+      data-name="dropdown-children"
       class="transform overflow-hidden ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
-      <div class="overflow-y-auto scrollbar-sm max-h-48 ">
+      <div
+        :class="[
+          renderClass(
+            'overflow-y-auto scrollbar-sm max-h-48',
+            'childrenScrollbar'
+          ),
+        ]"
+        data-name="dropdown-childrenScrollbar"
+      >
         <slot name="prepend" :hasItem="hasItem"></slot>
         <template v-for="(item, index) in getItems" :key="index">
           <template v-if="hasItemSlot">
@@ -87,11 +123,16 @@
             <div
               class="py-2 overflow-ellipsis overflow-hidden"
               :class="[
-                childClass,
-                {
-                  'bg-gray-100': selectedItem.value === item.value,
-                },
+                renderClass(
+                  'py-2 overflow-ellipsis overflow-hidden ' + childClass,
+                  'childrenItem',
+                  {
+                    'bg-gray-100': selectedItem.value === item.value,
+                  }
+                ),
+                ,
               ]"
+              data-name="dropdown-childrenItem"
               @click="selectItem(item)"
             >
               <template v-if="hasLabelSlot">
@@ -134,6 +175,8 @@ import { DropDown } from "@/utility/types/base-component-types";
 import { useDelayHandler } from "@/compositionFunctions/delayHandler";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
+import { useRenderClass } from "@/compositionFunctions/settings";
+
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 export default defineComponent({
   props: {
@@ -566,6 +609,8 @@ export default defineComponent({
       }
     });
 
+    const { renderClass } = useRenderClass("dropdown");
+
     return {
       hasHeaderSlot: !!slots.header,
       hasItemSlot: !!slots.item,
@@ -595,6 +640,7 @@ export default defineComponent({
       placement,
       arrowDirection,
       getAnimationDelay,
+      renderClass,
     };
   },
 });
