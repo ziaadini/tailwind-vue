@@ -24,7 +24,7 @@ export default defineComponent({
         title: {
           add: "text-danger"
         }
-      },
+      }
       // alert: {
       //   container: { add: "py-1" }
       // }
@@ -33,6 +33,8 @@ export default defineComponent({
       //   text: { add: "text-primary" }
       // }
     } as TSettings);
+    provide("t-table-localSort", false);
+    // provide("t-table-loading", true);
   }
 });
 </script>

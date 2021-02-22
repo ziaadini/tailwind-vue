@@ -379,7 +379,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, inject, PropType, ref } from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTh from "@/components/tailwind/table/TTh.vue";
 import TCollapsable from "@/components/tailwind/collapsable/TCollapsable.vue";
@@ -411,71 +411,72 @@ export default defineComponent({
     },
     localSort: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-localSort", true)
     },
     rounded: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-rounded", true)
     },
     card: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-card", true)
     },
     renderTable: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-renderTable", true)
     },
     renderCard: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-renderCard", true)
     },
     loading: {
       type: Boolean,
-      default: false
+      default: () => inject("t-table-loading", false)
     },
     loadingText: {
       type: String,
-      default: "Loading"
+      default: () => inject("t-table-loadingText", "Loading")
     },
     loadingProps: {
       type: Object,
-      default: () => ({
-        colorClass: "border-gray-300",
-        size: "md",
-        type: "spinner"
-      })
+      default: () =>
+        inject("t-table-loadingProps", {
+          colorClass: "border-gray-300",
+          size: "md",
+          type: "spinner"
+        })
     },
     divideX: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-divideX", true)
     },
     divideY: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-divideY", true)
     },
     hasCounter: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-hasCounter", true)
     },
     hasCardCounter: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-hasCardCounter", true)
     },
     hover: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-table-hover", true)
     },
     hoverClass: {
       type: String,
-      default: "hover:bg-gray-100"
+      default: () => inject("t-table-hoverClass", "hover:bg-gray-100")
     },
     striped: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-table-striped", false)
     },
     stripedClass: {
       type: String,
-      default: "bg-gray-50"
+      default: () => inject("t-table-stripedClass", "bg-gray-50")
     }
   },
   setup(props, { emit, slots }) {
