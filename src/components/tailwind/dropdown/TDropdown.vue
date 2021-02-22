@@ -1,11 +1,10 @@
 <template>
+  isOverflowed: {{ isOverflowed }} roundedClass: {{ roundedClass }}
+  <br />
   <div
     class="relative"
     @mouseenter="hoverTriggerMenu(true)"
     @mouseleave="hoverTriggerMenu(false)"
-    :class="{
-      'rounded-sm': isClosed,
-    }"
   >
     <!-- parent section -->
     <!-- header slot  -->
@@ -26,17 +25,8 @@
     <template v-else>
       <div
         ref="dropdownParentRef"
-        class="rounded-sm cursor-pointer w-64 h-10 flex items-center justify-center"
-        :class="[
-          isClosed && 'rounded-sm',
-          {
-            'rounded-full': isClosedRounded,
-            'rounded-md': isOpenedRounded,
-            'rounded-b-none': isOpened && !isOverflowed,
-            'rounded-t-none': isOpened && isOverflowed,
-          },
-          parentClass,
-        ]"
+        class="cursor-pointer w-64 h-10 flex items-center justify-center"
+        :class="[parentRoundedClass, parentClass]"
         @click="triggerMenu(true)"
       >
         <template v-if="hasActivatorSlot">
@@ -68,63 +58,63 @@
     <div
       ref="dropdownRef"
       :class="[
+        variant === 'white' && `border border-gray-200 ${handleBorderType}`,
         {
           'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
-          'rounded-b-sm': isOpened && !isOverflowed,
-          'border border-gray-200 border-t-0': variant === 'white',
-          'rounded-b-md': rounded && !isOverflowed,
-          'rounded-b-none': rounded && isOverflowed,
-          'rounded-t-md': rounded && isOverflowed,
-          '-translate-y-full top-0': isOverflowed,
           'z-30': !hover,
           'z-40': hover,
           'divide-y': divide,
         },
-        `duration-${animationDelay}`,
+        roundedClass,
+        `duration-${animationDuration}`,
+        getAnimationDelay,
+        handleVerticalTraslate,
       ]"
-      class="max-h-48 overflow-y-auto scrollbar-sm transform ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="transform overflow-hidden ease-in-out cursor-pointer transition w-64 absolute bg-white"
     >
-      <slot name="prepend" :hasItem="hasItem"></slot>
-      <template v-for="(item, index) in getItems" :key="index">
-        <template v-if="hasItemSlot">
-          <slot
-            name="item"
-            :original-item="items[index]"
-            :item="item"
-            :index="index"
-          ></slot>
+      <div class="overflow-y-auto scrollbar-sm max-h-48 ">
+        <slot name="prepend" :hasItem="hasItem"></slot>
+        <template v-for="(item, index) in getItems" :key="index">
+          <template v-if="hasItemSlot">
+            <slot
+              name="item"
+              :original-item="items[index]"
+              :item="item"
+              :index="index"
+            ></slot>
+          </template>
+          <template v-else>
+            <div
+              class="py-2 overflow-ellipsis overflow-hidden"
+              :class="[
+                childClass,
+                {
+                  'bg-gray-100': selectedItem.value === item.value,
+                },
+              ]"
+              @click="selectItem(item)"
+            >
+              <template v-if="hasLabelSlot">
+                <slot
+                  name="label"
+                  :item="item"
+                  :original-item="items[index]"
+                  :index="index"
+                ></slot>
+              </template>
+              <template v-else>
+                {{ item.label }}
+              </template>
+            </div>
+          </template>
         </template>
-        <template v-else>
-          <div
-            class="py-2 overflow-ellipsis overflow-hidden"
-            :class="[
-              childClass,
-              {
-                'bg-gray-100': selectedItem.value === item.value,
-              },
-            ]"
-            @click="selectItem(item)"
-          >
-            <template v-if="hasLabelSlot">
-              <slot
-                name="label"
-                :item="item"
-                :original-item="items[index]"
-                :index="index"
-              ></slot>
-            </template>
-            <template v-else>
-              {{ item.label }}
-            </template>
-          </div>
-        </template>
-      </template>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { arrowDirections, variants } from "@/utility/css-helper";
+import { arrowDirections, delayType, variants } from "@/utility/css-helper";
 import {
   useIsVisible,
   visibilityOverflow,
@@ -141,6 +131,7 @@ import {
   watchEffect,
 } from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
+import { useDelayHandler } from "@/compositionFunctions/delayHandler";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
@@ -226,9 +217,20 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    animationDelay: {
+    animationDuration: {
       type: String,
       default: "200",
+    },
+    animationDelay: {
+      type: String,
+      default: "0",
+    },
+    animationDelayType: {
+      type: String as PropType<delayType>,
+      default: delayType.both,
+      validator: (propValue: string) => {
+        return !!delayType[propValue];
+      },
     },
   },
   components: { TTriangle },
@@ -283,6 +285,14 @@ export default defineComponent({
       return isOpened.value && props.rounded;
     });
 
+    // handle animation delay based on type
+    const { getAnimationDelay } = useDelayHandler(
+      props.animationDelayType,
+      props.animationDelay,
+      isOpened,
+      isClosed
+    );
+
     function updateSelectedValue(item: any) {
       state.selected = item.value;
       emit("update:modelValue", item.value);
@@ -306,11 +316,11 @@ export default defineComponent({
     }
     const isOverflowed = computed(() => {
       if (props.top) {
-        if (hasPlacementPosition(visibilityOverflow.top)) return true;
+        if (hasPlacementPosition(visibilityOverflow.top)) return false;
         else {
           if (hasPlacementPosition(visibilityOverflow.bottom)) {
-            return false;
-          } else return true;
+            return true;
+          } else return false;
         }
       } else {
         if (hasPlacementPosition(visibilityOverflow.bottom)) return false;
@@ -319,6 +329,108 @@ export default defineComponent({
             return true;
           } else return false;
         }
+      }
+    });
+
+    // handler parent rounded class
+    const parentRoundedClass = computed(() => {
+      //       'rounded-full': isClosedRounded,
+      // 'rounded-md': isOpenedRounded,
+      // 'rounded-b-none': isOpened && !isOverflowed,
+      // 'rounded-t-none': isOpened && isOverflowed,
+      if (isOpened.value) {
+        if (!isOverflowed.value) {
+          if (props.top) {
+            if (props.rounded) {
+              return "rounded-b-md";
+            }
+            return "rounded-b-sm";
+          } else {
+            if (props.rounded) {
+              return "rounded-t-md";
+            }
+            return "rounded-t-sm";
+          }
+        } else {
+          if (props.top) {
+            if (props.rounded) {
+              return "rounded-t-md";
+            }
+            return "rounded-t-sm";
+          } else {
+            if (props.rounded) {
+              return "rounded-b-md";
+            }
+            return "rounded-b-sm";
+          }
+        }
+      } else {
+        if (props.rounded) {
+          return "rounded-md";
+        } else {
+          return "rounded-sm";
+        }
+      }
+    });
+
+    // handle child wrapper rounded classes
+    const roundedClass = computed(() => {
+      if (!isOverflowed.value) {
+        if (props.top) {
+          if (props.rounded) {
+            return "rounded-t-md";
+          }
+          return "rounded-t-sm";
+        } else {
+          if (props.rounded) {
+            return "rounded-b-md";
+          }
+          return "rounded-b-sm";
+        }
+      } else {
+        if (props.top) {
+          if (props.rounded) {
+            return "rounded-b-md";
+          }
+          return "rounded-b-sm";
+        } else {
+          if (props.rounded) {
+            return "rounded-t-md";
+          }
+          return "rounded-t-sm";
+        }
+      }
+      // 'rounded-b-sm': !top && !rounded && !isOverflowed,
+      //     'rounded-b-md': !top && rounded && !isOverflowed,
+      //     'rounded-t-md': top && rounded && !isOverflowed,
+      //     'rounded-b-none': !top && rounded && isOverflowed,
+      //     'rounded-t-md': !top && rounded && isOverflowed,
+      //     'rounded-t-sm': !top && !rounded && isOverflowed,
+      //     'rounded-t-sm': top && !rounded && !isOverflowed,
+    });
+
+    const handleVerticalTraslate = computed(() => {
+      if (!isOverflowed.value) {
+        if (props.top) {
+          return "-translate-y-full top-0";
+        }
+        return "";
+      } else {
+        if (!props.top) {
+          return "-translate-y-full top-0";
+        }
+        return "";
+      }
+    });
+
+    const handleBorderType = computed(() => {
+      // isOverflowed ? 'border-b-0' : 'border-t-0'
+      if (!isOverflowed.value) {
+        if (props.top) return "border-b-0";
+        return "border-t-0";
+      } else {
+        if (props.top) return "border-t-0";
+        return "border-b-0";
       }
     });
 
@@ -462,6 +574,10 @@ export default defineComponent({
       parentClass:
         props.parentColorClasses || props.outline ? outlineClass : baseClass,
       childClass: props.itemsColorClasses || childClass,
+      roundedClass,
+      parentRoundedClass,
+      handleVerticalTraslate,
+      handleBorderType,
       isOpened,
       isClosed,
       isClosedRounded,
@@ -478,6 +594,7 @@ export default defineComponent({
       isOverflowed,
       placement,
       arrowDirection,
+      getAnimationDelay,
     };
   },
 });
