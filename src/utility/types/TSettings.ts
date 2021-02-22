@@ -202,6 +202,15 @@ export interface TSettings {
     icon?: TSettingItem;
     page?: TSettingItem;
   };
+  dropdown?: {
+    parent: TSettingItem;
+    parentWrapper: TSettingItem;
+    parentWrapperText: TSettingItem;
+    parentWrapperTriangle: TSettingItem;
+    children: TSettingItem;
+    childrenScrollbar: TSettingItem;
+    childrenItem: TSettingItem;
+  }
 }
 
 export interface TSettingItem {

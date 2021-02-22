@@ -9,6 +9,7 @@ export enum visibilityOverflow {
 }
 
 let isScrolling = null as any;
+let scrollDestroyed = null as any;
 let destroyScroll = null as any;
 
 let observersCount = 0;
@@ -25,10 +26,11 @@ export const useIsVisible = (
     isScrolling = scrollInstance.result;
     scrollInstance.initiateScroll();
     destroyScroll = scrollInstance.destroyScroll;
+    scrollDestroyed = scrollInstance.scrollDestroyed;
   }
 
   const handlePlacement = () => {
-    if (!isOpen.value) return
+    if (!isOpen.value) return;
 
     const childBounding = element.value!.getBoundingClientRect();
     const parentBounding = parentElement.value!.getBoundingClientRect();
@@ -65,11 +67,11 @@ export const useIsVisible = (
       ];
     }
 
-    console.log(placement.value)
+    console.log(placement.value);
   };
 
   watch(isScrolling, (resultValue) => {
-    console.log('is scrolling')
+    console.log("is scrolling");
     handlePlacement();
   });
 
@@ -79,6 +81,10 @@ export const useIsVisible = (
       destroyScroll();
       isScrolling = null;
     }
+  });
+  watch(scrollDestroyed, () => {
+    observersCount = 0;
+    isScrolling = null;
   });
   return {
     element,
