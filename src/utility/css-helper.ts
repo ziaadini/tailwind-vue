@@ -57,3 +57,9 @@ export enum arrowDirections {
   "arrow-right" = "arrow-right",
   "arrow-left" = "arrow-left",
 }
+
+export enum delayType {
+  open = "open",
+  close = "close",
+  both = "both"
+}

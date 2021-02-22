@@ -355,8 +355,12 @@
     DROPDOWN
   </h6>
   <small> simple dropdown </small>
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+  <div
+    class="flex flex-col justify-center w-100 flex-wrap space-x-1 space-x-reverse"
+  >
     <t-dropdown
+      animationDelay="2000"
+      animationDelayType="close"
       v-model="dropdownModel"
       placeholder="this is a test placeholder"
       rounded
@@ -407,7 +411,9 @@
   </div>
   <br />
   <small> raised dropdown </small>
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
+  <div
+    class="flex justify-center flex-col w-100 flex-wrap space-x-1 space-x-reverse"
+  >
     <t-dropdown
       v-model="dropdownModel"
       v-model:opened="openedDropdown"
@@ -418,10 +424,12 @@
       labelField="title"
       :items="dropdownItems"
       animationDelay="1000"
+      animationDelayType="close"
     />
     <t-dropdown
       v-model="dropdownModel"
       :outline="false"
+      top
       variant="white"
       placeholder="this is a test placeholder"
       :items="['test1', 'test2', 'test3']"

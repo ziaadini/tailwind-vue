@@ -2,6 +2,7 @@ import { onUnmounted, ref } from "vue";
 import { onMounted } from "vue";
 export const useIsScrolling = (onMount = false, element = ref(null)) => {
   const result = ref({});
+  const scrollDestroyed = ref(0);
   const handleScroll = (e) => {
     result.value = e;
   };
@@ -23,11 +24,13 @@ export const useIsScrolling = (onMount = false, element = ref(null)) => {
 
   onUnmounted(() => {
     destroyScroll();
+    scrollDestroyed.value++
   });
 
   return {
     result,
     destroyScroll,
+    scrollDestroyed,
     initiateScroll,
     element,
   };

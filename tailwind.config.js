@@ -21,6 +21,7 @@ module.exports = {
           /^(hover:|focus:)?border-success(-50|-100)?$/,
           /^(hover:|focus:)?border-secondary(-50|-100)?$/,
           /^duration-/,
+          /^delay-/,
           /^text-primary$/,
           /^text-danger$/,
           /^text-warning$/,
@@ -36,6 +37,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      transitionDelay: {
+        "0": "0ms",
+        "2000": "2000ms",
+      },
       scale: {
         "200": "2",
         "300": "3",
