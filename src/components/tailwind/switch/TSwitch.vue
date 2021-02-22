@@ -46,7 +46,7 @@ import { useSwitchAndCheckbox } from "@/compositionFunctions/switchAndCheckbox";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
-  props: SwitchAndCheckboxProps,
+  props: SwitchAndCheckboxProps(false),
   emits: ["update:modelValue"],
   setup(props, context) {
     onMounted(() => {

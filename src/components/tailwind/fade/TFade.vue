@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { inject, ref, watch } from "vue";
 
 export default {
   name: "TFade",
@@ -30,19 +30,19 @@ export default {
     },
     duration: {
       type: Number,
-      default: 300
+      default: () => inject("t-fade-duration", 300)
     },
     easeClass: {
       type: String,
-      default: "ease-out"
+      default: () => inject("t-fade-easeClass", "ease-out")
     },
     opacityClass: {
       type: String,
-      default: "opacity-1"
+      default: () => inject("t-fade-opacityClass", "opacity-1")
     },
     allocateSpace: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-fade-allocateSpace", false)
     }
   },
   setup(props) {

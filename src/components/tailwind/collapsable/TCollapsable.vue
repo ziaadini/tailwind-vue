@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 
 export default {
   name: "TCollapsable",
@@ -19,15 +19,15 @@ export default {
     show: { type: [Boolean, Number] },
     duration: {
       type: Number,
-      default: 300
+      default: () => inject("t-collapsable-duration", 300)
     },
     easeClass: {
       type: String,
-      default: "ease-in-out"
+      default: () => inject("t-collapsable-easeClass", "ease-in-out")
     },
     tag: {
       type: String,
-      default: "div"
+      default: () => inject("t-collapsable-tag", "div")
     }
   },
   setup(props) {
