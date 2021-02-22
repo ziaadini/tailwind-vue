@@ -38,6 +38,7 @@
 import { userOffsetFinder } from "@/compositionFunctions/offset";
 import { computed, defineComponent, inject, ref, toRefs, watch } from "vue";
 import TImage from "../image/TImage.vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 const component = (propName: string) => "t-rate-" + propName;
 export default defineComponent({
@@ -109,10 +110,13 @@ export default defineComponent({
       return 3;
     });
 
+    const { renderClass } = useRenderClass("rate");
+
     return {
       selectStar,
       returnImageSrc,
-      parent
+      parent,
+      renderClass
     };
   }
 });
