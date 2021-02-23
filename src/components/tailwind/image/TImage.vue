@@ -1,5 +1,6 @@
 <template>
-  <img v-bind="$attrs" ref="image" />
+  <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
+  <img v-else :src="src" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
@@ -31,36 +32,38 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { attrs }) {
     const { src, default: defaultImage, lazy } = toRefs(props);
-    const image = ref(null);
 
-    const {
-      image: imageDownloaded,
-      setImage,
-      downloadImage,
-    } = useImageDownloader();
+    // image ref
+    const imageRef = ref(null);
 
-    // watch for src changes
-    watch(src, (newSrc) => {
-      if (newSrc) {
-        downloadImage(newSrc);
-      }
-    });
+    function handleImageLazyload() {
+      // handle image downloading
+      const {
+        image: imageDownloaded,
+        setImage,
+        downloadImage,
+      } = useImageDownloader();
 
-    // if new images downloaded set them
-    watch(imageDownloaded, () => {
-      setImage(image);
-    });
+      // watch for image source changes and download the new image
+      watch(src, (newSrc) => {
+        if (newSrc) {
+          downloadImage(newSrc);
+        }
+      });
 
-    // hanlde lazy loading
-    if (lazy.value) {
+      // if new images downloaded set them
+      watch(imageDownloaded, () => {
+        setImage(imageRef);
+      });
+
       const { isIntersecting, destroyObserver } = useIntersectElement(
         {
           passRef: true,
         },
         () => ({}),
-        image
+        imageRef
       );
 
       watchEffect(() => {
@@ -69,17 +72,21 @@ export default defineComponent({
           destroyObserver();
         }
       });
-    } else {
-      downloadImage(src.value);
+    }
+
+    // hanlde lazy loading
+    if (lazy.value) {
+      handleImageLazyload();
     }
 
     onMounted(() => {
-      // @ts-ignore
-      image.value.src = defaultImage.value;
+      if (lazy.value)
+        // @ts-ignore
+        imageRef.value.src = defaultImage.value;
     });
 
     return {
-      image,
+      imageRef,
     };
   },
 });
