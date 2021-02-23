@@ -18,6 +18,7 @@
         v-for="(link, index) in items"
         :key="index + 'img'"
         data-name="carousel-imageItem"
+        v-bind="imageProps"
         :class="[
           renderClass(
             `absolute w-full h-full transition transform origin-center duration-500 delay-150`,
@@ -138,6 +139,11 @@ export default defineComponent({
       default: () => inject(component("swipeEnabled"), true),
       required: false,
     },
+    imageProps: {
+      type: Object,
+      required: false,
+      default: () => inject(component("imageProps"), {}),
+    }
   },
   components: { TImage },
   setup(props, { emit }) {

@@ -10,6 +10,7 @@
 | items             | array   | []      | items of the carousel to show                      |
 | swipeThreshold    | Number  | 50      | number of the pixels needed for swipe              |
 | swipeEnabled      | boolean | true    | when true carousel would change with swipe         |
+| imageProps        | object  | {}      | props to send to t-image                           |
 
 ### slots
 
