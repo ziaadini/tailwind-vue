@@ -220,6 +220,10 @@ export interface TSettings {
     leftIcon: TSettingItem;
     input: TSettingItem;
     rightIcon: TSettingItem;
+  },
+  menu: {
+    trigger: TSettingItem;
+    items: TSettingItem;
   }
 }
 
