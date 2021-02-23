@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
@@ -39,15 +39,15 @@ export default defineComponent({
     },
     max: {
       type: Number,
-      default: 100
+      default: () => inject("t-progress-bar-max", 100)
     },
     showPercent: {
       type: Boolean,
-      default: false
+      default: () => inject("t-progress-bar-showPercent", false)
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-progress-bar-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -62,5 +62,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped></style>

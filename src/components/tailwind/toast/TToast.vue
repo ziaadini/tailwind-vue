@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { watchEffect, defineComponent } from "vue";
+import { watchEffect, defineComponent, inject } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
@@ -28,11 +28,11 @@ export default defineComponent({
     },
     variant: {
       type: String,
-      default: "success"
+      default: () => inject("t-toast-variant", "success")
     },
     duration: {
       type: Number,
-      default: 3000
+      default: () => inject("t-toast-duration", 3000)
     },
     message: {
       type: String,

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, watch, watchEffect } from "vue";
+import { ref, defineComponent, watch, watchEffect, inject } from "vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
@@ -45,20 +45,21 @@ export default defineComponent({
   props: {
     localSearch: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-searchable-localSearch", true)
     },
     modelValue: {
       type: [String, Number]
     },
     noResult: {
       type: String,
-      default: "no result found"
+      default: () => inject("t-searchable-noResult", "no result found")
     },
     delay: {
       type: Number,
-      default: 200
+      default: () => inject("t-searchable-delay", 200)
     }
   },
+  emits: ["update:modelValue", "search"],
   setup(props, { emit }) {
     const search = props.localSearch
       ? ref("")
@@ -103,5 +104,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped></style>

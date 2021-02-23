@@ -54,15 +54,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, inject, onMounted } from "vue";
 import SwitchAndCheckboxProps from "@/utility/commonProps/SwitchAndCheckboxProps";
 import { useSwitchAndCheckbox } from "@/compositionFunctions/switchAndCheckbox";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
 export default defineComponent({
   props: {
-    ...SwitchAndCheckboxProps,
-    activeClass: { type: String, default: "" },
+    ...SwitchAndCheckboxProps(),
+    activeClass: {
+      type: String,
+      default: () => inject("t-checkbox-activeClass", "")
+    },
     inActiveClass: { type: String, default: "" },
     hideInput: {
       type: Boolean,

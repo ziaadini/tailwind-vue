@@ -2,20 +2,20 @@
   <teleport :to="teleportTo" :disabled="isTeleportDisable">
     <template v-if="backDrop">
       <t-fade
-          :show="modelValue"
-          :allocate-space="false"
-          opacity-class="opacity-50"
-          class="relative z-30"
+        :show="modelValue"
+        :allocate-space="false"
+        opacity-class="opacity-50"
+        class="relative z-30"
       >
         <template #default="{className}">
           <div
-              data-name="drawer-backDrop"
-              :class="[
-            // { hidden: !modelValue },
-            className,
-            renderClass('fixed z-20 top-0 bg-gray-900', 'backDrop')
-          ]"
-              @click="close"
+            data-name="drawer-backDrop"
+            :class="[
+              // { hidden: !modelValue },
+              className,
+              renderClass('fixed z-20 top-0 bg-gray-900', 'backDrop')
+            ]"
+            @click="close"
           ></div>
         </template>
       </t-fade>
@@ -100,7 +100,7 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, PropType, inject } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useMaxWidth } from "@/compositionFunctions/maxSize";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -121,7 +121,7 @@ export default defineComponent({
     },
     rounded: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-drawer-rounded", true)
     },
     title: {
       type: String,
@@ -129,22 +129,19 @@ export default defineComponent({
     },
     titleTag: {
       type: String,
-      default: "h4"
+      default: () => inject("t-drawer-titleTag", "h4")
     },
     teleportTo: {
-      type: String
+      type: String,
+      default: () => inject("t-drawer-teleportTo", undefined)
     },
     hasCloseButton: {
       type: Boolean,
-      default: () => {
-        return true;
-      }
+      default: () => inject("t-drawer-hasCloseButton", true)
     },
     maxSize: {
       type: String,
-      default: () => {
-        return "full";
-      },
+      default: () => inject("t-drawer-maxSize", "full"),
       validator: (propValue: string) => {
         return !!size[propValue];
       }
@@ -157,21 +154,19 @@ export default defineComponent({
     },
     full: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-drawer-full", false)
     },
     left: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-drawer-left", false)
     },
     eager: {
       type: Boolean,
-      default: (): boolean => {
-        return false;
-      }
+      default: () => inject("t-drawer-eager", false)
     },
     backDrop: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-drawer-backDrop", true)
     }
   },
   setup(props, { emit, slots }) {

@@ -258,7 +258,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { useRoute } from "vue-router";
@@ -275,42 +275,42 @@ export default defineComponent({
     },
     perPage: {
       type: Number,
-      default: 20
+      default: () => inject("t-pagination-perPage", 20)
     },
     pageRange: {
       type: Number,
-      default: 2
+      default: () => inject("t-pagination-pageRange", 2)
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-pagination-variant", "primary"),
       validator: (propValue: string) => {
         return !!variants[propValue];
       }
     },
     colorClass: {
       type: String,
-      default: ""
+      default: () => inject("t-pagination-colorClass", "")
     },
     nuxt: {
       type: Boolean,
-      default: false
+      default: () => inject("t-pagination-nuxt", false)
     },
     vue: {
       type: Boolean,
-      default: false
+      default: () => inject("t-pagination-vue", false)
     },
     queryName: {
       type: String,
-      default: "page"
+      default: () => inject("t-pagination-queryName", "page")
     },
     appendQuery: {
       type: Boolean,
-      default: true
+      default: () => inject("t-pagination-appendQuery", true)
     },
     formName: {
       type: String,
-      default: ""
+      default: () => inject("t-pagination-formName", "")
     }
   },
   setup(props, { emit, slots }) {

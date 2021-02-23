@@ -4,7 +4,6 @@ import { TSettings, TSettingItem } from "@/utility/types/TSettings";
 export const useRenderClass = (componentName: string) => {
   const TSettings = inject<TSettings>("TSettings");
   const instance = getCurrentInstance();
-
   const renderClass = computed(
     () => (className: string, elementName: string, objectBinding = {}) => {
       const getSettings = computed((): TSettingItem | null => {
