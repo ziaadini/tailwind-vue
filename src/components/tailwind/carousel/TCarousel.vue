@@ -188,8 +188,8 @@ export default defineComponent({
       start(autoPlaceInterval.value);
     };
 
-    watchEffect(() => {
-      if (autoPlay.value) {
+    watch(autoPlay, (value) => {
+      if (value) {
         setCarouselInterval();
       } else {
         start(null);
