@@ -15,7 +15,7 @@
       :class="[renderClass('absolute w-full h-full', 'images')]"
     >
       <t-image
-        v-for="(link, index) in modelValue"
+        v-for="(link, index) in items"
         :key="index + 'img'"
         data-name="carousel-imageItem"
         :class="[
@@ -126,7 +126,7 @@ export default defineComponent({
     },
     items: {
       type: Array as PropType<{ value: number; url: string }[]>,
-      default: []
+      default: [],
     },
     swipeThreshold: {
       type: Number,
@@ -143,7 +143,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const activeIndex = ref(0);
 
-    const { autoPlay, autoPlaceInterval, modelValue } = toRefs(props);
+    const { autoPlay, autoPlaceInterval, modelValue, items } = toRefs(props);
 
     const horizontalClasses = (index: number) => ({
       "translate-x-0 top-0 z-20": index === activeIndex.value,
@@ -153,8 +153,8 @@ export default defineComponent({
 
     const itemChangedEvent = () => {
       emit(
-        "update:index",
-        modelValue.value[activeIndex.value].value || activeIndex
+        "update:modelValue",
+        items.value[activeIndex.value].value || activeIndex
       );
     };
 
