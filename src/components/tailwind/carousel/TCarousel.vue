@@ -1,27 +1,46 @@
 <template>
+  <!-- carousel wrapper -->
   <div
-    class="relative bg-gray-100 overflow-hidden"
+    data-name="carousel-wrapper"
+    :class="[renderClass('relative bg-transparent overflow-hidden', 'wrapper')]"
     v-bind="{
       ...$attrs,
       onMouseDown: swipeEnabled && onMouseDown,
       onTouchstart: swipeEnabled && onTouchstart,
     }"
   >
-    <div class="absolute w-full h-full">
-      <img
+    <!-- carousel images -->
+    <div
+      data-name="carousel-images"
+      :class="[renderClass('absolute w-full h-full', 'images')]"
+    >
+      <t-image
         v-for="(link, index) in modelValue"
-        :key="index + 'img-link'"
-        class="absolute w-full h-full transition transform origin-center duration-500 delay-150"
+        :key="index + 'img'"
+        data-name="carousel-imageItem"
         :class="[
-          horizontalClasses(index),
-          activeIndex !== index &&
-            `${rotate && 'rotate-90'} ${scale && 'scale-150'}`,
+          renderClass(
+            `absolute w-full h-full transition transform origin-center duration-500 delay-150`,
+            'imageItem',
+            {
+              'rotate-90': activeIndex !== index && rotate,
+              'scale-150': activeIndex !== index && scale,
+              ...horizontalClasses(index),
+            }
+          ),
         ]"
         :src="link.url"
-        alt=""
       />
     </div>
-    <div class="absolute transform right-0 top-1/2 -translate-y-1/2 z-20">
+    <div
+      data-name="carousel-rightBtn"
+      :class="[
+        renderClass(
+          'absolute transform right-0 top-1/2 -translate-y-1/2 z-20',
+          'rightBtn'
+        ),
+      ]"
+    >
       <slot
         name="rightButton"
         :leftDisabled="leftDisabled"
@@ -30,7 +49,15 @@
         :back="() => buttonClick(-1)"
       />
     </div>
-    <div class="absolute transform left-0 top-1/2 -translate-y-1/2 z-20">
+    <div
+      data-name="carousel-leftBtn"
+      :class="[
+        renderClass(
+          'absolute transform left-0 top-1/2 -translate-y-1/2 z-20',
+          'leftBtn'
+        ),
+      ]"
+    >
       <slot
         name="leftButton"
         :leftDisabled="leftDisabled"
@@ -39,7 +66,15 @@
         :back="() => buttonClick(-1)"
       />
     </div>
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+    <div
+      data-name="carousel-caption"
+      :class="[
+        renderClass(
+          'absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20',
+          'caption'
+        ),
+      ]"
+    >
       <slot />
     </div>
   </div>
@@ -51,13 +86,17 @@ import { useSwipeElement } from "@/compositionFunctions/swipe";
 import {
   computed,
   defineComponent,
+  inject,
   PropType,
   ref,
   toRefs,
   watch,
   watchEffect,
 } from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
+import TImage from "@/components/tailwind/image/TImage.vue";
 
+const component = (propName: string) => "t-carousel-" + propName;
 export default defineComponent({
   props: {
     scale: {
@@ -72,39 +111,39 @@ export default defineComponent({
     },
     autoPlay: {
       type: Boolean,
-      default: true,
+      default: () => inject(component("autoPlay"), true),
       required: false,
     },
     autoPlaceInterval: {
       type: Number,
-      default: 2000,
+      default: () => inject(component("autoPlaceInterval"), 2000),
       required: false,
     },
     modelValue: {
-      type: Array as PropType<{ value: number; url: string }[]>,
-      default: 2000,
+      type: Number,
+      default: () => inject(component("modelValue"), 0),
       required: false,
     },
-    index: {
-      type: Number,
-      default: 0,
-      required: false,
+    items: {
+      type: Array as PropType<{ value: number; url: string }[]>,
+      default: []
     },
     swipeThreshold: {
       type: Number,
-      default: 50,
+      default: () => inject(component("swipeThreshold"), 50),
       required: false,
     },
     swipeEnabled: {
       type: Boolean,
-      default: true,
+      default: () => inject(component("swipeEnabled"), true),
       required: false,
     },
   },
+  components: { TImage },
   setup(props, { emit }) {
     const activeIndex = ref(0);
 
-    const { autoPlay, autoPlaceInterval, modelValue, index } = toRefs(props);
+    const { autoPlay, autoPlaceInterval, modelValue } = toRefs(props);
 
     const horizontalClasses = (index: number) => ({
       "translate-x-0 top-0 z-20": index === activeIndex.value,
@@ -129,10 +168,10 @@ export default defineComponent({
     });
 
     const rightDisabled = computed(() => {
-      return activeIndex.value === props.modelValue.length - 1;
+      return activeIndex.value === props.items.length - 1;
     });
 
-    watch(index, (newIndex) => {
+    watch(modelValue, (newIndex) => {
       changeActiveIndex(newIndex - activeIndex.value);
     });
 
@@ -181,6 +220,9 @@ export default defineComponent({
           }
         }
       });
+
+    const { renderClass } = useRenderClass("carousel");
+
     return {
       horizontalClasses,
       changeActiveIndex,
@@ -190,6 +232,7 @@ export default defineComponent({
       buttonClick,
       onMouseDown: swipeEvent.onMousedown,
       onTouchstart: swipeEvent.onTouchstart,
+      renderClass,
     };
   },
 });
