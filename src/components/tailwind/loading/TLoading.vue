@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { size, variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { LoadingTypes } from "@/utility/enums/SkeletonTypes";
@@ -73,27 +73,25 @@ export default defineComponent({
   props: {
     size: {
       type: String,
-      default: () => {
-        return "sm";
-      },
+      default: () => inject("t-loading-size", "sm"),
       validator: (propValue: string) => {
         return !!size[propValue];
       }
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-loading-variant", "primary"),
       validator: (propValue: string) => {
         return !!variants[propValue];
       }
     },
     colorClass: {
       type: String,
-      default: ""
+      default: () => inject("t-loading-colorClass", "")
     },
     type: {
       type: String,
-      default: "default",
+      default: () => inject("t-loading-type", "default"),
       validator: (propValue: string) => {
         return !!LoadingTypes[propValue];
       }
@@ -127,10 +125,14 @@ export default defineComponent({
       }
       return `border-${props.variant}`;
     });
-    const { renderClass } = useRenderClass(
-      "loading"
-    );
-    return { withClass, renderClass, LoadingTypes,getBgVariant, getBorderVariant };
+    const { renderClass } = useRenderClass("loading");
+    return {
+      withClass,
+      renderClass,
+      LoadingTypes,
+      getBgVariant,
+      getBorderVariant
+    };
   }
 });
 </script>

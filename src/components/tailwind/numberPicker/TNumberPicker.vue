@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -85,22 +85,28 @@ export default defineComponent({
     },
     min: {
       type: Number,
-      default: 1
+      default: () => inject("t-number-picker-min", 1)
     },
     max: {
-      type: Number
+      type: Number,
+      default: () => inject("t-number-picker-max", undefined)
     },
     buttonProps: {
       type: Object as PropType<{ variant: string; [key: string]: any }>,
-      default: () => ({ variant: "primary" })
+      default: () =>
+        inject("t-number-picker-buttonProps", { variant: "primary" })
     },
     loadingProps: {
       type: Object as PropType<{ variant: string; [key: string]: any }>,
-      default: () => ({ variant: "secondary", type: "spinner" })
+      default: () =>
+        inject("t-number-picker-loadingProps", {
+          variant: "secondary",
+          type: "spinner"
+        })
     },
     loading: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-number-picker-loadingProps", false)
     }
   },
   emits: {

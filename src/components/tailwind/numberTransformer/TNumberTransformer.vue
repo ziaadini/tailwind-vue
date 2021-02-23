@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from "vue";
+import { defineComponent, computed, ref, watch, inject } from "vue";
 import { useInterval } from "@/compositionFunctions/interval";
 
 export default defineComponent({
@@ -11,19 +11,19 @@ export default defineComponent({
   props: {
     number: {
       type: Number,
-      default: 10
+      required: true
     },
     maxDuration: {
       type: Number,
-      default: 1000
+      default: () => inject("t-number-transformer-maxDuration", 1000)
     },
     maxUpdate: {
       type: Number,
-      default: 20
+      default: () => inject("t-number-transformer-maxUpdate", 20)
     },
     step: {
       type: Number,
-      default: 0
+      default: () => inject("t-number-transformer-step", 0)
     }
   },
   setup(props) {

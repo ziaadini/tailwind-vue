@@ -212,7 +212,12 @@
     >
       <div
         data-name="skeleton-custom"
-        :class="renderClass('relative overflow-hidden animate-pulse delay-500', 'custom')"
+        :class="
+          renderClass(
+            'relative overflow-hidden animate-pulse delay-500',
+            'custom'
+          )
+        "
       >
         <div
           class="skeleton-box absolute top-0 right-0 bottom-0 left-0 transform -translate-x-full"
@@ -224,29 +229,29 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import { SkeletonTypes } from "@/utility/enums/SkeletonTypes";
 import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   props: {
     type: {
       type: String,
-      default: SkeletonTypes.AVATAR_LIST,
+      default: () => inject("t-skeleton-type", SkeletonTypes.AVATAR_LIST),
       validator: (value: SkeletonTypes) => {
         return Object.values(SkeletonTypes).includes(value);
       }
     },
     border: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-skeleton-border", true)
     },
     shadow: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-skeleton-shadow", true)
     },
     rounded: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-skeleton-rounded", false)
     }
   },
   setup(props) {

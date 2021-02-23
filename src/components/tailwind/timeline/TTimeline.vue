@@ -120,7 +120,7 @@
 
 <script lang="ts">
 import { variants } from "@/utility/css-helper";
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import TCard from "../card/TCard.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -133,18 +133,18 @@ export default defineComponent({
       validator: (value: string) => {
         return ["both", "right", "left"].includes(value);
       },
-      default: "both"
+      default: () => inject("t-timeline-align", "both")
     },
     items: {
       type: Array as PropType<Array<{ [key: string]: string }>>,
       default: () => []
     },
-    label: { type: String, default: "label" },
-    value: { type: String, default: "value" },
-    text: { type: String, default: "text" },
+    label: { type: String, default: () => inject("t-timeline-label", "label") },
+    value: { type: String, default: () => inject("t-timeline-value", "value") },
+    text: { type: String, default: () => inject("t-timeline-text", "text") },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-timeline-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -153,7 +153,7 @@ export default defineComponent({
     },
     clickable: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-timeline-clickable", false)
     }
   },
   setup(props, { slots, emit }) {

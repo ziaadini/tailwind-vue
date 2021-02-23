@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -123,12 +123,12 @@ export default defineComponent({
       type: Array as PropType<Array<{ [key: string]: string }>>,
       default: () => []
     },
-    label: { type: String, default: "label" },
-    value: { type: String, default: "value" },
-    text: { type: String, default: "text" },
+    label: { type: String, default: () => inject("t-stepper-label", "label") },
+    value: { type: String, default: () => inject("t-stepper-value", "value") },
+    text: { type: String, default: () => inject("t-stepper-text", "text") },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-stepper-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -137,7 +137,7 @@ export default defineComponent({
     },
     clickable: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-stepper-clickable", false)
     }
   },
   setup(props, { slots, emit }) {
@@ -183,5 +183,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped></style>
