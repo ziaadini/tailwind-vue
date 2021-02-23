@@ -95,7 +95,8 @@ import {
   toRefs,
   VNode,
   watchEffect,
-  watch
+  watch,
+  inject
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import TIcon from "@/components/tailwind/TIcon.vue";
@@ -115,11 +116,11 @@ export default defineComponent({
     modelValue: { type: [String, Number], default: 0 },
     arrows: {
       type: Boolean,
-      default: true
+      default: () => inject("t-tabs-arrows", true)
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-tabs-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

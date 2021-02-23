@@ -102,7 +102,7 @@
 
 <script lang="ts">
 import { size } from "@/utility/css-helper";
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, PropType, inject } from "vue";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useMaxWidth } from "@/compositionFunctions/maxSize";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -127,22 +127,19 @@ export default defineComponent({
     },
     titleTag: {
       type: String,
-      default: "h4"
+      default: () => inject("t-modal-titleTag", "h4")
     },
     teleportTo: {
-      type: String
+      type: String,
+      default: () => inject("t-modal-teleportTo", undefined)
     },
     hasCloseButton: {
       type: Boolean,
-      default: () => {
-        return true;
-      }
+      default: () => inject("t-modal-hasCloseButton", true)
     },
     maxSize: {
       type: String,
-      default: () => {
-        return "lg";
-      },
+      default: () => inject("t-modal-maxSize", "lg"),
       validator: (propValue: string) => {
         return !!size[propValue];
       }
@@ -155,17 +152,15 @@ export default defineComponent({
     },
     full: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-modal-full", false)
     },
     eager: {
       type: Boolean,
-      default: (): boolean => {
-        return false;
-      }
+      default: () => inject("t-modal-eager", false)
     },
     backDrop: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-modal-backDrop", true)
     }
   },
   setup(props, { emit, slots }) {

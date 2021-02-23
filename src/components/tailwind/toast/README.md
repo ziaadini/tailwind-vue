@@ -2,7 +2,7 @@
 | name | Type | Default | Description |
 | ------------ | ------------ | ------------ | ------------ |
 | v-model | Boolean | - | v-model supported with toast |
-| variant | string | primary | background color variant |
+| variant | string | success | background color variant |
 | duration | number | 3000 | showing duration default is 3seconds |
 | message | string | '' | message you want to show |
 
