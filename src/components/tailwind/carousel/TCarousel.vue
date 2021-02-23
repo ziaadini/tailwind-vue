@@ -13,24 +13,34 @@
     <div
       data-name="carousel-images"
       :class="[renderClass('absolute w-full h-full', 'images')]"
+      ref="slotWrapperRef"
     >
-      <t-image
-        v-for="(link, index) in items"
-        :key="index + 'img'"
-        data-name="carousel-imageItem"
-        v-bind="imageProps"
-        :class="[
-          renderClass(
-            `absolute w-full h-full transition transform origin-center duration-500 delay-150`,
-            'imageItem',
-            {
-              'rotate-90': activeIndex !== index && rotate,
-              'scale-150': activeIndex !== index && scale,
-              ...horizontalClasses(index),
-            }
-          ),
-        ]"
-        :src="link.url"
+      <template v-if="!hasDefaultSlot">
+        <t-image
+          v-for="(link, index) in items"
+          :key="index + 'img'"
+          data-name="carousel-imageItem"
+          v-bind="imageProps"
+          :class="[
+            renderClass(
+              `absolute w-full h-full transition transform origin-center duration-500 delay-150`,
+              'imageItem',
+              {
+                'rotate-90': activeIndex !== index && rotate,
+                'scale-150': activeIndex !== index && scale,
+                ...horizontalClasses(index),
+              }
+            ),
+          ]"
+          :src="link.url"
+      /></template>
+      <slot
+        :activeIndex="activeIndex"
+        :handleClass="
+          (index, activeIndex) =>([`absolute w-full h-full transition transform origin-center duration-500 delay-150`,{
+                ...horizontalClasses(index),
+              }]),
+        "
       />
     </div>
     <div
@@ -76,7 +86,7 @@
         ),
       ]"
     >
-      <slot />
+      <slot name="caption" />
     </div>
   </div>
 </template>
@@ -88,6 +98,7 @@ import {
   computed,
   defineComponent,
   inject,
+  onMounted,
   PropType,
   ref,
   toRefs,
@@ -143,11 +154,12 @@ export default defineComponent({
       type: Object,
       required: false,
       default: () => inject(component("imageProps"), {}),
-    }
+    },
   },
   components: { TImage },
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const activeIndex = ref(0);
+    const itemsLength = ref(0);
 
     const { autoPlay, autoPlaceInterval, modelValue, items } = toRefs(props);
 
@@ -174,7 +186,7 @@ export default defineComponent({
     });
 
     const rightDisabled = computed(() => {
-      return activeIndex.value === props.items.length - 1;
+      return activeIndex.value === itemsLength.value - 1;
     });
 
     watch(modelValue, (newIndex) => {
@@ -229,6 +241,21 @@ export default defineComponent({
 
     const { renderClass } = useRenderClass("carousel");
 
+    const slotWrapperRef = ref(null);
+
+    const hasDefaultSlot = computed(() => {
+      return !!slots.default;
+    });
+
+    onMounted(() => {
+      if (hasDefaultSlot.value) {
+        itemsLength.value = (((slotWrapperRef.value! as HTMLTemplateElement)
+          .children as unknown) as any[]).length;
+      } else {
+        itemsLength.value = props.items.length;
+      }
+    });
+
     return {
       horizontalClasses,
       changeActiveIndex,
@@ -239,6 +266,8 @@ export default defineComponent({
       onMouseDown: swipeEvent.onMousedown,
       onTouchstart: swipeEvent.onTouchstart,
       renderClass,
+      slotWrapperRef,
+      hasDefaultSlot,
     };
   },
 });

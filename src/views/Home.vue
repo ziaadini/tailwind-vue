@@ -609,13 +609,21 @@
     CAROUSEL
   </h6>
   itemChange: {{ itemChange }}
-  <t-carousel
-    v-model="itemChange"
-    :items="links"
-    class="w-96 h-96"
-    style="margin: 0 auto;"
-  >
-    test
+  <t-carousel v-model="itemChange" class="w-96 h-96" style="margin: 0 auto;">
+    <template v-slot:default="slotProps">
+      {{slotProps.handleClass}}
+      <!-- <t-button
+        :class="slotProps.handleClass(i, slotProps.activeIndex)"
+        variant="primary"
+        v-for="i in 2"
+        :key="i"
+        :disabled="leftDisabled"
+        @click="back"
+      >
+        test</t-button
+      > -->
+    </template>
+
     <template #leftButton="{leftDisabled, back}">
       <t-button variant="primary" :disabled="leftDisabled" @click="back">
         -</t-button

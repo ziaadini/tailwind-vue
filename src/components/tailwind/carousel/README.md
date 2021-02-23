@@ -19,5 +19,6 @@
 | default     | slot for caption content   |
 | rightButton | slot for right side button |
 | leftButton  | slot for left side button  |
+| caption     | slot for the caption       |
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->

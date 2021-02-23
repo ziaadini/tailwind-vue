@@ -12,27 +12,27 @@ import { defineComponent, provide } from "vue";
 import { TSettings } from "@/utility/types/TSettings";
 export default defineComponent({
   setup() {
-    provide("TSettings", {
-      tabs: {
-        header: {
-          add: "hover:bg-gray-100 py-3",
-          delete: ["py-4"],
-          replace: { "text-gray-600": "text-gray-700" }
-        }
-      },
-      card: {
-        title: {
-          add: "text-danger"
-        }
-      }
-      // alert: {
-      //   container: { add: "py-1" }
-      // }
-      // accordion: {
-      //   title: { add: "hover:text-warning" },
-      //   text: { add: "text-primary" }
-      // }
-    } as TSettings);
+    // provide("TSettings", {
+    //   tabs: {
+    //     header: {
+    //       add: "hover:bg-gray-100 py-3",
+    //       delete: ["py-4"],
+    //       replace: { "text-gray-600": "text-gray-700" }
+    //     }
+    //   },
+    //   card: {
+    //     title: {
+    //       add: "text-danger"
+    //     }
+    //   }
+    //   // alert: {
+    //   //   container: { add: "py-1" }
+    //   // }
+    //   // accordion: {
+    //   //   title: { add: "hover:text-warning" },
+    //   //   text: { add: "text-primary" }
+    //   // }
+    // } as TSettings);
     provide("t-table-localSort", false);
     provide("t-bottom-sheet-titleTag", "h5");
     // provide("t-table-loading", true);
