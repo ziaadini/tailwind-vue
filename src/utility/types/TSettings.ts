@@ -233,6 +233,11 @@ export interface TSettings {
     leftBtn: TSettingItem;
     caption: TSettingItem;
   };
+  zoom: {
+    wrapper: TSettingItem;
+    mask: TSettingItem;
+    image: TSettingItem;
+  }
 }
 
 export interface TSettingItem {
