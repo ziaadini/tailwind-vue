@@ -8,11 +8,11 @@
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
     <t-button
       to="zia"
+      size="small"
+      class="w-1"
       ripple
       @click="log('clicked')"
       disabled
-      color="bg-red-500 text-blue-500"
-      variant="primary"
       >Test</t-button
     >
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
@@ -141,7 +141,13 @@
     simple text inputs
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
-    <TextInput placeholder="some test placeholder" variant="white" />
+    <TextInput
+      area
+      placeholder="some test placeholder"
+      variant="white"
+      left-icon="bookmarks"
+      right-icon="bookmarks"
+    />
     {{ text1 }}
     <TextInput
       placeholder="some test placeholder"
@@ -569,7 +575,9 @@
       class="w-32"
       emptyIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Empty_Star.svg/1200px-Empty_Star.svg.png"
       fullIcon="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Star_full.svg/1200px-Star_full.svg.png"
-    ></t-rate>
+    >
+      <template #star-1> test </template>
+    </t-rate>
     <small>
       simple rate component with half state
     </small>
@@ -602,8 +610,8 @@
   </h6>
   itemChange: {{ itemChange }}
   <t-carousel
-    v-model="links"
-    v-model:index="itemChange"
+    v-model="itemChange"
+    :items="links"
     class="w-96 h-96"
     style="margin: 0 auto;"
   >
@@ -688,6 +696,11 @@
   <small>
     image with lazy loading
   </small>
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
+  <t-image :src="imgSource2" lazy :default="defaultImage" />
   <t-image :src="imgSource2" lazy :default="defaultImage" />
   <br />
   <br />
