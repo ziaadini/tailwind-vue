@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, inject, onMounted, ref } from "vue";
 import { useRangeMax, useRangeMin } from "@/compositionFunctions/rangeSlider";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -97,16 +97,16 @@ export default defineComponent({
     },
     disableMin: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-range-slider-disableMin", false)
     },
     disableMax: {
       type: Boolean,
-      default: () => false
+      default: () => inject("t-range-slider-disableMax", false)
     },
 
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-range-slider-variant", "primary"),
       validator: (propValue: string) => {
         return !!variants[propValue];
       }

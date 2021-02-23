@@ -52,7 +52,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref, watchEffect } from "vue";
+import {
+  defineComponent,
+  PropType,
+  computed,
+  ref,
+  watchEffect,
+  inject
+} from "vue";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -65,11 +72,11 @@ export default defineComponent({
       type: String as PropType<string>,
       validator: (value: string) =>
         ["right", "left", "top", "bottom"].includes(value),
-      default: "top"
+      default: () => inject("t-tooltip-position", "top")
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-tooltip-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -82,7 +89,7 @@ export default defineComponent({
     },
     hover: {
       type: Boolean,
-      default: () => true
+      default: () => inject("t-tooltip-hover", true),
     },
     message: {
       type: String,

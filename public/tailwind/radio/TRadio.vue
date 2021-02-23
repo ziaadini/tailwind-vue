@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch, PropType } from "vue";
+import { defineComponent, computed, ref, watch, PropType, inject } from "vue";
 import { SwitchAndCheckbox } from "@/utility/types/base-component-types";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
@@ -69,15 +69,21 @@ export default defineComponent({
     label: { type: String, default: "" },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-radio-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
       }
     },
-    activeClass: { type: String, default: "" },
-    inActiveClass: { type: String, default: "" },
+    activeClass: {
+      type: String,
+      default: () => inject("t-radio-activeClass", "")
+    },
+    inActiveClass: {
+      type: String,
+      default: () => inject("t-radio-inActiveClass", "")
+    },
     hideInput: {
       type: Boolean,
       default: () => false

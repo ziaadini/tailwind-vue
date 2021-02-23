@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, inject, PropType } from "vue";
 import { arrowDirections, variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -24,21 +24,22 @@ export default defineComponent({
       validator: (value: string) => {
         return !!arrowDirections[value];
       },
-      default: arrowDirections["arrow-left"],
+      default: () =>
+        inject("t-triangle-direction", arrowDirections["arrow-left"])
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject("t-triangle-variant", "primary"),
       validator: (propValue: string) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         return !!variants[propValue];
-      },
+      }
     },
     colorClass: {
       type: String,
-      default: "",
-    },
+      default: () => inject("t-triangle-colorClass", "")
+    }
   },
   setup(props) {
     const triangleClassByDirection = computed(() => {
@@ -65,9 +66,9 @@ export default defineComponent({
     return {
       renderClass,
       triangleClassByDirection,
-      borderColor,
+      borderColor
     };
-  },
+  }
 });
 </script>
 

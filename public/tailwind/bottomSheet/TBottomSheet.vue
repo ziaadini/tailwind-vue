@@ -170,7 +170,7 @@ export default defineComponent({
     closeCallback: {
       type: Function as PropType<BooleanFunction>,
       default: () => {
-        return true;
+        return () => true;
       }
     },
     full: {
