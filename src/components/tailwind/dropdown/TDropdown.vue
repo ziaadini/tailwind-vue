@@ -197,6 +197,10 @@ export default defineComponent({
       type: Boolean,
       default: () => inject(component("divide"), true),
     },
+    item: {
+      type: Object,
+      default: () => ({ label: undefined, value: undefined }),
+    },
     outline: {
       type: Boolean,
       default: () => inject(component("outline"), true),
@@ -376,10 +380,6 @@ export default defineComponent({
 
     // handler parent rounded class
     const parentRoundedClass = computed(() => {
-      //       'rounded-full': isClosedRounded,
-      // 'rounded-md': isOpenedRounded,
-      // 'rounded-b-none': isOpened && !isOverflowed,
-      // 'rounded-t-none': isOpened && isOverflowed,
       if (isOpened.value) {
         if (!isOverflowed.value) {
           if (props.top) {
@@ -442,13 +442,6 @@ export default defineComponent({
           return "rounded-t-sm";
         }
       }
-      // 'rounded-b-sm': !top && !rounded && !isOverflowed,
-      //     'rounded-b-md': !top && rounded && !isOverflowed,
-      //     'rounded-t-md': top && rounded && !isOverflowed,
-      //     'rounded-b-none': !top && rounded && isOverflowed,
-      //     'rounded-t-md': !top && rounded && isOverflowed,
-      //     'rounded-t-sm': !top && !rounded && isOverflowed,
-      //     'rounded-t-sm': top && !rounded && !isOverflowed,
     });
 
     const handleVerticalTraslate = computed(() => {
