@@ -213,14 +213,6 @@ export default defineComponent({
       start(autoPlaceInterval.value);
     };
 
-    watch(autoPlay, (value) => {
-      if (value) {
-        setCarouselInterval();
-      } else {
-        start(null);
-      }
-    });
-
     const buttonClick = (variance) => {
       start(null);
       changeActiveIndex(variance);
@@ -252,6 +244,16 @@ export default defineComponent({
 
     const hasDefaultSlot = computed(() => {
       return !!slots.default;
+    });
+
+    onMounted(() => {
+      watchEffect(() => {
+        if (autoPlay.value) {
+          setCarouselInterval();
+        } else {
+          start(null);
+        }
+      });
     });
 
     return {
