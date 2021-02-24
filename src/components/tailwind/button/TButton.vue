@@ -67,7 +67,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from "vue";
 import AppIcon from "@/components/tailwind/icon/TIcon.vue";
-import { buttonSizes, variants } from "@/utility/css-helper.ts";
+import { size, variants } from "@/utility/css-helper.ts";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -92,9 +92,9 @@ export default defineComponent({
     },
     size: {
       type: String,
-      default: () => inject(component("size"), buttonSizes.normal),
+      default: () => inject(component("size"), size.md),
       validator: (propValue: string) => {
-        return !!buttonSizes[propValue];
+        return !!size[propValue];
       },
     },
     color: {
@@ -157,32 +157,36 @@ export default defineComponent({
       const outlineBaseClass =
         " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
 
-      let size = " ";
+      let btnSize = " ";
 
       let height;
       let width;
       switch (props.size) {
-        case buttonSizes.small:
+        case size.xs:
           height = "h-7";
           width = "w-7";
           break;
-        case buttonSizes.large:
-          height = "h-11";
+        case size.sm:
+          height = "h-9";
+          width = "w-9";
+          break;
+        case size.lg:
+          height = "h-13";
           break;
         default:
-          height = "h-9";
+          height = "h-11";
           break;
       }
 
-      size += height + " ";
+      btnSize += height + " ";
       if (props.fab) {
-        size += width;
+        btnSize += width;
       }
 
       return (
         (props.outline
           ? (props.color || outlineVariantClass) + outlineBaseClass
-          : (props.color || variantClass) + baseClass) + size
+          : (props.color || variantClass) + baseClass) + btnSize
       );
     });
 
@@ -207,7 +211,7 @@ export default defineComponent({
     });
 
     const hasMinWidth = computed(() => {
-      return props.size !== buttonSizes.small;
+      return props.size === size.xs || props.size === size.sm ? false : true;
     });
 
     return {

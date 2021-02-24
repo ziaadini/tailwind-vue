@@ -5,7 +5,7 @@
 | rounded      | Boolean | false   | make button rounded                                                  |
 | fab          | Boolean | false   | add fab ability to button                                            |
 | variant      | string  | white   | background color of the button                                       |
-| size         | string  | normal  | size of the button                                                   |
+| size         | string  | md      | size of the button                                                   |
 | color        | string  | ""      | when used default variant would be ignored and color is used instead |
 | icon         | string  | ""      | right icon of button                                                 |
 | disabled     | boolean | false   | disable button                                                       |
