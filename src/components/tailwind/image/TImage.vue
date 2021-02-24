@@ -1,12 +1,16 @@
 <template>
-  <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
-  <img v-else :src="src" v-bind="$attrs" />
+  <template v-if="!hasDefaultSlot">
+    <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
+    <img v-else />
+  </template>
+  <slot :src="src" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useImageDownloader } from "@/compositionFunctions/image";
 import {
+  computed,
   defineComponent,
   onMounted,
   ref,
@@ -32,7 +36,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props, { attrs }) {
+  setup(props, { slots }) {
     const { src, default: defaultImage, lazy } = toRefs(props);
 
     // image ref
@@ -79,14 +83,17 @@ export default defineComponent({
       handleImageLazyload();
     }
 
+    const hasDefaultSlot = computed(() => !!slots.default);
+
     onMounted(() => {
-      if (lazy.value)
+      if (lazy.value || !props.src)
         // @ts-ignore
-        imageRef.value.src = defaultImage.value;
+        imageRef.value && (imageRef.value.src = defaultImage.value);
     });
 
     return {
       imageRef,
+      hasDefaultSlot,
     };
   },
 });
