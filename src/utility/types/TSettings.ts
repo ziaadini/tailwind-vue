@@ -232,6 +232,11 @@ export interface TSettings {
     rightBtn: TSettingItem;
     leftBtn: TSettingItem;
     caption: TSettingItem;
+    paginationWrapper: TSettingItem;
+    paginationBack: TSettingItem;
+    paginationContainer: TSettingItem;
+    paginationTick: TSettingItem;
+    paginationNext: TSettingItem;
   };
   zoom: {
     wrapper: TSettingItem;

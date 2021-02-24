@@ -14,11 +14,12 @@
 
 ### slots
 
-| name        | description                |
-| ----------- | -------------------------- |
-| default     | slot for each carousel item   |
-| rightButton | slot for right side button |
-| leftButton  | slot for left side button  |
-| caption     | slot for the caption       |
+| name        | description                 |
+| ----------- | --------------------------- |
+| default     | slot for each carousel item |
+| rightButton | slot for right side button  |
+| leftButton  | slot for left side button   |
+| caption     | slot for the caption        |
+| pagination  | slot for the pagination     |
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->

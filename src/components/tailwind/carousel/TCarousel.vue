@@ -15,6 +15,7 @@
       :class="[renderClass('absolute w-full h-full', 'images')]"
       ref="slotWrapperRef"
     >
+      <!-- handle carousel with t-image -->
       <template v-if="!hasDefaultSlot">
         <t-image
           v-for="(link, index) in items"
@@ -34,6 +35,7 @@
           ]"
           :src="link.url"
       /></template>
+      <!-- handle carousel with slot -->
       <div
         v-for="(link, index) in items"
         :key="index + 'img'"
@@ -54,6 +56,7 @@
         <slot :src="link.url" :index="index" :activeIndex="activeIndex" />
       </div>
     </div>
+    <!-- right btn -->
     <div
       data-name="carousel-rightBtn"
       :class="[
@@ -71,6 +74,7 @@
         :back="() => buttonClick(-1)"
       />
     </div>
+    <!-- left btn -->
     <div
       data-name="carousel-leftBtn"
       :class="[
@@ -88,6 +92,68 @@
         :back="() => buttonClick(-1)"
       />
     </div>
+
+    <!-- pagination wrapper -->
+    <div
+      v-if="!hasPaginationSlot"
+      data-name="carousel-paginationWrapper"
+      :class="[
+        renderClass(
+          'flex flex-row-reverse flex-wrap justify-center absolute right-1/2 transform translate-x-1/2 bottom-20 z-20',
+          'paginationWrapper'
+        ),
+      ]"
+    >
+      <div
+        v-if="activeIndex > paginationTicksNumber - 1"
+        data-name="carousel-paginationBack"
+        :class="[
+          renderClass(
+            'mr-1 w-1 h-1 cursor-pointer bg-gray-400 rounded-full',
+            'paginationBack'
+          ),
+        ]"
+        @click="handlePaginationClick(0)"
+      ></div>
+      <div
+        data-name="carousel-paginationContainer"
+        :class="[
+          renderClass(
+            'rounded-sm flex flex-row-reverse overflow-hidden',
+            'paginationContainer'
+          ),
+        ]"
+      >
+        <div
+          v-for="(item, index) in getPaginationTicks"
+          :key="index + '-pagination'"
+          data-name="carousel-paginationTick"
+          :class="[
+            renderClass('w-3 h-1 cursor-pointer', 'paginationTick', {
+              'bg-transparent': item.transparent,
+              'bg-gray-400': !item.transparent && !item.enabled,
+              'bg-gray-100': item.enabled,
+            }),
+          ]"
+          @click="handlePaginationClick(index)"
+        ></div>
+      </div>
+      <div
+        v-if="!rightDisabled"
+        data-name="carousel-paginationNext"
+        :class="[
+          renderClass(
+            'ml-1 w-1 h-1 cursor-pointer bg-gray-400 rounded-full',
+            'paginationNext'
+          ),
+        ]"
+        @click="handlePaginationClick(3)"
+      ></div>
+    </div>
+    <!-- pagination slot -->
+    <slot :activeIndex="activeIndex" name="pagination" />
+
+    <!-- carousel caption -->
     <div
       data-name="carousel-caption"
       :class="[
@@ -165,6 +231,10 @@ export default defineComponent({
       type: Object,
       required: false,
       default: () => inject(component("imageProps"), {}),
+    },
+    paginationTicksNumber: {
+      type: Number,
+      default: () => inject(component("paginationTicksNumber"), 3),
     },
   },
   components: { TImage },
@@ -246,6 +316,49 @@ export default defineComponent({
       return !!slots.default;
     });
 
+    const paginationTicks = ref([] as any[]);
+    for (let i = 0; i < props.paginationTicksNumber; i++) {
+      paginationTicks.value.push({
+        enabled: false,
+        transparent: false,
+      });
+    }
+
+    // handle pagination
+    const getPaginationTicks = computed(() => {
+      // find selected tick
+      const selected = activeIndex.value % props.paginationTicksNumber;
+
+      // reset enabled item
+      paginationTicks.value.forEach((value) => {
+        value.enabled = false;
+      });
+
+      // handle last item
+      if (activeIndex.value === items.value.length - 1) {
+        for (let i = selected + 1; i < props.paginationTicksNumber; i++) {
+          paginationTicks.value[i].transparent = true;
+        }
+      } else if (activeIndex.value === items.value.length - 2) {
+        paginationTicks.value.forEach((value) => {
+          value.transparent = false;
+        });
+      }
+
+      paginationTicks.value[selected].enabled = true;
+      return paginationTicks.value;
+    });
+
+    // handle pagination tick clicks
+    function handlePaginationClick(index) {
+      if (activeIndex.value % 3 === index) return;
+      return activeIndex.value % 3 < index ? buttonClick(+1) : buttonClick(-1);
+    }
+
+    const hasPaginationSlot = computed(() => {
+      return !!slots.pagination;
+    });
+
     onMounted(() => {
       watchEffect(() => {
         if (autoPlay.value) {
@@ -268,6 +381,9 @@ export default defineComponent({
       renderClass,
       slotWrapperRef,
       hasDefaultSlot,
+      handlePaginationClick,
+      getPaginationTicks,
+      hasPaginationSlot
     };
   },
 });
