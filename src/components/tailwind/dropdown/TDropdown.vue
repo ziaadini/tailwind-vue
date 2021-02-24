@@ -68,7 +68,8 @@
               :class="[renderClass('mr-auto ml-4', 'parentWrapperTriangle')]"
               data-name="dropdown-parentWrapperTriangle"
               :direction="arrowDirection"
-              :variant="''"
+              :variant="'secondary'"
+              v-bind="triangleProps"
             />
           </div>
         </template>
@@ -277,6 +278,10 @@ export default defineComponent({
       validator: (propValue: string) => {
         return !!delayType[propValue];
       },
+    },
+    triangleProps: {
+      type: Object,
+      default: () => inject(component("triangleProps"), {}),
     },
   },
   components: { TTriangle },

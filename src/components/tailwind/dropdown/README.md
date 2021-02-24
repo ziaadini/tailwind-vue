@@ -20,6 +20,7 @@
 | itemsColorClasses  | string                               | ""      | if passed default item variant class would be ignored           |
 | animationDuration  | string                               | "200"   | changes duration of the animation in ms                         |
 | animationDelay     | string                               | "0"     | delay of the animation in ms                                    |
-| animationDelayType     | string                               | ""     | delay of the animation in ms                                    |
+| animationDelayType | string                               | ""      | delay of the animation in ms                                    |
+| triangleProps      | Object                               | {}      | props to send to triangle                                       |
 
 ### slots
