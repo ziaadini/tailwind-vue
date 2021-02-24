@@ -34,14 +34,25 @@
           ]"
           :src="link.url"
       /></template>
-      <slot
-        :activeIndex="activeIndex"
-        :handleClass="
-          (index, activeIndex) =>([`absolute w-full h-full transition transform origin-center duration-500 delay-150`,{
-                ...horizontalClasses(index),
-              }]),
-        "
-      />
+      <div
+        v-for="(link, index) in items"
+        :key="index + 'img'"
+        data-name="carousel-imageItem"
+        v-bind="imageProps"
+        :class="[
+          renderClass(
+            `absolute w-full h-full transition transform origin-center duration-500 delay-150`,
+            'imageItem',
+            {
+              'rotate-90': activeIndex !== index && rotate,
+              'scale-150': activeIndex !== index && scale,
+              ...horizontalClasses(index),
+            }
+          ),
+        ]"
+      >
+        <slot :src="link.url" :index="index" :activeIndex="activeIndex" />
+      </div>
     </div>
     <div
       data-name="carousel-rightBtn"
@@ -159,7 +170,6 @@ export default defineComponent({
   components: { TImage },
   setup(props, { emit, slots }) {
     const activeIndex = ref(0);
-    const itemsLength = ref(0);
 
     const { autoPlay, autoPlaceInterval, modelValue, items } = toRefs(props);
 
@@ -170,10 +180,7 @@ export default defineComponent({
     });
 
     const itemChangedEvent = () => {
-      emit(
-        "update:modelValue",
-        items.value[activeIndex.value].value || activeIndex
-      );
+      emit("update:modelValue", activeIndex);
     };
 
     const changeActiveIndex = (value: number) => {
@@ -186,7 +193,7 @@ export default defineComponent({
     });
 
     const rightDisabled = computed(() => {
-      return activeIndex.value === itemsLength.value - 1;
+      return activeIndex.value >= props.items.length - 1;
     });
 
     watch(modelValue, (newIndex) => {
@@ -245,15 +252,6 @@ export default defineComponent({
 
     const hasDefaultSlot = computed(() => {
       return !!slots.default;
-    });
-
-    onMounted(() => {
-      if (hasDefaultSlot.value) {
-        itemsLength.value = (((slotWrapperRef.value! as HTMLTemplateElement)
-          .children as unknown) as any[]).length;
-      } else {
-        itemsLength.value = props.items.length;
-      }
     });
 
     return {

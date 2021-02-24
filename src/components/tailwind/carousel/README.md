@@ -16,7 +16,7 @@
 
 | name        | description                |
 | ----------- | -------------------------- |
-| default     | slot for caption content   |
+| default     | slot for each carousel item   |
 | rightButton | slot for right side button |
 | leftButton  | slot for left side button  |
 | caption     | slot for the caption       |
