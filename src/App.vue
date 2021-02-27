@@ -30,6 +30,11 @@ export default defineComponent({
       ddItems: ["button", "alert", "textInput"],
     };
   },
+  watch: {
+    dropdownModel(value) {
+      this.$router.push(`/${value}`);
+    },
+  },
   setup() {
     provide("TSettings", {
       tabs: {
