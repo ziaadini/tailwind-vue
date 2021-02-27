@@ -34,10 +34,6 @@ export const useIsVisible = (
 
     const childBounding = element.value!.getBoundingClientRect();
     const parentBounding = parentElement.value!.getBoundingClientRect();
-    console.log({
-      childBounding,
-      parentBounding,
-    });
     const windowHeight =
       window.innerHeight || document.documentElement.clientHeight;
     const placementTemporaryValue = [] as visibilityOverflow[] | null;
@@ -67,11 +63,9 @@ export const useIsVisible = (
       ];
     }
 
-    console.log(placement.value);
   };
 
   watch(isScrolling, (resultValue) => {
-    console.log("is scrolling");
     handlePlacement();
   });
 

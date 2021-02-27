@@ -1,8 +1,12 @@
 <template>
   <template v-if="!hasDefaultSlot">
     <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
-    <img v-else />
+    <img @load="handleImageLoaded" v-bind="$attrs" v-else />
+    <div v-if="loading">
+      <slot v-bind="$attrs" name="loader" />
+    </div>
   </template>
+  <!-- TODO why should we have a default Slot -->
   <slot :src="src" v-bind="$attrs" />
 </template>
 
@@ -39,6 +43,12 @@ export default defineComponent({
   setup(props, { slots }) {
     const { src, default: defaultImage, lazy } = toRefs(props);
 
+    // handle loading state of image
+    const loading = ref(true);
+    function handleImageLoaded(value = false) {
+      loading.value = value;
+    }
+
     // image ref
     const imageRef = ref(null);
 
@@ -53,12 +63,14 @@ export default defineComponent({
       // watch for image source changes and download the new image
       watch(src, (newSrc) => {
         if (newSrc) {
+          handleImageLoaded(true);
           downloadImage(newSrc);
         }
       });
 
       // if new images downloaded set them
       watch(imageDownloaded, () => {
+        handleImageLoaded();
         setImage(imageRef);
       });
 
@@ -66,8 +78,9 @@ export default defineComponent({
         {
           passRef: true,
         },
-        () => ({}),
-        imageRef
+        undefined,
+        imageRef.value,
+        false
       );
 
       watchEffect(() => {
@@ -78,14 +91,13 @@ export default defineComponent({
       });
     }
 
-    // hanlde lazy loading
-    if (lazy.value) {
-      handleImageLazyload();
-    }
-
     const hasDefaultSlot = computed(() => !!slots.default);
 
     onMounted(() => {
+      // hanlde lazy loading
+      if (lazy.value && !hasDefaultSlot.value) {
+        handleImageLazyload();
+      }
       if (lazy.value || !props.src)
         // @ts-ignore
         imageRef.value && (imageRef.value.src = defaultImage.value);
@@ -94,6 +106,8 @@ export default defineComponent({
     return {
       imageRef,
       hasDefaultSlot,
+      handleImageLoaded,
+      loading,
     };
   },
 });

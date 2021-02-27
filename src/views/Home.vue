@@ -698,7 +698,13 @@
   <small>
     image with lazy loading
   </small>
-  <t-image :src="imgSource2" lazy :default="defaultImage" />
+  <t-image :src="imgSource2" lazy :default="defaultImage">
+    <template #loader>
+      <p class="text-9xl">
+        image is being loaded
+      </p>
+    </template>
+  </t-image>
   <t-image :src="imgSource2" lazy :default="defaultImage" />
   <t-image :src="imgSource2" lazy :default="defaultImage" />
   <t-image :src="imgSource2" lazy :default="defaultImage" />
