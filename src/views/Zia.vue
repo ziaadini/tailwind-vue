@@ -566,6 +566,7 @@
           { key: 'last_name', label: 'last name', sortable: true },
           { key: 'age', label: 'age', sortable: true }
         ]"
+        @sort="onSort"
       >
         <template #card-header="{item}">
           <div class="text-blue-400">{{ item.label }}</div>
@@ -745,6 +746,8 @@ import TTable from "@/components/tailwind/table/TTable.vue";
 import TSearchable from "@/components/tailwind/searchable/TSearchable.vue";
 import TPagination from "@/components/tailwind/pagination/TPagination.vue";
 import TNumberTransformer from "@/components/tailwind/numberTransformer/TNumberTransformer.vue";
+import { Table } from "@/utility/types/base-component-types";
+import { useRouter } from "vue-router";
 // import TabItemChildTest from "@/components/TabItemChildTest.vue";
 export default defineComponent({
   name: "App",
@@ -864,7 +867,17 @@ export default defineComponent({
     setTimeout(() => {
       number.value = 10000000;
     }, 3000);
+    const router = useRouter();
+    const onSort = ({ key, sort, setSort }) => {
+      if (sort === Table.SortEnum.ASC) {
+        router.push({ query: { sort: key } });
+      } else {
+        router.push({ query: { sort: "-" + key } });
+      }
+      setSort();
+    };
     return {
+      onSort,
       number,
       pagination,
       searchableItems,
