@@ -1,4 +1,12 @@
-import { computed, reactive, ref, watchEffect } from "vue";
+import {
+  computed,
+  onBeforeMount,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  watchEffect
+} from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import SortEnum = Table.SortEnum;
 
@@ -106,6 +114,22 @@ export const useTableSort = (props, { emit }, doneCallback) => {
     });
     doneCallback();
   };
+  watch(
+    () => (props.defaultSort),
+    () => {
+      onSort(props.defaultSort);
+    },
+    { immediate: true }
+  );
+  // onMounted(() => {
+  //   console.log(
+  //     'activeSort.key !== "" && activeSort.sort',
+  //     activeSort.key !== "" && activeSort.sort
+  //   );
+  //   if (activeSort.key !== "" && activeSort.sort) {
+  //     onSort(props.defaultSort);
+  //   }
+  // });
   const compare = (a, b) => {
     if (a[activeSort.key] < b[activeSort.key]) {
       return activeSort.sort === SortEnum.ASC ? -1 : 1;
