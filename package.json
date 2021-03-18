@@ -1,14 +1,23 @@
 {
   "name": "tailwind-vue3",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.4.8",
+  "main": "./dist/tailwind-vue3.common.js",
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
+    "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "tailwind-config-viewer": "tailwind-config-viewer -o",
-    "view": "serve -s dist"
+    "view": "serve -s dist",
+    "publish-package": "npm publish --access public"
   },
   "dependencies": {
     "core-js": "^3.6.5",
