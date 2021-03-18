@@ -337,6 +337,7 @@ export default defineComponent({
       // handle last item
       if (activeIndex.value === items.value.length - 1) {
         for (let i = selected + 1; i < props.paginationTicksNumber; i++) {
+/* eslint-disable vue/no-side-effects-in-computed-properties */
           paginationTicks.value[i].transparent = true;
         }
       } else if (activeIndex.value === items.value.length - 2) {
@@ -345,6 +346,7 @@ export default defineComponent({
         });
       }
 
+/* eslint-disable vue/no-side-effects-in-computed-properties */
       paginationTicks.value[selected].enabled = true;
       return paginationTicks.value;
     });
