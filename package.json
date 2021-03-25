@@ -4,11 +4,13 @@
   "main": "./dist/tailwind-vue3.common.js",
   "files": [
     "dist/*",
+    "types/*",
     "src/*",
     "public/*",
     "*.json",
     "*.js"
   ],
+  "types": "./types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
