@@ -105,7 +105,8 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const sortRef = ref<Table.SortEnum>(Table.SortEnum.DESC);
     const toggleSort = () => {
-      if (sortRef.value === Table.SortEnum.ASC) {
+      const currentSort = props.activeSort?.sort ?? sortRef.value;
+      if (currentSort === Table.SortEnum.ASC) {
         sortRef.value = Table.SortEnum.DESC;
       } else {
         sortRef.value = Table.SortEnum.ASC;
