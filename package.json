@@ -1,6 +1,6 @@
 {
   "name": "tailwind-vue3",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "main": "./dist/tailwind-vue3.common.js",
   "files": [
     "dist/*",
@@ -25,6 +25,15 @@
     "vue": "^3.0.0",
     "vue-router": "^4.0.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziaadini/tailwind-vue"
+  },
+  "keywords": [
+    "vue3",
+    "tailwind",
+    "tailwindvue3",
+  ],
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@types/jest": "^24.0.19",
