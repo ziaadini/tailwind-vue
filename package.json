@@ -34,7 +34,7 @@
   "keywords": [
     "vue3",
     "tailwind",
-    "tailwindvue3",
+    "tailwindvue3"
   ],
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
