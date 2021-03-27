@@ -83,7 +83,6 @@ import TToast from "./components/tailwind/toast/TToast.vue";
 import TTooltip from "./components/tailwind/tooltip/TTooltip.vue";
 import TTriangle from "./components/tailwind/triangle/TTriangle.vue";
 import TZoom from "./components/tailwind/zoom/TZoom.vue";
-import Vue from "vue";
 import { useDebouncedRef } from "./compositionFunctions/expose/debounce";
 import { useFormatRef } from "./compositionFunctions/expose/format";
 const components = {
