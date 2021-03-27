@@ -1,6 +1,6 @@
 {
   "name": "tailwind-vue3",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "main": "./dist/tailwind-vue3.common.js",
   "files": [
     "dist/*",
