@@ -43,7 +43,7 @@
                 <template v-else>
                   <svg
                     data-name="pagination-icon"
-                    :class="renderClass('w-4 h-4 sm: h-5 sm:w-5', 'icon')"
+                    :class="renderClass('w-4 h-4 sm:h-5 sm:w-5', 'icon')"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -234,7 +234,7 @@
                 <template v-else>
                   <svg
                     data-name="pagination-icon"
-                    :class="renderClass('w-4 h-4 sm: h-5 sm:w-5', 'icon')"
+                    :class="renderClass('w-4 h-4 sm:h-5 sm:w-5', 'icon')"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"

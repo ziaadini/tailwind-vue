@@ -1,45 +1,55 @@
+import { App, DefineComponent } from "vue";
+export { TSettings } from "../src/utility/types/TSettings";
+
+/**
+ * Install entry point
+ *
+ * @param app - A target Vue app instance
+ * @param options - An install options
+ */
+export declare function install(app: App, ...options: unknown[]): void;
+
 declare module "tailwind-vue3" {
-  import { VueConstructor } from "vue";
-  export const TAccordion: VueConstructor;
-  export const TAlert: VueConstructor;
-  export const TAnimate: VueConstructor;
-  export const TBadge: VueConstructor;
-  export const TButton: VueConstructor;
-  export const TBottomSheet: VueConstructor;
-  export const TBreadcrumb: VueConstructor;
-  export const TCard: VueConstructor;
-  export const TCarousel: VueConstructor;
-  export const TCheckbox: VueConstructor;
-  export const TCollapsable: VueConstructor;
-  export const TDrawer: VueConstructor;
-  export const TDropdown: VueConstructor;
-  export const TFade: VueConstructor;
-  export const TIcon: VueConstructor;
-  export const TImage: VueConstructor;
-  export const TLoading: VueConstructor;
-  export const TMenu: VueConstructor;
-  export const TModal: VueConstructor;
-  export const TNumberPicker: VueConstructor;
-  export const numberTransformer: VueConstructor;
-  export const TPagination: VueConstructor;
-  export const TProgressBar: VueConstructor;
-  export const TRadio: VueConstructor;
-  export const TRangeSlider: VueConstructor;
-  export const TRate: VueConstructor;
-  export const TSearchable: VueConstructor;
-  export const TSkeleton: VueConstructor;
-  export const TSlider: VueConstructor;
-  export const TStepper: VueConstructor;
-  export const TSwitch: VueConstructor;
-  export const TTabs: VueConstructor;
-  export const TTabItem: VueConstructor;
-  export const TTh: VueConstructor;
-  export const TTable: VueConstructor;
-  export const TTextInput: VueConstructor;
-  export const TTimeline: VueConstructor;
-  export const TCountDownTimer: VueConstructor;
-  export const TToast: VueConstructor;
-  export const TTooltip: VueConstructor;
-  export const TTriangle: VueConstructor;
-  export const TZoom: VueConstructor;
+  export const TAccordion: DefineComponent;
+  export const TAlert: DefineComponent;
+  export const TAnimate: DefineComponent;
+  export const TBadge: DefineComponent;
+  export const TButton: DefineComponent;
+  export const TBottomSheet: DefineComponent;
+  export const TBreadcrumb: DefineComponent;
+  export const TCard: DefineComponent;
+  export const TCarousel: DefineComponent;
+  export const TCheckbox: DefineComponent;
+  export const TCollapsable: DefineComponent;
+  export const TDrawer: DefineComponent;
+  export const TDropdown: DefineComponent;
+  export const TFade: DefineComponent;
+  export const TIcon: DefineComponent;
+  export const TImage: DefineComponent;
+  export const TLoading: DefineComponent;
+  export const TMenu: DefineComponent;
+  export const TModal: DefineComponent;
+  export const TNumberPicker: DefineComponent;
+  export const numberTransformer: DefineComponent;
+  export const TPagination: DefineComponent;
+  export const TProgressBar: DefineComponent;
+  export const TRadio: DefineComponent;
+  export const TRangeSlider: DefineComponent;
+  export const TRate: DefineComponent;
+  export const TSearchable: DefineComponent;
+  export const TSkeleton: DefineComponent;
+  export const TSlider: DefineComponent;
+  export const TStepper: DefineComponent;
+  export const TSwitch: DefineComponent;
+  export const TTabs: DefineComponent;
+  export const TTabItem: DefineComponent;
+  export const TTh: DefineComponent;
+  export const TTable: DefineComponent;
+  export const TTextInput: DefineComponent;
+  export const TTimeline: DefineComponent;
+  export const TCountDownTimer: DefineComponent;
+  export const TToast: DefineComponent;
+  export const TTooltip: DefineComponent;
+  export const TTriangle: DefineComponent;
+  export const TZoom: DefineComponent;
 }
