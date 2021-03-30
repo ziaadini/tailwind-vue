@@ -1,32 +1,44 @@
 <template>
+  <!-- menu wrapper -->
   <div
     class="relative"
-    @mouseenter="hover && openClose(true)"
-    @mouseleave="hover && openClose(false)"
+    @mouseenter="hover && triggerMenu(true)"
+    @mouseleave="hover && triggerMenu(false)"
   >
+    <!-- menu trigger -->
     <div
-      class=" relative flex items-center focus:outline-none min-w-full "
-      @click="openClose"
+      data-name="menu-trigger"
+      :class="[
+        renderClass(
+          'relative flex items-center focus:outline-none min-w-full',
+          'trigger'
+        ),
+      ]"
+      @click="triggerMenu"
     >
       <slot name="button" :isOpen="isOpen"></slot>
     </div>
 
-    <!--dropdown menu-->
+    <!-- menu items-->
     <transition :name="!animate && 'fade'" mode="out-in">
       <div
-        v-if="animate || notAnimatedOpened"
+        v-if="animate || isOpenWithoutAnimate"
         ref="menuRef"
-        class="absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right "
+        data-name="menu-items"
         :class="[
-          {
-            'right-0': placement === 'right',
-            'left-0': placement !== 'right',
-            'w-full': full,
-            'z-30': !hover,
-            'z-40': hover,
-            'scale-0 opacity-0': animatedClosed,
-            'scale-100 opacity-1': animatedOpened,
-          },
+          renderClass(
+            'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right',
+            'items',
+            {
+              'right-0': placement === 'right',
+              'left-0': placement !== 'right',
+              'w-full': full,
+              'z-30': !hover,
+              'z-40': hover,
+              'scale-0 opacity-0': animatedClosed,
+              'scale-100 opacity-1': animatedOpened,
+            }
+          ),
         ]"
       >
         <slot name="content"></slot>
@@ -38,13 +50,22 @@
 <script lang="ts">
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
-import { computed, defineComponent, ref, watch, watchEffect } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
+const component = (propName: string) => "t-menu-" + propName;
 export default defineComponent({
   props: {
     placement: {
       type: String,
-      default: "right",
+      default: () => inject(component("placement"), "right"),
       validator: (value: string) => ["right", "left"].indexOf(value) !== -1,
     },
     disabled: {
@@ -54,17 +75,17 @@ export default defineComponent({
     },
     full: {
       required: false,
-      default: false,
+      default: () => inject(component("full"), false),
       type: Boolean,
     },
     hover: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("hover"), false),
       required: false,
     },
     animate: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("animate"), false),
       required: false,
     },
   },
@@ -105,7 +126,7 @@ export default defineComponent({
       }
     });
 
-    const openClose = (value = null as any) => {
+    const triggerMenu = (value = null as any) => {
       if (!props.disabled) {
         open.value = value !== null ? value : !open.value;
       }
@@ -119,17 +140,20 @@ export default defineComponent({
       return props.animate && !isOpen.value;
     });
 
-    const notAnimatedOpened = computed(() => {
+    const isOpenWithoutAnimate = computed(() => {
       return !props.animate && isOpen.value;
     });
 
+    const { renderClass } = useRenderClass("menu");
+
     return {
       menuRef,
-      openClose,
+      triggerMenu,
       isOpen,
       animatedOpened,
       animatedClosed,
-      notAnimatedOpened
+      isOpenWithoutAnimate,
+      renderClass,
     };
   },
 });

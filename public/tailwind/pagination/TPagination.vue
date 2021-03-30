@@ -261,7 +261,7 @@
 import { computed, defineComponent, inject } from "vue";
 import { variants } from "@/utility/css-helper";
 import { useRenderClass } from "@/compositionFunctions/settings";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   name: "TPagination",
   props: {
@@ -359,25 +359,6 @@ export default defineComponent({
 
     const nextPage = computed(() => getModelValue.value + 1);
     const prevPage = computed(() => getModelValue.value - 1);
-    const changePage = page => {
-      if (page > 0 && page <= totalPages.value) {
-        emit("update:modelValue", page);
-      }
-    };
-    const getColorClass = computed(() => {
-      if (props.colorClass) {
-        return props.colorClass;
-      }
-      return `bg-${props.variant}`;
-    });
-    const is = computed(() => {
-      if (props.nuxt) {
-        return "nuxt-link";
-      } else if (props.vue) {
-        return "router-link";
-      }
-      return "a";
-    });
     const dynamicBinding = computed(() => page => {
       if (props.nuxt || props.vue) {
         const append = props.appendQuery ? route.query : {};
@@ -394,6 +375,30 @@ export default defineComponent({
         };
       }
       return { href: "#" };
+    });
+    const router = useRouter();
+    const changePage = page => {
+      if (page > 0 && page <= totalPages.value) {
+        emit("update:modelValue", page);
+      }
+      const link = dynamicBinding.value(page);
+      if (link.to) {
+        router.push(link.to);
+      }
+    };
+    const getColorClass = computed(() => {
+      if (props.colorClass) {
+        return props.colorClass;
+      }
+      return `bg-${props.variant}`;
+    });
+    const is = computed(() => {
+      if (props.nuxt) {
+        return "nuxt-link";
+      } else if (props.vue) {
+        return "router-link";
+      }
+      return "a";
     });
     const { renderClass } = useRenderClass("pagination");
     return {

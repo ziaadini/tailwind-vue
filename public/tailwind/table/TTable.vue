@@ -477,6 +477,14 @@ export default defineComponent({
     stripedClass: {
       type: String,
       default: () => inject("t-table-stripedClass", "bg-gray-50")
+    },
+    defaultSort: {
+      type: Object as PropType<{ key: string; sort: Table.SortEnum }>,
+      default: () =>
+        inject("t-table-activeSort", {
+          key: "",
+          sort: "" as Table.SortEnum
+        })
     }
   },
   setup(props, { emit, slots }) {

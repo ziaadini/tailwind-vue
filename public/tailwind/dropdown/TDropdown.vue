@@ -68,7 +68,8 @@
               :class="[renderClass('mr-auto ml-4', 'parentWrapperTriangle')]"
               data-name="dropdown-parentWrapperTriangle"
               :direction="arrowDirection"
-              :variant="''"
+              :variant="'secondary'"
+              v-bind="triangleProps"
             />
           </div>
         </template>
@@ -278,6 +279,10 @@ export default defineComponent({
         return !!delayType[propValue];
       },
     },
+    triangleProps: {
+      type: Object,
+      default: () => inject(component("triangleProps"), {}),
+    },
   },
   components: { TTriangle },
   setup(props, { emit, slots }) {
@@ -380,10 +385,6 @@ export default defineComponent({
 
     // handler parent rounded class
     const parentRoundedClass = computed(() => {
-      //       'rounded-full': isClosedRounded,
-      // 'rounded-md': isOpenedRounded,
-      // 'rounded-b-none': isOpened && !isOverflowed,
-      // 'rounded-t-none': isOpened && isOverflowed,
       if (isOpened.value) {
         if (!isOverflowed.value) {
           if (props.top) {
@@ -446,13 +447,6 @@ export default defineComponent({
           return "rounded-t-sm";
         }
       }
-      // 'rounded-b-sm': !top && !rounded && !isOverflowed,
-      //     'rounded-b-md': !top && rounded && !isOverflowed,
-      //     'rounded-t-md': top && rounded && !isOverflowed,
-      //     'rounded-b-none': !top && rounded && isOverflowed,
-      //     'rounded-t-md': !top && rounded && isOverflowed,
-      //     'rounded-t-sm': !top && !rounded && isOverflowed,
-      //     'rounded-t-sm': top && !rounded && !isOverflowed,
     });
 
     const handleVerticalTraslate = computed(() => {

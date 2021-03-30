@@ -1,29 +1,36 @@
 <template>
+  <!-- text input label -->
   <label
     v-if="label"
-    class="block text-sm font-medium text-gray-700 text-right"
+    data-name="textinput-label"
+    :class="[renderClass('block text-sm font-medium text-right', 'label')]"
   >
     {{ label }}
   </label>
+
+  <!-- text input wrapper -->
   <div
-    class="mt-1 relative min-content-height"
-    :class="{
-      'rounded-full': rounded,
-      'rounded-sm': !rounded,
-    }"
+    data-name="textinput-wrapper"
+    :class="[
+      renderClass('mt-1 relative min-content-height', 'wrapper', {
+        'rounded-full': rounded,
+        'rounded-sm': !rounded,
+      }),
+    ]"
   >
     <!-- left icon section -->
     <div
       v-if="leftPadding"
-      class="absolute inset-y-0 left-2 flex pointer-events-none items-center"
+      data-name="textinput-leftIcon"
+      :class="[
+        renderClass(
+          'absolute inset-y-0 z-10 left-2 flex pointer-events-none items-center ' +
+            leftIconColor,
+          'leftIcon'
+        ),
+      ]"
     >
-      <t-icon
-        v-if="leftIcon"
-        class="material-icons z-10"
-        :class="[{ 'text-gray-200': disabled }, leftIconColor]"
-        :name="leftIcon"
-      >
-      </t-icon>
+      <t-icon v-if="leftIcon" :name="leftIcon"> </t-icon>
       <template v-else>
         <slot name="leftSlot" />
       </template>
@@ -38,34 +45,38 @@
       v-bind="$attrs"
       :value="modelValue"
       @input="updateFunction($event.target.value)"
-      class="block h-9 w-full sm:text-sm outline-none"
+      data-name="textinput-input"
       :class="[
-        {
-          'pr-8': rightPadding,
-          'pr-3': !rightPadding,
-          'pl-8': leftPadding,
-          'pl-3': !leftPadding,
-          'rounded-full': rounded,
-          'rounded-sm': !rounded,
-          'text-right': isRight,
-          'text-center': isCenter,
-          'text-left': isLeft,
-        },
-        variantClasses,
+        renderClass(
+          'block h-9 w-full sm:text-sm outline-none ' + variantClasses,
+          'input',
+          {
+            'pr-8': rightPadding,
+            'pr-3': !rightPadding,
+            'pl-8': leftPadding,
+            'pl-3': !leftPadding,
+            'rounded-full': rounded,
+            'rounded-sm': !rounded,
+            'text-right': isRight,
+            'text-center': isCenter,
+            'text-left': isLeft,
+          }
+        ),
       ]"
     />
     <!-- right icon section -->
     <div
       v-if="rightPadding"
-      class="absolute inset-y-0 right-2 flex pointer-events-none items-center"
+      data-name="textinput-rightIcon"
+      :class="[
+        renderClass(
+          'absolute inset-y-0 right-2 flex pointer-events-none items-center z-10 ' +
+            rightIconColor,
+          'rightIcon'
+        ),
+      ]"
     >
-      <t-icon
-        v-if="rightIcon"
-        class="material-icons z-10"
-        :class="[{ 'text-gray-200': disabled }, rightIconColor]"
-        :name="rightIcon"
-      >
-      </t-icon>
+      <t-icon v-if="rightIcon" :name="rightIcon"> </t-icon>
       <template v-else>
         <slot name="rightSlot" />
       </template>
@@ -79,33 +90,44 @@ import {
   textInputAlignments,
   variants,
 } from "@/utility/css-helper";
-import { computed, defineComponent, nextTick, ref, toRefs, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  ref,
+  toRefs,
+  watch,
+} from "vue";
 import { formatHandlerWrapper, numberFormat } from "@/helpers/generalHelper";
 import TIcon from "@/components/tailwind/icon/TIcon.vue";
+import { useRenderClass } from "@/compositionFunctions/settings";
+
+const component = (propName: string) => "t-textinput-" + propName;
 export default defineComponent({
   name: "TTextInput",
   components: { TIcon },
   props: {
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
       },
     },
     hover: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("hover"), false),
     },
     type: {
       required: false,
       type: String,
-      default: "text",
+      default: () => inject(component("type"), "text"),
     },
     inputmode: {
       required: false,
       type: String,
-      default: "text",
+      default: () => inject(component("inputmode"), "text"),
     },
     label: {
       required: false,
@@ -120,30 +142,30 @@ export default defineComponent({
     rightIcon: {
       required: false,
       type: String,
-      default: "",
+      default: () => "",
     },
     leftIconColor: {
       required: false,
       type: String,
-      default: "",
+      default: () => inject(component("leftIconColor"), ""),
     },
     rightIconColor: {
       required: false,
       type: String,
-      default: "",
+      default: () => inject(component("rightIconColor"), ""),
     },
     rounded: {
       type: Boolean,
       required: false,
-      default: false,
+      default: () => inject(component("rounded"), false),
     },
     align: {
       type: String,
       required: false,
-      default: textInputAlignments.right,
       validator: (propValue: string) => {
         return !!textInputAlignments[propValue];
       },
+      default: () => inject(component("align"), textInputAlignments.right),
     },
     modelValue: {
       type: String,
@@ -168,8 +190,40 @@ export default defineComponent({
       required: false,
     },
   },
-  computed: {},
   setup(props, { slots, emit }) {
+    // handle text variant
+    const variantClasses = computed((): string => {
+      let classes = "";
+      classes += `bg-white text-input-placehoder-black text-dark border ${
+        props.error
+          ? "border-red-500"
+          : `border-${
+              props.variant === variants.white ? "gray-300" : props.variant
+            }-100 focus:border-${
+              props.variant === variants.white ? "gray-600" : props.variant
+            }`
+      }  ${props.hover ? `hover:bg-${props.variant}-50` : ""}`;
+
+      classes +=
+        " border transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
+      return classes;
+    });
+
+    const rightPadding = computed(
+      (): boolean => !!(slots.rightSlot || props.rightIcon)
+    );
+    const leftPadding = computed(
+      (): boolean => !!(slots.leftSlot || props.leftIcon)
+    );
+    const isRight = (): boolean => {
+      return props.align === textInputAlignments.right;
+    };
+    const isLeft = (): boolean => {
+      return props.align === textInputAlignments.left;
+    };
+    const isCenter = (): boolean => {
+      return props.align === textInputAlignments.center;
+    };
     const { modelValue } = toRefs(props);
     const input = ref(null);
 
@@ -178,6 +232,7 @@ export default defineComponent({
       props.modelModifiers
     );
 
+    // handling how to update textinput modelValue
     const updateFunction = formatFounded
       ? async (value) => {
           const formattedValue = numberFormat(value, args[0], args[1]);
@@ -190,58 +245,13 @@ export default defineComponent({
           emit("update:modelValue", value);
         };
 
-    const rightPadding = computed(
-      (): boolean => !!(slots.rightSlot || props.rightIcon)
-    );
-    const leftPadding = computed(
-      (): boolean => !!(slots.leftSlot || props.leftIcon)
-    );
-
-    const variantClasses = computed((): string => {
-      let classes = "";
-      // if (!props.outline) {
-      // classes += `${
-      //   props.variant === variants.white ? "text-dark" : "text-white"
-      // } ${
-      //   props.error ? "bg-red-300 border-red-200" : "bg-" + props.variant
-      // } ${
-      //   props.variant === variants.white
-      //     ? "placeholder-gray-300"
-      //     : "placeholder-white"
-      // }`;
-      // }
-      // else {
-      classes += `bg-white text-input-placehoder-black text-dark border ${
-        props.error
-          ? "border-red-500"
-          : `border-${
-              props.variant === variants.white ? "gray-300" : props.variant
-            }-100 focus:border-${
-              props.variant === variants.white ? "gray-600" : props.variant
-            }`
-      }  ${props.hover ? `hover:bg-${props.variant}-50` : ""}`;
-      // }
-
-      classes +=
-        " border transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
-      return classes;
-    });
-
-    const isRight = (): boolean => {
-      return props.align === textInputAlignments.right;
-    };
-    const isLeft = (): boolean => {
-      return props.align === textInputAlignments.left;
-    };
-    const isCenter = (): boolean => {
-      return props.align === textInputAlignments.center;
-    };
-
+    // watch for modelValue changes
     watch(modelValue, (value) => {
       updateFunction(value);
     });
 
-    const inputMode = computed(() => {
+    // handle input mode when format is passed as modifier
+    const inputMode = computed(function() {
       if (formatFounded) {
         return "numeric";
       }
@@ -253,9 +263,12 @@ export default defineComponent({
       textarea = "textarea",
     }
 
+    // handle input type (textarea or input)
     const inputType = computed(() => {
       return !props.area ? inputTypes.input : inputTypes.textarea;
     });
+
+    const { renderClass } = useRenderClass("textinput");
 
     return {
       rightPadding,
@@ -268,6 +281,7 @@ export default defineComponent({
       input,
       inputMode,
       inputType,
+      renderClass,
     };
   },
   watch: {},

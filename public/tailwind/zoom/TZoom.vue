@@ -1,18 +1,31 @@
 <template>
-  {{ scaleClass }}
-  {{ translateXY }}
+  <!-- zoom wrapper -->
   <div
-    class="overflow-hidden w-64 h-64"
+    data-name="zoom-wrapper"
+    :class="[renderClass('overflow-hidden w-64 h-64', 'wrapper')]"
     v-bind="$attrs"
     @mousemove="handleMouseHover"
     @mouseover="setTranslateHover"
     @mouseout="resetTranslate"
   >
-    <t-image v-show="showMask" :src="maskSrc" class="w-full h-full" />
+    <!-- zoom mask -->
     <t-image
-      :src="imgSrc"
-      class="w-full h-full transform origin-top-left"
-      :class="[scaleClass]"
+      v-show="showMask"
+      :src="maskSrc"
+      data-name="zoom-mask"
+      :class="[renderClass('w-full h-full', 'mask')]"
+    />
+
+    <!-- zoom image -->
+    <t-image
+      :src="src"
+      data-name="zoom-image"
+      :class="[
+        renderClass(
+          `w-full h-full transform origin-top-left ${scaleClass}`,
+          'mask'
+        ),
+      ]"
       :style="{
         '--tw-translate-x': `${-translateXY.x}px`,
         '--tw-translate-y': `${-translateXY.y}px`,
@@ -22,24 +35,34 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+  reactive,
+  ref,
+} from "vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
 import { userOffsetFinder } from "@/compositionFunctions/offset";
+import { useRenderClass } from "@/compositionFunctions/settings";
 
 const scales = [1.5, 2, 3, 4];
+const component = (propName: string) => "t-zoom-" + propName;
+
 export default defineComponent({
   components: {
     TImage,
   },
   props: {
-    imgSrc: {
+    src: {
       default: "",
       type: String,
       required: true,
     },
     scale: {
       type: Number,
-      default: 1.5,
+      default: () => inject(component("scale"), 1.5),
       required: false,
       valdator: (value: any) => {
         return !!scales.find(value);
@@ -47,10 +70,11 @@ export default defineComponent({
     },
     maskSrc: {
       type: String,
-      default: "",
+      default: () => inject(component("maskSrc"), ""),
     },
   },
   setup(props) {
+    // translate variables
     const translateXY = reactive({
       x: 0,
       y: 0,
@@ -72,10 +96,12 @@ export default defineComponent({
       scaleClass.value = zoomOption.value.class;
     }
 
+    // if hovering the image then hover is set to true
     function setTranslateHover() {
       translateXY.hover = true;
     }
 
+    // reset translate state
     function resetTranslate() {
       translateXY.x = 0;
       translateXY.y = 0;
@@ -84,6 +110,7 @@ export default defineComponent({
       scaleClass.value = "";
     }
 
+    // handle image zoom scale based on the passed scale
     function handleScaleClass() {
       let option;
       switch (props.scale) {
@@ -103,12 +130,14 @@ export default defineComponent({
       zoomOption.value = option;
     }
 
+    // base on the hover position(x,y) set the translate
     function handleMouseHover($event) {
       const offset = findOffset($event);
 
       setTranslate(offset);
     }
 
+    // handle image showing when mask is enabled
     const showImage = computed(function() {
       return props.maskSrc ? translateXY.hover : true;
     });
@@ -121,6 +150,8 @@ export default defineComponent({
       handleScaleClass();
     });
 
+    const { renderClass } = useRenderClass("zoom");
+
     return {
       handleMouseHover,
       resetTranslate,
@@ -130,6 +161,7 @@ export default defineComponent({
       setTranslateHover,
       showMask,
       scaleClass,
+      renderClass,
     };
   },
 });

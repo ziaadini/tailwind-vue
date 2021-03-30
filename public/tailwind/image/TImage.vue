@@ -1,11 +1,20 @@
 <template>
-  <img v-bind="$attrs" ref="image" />
+  <template v-if="!hasDefaultSlot">
+    <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
+    <img @load="handleImageLoaded" v-bind="$attrs" v-else />
+    <div v-if="loading">
+      <slot v-bind="$attrs" name="loader" />
+    </div>
+  </template>
+  <!-- TODO why should we have a default Slot -->
+  <slot :src="src" v-bind="$attrs" />
 </template>
 
 <script lang="ts">
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useImageDownloader } from "@/compositionFunctions/image";
 import {
+  computed,
   defineComponent,
   onMounted,
   ref,
@@ -31,36 +40,47 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { src, default: defaultImage, lazy } = toRefs(props);
-    const image = ref(null);
 
-    const {
-      image: imageDownloaded,
-      setImage,
-      downloadImage,
-    } = useImageDownloader();
+    // handle loading state of image
+    const loading = ref(true);
+    function handleImageLoaded(value = false) {
+      loading.value = value;
+    }
 
-    // watch for src changes
-    watch(src, (newSrc) => {
-      if (newSrc) {
-        downloadImage(newSrc);
-      }
-    });
+    // image ref
+    const imageRef = ref(null);
 
-    // if new images downloaded set them
-    watch(imageDownloaded, () => {
-      setImage(image);
-    });
+    function handleImageLazyload() {
+      // handle image downloading
+      const {
+        image: imageDownloaded,
+        setImage,
+        downloadImage,
+      } = useImageDownloader();
 
-    // hanlde lazy loading
-    if (lazy.value) {
+      // watch for image source changes and download the new image
+      watch(src, (newSrc) => {
+        if (newSrc) {
+          handleImageLoaded(true);
+          downloadImage(newSrc);
+        }
+      });
+
+      // if new images downloaded set them
+      watch(imageDownloaded, () => {
+        handleImageLoaded();
+        setImage(imageRef);
+      });
+
       const { isIntersecting, destroyObserver } = useIntersectElement(
         {
           passRef: true,
         },
-        () => ({}),
-        image
+        undefined,
+        imageRef.value,
+        false
       );
 
       watchEffect(() => {
@@ -69,17 +89,25 @@ export default defineComponent({
           destroyObserver();
         }
       });
-    } else {
-      downloadImage(src.value);
     }
 
+    const hasDefaultSlot = computed(() => !!slots.default);
+
     onMounted(() => {
-      // @ts-ignore
-      image.value.src = defaultImage.value;
+      // hanlde lazy loading
+      if (lazy.value && !hasDefaultSlot.value) {
+        handleImageLazyload();
+      }
+      if (lazy.value || !props.src)
+        // @ts-ignore
+        imageRef.value && (imageRef.value.src = defaultImage.value);
     });
 
     return {
-      image,
+      imageRef,
+      hasDefaultSlot,
+      handleImageLoaded,
+      loading,
     };
   },
 });
