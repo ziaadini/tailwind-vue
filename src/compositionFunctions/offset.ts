@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 export const userOffsetFinder = () => {
   function findOffset($event: MouseEvent) {
     const leftOffset =
@@ -8,7 +9,7 @@ export const userOffsetFinder = () => {
       $event.pageY - $event.target!.offsetTop;
     return {
       left: leftOffset,
-      top: topOffset,
+      top: topOffset
     };
   }
 

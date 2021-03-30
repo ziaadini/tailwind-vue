@@ -1,5 +1,5 @@
 import { delayType } from "./../utility/css-helper";
-import { onBeforeUnmount, watch, onBeforeMount, computed } from "vue";
+import { computed } from "vue";
 
 export const useDelayHandler = (
   type: delayType,
@@ -19,6 +19,6 @@ export const useDelayHandler = (
   });
 
   return {
-      getAnimationDelay
-  }
+    getAnimationDelay
+  };
 };

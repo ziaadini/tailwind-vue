@@ -6,7 +6,7 @@
     v-bind="{
       ...$attrs,
       onMouseDown: swipeEnabled && onMouseDown,
-      onTouchstart: swipeEnabled && onTouchstart,
+      onTouchstart: swipeEnabled && onTouchstart
     }"
   >
     <!-- carousel images -->
@@ -29,9 +29,9 @@
               {
                 'rotate-90': activeIndex !== index && rotate,
                 'scale-150': activeIndex !== index && scale,
-                ...horizontalClasses(index),
+                ...horizontalClasses(index)
               }
-            ),
+            )
           ]"
           :src="link.url"
       /></template>
@@ -48,9 +48,9 @@
             {
               'rotate-90': activeIndex !== index && rotate,
               'scale-150': activeIndex !== index && scale,
-              ...horizontalClasses(index),
+              ...horizontalClasses(index)
             }
-          ),
+          )
         ]"
       >
         <slot :src="link.url" :index="index" :activeIndex="activeIndex" />
@@ -63,7 +63,7 @@
         renderClass(
           'absolute transform right-0 top-1/2 -translate-y-1/2 z-20',
           'rightBtn'
-        ),
+        )
       ]"
     >
       <slot
@@ -81,7 +81,7 @@
         renderClass(
           'absolute transform left-0 top-1/2 -translate-y-1/2 z-20',
           'leftBtn'
-        ),
+        )
       ]"
     >
       <slot
@@ -101,7 +101,7 @@
         renderClass(
           'flex flex-row-reverse flex-wrap justify-center absolute right-1/2 transform translate-x-1/2 bottom-20 z-20',
           'paginationWrapper'
-        ),
+        )
       ]"
     >
       <div
@@ -111,7 +111,7 @@
           renderClass(
             'mr-1 w-1 h-1 cursor-pointer bg-gray-400 rounded-full',
             'paginationBack'
-          ),
+          )
         ]"
         @click="handlePaginationClick(0)"
       ></div>
@@ -121,7 +121,7 @@
           renderClass(
             'rounded-sm flex flex-row-reverse overflow-hidden',
             'paginationContainer'
-          ),
+          )
         ]"
       >
         <div
@@ -132,8 +132,8 @@
             renderClass('w-3 h-1 cursor-pointer', 'paginationTick', {
               'bg-transparent': item.transparent,
               'bg-gray-400': !item.transparent && !item.enabled,
-              'bg-gray-100': item.enabled,
-            }),
+              'bg-gray-100': item.enabled
+            })
           ]"
           @click="handlePaginationClick(index)"
         ></div>
@@ -145,7 +145,7 @@
           renderClass(
             'ml-1 w-1 h-1 cursor-pointer bg-gray-400 rounded-full',
             'paginationNext'
-          ),
+          )
         ]"
         @click="handlePaginationClick(3)"
       ></div>
@@ -160,7 +160,7 @@
         renderClass(
           'absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20',
           'caption'
-        ),
+        )
       ]"
     >
       <slot name="caption" />
@@ -180,7 +180,7 @@ import {
   ref,
   toRefs,
   watch,
-  watchEffect,
+  watchEffect
 } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import TImage from "@/components/tailwind/image/TImage.vue";
@@ -191,51 +191,51 @@ export default defineComponent({
     scale: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     rotate: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     autoPlay: {
       type: Boolean,
       default: () => inject(component("autoPlay"), true),
-      required: false,
+      required: false
     },
     autoPlaceInterval: {
       type: Number,
       default: () => inject(component("autoPlaceInterval"), 2000),
-      required: false,
+      required: false
     },
     modelValue: {
       type: Number,
       default: () => inject(component("modelValue"), 0),
-      required: false,
+      required: false
     },
     items: {
       type: Array as PropType<{ value: number; url: string }[]>,
-      default: [],
+      default: []
     },
     swipeThreshold: {
       type: Number,
       default: () => inject(component("swipeThreshold"), 50),
-      required: false,
+      required: false
     },
     swipeEnabled: {
       type: Boolean,
       default: () => inject(component("swipeEnabled"), true),
-      required: false,
+      required: false
     },
     imageProps: {
       type: Object,
       required: false,
-      default: () => inject(component("imageProps"), {}),
+      default: () => inject(component("imageProps"), {})
     },
     paginationTicksNumber: {
       type: Number,
-      default: () => inject(component("paginationTicksNumber"), 3),
-    },
+      default: () => inject(component("paginationTicksNumber"), 3)
+    }
   },
   components: { TImage },
   setup(props, { emit, slots }) {
@@ -246,7 +246,7 @@ export default defineComponent({
     const horizontalClasses = (index: number) => ({
       "translate-x-0 top-0 z-20": index === activeIndex.value,
       "-translate-x-full top-0": activeIndex.value - index > 0,
-      "translate-x-full top-0": activeIndex.value - index < 0,
+      "translate-x-full top-0": activeIndex.value - index < 0
     });
 
     const itemChangedEvent = () => {
@@ -266,7 +266,7 @@ export default defineComponent({
       return activeIndex.value >= props.items.length - 1;
     });
 
-    watch(modelValue, (newIndex) => {
+    watch(modelValue, newIndex => {
       changeActiveIndex(newIndex - activeIndex.value);
     });
 
@@ -283,7 +283,7 @@ export default defineComponent({
       start(autoPlaceInterval.value);
     };
 
-    const buttonClick = (variance) => {
+    const buttonClick = variance => {
       start(null);
       changeActiveIndex(variance);
       if (autoPlay.value) {
@@ -294,7 +294,7 @@ export default defineComponent({
     const {
       bind: swipeEvent,
       state: state,
-      xDiff: swipeDiff,
+      xDiff: swipeDiff
     } = useSwipeElement();
 
     if (props.swipeEnabled)
@@ -320,7 +320,7 @@ export default defineComponent({
     for (let i = 0; i < props.paginationTicksNumber; i++) {
       paginationTicks.value.push({
         enabled: false,
-        transparent: false,
+        transparent: false
       });
     }
 
@@ -330,23 +330,23 @@ export default defineComponent({
       const selected = activeIndex.value % props.paginationTicksNumber;
 
       // reset enabled item
-      paginationTicks.value.forEach((value) => {
+      paginationTicks.value.forEach(value => {
         value.enabled = false;
       });
 
       // handle last item
       if (activeIndex.value === items.value.length - 1) {
         for (let i = selected + 1; i < props.paginationTicksNumber; i++) {
-/* eslint-disable vue/no-side-effects-in-computed-properties */
+          /* eslint-disable vue/no-side-effects-in-computed-properties */
           paginationTicks.value[i].transparent = true;
         }
       } else if (activeIndex.value === items.value.length - 2) {
-        paginationTicks.value.forEach((value) => {
+        paginationTicks.value.forEach(value => {
           value.transparent = false;
         });
       }
 
-/* eslint-disable vue/no-side-effects-in-computed-properties */
+      /* eslint-disable vue/no-side-effects-in-computed-properties */
       paginationTicks.value[selected].enabled = true;
       return paginationTicks.value;
     });
@@ -387,7 +387,7 @@ export default defineComponent({
       getPaginationTicks,
       hasPaginationSlot
     };
-  },
+  }
 });
 </script>
 

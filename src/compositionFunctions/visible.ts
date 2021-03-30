@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useIsScrolling } from "./isScrolling";
-import { onUnmounted, watch, watchEffect } from "vue";
+import { onUnmounted, watch } from "vue";
 import { ref } from "vue";
 export enum visibilityOverflow {
   right = "right",
   left = "left",
   top = "top",
-  bottom = "bottom",
+  bottom = "bottom"
 }
 
 let isScrolling = null as any;
@@ -59,13 +60,12 @@ export const useIsVisible = (
         visibilityOverflow.bottom,
         visibilityOverflow.left,
         visibilityOverflow.right,
-        visibilityOverflow.top,
+        visibilityOverflow.top
       ];
     }
-
   };
 
-  watch(isScrolling, (resultValue) => {
+  watch(isScrolling, () => {
     handlePlacement();
   });
 
@@ -85,6 +85,6 @@ export const useIsVisible = (
     placement,
     parentElement,
     handlePlacement,
-    isOpen,
+    isOpen
   };
 };

@@ -567,7 +567,7 @@
           { key: 'age', label: 'age', sortable: true }
         ]"
         @sort="onSort"
-        :default-sort="{key:'last_name',sort:'asc'}"
+        :default-sort="{ key: 'last_name', sort: 'asc' }"
       >
         <template #card-header="{item}">
           <div class="text-blue-400">{{ item.label }}</div>

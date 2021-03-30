@@ -200,6 +200,7 @@ export default defineComponent({
 
     const showArrows = computed(
       () =>
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
     );
 

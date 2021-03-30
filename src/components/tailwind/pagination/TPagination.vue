@@ -321,6 +321,7 @@ export default defineComponent({
           if (props.formName) {
             return +route.query[props.formName]?.[props.queryName] || 1;
           } else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return +route.query[props.queryName]!;
           }
         } else {
