@@ -9,7 +9,7 @@ export const useIntersectElement = (
     entry: IntersectionObserverEntry,
     observer: IntersectionObserver
   ) => void,
-  elementRef = ref(null),
+  elementRef = ref(null) as any,
   mounted = true
 ) => {
   const isIntersecting = ref(false);

@@ -1,5 +1,5 @@
 <template>
-  <!-- This is an example component -->
+  <!-- component wrapper for button router link and nuxt link -->
   <component
     :is="wrapperComponent"
     :to="to"
@@ -13,22 +13,25 @@
           'rounded-full': rounded,
           ripple: ripple && !isDisabled,
           'w-full': full,
-          'min-w-14': !fab
+          'min-w-14': !fab && hasMinWidth,
         }
       ),
     ]"
     v-bind="$attrs"
   >
+    <!-- button icon -->
     <app-icon
       :name="icon"
       data-name="button-icon"
       :class="[
         renderClass('', 'icon', {
           'opacity-0': loading,
-          'pl-2': !fab
+          'pl-2': !fab,
         }),
       ]"
     />
+
+    <!-- default slot -->
     <span
       :class="{
         'opacity-0': loading,
@@ -37,6 +40,7 @@
       <slot />
     </span>
 
+    <!-- button loading -->
     <span
       v-if="loading"
       data-name="button-loadingContainer"
@@ -61,17 +65,19 @@
   </component>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, inject } from "vue";
 import AppIcon from "@/components/tailwind/icon/TIcon.vue";
-import { buttonSizes, variants } from "@/utility/css-helper.ts";
+import { size, variants } from "@/utility/css-helper.ts";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
+
+const component = (propName: string) => "t-button-" + propName;
 export default defineComponent({
   name: "TButton",
   props: {
     rounded: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("rounded"), false),
     },
     fab: {
       type: Boolean,
@@ -79,21 +85,21 @@ export default defineComponent({
     },
     variant: {
       type: String,
-      default: "primary",
+      default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
       },
     },
     size: {
       type: String,
-      default: "normal",
+      default: () => inject(component("size"), size.md),
       validator: (propValue: string) => {
-        return !!buttonSizes[propValue];
+        return !!size[propValue];
       },
     },
     color: {
       type: String,
-      default: "",
+      default: () => inject(component("color"), ""),
     },
     icon: {
       type: String,
@@ -105,11 +111,11 @@ export default defineComponent({
     },
     outline: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("outline"), false),
     },
     ripple: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("ripple"), false),
     },
     to: {
       type: String,
@@ -119,11 +125,11 @@ export default defineComponent({
     nuxt: {
       required: false,
       type: Boolean,
-      default: false,
+      default: () => inject(component("nuxt"), false),
     },
     full: {
       type: Boolean,
-      default: false,
+      default: () => inject(component("full"), false),
       required: false,
     },
     loading: {
@@ -133,7 +139,7 @@ export default defineComponent({
     },
     loadingProps: {
       type: Object,
-      default: () => ({}),
+      default: () => inject(component("loadingProps"), {}),
     },
   },
   components: {
@@ -142,42 +148,45 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const variantClasses = computed((): string => {
-      const baseClass =
-        " hover:opacity-80 transition hover:shadow-md text-white disabled:opacity-50";
+      const baseClass = ` hover:opacity-80 transition hover:shadow-md ${
+        props.variant === variants.white ? "text-dark" : "text-white"
+      } disabled:opacity-50`;
       const variantClass = `bg-${props.variant} hover:bg-${props.variant}`;
 
       const outlineVariantClass = `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50`;
       const outlineBaseClass =
         " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
 
-      let size = " ";
+      let btnSize = " ";
 
       let height;
       let width;
       switch (props.size) {
-        case buttonSizes.small:
+        case size.xs:
           height = "h-7";
           width = "w-7";
           break;
-        case buttonSizes.large:
-          height = "h-11";
-          width = "w-11";
-          break;
-        default:
+        case size.sm:
           height = "h-9";
           width = "w-9";
           break;
+        case size.lg:
+          height = "h-13";
+          break;
+        default:
+          height = "h-11";
+          break;
       }
 
-      size += height + " ";
+      btnSize += height + " ";
       if (props.fab) {
-        size += width;
+        btnSize += width;
       }
 
       return (
         (props.outline
           ? (props.color || outlineVariantClass) + outlineBaseClass
-          : (props.color || variantClass) + baseClass) + size
+          : (props.color || variantClass) + baseClass) + btnSize
       );
     });
 
@@ -201,6 +210,10 @@ export default defineComponent({
       return props.loading || props.disabled;
     });
 
+    const hasMinWidth = computed(() => {
+      return props.size === size.xs || props.size === size.sm ? false : true;
+    });
+
     return {
       renderClass,
       variantClasses,
@@ -208,6 +221,7 @@ export default defineComponent({
       hasLoadingSlot: !!slots.loading,
       wrapperComponent,
       isDisabled,
+      hasMinWidth,
     };
   },
 });

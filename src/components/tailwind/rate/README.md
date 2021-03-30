@@ -10,3 +10,8 @@
 
 ### slots
 
+| name | description 
+| ------------ | ------------ |
+| before-star-{index of item} | slot before each star |
+| after-star-{index of item} | slot after each star |
+

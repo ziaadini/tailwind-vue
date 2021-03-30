@@ -210,6 +210,38 @@ export interface TSettings {
     children: TSettingItem;
     childrenScrollbar: TSettingItem;
     childrenItem: TSettingItem;
+  };
+  rate?: {
+    wrapper: TSettingItem;
+  };
+  textinput?: {
+    label: TSettingItem;
+    wrapper: TSettingItem;
+    leftIcon: TSettingItem;
+    input: TSettingItem;
+    rightIcon: TSettingItem;
+  };
+  menu: {
+    trigger: TSettingItem;
+    items: TSettingItem;
+  };
+  carousel: {
+    wrapper: TSettingItem;
+    images: TSettingItem;
+    imageItem: TSettingItem;
+    rightBtn: TSettingItem;
+    leftBtn: TSettingItem;
+    caption: TSettingItem;
+    paginationWrapper: TSettingItem;
+    paginationBack: TSettingItem;
+    paginationContainer: TSettingItem;
+    paginationTick: TSettingItem;
+    paginationNext: TSettingItem;
+  };
+  zoom: {
+    wrapper: TSettingItem;
+    mask: TSettingItem;
+    image: TSettingItem;
   }
 }
 

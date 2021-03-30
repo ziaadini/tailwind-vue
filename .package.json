@@ -1,6 +1,6 @@
 {
   "name": "tailwind-vue3",
-  "version": "0.5.0",
+  "version": "0.4.9",
   "main": "./dist/tailwind-vue3.common.js",
   "files": [
     "dist/*",
@@ -12,7 +12,7 @@
   ],
   "types": "./types/index.d.ts",
   "scripts": {
-    "serve": "node ./copy-md-files && vue-cli-service serve --open",
+    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.js",
     "test:unit": "vue-cli-service test:unit",
@@ -25,10 +25,7 @@
     "core-js": "^3.6.5",
     "moment": "^2.29.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.2",
-    "@tailwindcss/typography": "^0.4.0",
-    "simple-syntax-highlighter": "^2.0.4",
-    "vue3-markdown-it": "^1.0.7"
+    "vue-router": "^4.0.2"
   },
   "repository": {
     "type": "git",
@@ -66,43 +63,5 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
-  },
-  "contributors": [
-    {
-      "name": null,
-      "email": null,
-      "url": "https://github.com/Tefoh",
-      "contributions": 2,
-      "additions": 27227,
-      "deletions": 21,
-      "hireable": null
-    },
-    {
-      "name": "yadollah ziaadini",
-      "email": null,
-      "url": "https://github.com/ziaadini",
-      "contributions": 152,
-      "additions": 59380,
-      "deletions": 20219,
-      "hireable": null
-    },
-    {
-      "name": "Ali Zangiabadi",
-      "email": null,
-      "url": "https://github.com/alizangiabadicode",
-      "contributions": 236,
-      "additions": 60693,
-      "deletions": 23528,
-      "hireable": null
-    },
-    {
-      "name": "Mohammad Amin Mokhtari",
-      "email": null,
-      "url": "https://github.com/aminmokhtari94",
-      "contributions": 1,
-      "additions": 50,
-      "deletions": 6,
-      "hireable": null
-    }
-  ]
+  }
 }

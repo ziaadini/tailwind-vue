@@ -12,7 +12,6 @@ export const useImageDownloader = () => {
 
 
   const setImage = (imageRef: any) => {
-    console.log(imageRef, image)
     imageRef.value.src = image.value;
   };
 
