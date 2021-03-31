@@ -1,17 +1,8 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/ali">Ali</router-link> |
-    <router-link to="/mohammad">mohammad</router-link> |
+    <router-link to="/">Home</router-link> | <router-link to="/ali">Ali</router-link> | <router-link to="/mohammad">mohammad</router-link> |
     <router-link to="/zia">zia</router-link> |
-    <t-dropdown
-      v-model="dropdownModel"
-      hover
-      placeholder="Component's Document"
-      rounded
-      :items="ddItems"
-      variant="success"
-    />
+    <t-dropdown v-model="dropdownModel" hover placeholder="Component's Document" rounded :items="ddItems" variant="success" />
   </div>
   <router-view />
 </template>
@@ -27,7 +18,7 @@ export default defineComponent({
   data() {
     return {
       dropdownModel: "",
-      ddItems: ["button", "alert", "textInput", "badge", "menu"],
+      ddItems: ["button", "alert", "textInput", "badge", "menu", "modal"],
     };
   },
   watch: {
