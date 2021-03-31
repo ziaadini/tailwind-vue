@@ -14,7 +14,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.js",
+    "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "tailwind-config-viewer": "tailwind-config-viewer -o",

@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { ScrollDirections } from "@/utility/enums/ScrollDirections";
 
 export const useScrollElement = () => {

@@ -5,7 +5,7 @@
       renderClass(
         'flex justify-center flex-wrap flex-row-reverse space-x-reverse space-x-1 w-full',
         'wrapper'
-      ),
+      )
     ]"
   >
     <div v-for="i in length" :key="i + 'rating'">
@@ -49,33 +49,33 @@ export default defineComponent({
     emptyIcon: {
       type: String,
       default: () => inject(component("emptyIcon"), ""),
-      required: true,
+      required: true
     },
     fullIcon: {
       type: String,
       default: () => inject(component("fullIcon"), ""),
-      required: true,
+      required: true
     },
     halfIcon: {
       type: String,
       default: () => inject(component("halfIcon"), ""),
-      required: true,
+      required: true
     },
     hover: {
       type: Boolean,
       default: () => inject(component("hover"), true),
-      required: false,
+      required: false
     },
     length: {
       type: Number,
       default: () => inject(component("length"), 5),
-      required: false,
+      required: false
     },
     modelValue: {
       type: Number,
       required: true,
-      default: () => inject(component("length"), -1),
-    },
+      default: () => inject(component("length"), -1)
+    }
   },
   setup(props, { emit }) {
     const parent = ref(null);
@@ -93,11 +93,11 @@ export default defineComponent({
       selectedIndex.value = starIndex;
     };
 
-    watch(selectedIndex, (value) => {
+    watch(selectedIndex, value => {
       emit("update:modelValue", value);
     });
 
-    watch(modelValue, (value) => {
+    watch(modelValue, value => {
       selectedIndex.value = value;
     });
 
@@ -118,8 +118,8 @@ export default defineComponent({
       selectStar,
       returnImageSrc,
       parent,
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>

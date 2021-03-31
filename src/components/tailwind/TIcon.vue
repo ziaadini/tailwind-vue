@@ -3,7 +3,7 @@
     v-if="name"
     data-name="icon-wrapper"
     :class="[
-      renderClass('material-icons pl-1', 'wrapper', { 'opacity-40': disabled }),
+      renderClass('material-icons pl-1', 'wrapper', { 'opacity-40': disabled })
     ]"
   >
     <template v-if="!avoidText">
@@ -22,22 +22,22 @@ export default defineComponent({
   props: {
     name: {
       type: String,
-      default: "",
+      default: ""
     },
     disabled: {
       type: Boolean,
-      default: () => false,
+      default: () => false
     },
     avoidText: {
       type: Boolean,
-      default: () => inject(component("i"), false),
-    },
+      default: () => inject(component("i"), false)
+    }
   },
   setup() {
     const { renderClass } = useRenderClass("button");
     return {
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>
