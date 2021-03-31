@@ -43,7 +43,7 @@
                 <template v-else>
                   <svg
                     data-name="pagination-icon"
-                    :class="renderClass('w-4 h-4 sm: h-5 sm:w-5', 'icon')"
+                    :class="renderClass('w-4 h-4 sm:h-5 sm:w-5', 'icon')"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -234,7 +234,7 @@
                 <template v-else>
                   <svg
                     data-name="pagination-icon"
-                    :class="renderClass('w-4 h-4 sm: h-5 sm:w-5', 'icon')"
+                    :class="renderClass('w-4 h-4 sm:h-5 sm:w-5', 'icon')"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -321,6 +321,7 @@ export default defineComponent({
           if (props.formName) {
             return +route.query[props.formName]?.[props.queryName] || 1;
           } else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return +route.query[props.queryName]!;
           }
         } else {

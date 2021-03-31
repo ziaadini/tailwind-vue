@@ -21,7 +21,7 @@ export function formatHandlerWrapper(
 ) {
   const keys = Object.keys(modelModifiers);
   const findKey = (type: modifierVariants) =>
-    keys.findIndex((e) => e.includes(type));
+    keys.findIndex(e => e.includes(type));
   const retArgs = (str: string) => {
     if (str.split(":").length > 1) {
       const tmp = str.split(":");

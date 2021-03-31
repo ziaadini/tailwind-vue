@@ -242,7 +242,7 @@ export interface TSettings {
     wrapper: TSettingItem;
     mask: TSettingItem;
     image: TSettingItem;
-  }
+  };
 }
 
 export interface TSettingItem {

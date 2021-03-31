@@ -30,7 +30,7 @@
           renderClass(
             `cursor-pointer w-64 h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
             'parent'
-          ),
+          )
         ]"
         @click="triggerMenu(true)"
       >
@@ -50,7 +50,7 @@
               renderClass(
                 'flex flex-row justify-center items-center w-full',
                 'parentWrapper'
-              ),
+              )
             ]"
           >
             <span
@@ -59,7 +59,7 @@
                 renderClass(
                   'mr-4 ml-2 overflow-ellipsis overflow-hidden h-full',
                   'parentWrapperText'
-                ),
+                )
               ]"
             >
               {{ selectedItem.label || placeholder }}
@@ -96,9 +96,9 @@
             'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
             'z-30': !hover,
             'z-40': hover,
-            'divide-y': divide,
+            'divide-y': divide
           }
-        ),
+        )
       ]"
       data-name="dropdown-children"
       class="transform overflow-hidden ease-in-out cursor-pointer transition w-64 absolute bg-white"
@@ -108,7 +108,7 @@
           renderClass(
             'overflow-y-auto scrollbar-sm max-h-48',
             'childrenScrollbar'
-          ),
+          )
         ]"
         data-name="dropdown-childrenScrollbar"
       >
@@ -130,7 +130,7 @@
                   'py-2 overflow-ellipsis overflow-hidden ' + childClass,
                   'childrenItem',
                   {
-                    'bg-gray-100': selectedItem.value === item.value,
+                    'bg-gray-100': selectedItem.value === item.value
                   }
                 ),
                 ,
@@ -161,7 +161,7 @@
 import { arrowDirections, delayType, variants } from "@/utility/css-helper";
 import {
   useIsVisible,
-  visibilityOverflow,
+  visibilityOverflow
 } from "@/compositionFunctions/visible";
 import {
   computed,
@@ -172,7 +172,7 @@ import {
   reactive,
   ref,
   toRefs,
-  watch,
+  watch
 } from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
 import { useDelayHandler } from "@/compositionFunctions/delayHandler";
@@ -189,100 +189,100 @@ export default defineComponent({
       default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
-      },
+      }
     },
     modelValue: {
-      type: String,
+      type: String
     },
     divide: {
       type: Boolean,
-      default: () => inject(component("divide"), true),
+      default: () => inject(component("divide"), true)
     },
     item: {
       type: Object,
-      default: () => ({ label: undefined, value: undefined }),
+      default: () => ({ label: undefined, value: undefined })
     },
     outline: {
       type: Boolean,
       default: () => inject(component("outline"), true),
-      required: false,
+      required: false
     },
     placeholder: {
       type: String,
       default: () => inject(component("placeholder"), ""),
-      required: false,
+      required: false
     },
     rounded: {
       type: Boolean,
       default: () => inject(component("rounded"), false),
-      required: false,
+      required: false
     },
     hover: {
       type: Boolean,
       default: () => inject(component("hover"), false),
-      required: false,
+      required: false
     },
     top: {
       type: Boolean,
       default: () => inject(component("top"), false),
-      required: false,
+      required: false
     },
     items: {
       default: [],
-      type: Array as PropType<DropDown.Root>,
+      type: Array as PropType<DropDown.Root>
     },
     opened: {
       type: Boolean,
       default: () => inject(component("opened"), false),
-      required: false,
+      required: false
     },
     searchKey: {
       type: String,
-      default: "",
+      default: ""
     },
     labelField: {
       type: String,
-      default: () => inject(component("labelField"), "label"),
+      default: () => inject(component("labelField"), "label")
     },
     valueField: {
       type: String,
-      default: () => inject(component("valueField"), "value"),
+      default: () => inject(component("valueField"), "value")
     },
     disabled: {
       type: Boolean,
-      default: () => inject(component("disabled"), false),
+      default: () => inject(component("disabled"), false)
     },
     toggleByHeader: {
       type: Boolean,
-      default: () => inject(component("toggleByHeader"), true),
+      default: () => inject(component("toggleByHeader"), true)
     },
     parentColorClasses: {
       type: String,
-      default: () => inject(component("parentColorClasses"), ""),
+      default: () => inject(component("parentColorClasses"), "")
     },
     itemsColorClasses: {
       type: String,
-      default: () => inject(component("itemsColorClasses"), ""),
+      default: () => inject(component("itemsColorClasses"), "")
     },
     animationDuration: {
       type: String,
-      default: () => inject(component("animationDuration"), "200"),
+      default: () => inject(component("animationDuration"), "200")
     },
     animationDelay: {
       type: String,
-      default: () => inject(component("animationDelay"), "0"),
+      default: () => inject(component("animationDelay"), "0")
     },
     animationDelayType: {
       type: String as PropType<delayType>,
       default: () => inject(component("animationDelayType"), delayType.both),
       validator: (propValue: string) => {
         return !!delayType[propValue];
-      },
+      }
     },
     triangleProps: {
       type: Object,
-      default: () => inject(component("triangleProps"), {}),
-    },
+      default: () => inject(component("triangleProps"), {})
+    }
   },
   components: { TTriangle },
   setup(props, { emit, slots }) {
@@ -307,7 +307,7 @@ export default defineComponent({
     const state = reactive({
       selected: null as any,
       opened: props.opened,
-      disabled: false,
+      disabled: false
     });
 
     const { items, opened, disabled } = toRefs(props);
@@ -480,22 +480,22 @@ export default defineComponent({
 
       const newItems = [] as DropDown.ObjectForm[];
 
-      items.value.forEach((item) => {
+      items.value.forEach(item => {
         if (typeof item === "string") {
           newItems.push({
             label: item,
-            value: item,
+            value: item
           });
         } else {
           newItems.push({
             label: item[props.labelField],
-            value: item[props.valueField],
+            value: item[props.valueField]
           });
         }
       });
 
       if (props.searchKey) {
-        return newItems.filter((i) =>
+        return newItems.filter(i =>
           i.label.toLowerCase().includes(props.searchKey.toLowerCase())
         );
       }
@@ -504,8 +504,8 @@ export default defineComponent({
     });
     const selectedItem = computed(() => {
       return (
-        itemFactory.value.find((e) => e.value === state.selected) || {
-          label: false,
+        itemFactory.value.find(e => e.value === state.selected) || {
+          label: false
         }
       );
     });
@@ -515,7 +515,7 @@ export default defineComponent({
 
     watch(
       getModelValue,
-      (value) => {
+      value => {
         if (value !== state.selected) state.selected = value;
       },
       { immediate: true }
@@ -541,7 +541,7 @@ export default defineComponent({
     }
 
     // handle disabled state
-    watch(disabled, (value) => {
+    watch(disabled, value => {
       if (value) triggerMenu(false);
       state.disabled = value;
     });
@@ -558,7 +558,7 @@ export default defineComponent({
       }
     };
     useKeyDown(onEscape);
-    watch(clickedOutside, (value) => {
+    watch(clickedOutside, () => {
       triggerMenu(false);
     });
 
@@ -568,7 +568,7 @@ export default defineComponent({
       }
     }
 
-    watch(opened, (value) => {
+    watch(opened, value => {
       if (value) {
         triggerMenu(true);
       } else {
@@ -576,7 +576,7 @@ export default defineComponent({
       }
     });
 
-    watch(toRefs(state).opened, (value) => {
+    watch(toRefs(state).opened, value => {
       if (value) {
         registerEvent();
       } else {
@@ -637,8 +637,8 @@ export default defineComponent({
       placement,
       arrowDirection,
       getAnimationDelay,
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>

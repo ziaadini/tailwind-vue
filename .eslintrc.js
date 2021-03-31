@@ -14,11 +14,19 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "prettier/prettier": [
+      "warn",
+      {
+        singleQuote: false,
+        semi: true
+      }
+    ],
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   overrides: [
     {
