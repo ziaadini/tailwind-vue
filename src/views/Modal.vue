@@ -6,17 +6,17 @@
     <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
       <h2 class="text-xl font-bold mb-2">Simple</h2>
       <p class="mb-2">Toggle a working modal demo by clicking the button below.</p>
-      <t-modal max-size="lg" teleport-to="#modal-content" v-model="modal" :close-callback="modalCloseCallback">
+      <t-modal max-size="lg" teleport-to="#modal-content" v-model="modal" :close-callback="modalCloseCallback" title="Your title">
         <p class="text-gray-800">
-          Are you sure you want you delete your account? This action cannot be undone.
+          Your description and your description and your description .
         </p>
 
         <div class="text-right mt-4">
           <button @click="modal = false" class="px-4 py-2 text-sm text-gray-600 focus:outline-none hover:underline">
             Cancel
           </button>
-          <button class="mr-2 px-4 py-2 text-sm rounded text-white bg-red-500 focus:outline-none hover:bg-red-400">
-            Delete
+          <button class="mr-2 px-4 py-2 text-sm rounded text-white bg-green-500 focus:outline-none hover:bg-green-400">
+            Accept
           </button>
         </div>
       </t-modal>
