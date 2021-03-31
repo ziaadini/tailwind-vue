@@ -27,7 +27,7 @@ export default defineComponent({
   data() {
     return {
       dropdownModel: "",
-      ddItems: ["button", "alert", "textInput", "badge"],
+      ddItems: ["button", "alert", "textInput", "badge", "menu"],
     };
   },
   watch: {
