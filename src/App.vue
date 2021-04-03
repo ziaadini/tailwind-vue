@@ -1,8 +1,17 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> | <router-link to="/ali">Ali</router-link> | <router-link to="/mohammad">mohammad</router-link> |
+    <router-link to="/">Home</router-link> |
+    <router-link to="/ali">Ali</router-link> |
+    <router-link to="/mohammad">mohammad</router-link> |
     <router-link to="/zia">zia</router-link> |
-    <t-dropdown v-model="dropdownModel" hover placeholder="Component's Document" rounded :items="ddItems" variant="success" />
+    <t-dropdown
+      v-model="dropdownModel"
+      hover
+      placeholder="Component's Document"
+      rounded
+      :items="ddItems"
+      variant="success"
+    />
   </div>
   <router-view />
 </template>
@@ -13,18 +22,26 @@ import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 
 export default defineComponent({
   components: {
-    TDropdown,
+    TDropdown
   },
   data() {
     return {
       dropdownModel: "",
-      ddItems: ["button", "alert", "textInput", "badge", "menu", "modal"],
+      ddItems: [
+        "button",
+        "alert",
+        "textInput",
+        "badge",
+        "menu",
+        "modal",
+        "dropdown"
+      ]
     };
   },
   watch: {
     dropdownModel(value) {
       this.$router.push(`/${value}`);
-    },
+    }
   },
   setup() {
     // provide("TSettings", {
@@ -51,7 +68,7 @@ export default defineComponent({
     provide("t-table-localSort", false);
     provide("t-bottom-sheet-titleTag", "h5");
     // provide("t-table-loading", true);
-  },
+  }
 });
 </script>
 <style>
