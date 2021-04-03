@@ -440,9 +440,10 @@
       placeholder="this is a test placeholder"
       :items="['test1', 'test2', 'test3']"
     />
+    ali
     <t-dropdown
       :outline="false"
-      :disabled="disabled"
+      :disabled="true"
       rounded
       variant="danger"
       placeholder="تست"

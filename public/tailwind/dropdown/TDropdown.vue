@@ -1,6 +1,4 @@
 <template>
-  isOverflowed: {{ isOverflowed }} roundedClass: {{ roundedClass }}
-  <br />
   <div
     class="relative"
     @mouseenter="hoverTriggerMenu(true)"
