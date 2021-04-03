@@ -20,8 +20,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="150"
+        src="//jsfiddle.net/mohstarsos1/cqfzj2s4/1/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -50,8 +50,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/wmzushbo/1/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -74,21 +74,21 @@
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
           />
           <t-dropdown
-            placeholder="sucess dropdown"
+            placeholder="Sucess dropdown"
             variant="success"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             class="mt-3"
           />
           <t-dropdown
-            placeholder="warning dropdown"
+            placeholder="Warning dropdown"
             variant="warning"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             class="mt-3"
           />
           <t-dropdown
-            placeholder="danger dropdown"
+            placeholder="Danger dropdown"
             variant="danger"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
@@ -97,14 +97,14 @@
         </div>
         <div class="my-4 ml-8">
           <t-dropdown
-            placeholder="Primary dropdown"
+            placeholder="Primary rounded"
             variant="primary"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             rounded
           />
           <t-dropdown
-            placeholder="sucess dropdown"
+            placeholder="Sucess rounded"
             variant="success"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
@@ -112,7 +112,7 @@
             class="mt-3"
           />
           <t-dropdown
-            placeholder="warning dropdown"
+            placeholder="Warning rounded"
             variant="warning"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
@@ -120,7 +120,7 @@
             class="mt-3"
           />
           <t-dropdown
-            placeholder="danger dropdown"
+            placeholder="Danger rounded"
             variant="danger"
             :outline="false"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
@@ -130,27 +130,27 @@
         </div>
         <div class="my-4 ml-8">
           <t-dropdown
-            placeholder="Primary dropdown"
+            placeholder="Primary outline"
             variant="primary"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             rounded
           />
           <t-dropdown
-            placeholder="sucess dropdown"
+            placeholder="Sucess outline"
             variant="success"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             rounded
             class="mt-3"
           />
           <t-dropdown
-            placeholder="warning dropdown"
+            placeholder="Warning outline"
             variant="warning"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             rounded
             class="mt-3"
           />
           <t-dropdown
-            placeholder="danger dropdown"
+            placeholder="Danger outline"
             variant="danger"
             :items="['item-1', 'item-2', 'item-3', 'item-4', 'item-5']"
             rounded
@@ -160,8 +160,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="500"
+        src="//jsfiddle.net/mohstarsos1/sLc0dohq/4/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -192,8 +192,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/o6ev4tys/1/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -222,8 +222,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/0o49avtw/2/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
