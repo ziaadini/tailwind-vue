@@ -9,8 +9,8 @@
     <div
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
-      <h2 class="text-xl font-bold mb-2">Simple (Only Text)</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <h2 class="text-xl font-bold mb-2">Simple</h2>
+      <p class="mb-2">Here’s a carousel with slides only.</p>
 
       <t-carousel
         :autoPlay="false"
@@ -36,8 +36,8 @@
 
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/nrpe3x7o/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"

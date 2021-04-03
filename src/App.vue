@@ -36,6 +36,7 @@ export default defineComponent({
         "modal",
         "dropdown",
         "breadcrumb",
+        "slider",
         "carousel"
       ]
     };
