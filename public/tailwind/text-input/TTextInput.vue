@@ -14,8 +14,8 @@
     :class="[
       renderClass('mt-1 relative min-content-height', 'wrapper', {
         'rounded-full': rounded,
-        'rounded-sm': !rounded,
-      }),
+        'rounded-sm': !rounded
+      })
     ]"
   >
     <!-- left icon section -->
@@ -27,7 +27,7 @@
           'absolute inset-y-0 z-10 left-2 flex pointer-events-none items-center ' +
             leftIconColor,
           'leftIcon'
-        ),
+        )
       ]"
     >
       <t-icon v-if="leftIcon" :name="leftIcon"> </t-icon>
@@ -59,9 +59,9 @@
             'rounded-sm': !rounded,
             'text-right': isRight,
             'text-center': isCenter,
-            'text-left': isLeft,
+            'text-left': isLeft
           }
-        ),
+        )
       ]"
     />
     <!-- right icon section -->
@@ -73,7 +73,7 @@
           'absolute inset-y-0 right-2 flex pointer-events-none items-center z-10 ' +
             rightIconColor,
           'rightIcon'
-        ),
+        )
       ]"
     >
       <t-icon v-if="rightIcon" :name="rightIcon"> </t-icon>
@@ -88,7 +88,7 @@
 import {
   modifierVariants,
   textInputAlignments,
-  variants,
+  variants
 } from "@/utility/css-helper";
 import {
   computed,
@@ -97,7 +97,7 @@ import {
   nextTick,
   ref,
   toRefs,
-  watch,
+  watch
 } from "vue";
 import { formatHandlerWrapper, numberFormat } from "@/helpers/generalHelper";
 import TIcon from "@/components/tailwind/icon/TIcon.vue";
@@ -113,51 +113,51 @@ export default defineComponent({
       default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
-      },
+      }
     },
     hover: {
       type: Boolean,
-      default: () => inject(component("hover"), false),
+      default: () => inject(component("hover"), false)
     },
     type: {
       required: false,
       type: String,
-      default: () => inject(component("type"), "text"),
+      default: () => inject(component("type"), "text")
     },
     inputmode: {
       required: false,
       type: String,
-      default: () => inject(component("inputmode"), "text"),
+      default: () => inject(component("inputmode"), "text")
     },
     label: {
       required: false,
       type: String,
-      default: "",
+      default: ""
     },
     leftIcon: {
       required: false,
       type: String,
-      default: "",
+      default: ""
     },
     rightIcon: {
       required: false,
       type: String,
-      default: () => "",
+      default: () => ""
     },
     leftIconColor: {
       required: false,
       type: String,
-      default: () => inject(component("leftIconColor"), ""),
+      default: () => inject(component("leftIconColor"), "")
     },
     rightIconColor: {
       required: false,
       type: String,
-      default: () => inject(component("rightIconColor"), ""),
+      default: () => inject(component("rightIconColor"), "")
     },
     rounded: {
       type: Boolean,
       required: false,
-      default: () => inject(component("rounded"), false),
+      default: () => inject(component("rounded"), false)
     },
     align: {
       type: String,
@@ -165,30 +165,30 @@ export default defineComponent({
       validator: (propValue: string) => {
         return !!textInputAlignments[propValue];
       },
-      default: () => inject(component("align"), textInputAlignments.right),
+      default: () => inject(component("align"), textInputAlignments.right)
     },
     modelValue: {
       type: String,
-      required: true,
+      required: true
     },
     modelModifiers: {
-      default: () => ({} as any),
+      default: () => ({} as any)
     },
     disabled: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     error: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     area: {
       type: Boolean,
       default: false,
-      required: false,
-    },
+      required: false
+    }
   },
   setup(props, { slots, emit }) {
     // handle text variant
@@ -234,19 +234,19 @@ export default defineComponent({
 
     // handling how to update textinput modelValue
     const updateFunction = formatFounded
-      ? async (value) => {
+      ? async value => {
           const formattedValue = numberFormat(value, args[0], args[1]);
           emit("update:modelValue", formattedValue.split(args[0]).join(""));
           await nextTick();
           // @ts-ignore
           input.value.value = formattedValue;
         }
-      : (value) => {
+      : value => {
           emit("update:modelValue", value);
         };
 
     // watch for modelValue changes
-    watch(modelValue, (value) => {
+    watch(modelValue, value => {
       updateFunction(value);
     });
 
@@ -260,7 +260,7 @@ export default defineComponent({
 
     enum inputTypes {
       input = "input",
-      textarea = "textarea",
+      textarea = "textarea"
     }
 
     // handle input type (textarea or input)
@@ -281,11 +281,11 @@ export default defineComponent({
       input,
       inputMode,
       inputType,
-      renderClass,
+      renderClass
     };
   },
   watch: {},
-  methods: {},
+  methods: {}
 });
 </script>
 

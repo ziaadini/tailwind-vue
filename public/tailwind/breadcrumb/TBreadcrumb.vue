@@ -16,7 +16,7 @@
             data-name="breadcrumb-link"
             :class="[
               renderClass(!item.active ? 'hover:underline' : '', 'link'),
-              { 'cursor-default': item.active },
+              { 'cursor-default': item.active }
             ]"
             :to="item.url"
             :is="linkType"
@@ -47,15 +47,15 @@ export default defineComponent({
     nuxt: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     items: {
       required: true,
       type: Array as PropType<BreadCrumb.Root>,
       default: () => {
         return [];
-      },
-    },
+      }
+    }
   },
   setup(props, { slots }) {
     const linkType = computed(() => {
@@ -68,8 +68,8 @@ export default defineComponent({
     return {
       linkType,
       hasDefaultSlot: !!slots.default,
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>

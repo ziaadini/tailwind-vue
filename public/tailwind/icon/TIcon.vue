@@ -1,18 +1,31 @@
 <template>
-  <i v-if="name" :class="renderClass('material-icons', 'container')">
-    {{ name }}
+  <i
+    v-if="name"
+    :class="
+      renderClass('material-icons', 'container', { [name]: nameInsideClass })
+    "
+  >
+    {{ nameInsideTag ? name : "" }}
   </i>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   name: "TIcon",
   props: {
     name: {
       type: String,
-      default: ""
+      default: () => inject("t-icon-name", "")
+    },
+    nameInsideTag: {
+      type: Boolean,
+      default: () => inject("t-icon-nameInsideTag", true)
+    },
+    nameInsideClass: {
+      type: Boolean,
+      default: () => inject("t-icon-nameInsideClass", false)
     }
   },
   setup() {
