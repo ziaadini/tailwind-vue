@@ -34,7 +34,8 @@ export default defineComponent({
         "badge",
         "menu",
         "modal",
-        "dropdown"
+        "dropdown",
+        "breadcrumb"
       ]
     };
   },
