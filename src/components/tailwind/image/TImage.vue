@@ -1,13 +1,9 @@
-<template>
-  <template v-if="!hasDefaultSlot">
-    <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
-    <img @load="handleImageLoaded" v-bind="$attrs" v-else />
-    <div v-if="loading">
-      <slot v-bind="$attrs" name="loader" />
-    </div>
-  </template>
-  <!-- TODO why should we have a default Slot -->
-  <slot :src="src" v-bind="$attrs" />
+<template v-if="!hasDefaultSlot">
+  <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
+  <img @load="handleImageLoaded" v-bind="$attrs" v-else />
+  <div v-if="loading">
+    <slot v-bind="$attrs" name="loader" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,7 +28,7 @@ export default defineComponent({
     default: {
       type: String,
       default: "",
-      required: false
+      required: false //TODO default prop with provide-inject
     },
     lazy: {
       type: Boolean,
