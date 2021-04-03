@@ -731,7 +731,7 @@ import TTabItem from "@/components/tailwind/tab/TTabItem.vue";
 import TabItemChildTest from "@/components/TabItemChildTest.vue";
 import TToast from "@/components/tailwind/toast/TToast.vue";
 import TStepper from "@/components/tailwind/stepper/TStepper.vue";
-import TIcon from "@/components/tailwind/TIcon.vue";
+import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import TTooltip from "@/components/tailwind/tooltip/TTooltip.vue";
 import TCard from "@/components/tailwind/card/TCard.vue";
 import TTimeline from "@/components/tailwind/timeline/TTimeline.vue";
