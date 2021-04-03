@@ -85,15 +85,15 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-// // @ts-ignore
-//   parseQuery(query) {
-//     return qs.parse(query);
-//   },
-//   stringifyQuery(query) {
-//     const result = qs.stringify(query);
-//
-//     return result ? "?" + result : "";
-//   },
+  // // @ts-ignore
+  //   parseQuery(query) {
+  //     return qs.parse(query);
+  //   },
+  //   stringifyQuery(query) {
+  //     const result = qs.stringify(query);
+  //
+  //     return result ? "?" + result : "";
+  //   },
   routes
 });
 

@@ -1,12 +1,4 @@
-import {
-  computed,
-  onBeforeMount,
-  onMounted,
-  reactive,
-  ref,
-  watch,
-  watchEffect
-} from "vue";
+import { computed, reactive, ref, watch, watchEffect } from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import SortEnum = Table.SortEnum;
 
@@ -115,7 +107,7 @@ export const useTableSort = (props, { emit }, doneCallback) => {
     doneCallback();
   };
   watch(
-    () => (props.defaultSort),
+    () => props.defaultSort,
     () => {
       onSort(props.defaultSort);
     },

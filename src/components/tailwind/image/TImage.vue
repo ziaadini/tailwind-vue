@@ -1,13 +1,9 @@
-<template>
-  <template v-if="!hasDefaultSlot">
-    <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
-    <img @load="handleImageLoaded" v-bind="$attrs" v-else />
-    <div v-if="loading">
-      <slot v-bind="$attrs" name="loader" />
-    </div>
-  </template>
-  <!-- TODO why should we have a default Slot -->
-  <slot :src="src" v-bind="$attrs" />
+<template v-if="!hasDefaultSlot">
+  <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
+  <img @load="handleImageLoaded" v-bind="$attrs" v-else />
+  <div v-if="loading">
+    <slot v-bind="$attrs" name="loader" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,25 +16,25 @@ import {
   ref,
   toRefs,
   watch,
-  watchEffect,
+  watchEffect
 } from "vue";
 export default defineComponent({
   props: {
     src: {
       type: String,
       default: "",
-      required: true,
+      required: true
     },
     default: {
       type: String,
       default: "",
-      required: false,
+      required: false //TODO default prop with provide-inject
     },
     lazy: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props, { slots }) {
     const { src, default: defaultImage, lazy } = toRefs(props);
@@ -57,11 +53,11 @@ export default defineComponent({
       const {
         image: imageDownloaded,
         setImage,
-        downloadImage,
+        downloadImage
       } = useImageDownloader();
 
       // watch for image source changes and download the new image
-      watch(src, (newSrc) => {
+      watch(src, newSrc => {
         if (newSrc) {
           handleImageLoaded(true);
           downloadImage(newSrc);
@@ -76,7 +72,7 @@ export default defineComponent({
 
       const { isIntersecting, destroyObserver } = useIntersectElement(
         {
-          passRef: true,
+          passRef: true
         },
         undefined,
         imageRef.value,
@@ -107,8 +103,8 @@ export default defineComponent({
       imageRef,
       hasDefaultSlot,
       handleImageLoaded,
-      loading,
+      loading
     };
-  },
+  }
 });
 </script>

@@ -397,6 +397,7 @@ export default defineComponent({
   inheritAttrs: false,
   components: { TLoading, TCollapsable, TTh },
   emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sort(_: { key: string; sort: Table.SortEnum; setSort: Function }) {
       return true;
     }

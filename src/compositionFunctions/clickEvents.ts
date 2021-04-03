@@ -34,6 +34,6 @@ export const useClickOutside = (elementRef = ref(null)) => {
     elementRef,
     clickedOutside,
     registerEvent,
-    unRegisterEvent,
+    unRegisterEvent
   };
 };

@@ -27,44 +27,44 @@ module.exports = {
           /^text-warning$/,
           /^text-success$/,
           /^text-white$/,
-          /^text-secondary$/,
+          /^text-secondary$/
         ],
         keyframes: true,
-        fontFace: true,
-      },
-    },
+        fontFace: true
+      }
+    }
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       transitionDelay: {
         "0": "0ms",
-        "2000": "2000ms",
+        "2000": "2000ms"
       },
       scale: {
         "200": "2",
         "300": "3",
-        "400": "4",
+        "400": "4"
       },
       maxHeight: {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
-        "9/10": "90%",
+        "9/10": "90%"
       },
       maxWidth: {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
-        "9/10": "90%",
+        "9/10": "90%"
       },
       minHeight: {
-        "8": "2rem",
+        "8": "2rem"
       },
       minWidth: {
         "8": "2rem",
         "48": "12rem",
-        "14": "3.5rem",
+        "14": "3.5rem"
       },
       colors: {
         primary: {
@@ -85,7 +85,7 @@ module.exports = {
           A100: "#ffffff",
           A200: "#fcfcff",
           A400: "#c9d4ff",
-          A700: "#afbfff",
+          A700: "#afbfff"
         },
         success: {
           light: "#8be77b",
@@ -105,7 +105,7 @@ module.exports = {
           A100: "#c3ffc5",
           A200: "#90ff93",
           A400: "#5dff61",
-          A700: "#44ff48",
+          A700: "#44ff48"
         },
         danger: {
           light: "#f16484",
@@ -125,7 +125,7 @@ module.exports = {
           A100: "#ffffff",
           A200: "#ffeef0",
           A400: "#ffbbc3",
-          A700: "#ffa1ac",
+          A700: "#ffa1ac"
         },
         warning: {
           light: "#ec9f76",
@@ -145,21 +145,21 @@ module.exports = {
           A100: "#ffffff",
           A200: "#ffe9e2",
           A400: "#ffc2af",
-          A700: "#ffaf96",
+          A700: "#ffaf96"
         },
         secondary: {
           light: "#E0E0E0",
           DEFAULT: "#BDBDBD",
           dark: "#9E9E9E",
-          hover: "#F5F5F5",
-        },
+          hover: "#F5F5F5"
+        }
       },
 
       ringColor: {
         primary: "#9ab4e5",
         success: "#a0eb93",
         danger: "#f48ba3",
-        warning: "#f3c0a5",
+        warning: "#f3c0a5"
       },
       fontSize: {
         xs: "12px",
@@ -170,7 +170,7 @@ module.exports = {
         "2xl": "22px",
         "3xl": "24px",
         "4xl": "26px",
-        "5xl": "28px",
+        "5xl": "28px"
       },
       borderRadius: {
         inherit: "inherit",
@@ -181,15 +181,15 @@ module.exports = {
         md: "20px",
         lg: "26px",
         large: "32px",
-        full: "9999px",
+        full: "9999px"
       },
       borderRightColor: {
-        transparent: "transparent",
+        transparent: "transparent"
       },
       borderLeftColor: {
-        transparent: "transparent",
-      },
-    },
+        transparent: "transparent"
+      }
+    }
   },
   variants: {
     extend: {
@@ -197,8 +197,8 @@ module.exports = {
       borderColor: ["checked"],
       opacity: ["disabled"],
       ringWidth: ["hover"],
-      borderRadius: ["first", "last"],
-    },
+      borderRadius: ["first", "last"]
+    }
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography")]
 };

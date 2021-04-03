@@ -89,7 +89,7 @@ export default defineComponent({
     },
     hover: {
       type: Boolean,
-      default: () => inject("t-tooltip-hover", true),
+      default: () => inject("t-tooltip-hover", true)
     },
     message: {
       type: String,

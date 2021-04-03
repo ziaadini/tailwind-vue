@@ -99,7 +99,7 @@ import {
   inject
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
-import TIcon from "@/components/tailwind/TIcon.vue";
+import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { variants } from "@/utility/css-helper";
@@ -200,6 +200,7 @@ export default defineComponent({
 
     const showArrows = computed(
       () =>
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
     );
 

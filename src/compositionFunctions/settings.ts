@@ -1,4 +1,5 @@
 import { computed, inject, getCurrentInstance } from "vue";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { TSettings, TSettingItem } from "@/utility/types/TSettings";
 
 export const useRenderClass = (componentName: string) => {

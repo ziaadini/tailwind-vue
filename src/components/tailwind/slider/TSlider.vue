@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { computed, nextTick } from "vue";
+import { nextTick } from "vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import { defineComponent, onMounted, ref, watch } from "vue";
@@ -51,16 +51,16 @@ export default defineComponent({
     const {
       elementRef: slidesContainer,
       scrollLeft,
-      scrollRight,
+      scrollRight
     } = useScrollElement();
 
     const currentViewStartAndEndIndex = (
       items: any[] = intersectionArray.value
     ): [number, number] => {
-      const _ = items.findIndex((e) => e.isIntersecting);
+      const _ = items.findIndex(e => e.isIntersecting);
       const first = _ !== 0 ? _ - 1 : 0;
       let last =
-        items.slice(first + 1).findIndex((e) => !e.isIntersecting) + first + 1;
+        items.slice(first + 1).findIndex(e => !e.isIntersecting) + first + 1;
 
       if (last - first <= 2) last = items.length - 1;
       return [first, last];
@@ -72,9 +72,9 @@ export default defineComponent({
       const items = intersectionArray.value;
       [rightDisabled.value, leftDisabled.value] = [
         items[0].isIntersecting,
-        items[items.length - 1].isIntersecting,
+        items[items.length - 1].isIntersecting
       ];
-      console.log([rightDisabled.value, leftDisabled.value])
+      console.log([rightDisabled.value, leftDisabled.value]);
     });
 
     // const leftDisabled = computed(() => {
@@ -82,22 +82,24 @@ export default defineComponent({
     // });
 
     const onScrollLeft = () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, last] = currentViewStartAndEndIndex();
       if (last !== intersectionArray.value.length - 1) {
         const notIntersected = intersectionArray.value[last];
         notIntersected.ref.scrollIntoView({
           block: "nearest",
-          behavior: "smooth",
+          behavior: "smooth"
         });
       } else scrollLeft(slidesContainer.value.clientWidth, 200);
     };
     const onScrollRight = () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [first, _] = currentViewStartAndEndIndex();
       if (first) {
         const notIntersected = intersectionArray.value[first];
         notIntersected.ref.scrollIntoView({
           block: "nearest",
-          behavior: "smooth",
+          behavior: "smooth"
         });
       } else scrollRight(slidesContainer.value.clientWidth, 200);
     };
@@ -109,11 +111,12 @@ export default defineComponent({
     const intersectionArrayGenerator = async () => {
       const tmp = [] as any[];
       await nextTick();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (((content.value! as HTMLTemplateElement)
-        .children as unknown) as any[]).forEach((domItem) => {
+        .children as unknown) as any[]).forEach(domItem => {
         const intersect = useIntersectElement(
           {
-            passRef: true,
+            passRef: true
           },
           undefined,
           domItem,
@@ -121,7 +124,7 @@ export default defineComponent({
         );
         tmp.push({
           isIntersecting: intersect.isIntersecting,
-          ref: intersect.elementRef,
+          ref: intersect.elementRef
         });
 
         intersectionArray.value = tmp;
@@ -144,7 +147,7 @@ export default defineComponent({
       leftDisabled,
       rightDisabled
     };
-  },
+  }
 });
 </script>
 

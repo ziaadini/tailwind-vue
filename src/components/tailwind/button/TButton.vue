@@ -13,9 +13,9 @@
           'rounded-full': rounded,
           ripple: ripple && !isDisabled,
           'w-full': full,
-          'min-w-14': !fab && hasMinWidth,
+          'min-w-14': !fab && hasMinWidth
         }
-      ),
+      )
     ]"
     v-bind="$attrs"
   >
@@ -26,15 +26,15 @@
       :class="[
         renderClass('', 'icon', {
           'opacity-0': loading,
-          'pl-2': !fab,
-        }),
+          'pl-2': !fab
+        })
       ]"
     />
 
     <!-- default slot -->
     <span
       :class="{
-        'opacity-0': loading,
+        'opacity-0': loading
       }"
     >
       <slot />
@@ -48,7 +48,7 @@
         [renderClass(
           'absolute transform top-1/2 -translate-y-1/2',
           'loadingContainer'
-        )]: loading,
+        )]: loading
       }"
     >
       <template v-if="hasLoadingSlot">
@@ -77,74 +77,74 @@ export default defineComponent({
   props: {
     rounded: {
       type: Boolean,
-      default: () => inject(component("rounded"), false),
+      default: () => inject(component("rounded"), false)
     },
     fab: {
       type: Boolean,
-      default: false,
+      default: false
     },
     variant: {
       type: String,
       default: () => inject(component("variant"), variants.white),
       validator: (propValue: string) => {
         return !!variants[propValue];
-      },
+      }
     },
     size: {
       type: String,
       default: () => inject(component("size"), size.md),
       validator: (propValue: string) => {
         return !!size[propValue];
-      },
+      }
     },
     color: {
       type: String,
-      default: () => inject(component("color"), ""),
+      default: () => inject(component("color"), "")
     },
     icon: {
       type: String,
-      default: "",
+      default: ""
     },
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     outline: {
       type: Boolean,
-      default: () => inject(component("outline"), false),
+      default: () => inject(component("outline"), false)
     },
     ripple: {
       type: Boolean,
-      default: () => inject(component("ripple"), false),
+      default: () => inject(component("ripple"), false)
     },
     to: {
       type: String,
       required: false,
-      default: "",
+      default: ""
     },
     nuxt: {
       required: false,
       type: Boolean,
-      default: () => inject(component("nuxt"), false),
+      default: () => inject(component("nuxt"), false)
     },
     full: {
       type: Boolean,
       default: () => inject(component("full"), false),
-      required: false,
+      required: false
     },
     loading: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
     loadingProps: {
       type: Object,
-      default: () => inject(component("loadingProps"), {}),
-    },
+      default: () => inject(component("loadingProps"), {})
+    }
   },
   components: {
     AppIcon,
-    TLoading,
+    TLoading
   },
   setup(props, { slots }) {
     const variantClasses = computed((): string => {
@@ -192,7 +192,7 @@ export default defineComponent({
 
     const loadingBindingProps = {
       variant: props.outline ? props.variant : "white",
-      ...props.loadingProps,
+      ...props.loadingProps
     };
 
     const wrapperComponent = computed((): string => {
@@ -221,8 +221,8 @@ export default defineComponent({
       hasLoadingSlot: !!slots.loading,
       wrapperComponent,
       isDisabled,
-      hasMinWidth,
+      hasMinWidth
     };
-  },
+  }
 });
 </script>

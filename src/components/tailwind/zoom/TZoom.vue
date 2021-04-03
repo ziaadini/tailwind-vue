@@ -24,11 +24,11 @@
         renderClass(
           `w-full h-full transform origin-top-left ${scaleClass}`,
           'mask'
-        ),
+        )
       ]"
       :style="{
         '--tw-translate-x': `${-translateXY.x}px`,
-        '--tw-translate-y': `${-translateXY.y}px`,
+        '--tw-translate-y': `${-translateXY.y}px`
       }"
     />
   </div>
@@ -41,7 +41,7 @@ import {
   inject,
   onMounted,
   reactive,
-  ref,
+  ref
 } from "vue";
 import TImage from "@/components/tailwind/image/TImage.vue";
 import { userOffsetFinder } from "@/compositionFunctions/offset";
@@ -52,13 +52,13 @@ const component = (propName: string) => "t-zoom-" + propName;
 
 export default defineComponent({
   components: {
-    TImage,
+    TImage
   },
   props: {
     src: {
       default: "",
       type: String,
-      required: true,
+      required: true
     },
     scale: {
       type: Number,
@@ -66,19 +66,19 @@ export default defineComponent({
       required: false,
       valdator: (value: any) => {
         return !!scales.find(value);
-      },
+      }
     },
     maskSrc: {
       type: String,
-      default: () => inject(component("maskSrc"), ""),
-    },
+      default: () => inject(component("maskSrc"), "")
+    }
   },
   setup(props) {
     // translate variables
     const translateXY = reactive({
       x: 0,
       y: 0,
-      hover: false,
+      hover: false
     });
 
     const { findOffset } = userOffsetFinder();
@@ -86,7 +86,7 @@ export default defineComponent({
     const scaleClass = ref("");
     const zoomOption = ref({
       scale: 1,
-      class: "",
+      class: ""
     });
 
     function setTranslate(offset: { left: number; top: number }) {
@@ -161,8 +161,8 @@ export default defineComponent({
       setTranslateHover,
       showMask,
       scaleClass,
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "tailwind-vue3",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "main": "./dist/tailwind-vue3.common.js",
   "files": [
     "dist/*",
@@ -14,7 +14,7 @@
   "scripts": {
     "serve": "node ./copy-md-files && vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.js",
+    "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "tailwind-config-viewer": "tailwind-config-viewer -o",
@@ -63,7 +63,7 @@
     "prettier": "^1.19.1",
     "sass-loader": "^10.1.0",
     "tailwind-config-viewer": "^1.4.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
   },
