@@ -67,7 +67,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from "vue";
 import AppIcon from "@/components/tailwind/icon/TIcon.vue";
-import { size, variants } from "@/utility/css-helper.ts";
+import { size, variants } from "@/utility/css-helper";
 import TLoading from "@/components/tailwind/loading/TLoading.vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -118,7 +118,7 @@ export default defineComponent({
       default: () => inject(component("ripple"), false)
     },
     to: {
-      type: String,
+      type: [String, Object],
       required: false,
       default: ""
     },
@@ -153,9 +153,9 @@ export default defineComponent({
       } disabled:opacity-50`;
       const variantClass = `bg-${props.variant} hover:bg-${props.variant}`;
 
-      const outlineVariantClass = `bg-white border-${props.variant}-50 hover:bg-${props.variant}-50`;
+      const outlineVariantClass = `border-${props.variant}-50 text-${props.variant} hover:bg-${props.variant}-50`;
       const outlineBaseClass =
-        " transition border hover:shadow-md text-dark hover:opacity-80 disabled:opacity-50";
+        " transition hover:shadow-md disabled:opacity-50";
 
       let btnSize = " ";
 
