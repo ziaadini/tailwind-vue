@@ -13,13 +13,26 @@
         <template v-if="hasRightArrowSlot">
           <slot name="arrowRight" :disabled="endIntersecting"></slot>
         </template>
-        <t-icon
+        <div
           v-else
           :disabled="startIntersecting"
           name="keyboard_arrow_right"
           data-name="tabs-arrow"
-          :class="renderClass('tab-arrow', 'arrow')"
-        ></t-icon>
+          :class="
+            renderClass('cursor-pointer self-center fill-current', 'arrow')
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
+            />
+          </svg>
+        </div>
       </div>
       <nav
         ref="navRef"
@@ -71,13 +84,26 @@
         <template v-if="hasLeftArrowSlot">
           <slot name="arrowLeft" :disabled="endIntersecting"></slot>
         </template>
-        <t-icon
+        <div
           v-else
           :disabled="endIntersecting"
           name="keyboard_arrow_left"
           data-name="tabs-arrow"
-          :class="renderClass('tab-arrow', 'arrow')"
-        ></t-icon>
+          :class="
+            renderClass('cursor-pointer self-center fill-current', 'arrow')
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
+            />
+          </svg>
+        </div>
       </div>
     </div>
     <div>
@@ -99,7 +125,6 @@ import {
   inject
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
-import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { variants } from "@/utility/css-helper";
@@ -111,7 +136,6 @@ interface TabProps {
 
 export default defineComponent({
   name: "TTabs",
-  components: { TIcon },
   props: {
     modelValue: { type: [String, Number], default: 0 },
     arrows: {
