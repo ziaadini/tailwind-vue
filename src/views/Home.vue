@@ -68,6 +68,22 @@
 
   <br />
   <h6>
+    CARD
+  </h6>
+  <t-card
+    rounded
+    class="m-3"
+    title="rounded card title"
+    description="card descriptions"
+  />
+  <t-card
+    no-shadow
+    class="m-3 border-2"
+    title="no shadow card"
+    description="card descriptions"
+  />
+  <br />
+  <h6>
     ALERTS
   </h6>
   <div class="container mx-auto p-4">
@@ -723,6 +739,7 @@
 import { defineComponent, ref } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
+import TCard from "@/components/tailwind/card/TCard.vue";
 import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
@@ -739,6 +756,7 @@ export default defineComponent({
   components: {
     TButton,
     TAlert,
+    TCard,
     TextInput,
     TMenu,
     TDropdown,
