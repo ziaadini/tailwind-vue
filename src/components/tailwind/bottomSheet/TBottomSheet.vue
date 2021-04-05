@@ -25,7 +25,7 @@
       data-name="bottomSheet-container"
       :class="[
         renderClass(
-          'rounded-t-md fixed z-30 w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform',
+          'rounded-t-md fixed z-30 max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform',
           'container'
         ),
         {
