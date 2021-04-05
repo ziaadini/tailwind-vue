@@ -11,13 +11,16 @@ import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useImageDownloader } from "@/compositionFunctions/image";
 import {
   computed,
-  defineComponent,
+  defineComponent, inject,
   onMounted,
   ref,
   toRefs,
   watch,
   watchEffect
 } from "vue";
+
+const component = (propName: string) => "t-image-" + propName;
+
 export default defineComponent({
   props: {
     src: {
@@ -27,7 +30,7 @@ export default defineComponent({
     },
     default: {
       type: String,
-      default: "",
+      default: () => inject(component("default"), ""),
       required: false //TODO default prop with provide-inject
     },
     lazy: {
