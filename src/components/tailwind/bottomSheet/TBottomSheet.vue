@@ -34,7 +34,8 @@
           'rounded-t-md': rounded
         },
         maxHeight.class,
-        $attrs.class
+        $attrs.class,
+        containerClass
       ]"
       :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
@@ -136,6 +137,11 @@ export default defineComponent({
     }
   },
   props: {
+    containerClass: {
+      //for vue2 support
+      type: [Object, Array, String],
+      default: ""
+    },
     modelValue: {
       type: [Number, Boolean],
       default: 0
