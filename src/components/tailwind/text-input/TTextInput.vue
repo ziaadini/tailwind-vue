@@ -55,7 +55,7 @@
             'pr-3': !rightPadding,
             'pl-8': leftPadding,
             'pl-3': !leftPadding,
-            'rounded-full': rounded,
+            'rounded-full': rounded && !area,
             'rounded-sm': !rounded,
             'text-right': isRight,
             'text-center': isCenter,
