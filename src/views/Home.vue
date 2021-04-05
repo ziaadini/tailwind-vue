@@ -689,18 +689,18 @@
   </h6>
 
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     :scale="2"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     :scale="3"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     maskSrc="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     :scale="4"
   ></TZoom>

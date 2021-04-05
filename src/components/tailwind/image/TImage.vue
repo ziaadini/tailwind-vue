@@ -1,7 +1,7 @@
 <template v-if="!hasDefaultSlot">
   <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
-  <img @load="handleImageLoaded" v-bind="$attrs" v-else />
-  <div v-if="loading">
+  <img v-else @load="setLoadingState" v-bind="$attrs" :src="getSrc" />
+  <div v-if="loading && hasLoaderSlot">
     <slot v-bind="$attrs" name="loader" />
   </div>
 </template>
@@ -41,14 +41,14 @@ export default defineComponent({
 
     // handle loading state of image
     const loading = ref(true);
-    function handleImageLoaded(value = false) {
+    function setLoadingState(value = false) {
       loading.value = value;
     }
 
     // image ref
     const imageRef = ref(null);
 
-    function handleImageLazyload() {
+    function handleImageLazyLoad() {
       // handle image downloading
       const {
         image: imageDownloaded,
@@ -59,14 +59,14 @@ export default defineComponent({
       // watch for image source changes and download the new image
       watch(src, newSrc => {
         if (newSrc) {
-          handleImageLoaded(true);
+          setLoadingState(true);
           downloadImage(newSrc);
         }
       });
 
       // if new images downloaded set them
       watch(imageDownloaded, () => {
-        handleImageLoaded();
+        setLoadingState(false);
         setImage(imageRef);
       });
 
@@ -79,6 +79,10 @@ export default defineComponent({
         false
       );
 
+      if (!props.src)
+        // @ts-ignore
+        imageRef.value && (imageRef.value.src = defaultImage.value);
+
       watchEffect(() => {
         if (isIntersecting?.value) {
           downloadImage(src.value);
@@ -88,22 +92,23 @@ export default defineComponent({
     }
 
     const hasDefaultSlot = computed(() => !!slots.default);
+    const hasLoaderSlot = computed(() => !!slots.loader);
+    const getSrc = computed(() => src.value || defaultImage.value);
 
     onMounted(() => {
       // hanlde lazy loading
-      if (lazy.value && !hasDefaultSlot.value) {
-        handleImageLazyload();
+      if (lazy.value) {
+        handleImageLazyLoad();
       }
-      if (lazy.value || !props.src)
-        // @ts-ignore
-        imageRef.value && (imageRef.value.src = defaultImage.value);
     });
 
     return {
       imageRef,
       hasDefaultSlot,
-      handleImageLoaded,
-      loading
+      hasLoaderSlot,
+      setLoadingState,
+      loading,
+      getSrc
     };
   }
 });
