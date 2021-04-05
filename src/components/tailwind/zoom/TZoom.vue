@@ -1,5 +1,4 @@
 <template>
-  {{ showMask }}
   <!-- zoom wrapper -->
   <div
     data-name="zoom-wrapper"
