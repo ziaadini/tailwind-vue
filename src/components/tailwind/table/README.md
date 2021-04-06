@@ -44,6 +44,6 @@
     - item : current item
     - itemKey : current item key
     - value : current item value
-    - toggleDetails : a method for toggle details for collapsable table
+    - toggleDetails : a method for toggle details for collapsible table
     
 

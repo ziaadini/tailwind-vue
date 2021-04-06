@@ -8,7 +8,7 @@ export { default as TButton } from "./button/TButton.vue";
 export { default as TCard } from "./card/TCard.vue";
 export { default as TCarousel } from "./carousel/TCarousel.vue";
 export { default as TCheckbox } from "./checkbox/TCheckbox.vue";
-export { default as TCollapsable } from "./collapsable/TCollapsable.vue";
+export { default as TCollapsible } from "./collapsible/TCollapsible.vue";
 export { default as TDrawer } from "./drawer/TDrawer.vue";
 export { default as TDropdown } from "./dropdown/TDropdown.vue";
 export { default as TFade } from "./fade/TFade.vue";

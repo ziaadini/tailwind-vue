@@ -123,7 +123,7 @@
           </div>
         </div>
         <template v-if="hasRowDetailsSlot">
-          <t-collapsable
+          <t-collapsible
             data-name="table-cardCollapse"
             :class="renderClass('', 'cardCollapse')"
             :show="getShowDetails(i)"
@@ -140,7 +140,7 @@
                 }
               "
             ></slot>
-          </t-collapsable>
+          </t-collapsible>
         </template>
       </template>
     </div>
@@ -351,7 +351,7 @@
                         :class="renderClass('', 'detailsTd')"
                         :colspan="getHeaderLength"
                       >
-                        <t-collapsable :show="getShowDetails(i)">
+                        <t-collapsible :show="getShowDetails(i)">
                           <slot
                             name="rowDetails"
                             :show="getShowDetails(i)"
@@ -364,7 +364,7 @@
                               }
                             "
                           ></slot>
-                        </t-collapsable>
+                        </t-collapsible>
                       </td>
                     </tr>
                   </template>
@@ -382,7 +382,7 @@
 import { computed, defineComponent, inject, PropType, ref } from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTh from "@/components/tailwind/table/TTh.vue";
-import TCollapsable from "@/components/tailwind/collapsable/TCollapsable.vue";
+import TCollapsible from "@/components/tailwind/collapsible/TCollapsible.vue";
 import {
   useTableHeader,
   useShowDetails,
@@ -395,7 +395,7 @@ import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
   name: "TTable",
   inheritAttrs: false,
-  components: { TLoading, TCollapsable, TTh },
+  components: { TLoading, TCollapsible, TTh },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sort(_: { key: string; sort: Table.SortEnum; setSort: Function }) {
