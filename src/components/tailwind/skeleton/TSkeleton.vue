@@ -4,6 +4,7 @@
       data-name="skeleton-avatarListContainer"
       v-bind="$attrs"
       :class="[
+        containerClass,
         renderClass(
           `p-4 w-full mx-auto cursor-wait ${borderClass}  ${shadowClass} ${roundedClass}`,
           'avatarListContainer'
@@ -60,6 +61,7 @@
       data-name="skeleton-imageContainer"
       v-bind="$attrs"
       :class="[
+        containerClass,
         renderClass(
           `${roundedSmClass} ${shadowClass} ${borderClass} max-w-xs w-full mx-auto cursor-wait`,
           'imageContainer'
@@ -92,12 +94,13 @@
     <div
       data-name="skeleton-cardContainer"
       v-bind="$attrs"
-      :class="
+      :class="[
+        containerClass,
         renderClass(
           `${roundedSmClass} ${shadowClass} ${borderClass} max-w-xs  w-full mx-auto cursor-wait`,
           'cardContainer'
         )
-      "
+      ]"
     >
       <div
         data-name="skeleton-cardInnerContainer"
@@ -139,21 +142,23 @@
     <div
       data-name="skeleton-lineContainer"
       v-bind="$attrs"
-      :class="
+      :class="[
+        containerClass,
         renderClass(
           `${roundedClass} ${shadowClass} ${borderClass} p-4 w-full mx-auto cursor-wait`,
           'lineContainer'
         )
-      "
+      ]"
     >
       <div
         data-name="skeleton-line"
-        :class="
+        :class="[
+          containerClass,
           renderClass(
             'relative overflow-hidden delay-500 animate-pulse h-4 bg-gray-300 rounded w-full',
             'line'
           )
-        "
+        ]"
       >
         <div
           class="skeleton-box absolute top-0 right-0 bottom-0 left-0 transform -translate-x-full"
@@ -165,21 +170,23 @@
     <div
       v-bind="$attrs"
       data-name="skeleton-threeLineContainer"
-      :class="
+      :class="[
+        containerClass,
         renderClass(
           `${roundedClass} ${shadowClass} ${borderClass} p-4 w-full mx-auto cursor-wait`,
           'threeLineContainer'
         )
-      "
+      ]"
     >
       <div
         data-name="skeleton-threeLineInnerContainer"
-        :class="
+        :class="[
+          containerClass,
           renderClass(
             'relative overflow-hidden flex-1 space-y-3 py-1 animate-pulse delay-500',
             'threeLineInnerContainer'
           )
-        "
+        ]"
       >
         <div
           class="skeleton-box absolute top-0 right-0 bottom-0 left-0 transform -translate-x-full"
@@ -203,12 +210,13 @@
     <div
       v-bind="$attrs"
       data-name="skeleton-customContainer"
-      :class="
+      :class="[
+        containerClass,
         renderClass(
           `${roundedClass} ${shadowClass} ${borderClass} w-full mx-auto cursor-wait`,
           'customContainer'
         )
-      "
+      ]"
     >
       <div
         data-name="skeleton-custom"
@@ -234,6 +242,10 @@ import { SkeletonTypes } from "@/utility/enums/SkeletonTypes";
 import { useRenderClass } from "@/compositionFunctions/settings";
 export default defineComponent({
   props: {
+    containerClass: {
+      type: [Object, String, Array],
+      default: ""
+    },
     type: {
       type: String,
       default: () => inject("t-skeleton-type", SkeletonTypes.AVATAR_LIST),
