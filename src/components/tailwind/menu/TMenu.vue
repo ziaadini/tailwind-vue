@@ -54,6 +54,7 @@ import {
   computed,
   defineComponent,
   inject,
+  onMounted,
   ref,
   watch,
   watchEffect
@@ -113,17 +114,19 @@ export default defineComponent({
       unRegisterEvent
     } = useClickOutside();
     watch(clickedOutside, value => {
-      console.log("watch clickoutside", value);
       if (value) {
         open.value = false;
       }
     });
-    watchEffect(() => {
-      if (open.value) {
-        registerEvent();
-      } else {
-        unRegisterEvent();
-      }
+
+    onMounted(() => {
+      watchEffect(() => {
+        if (open.value) {
+          registerEvent();
+        } else {
+          unRegisterEvent();
+        }
+      });
     });
 
     const triggerMenu = (value = null as any) => {
