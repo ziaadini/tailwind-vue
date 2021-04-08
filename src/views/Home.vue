@@ -828,37 +828,37 @@ export default defineComponent({
         }
       ] as BreadCrumb.Root,
       disabled: false,
-      openedDropdown: false,
-      dropdownItems: [
-        {
-          title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
-          value: {}
-        },
-        {
-          title: "ali2",
-          value: {}
-        },
-        {
-          title: "ali3",
-          value: {}
-        },
-        {
-          title: "ali4",
-          value: {}
-        },
-        {
-          title: "ali5",
-          value: {}
-        },
-        {
-          title: "ali6",
-          value: {}
-        },
-        {
-          title: "ali7",
-          value: {}
-        }
-      ]
+        openedDropdown: false,
+        dropdownItems: [
+          {
+            title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
+            value: {}
+          },
+          {
+            title: "ali2",
+            value: {}
+          },
+          {
+            title: "ali3",
+            value: {}
+          },
+          {
+            title: "ali4",
+            value: {}
+          },
+          {
+            title: "ali5",
+            value: {}
+          },
+          {
+            title: "ali6",
+            value: {}
+          },
+          {
+            title: "ali7",
+            value: {}
+          }
+        ]
     };
   },
   setup() {

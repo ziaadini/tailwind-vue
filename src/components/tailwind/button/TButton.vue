@@ -97,9 +97,9 @@ export default defineComponent({
         return !!size[propValue];
       }
     },
-    color: {
+    colorClass: {
       type: String,
-      default: () => inject(component("color"), "")
+      default: () => inject(component("colorClass"), "")
     },
     icon: {
       type: String,
@@ -185,8 +185,8 @@ export default defineComponent({
 
       return (
         (props.outline
-          ? (props.color || outlineVariantClass) + outlineBaseClass
-          : (props.color || variantClass) + baseClass) + btnSize
+          ? (props.colorClass || outlineVariantClass) + outlineBaseClass
+          : (props.colorClass || variantClass) + baseClass) + btnSize
       );
     });
 

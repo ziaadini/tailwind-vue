@@ -1,15 +1,13 @@
 <template>
-  isOverflowed: {{ isOverflowed }} roundedClass: {{ roundedClass }}
-  <br />
-  <div
-    class="relative"
-    @mouseenter="hoverTriggerMenu(true)"
-    @mouseleave="hoverTriggerMenu(false)"
-  >
+  <div class="relative">
     <!-- parent section -->
     <!-- header slot  -->
     <template v-if="hasHeaderSlot">
-      <div ref="dropdownParentRef">
+      <div
+        ref="dropdownParentRef"
+        @mouseenter="hoverTriggerMenu(true)"
+        @mouseleave="hoverTriggerMenu(false)"
+      >
         <slot
           name="header"
           :selectedItem="selectedItem"
@@ -26,6 +24,8 @@
       <div
         ref="dropdownParentRef"
         data-name="dropdown-parent"
+        @mouseenter="hoverTriggerMenu(true)"
+        @mouseleave="hoverTriggerMenu(false)"
         :class="[
           renderClass(
             `cursor-pointer w-64 h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
@@ -522,7 +522,7 @@ export default defineComponent({
     );
 
     const handleEmitOpened = async () => {
-      emit("update:opened", isVisibleWatch.value);
+      emit("opened", isVisibleWatch.value);
       await nextTick();
       handlePlacement();
     };
