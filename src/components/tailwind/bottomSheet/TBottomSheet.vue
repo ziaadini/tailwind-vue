@@ -25,7 +25,7 @@
       data-name="bottomSheet-container"
       :class="[
         renderClass(
-          'rounded-t-md fixed z-30 w-max max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform',
+          'rounded-t-md fixed z-30 max-w-full right-1/2 translate-x-1/2 bottom-0 bg-white transform',
           'container'
         ),
         {
@@ -34,7 +34,8 @@
           'rounded-t-md': rounded
         },
         maxHeight.class,
-        $attrs.class
+        $attrs.class,
+        containerClass
       ]"
       :style="[modelValue ? { '--tw-translate-y': swipeY + 'px' } : {}]"
     >
@@ -136,6 +137,11 @@ export default defineComponent({
     }
   },
   props: {
+    containerClass: {
+      //for vue2 support
+      type: [Object, Array, String],
+      default: ""
+    },
     modelValue: {
       type: [Number, Boolean],
       default: 0

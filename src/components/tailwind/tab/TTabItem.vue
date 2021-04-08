@@ -26,6 +26,10 @@ export default defineComponent({
     eager: {
       type: Boolean,
       default: false
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   setup() {

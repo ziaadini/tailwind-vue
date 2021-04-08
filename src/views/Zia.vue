@@ -688,6 +688,9 @@
         :per-page="5"
       ></t-pagination>
 
+      <div>with vue router query</div>
+      <t-pagination class="mx-auto" vue :total-count="80" :per-page="5">
+      </t-pagination>
       <div>with custom slot and vue router query</div>
       <t-pagination class="mx-auto" vue :total-count="80" :per-page="5">
         <!--        <template #page="{value}">-->

@@ -20,7 +20,7 @@ declare module "tailwind-vue3" {
   export const TCard: DefineComponent;
   export const TCarousel: DefineComponent;
   export const TCheckbox: DefineComponent;
-  export const TCollapsable: DefineComponent;
+  export const TCollapsible: DefineComponent;
   export const TDrawer: DefineComponent;
   export const TDropdown: DefineComponent;
   export const TFade: DefineComponent;
