@@ -128,7 +128,7 @@ import { useScrollElement } from "@/compositionFunctions/scroll";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { variants } from "@/utility/css-helper";
-
+import { useResize } from "@/compositionFunctions/useResize";
 interface TabProps {
   title: string;
   value?: string | number;
@@ -207,19 +207,44 @@ export default defineComponent({
     const onScrollRight = () => {
       scrollRight(navRef.value.clientWidth, 200);
     };
+
     const {
       elementRef: startItem,
-      isIntersecting: startIntersecting
+      isIntersecting: startIntersecting,
+      destroyObserver: destroyStart,
+      startObserver: enableStart
     } = useIntersectElement({
       passRef: true,
-      root: navRef.value
+      root: navRef.value,
+      defaultValue: true
     });
     const {
       elementRef: endItem,
-      isIntersecting: endIntersecting
+      isIntersecting: endIntersecting,
+      destroyObserver: destroyEnd,
+      startObserver: enableEnd
     } = useIntersectElement({
       passRef: true,
-      root: navRef.value
+      root: navRef.value,
+      defaultValue: true
+    });
+    let destroyTimeout;
+    watchEffect(() => {
+      if (startIntersecting?.value && endIntersecting?.value) {
+        clearTimeout(destroyTimeout);
+        destroyTimeout = setTimeout(() => {
+          destroyStart();
+          destroyEnd();
+        }, 300);
+      }
+    });
+    let resizeTimeout;
+    useResize(() => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        enableStart();
+        enableEnd();
+      }, 200);
     });
 
     const showArrows = computed(
