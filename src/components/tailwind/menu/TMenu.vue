@@ -12,7 +12,7 @@
         renderClass(
           'relative flex items-center focus:outline-none min-w-full',
           'trigger'
-        ),
+        )
       ]"
       @click="triggerMenu"
     >
@@ -36,9 +36,9 @@
               'z-30': !hover,
               'z-40': hover,
               'scale-0 opacity-0': animatedClosed,
-              'scale-100 opacity-1': animatedOpened,
+              'scale-100 opacity-1': animatedOpened
             }
-          ),
+          )
         ]"
       >
         <slot name="content"></slot>
@@ -57,7 +57,7 @@ import {
   onMounted,
   ref,
   watch,
-  watchEffect,
+  watchEffect
 } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
 
@@ -67,28 +67,28 @@ export default defineComponent({
     placement: {
       type: String,
       default: () => inject(component("placement"), "right"),
-      validator: (value: string) => ["right", "left"].indexOf(value) !== -1,
+      validator: (value: string) => ["right", "left"].indexOf(value) !== -1
     },
     disabled: {
       type: Boolean,
       default: false,
-      required: false,
+      required: false
     },
     full: {
       required: false,
       default: () => inject(component("full"), false),
-      type: Boolean,
+      type: Boolean
     },
     hover: {
       type: Boolean,
       default: () => inject(component("hover"), false),
-      required: false,
+      required: false
     },
     animate: {
       type: Boolean,
       default: () => inject(component("animate"), false),
-      required: false,
-    },
+      required: false
+    }
   },
   setup(props) {
     const open = ref(false);
@@ -99,7 +99,7 @@ export default defineComponent({
     });
 
     // handle escape key
-    const onEscape = (e) => {
+    const onEscape = e => {
       if (e.key === "Esc" || e.key === "Escape") {
         open.value = false;
       }
@@ -111,9 +111,9 @@ export default defineComponent({
       clickedOutside,
       elementRef: menuRef,
       registerEvent,
-      unRegisterEvent,
+      unRegisterEvent
     } = useClickOutside();
-    watch(clickedOutside, (value) => {
+    watch(clickedOutside, value => {
       if (value) {
         open.value = false;
       }
@@ -156,8 +156,8 @@ export default defineComponent({
       animatedOpened,
       animatedClosed,
       isOpenWithoutAnimate,
-      renderClass,
+      renderClass
     };
-  },
+  }
 });
 </script>
