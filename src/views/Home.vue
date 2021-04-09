@@ -308,8 +308,8 @@
   <h6>
     MENU
   </h6>
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-menu placement="right" full>
+  <div class="w-44 mx-auto">
+    <t-menu align="right" hover>
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline>
@@ -320,11 +320,11 @@
       <!-- Opened dropdown content -->
       <template v-slot:content>
         <div class="w-full flex flex-col">
-          <t-menu placement="right" full>
+          <t-menu placement="right">
             <!-- Button content -->
             <template v-slot:button>
               <t-button class="z-10" variant="primary" full outline>
-                ..........................................................
+                ....
               </t-button>
             </template>
 
@@ -371,6 +371,72 @@
         </div>
       </template>
     </t-menu>
+  </div>
+  <div class="w-44 mx-auto">
+    <t-menu align="left" hover>
+      <!-- Button content -->
+      <template v-slot:button>
+        <t-button class="z-10" variant="primary" full outline>
+          ..........................................................
+        </t-button>
+      </template>
+
+      <!-- Opened dropdown content -->
+      <template v-slot:content>
+        <div class="w-full flex flex-col">
+          <t-menu placement="right">
+            <!-- Button content -->
+            <template v-slot:button>
+              <t-button class="z-10" variant="primary" full outline>
+                ....
+              </t-button>
+            </template>
+
+            <!-- Opened dropdown content -->
+            <template v-slot:content>
+              <div class="w-full flex flex-col">
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Profile</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Settings</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Help</a
+                >
+
+                <hr />
+
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+                  >Logout</a
+                >
+              </div>
+            </template>
+          </t-menu>
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
+
+          <hr />
+
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
+      </template>
+    </t-menu>
+  </div>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-menu hover placement="right" animate>
       <!-- Button content -->
       <template v-slot:button>
