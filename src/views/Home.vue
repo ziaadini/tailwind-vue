@@ -6,6 +6,7 @@
     simple button
   </small>
   <div class="flex justify-center flex-wrap space-x-1 space-x-reverse">
+
     <t-button
       to="zia"
       size="sm"
@@ -17,8 +18,8 @@
     >
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
-    <t-button rounded variant="success" size="large">Test</t-button>
-    <t-button rounded variant="success" icon="bookmarks" size="large" fab>
+    <t-button rounded variant="success" size="lg">Test</t-button>
+    <t-button rounded variant="success" icon="bookmarks" size="lg" fab>
     </t-button>
   </div>
   <br />
@@ -162,6 +163,7 @@
       placeholder="some test placeholder"
       variant="white"
       left-icon="bookmarks"
+      v-model="text"
       right-icon="bookmarks"
     />
     {{ text1 }}
@@ -828,37 +830,37 @@ export default defineComponent({
         }
       ] as BreadCrumb.Root,
       disabled: false,
-        openedDropdown: false,
-        dropdownItems: [
-          {
-            title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
-            value: {}
-          },
-          {
-            title: "ali2",
-            value: {}
-          },
-          {
-            title: "ali3",
-            value: {}
-          },
-          {
-            title: "ali4",
-            value: {}
-          },
-          {
-            title: "ali5",
-            value: {}
-          },
-          {
-            title: "ali6",
-            value: {}
-          },
-          {
-            title: "ali7",
-            value: {}
-          }
-        ]
+      openedDropdown: false,
+      dropdownItems: [
+        {
+          title: "aldddddddddddddddddddddddddddddddddddddddddddddddddddddddi",
+          value: {}
+        },
+        {
+          title: "ali2",
+          value: {}
+        },
+        {
+          title: "ali3",
+          value: {}
+        },
+        {
+          title: "ali4",
+          value: {}
+        },
+        {
+          title: "ali5",
+          value: {}
+        },
+        {
+          title: "ali6",
+          value: {}
+        },
+        {
+          title: "ali7",
+          value: {}
+        }
+      ]
     };
   },
   setup() {

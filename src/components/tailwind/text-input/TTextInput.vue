@@ -169,7 +169,8 @@ export default defineComponent({
     },
     modelValue: {
       type: String,
-      required: true
+      required: false,
+      default: ""
     },
     modelModifiers: {
       default: () => ({} as any)

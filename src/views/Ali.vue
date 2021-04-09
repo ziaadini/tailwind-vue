@@ -108,7 +108,6 @@ export default defineComponent({
     const numberPickerCount = ref<number>(3);
     const modal = ref<boolean>(false);
     const modalCloseCallback = () => {
-      console.log("modal has been closed");
       return true;
     };
     return { numberPickerCount, modal, modalCloseCallback };

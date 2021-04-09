@@ -11,7 +11,8 @@ import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useImageDownloader } from "@/compositionFunctions/image";
 import {
   computed,
-  defineComponent, inject,
+  defineComponent,
+  inject,
   onMounted,
   ref,
   toRefs,
