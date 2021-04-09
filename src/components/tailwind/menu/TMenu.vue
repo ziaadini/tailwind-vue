@@ -1,7 +1,8 @@
 <template>
   <!-- menu wrapper -->
   <div
-    class="relative"
+    data-name="menu-wrapper"
+    :class="[renderClass('relative', 'wrapper')]"
     @mouseenter="hover && triggerMenu(true)"
     @mouseleave="hover && triggerMenu(false)"
   >
@@ -14,13 +15,26 @@
           'trigger'
         )
       ]"
+      ref="btnWrapper"
       @click="triggerMenu"
     >
       <slot name="button" :isOpen="isOpen"></slot>
     </div>
 
     <!-- menu items-->
-    <transition :name="!animate ? 'fade' : ''" mode="out-in">
+    <transition
+      :name="!animate ? 'fade' : ''"
+      mode="out-in"
+      :style="{
+        '--tw-translate-x': hasAlign && getTranslateWidth,
+        '--tw-translate-y': hasAlign && getTranslateHeight
+      }"
+      :class="[
+        renderClass('', 'trigger', {
+          'absolute transform': hasAlign
+        })
+      ]"
+    >
       <div
         v-if="animate || isOpenWithoutAnimate"
         ref="menuRef"
@@ -30,8 +44,8 @@
             'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right',
             'items',
             {
-              'right-0': placement === 'right',
-              'left-0': placement !== 'right',
+              'right-0': hasAlign && placement === 'right',
+              'left-0': placement !== 'right' || getTranslateHeight,
               'w-full': full,
               'z-30': !hover,
               'z-40': hover,
@@ -41,6 +55,9 @@
           )
         ]"
       >
+        {{ hasAlign }}
+        {{ getTranslateWidth }}
+
         <slot name="content"></slot>
       </div>
     </transition>
@@ -88,10 +105,16 @@ export default defineComponent({
       type: Boolean,
       default: () => inject(component("animate"), false),
       required: false
+    },
+    align: {
+      type: String,
+      default: null
     }
   },
   setup(props) {
     const open = ref(false);
+
+    const btnWrapper = ref(null as any);
 
     // is menu open
     const isOpen = computed(() => {
@@ -130,6 +153,7 @@ export default defineComponent({
     });
 
     const triggerMenu = (value = null as any) => {
+      console.log(btnWrapper.value.clientWidth);
       if (!props.disabled) {
         open.value = value !== null ? value : !open.value;
       }
@@ -147,16 +171,54 @@ export default defineComponent({
       return !props.animate && isOpen.value;
     });
 
+    const hasAlign = computed(() => {
+      return props.align !== null;
+    });
+
+    function hasRightAlign() {
+      return props.align === "right";
+    }
+
+    function hasLeftAlign() {
+      return props.align === "left";
+    }
+
+    const getTranslateWidth = computed(() => {
+      if (hasAlign.value) {
+        const value = btnWrapper?.value?.clientWidth || 0;
+        if (value) {
+          if (hasRightAlign()) return `${value}px`;
+          else if (hasLeftAlign()) return "-100%";
+          else return 0;
+        }
+      }
+      return 0;
+    });
+
+    const getTranslateHeight = computed(() => {
+      if (hasAlign.value) {
+        const value = -btnWrapper?.value?.clientHeight || 0;
+        if (value) {
+          return `${value}px`;
+        }
+      }
+      return 0;
+    });
+
     const { renderClass } = useRenderClass("menu");
 
     return {
       menuRef,
       triggerMenu,
+      getTranslateHeight,
+      getTranslateWidth,
+      hasAlign,
       isOpen,
       animatedOpened,
       animatedClosed,
       isOpenWithoutAnimate,
-      renderClass
+      renderClass,
+      btnWrapper
     };
   }
 });
