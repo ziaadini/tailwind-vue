@@ -309,18 +309,18 @@
     MENU
   </h6>
   <div class="w-44 mx-auto">
-    <t-menu align="right" hover>
+    <t-menu>
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline>
-          ..........................................................
+          ...
         </t-button>
       </template>
 
       <!-- Opened dropdown content -->
       <template v-slot:content>
-        <div class="w-full flex flex-col">
-          <t-menu placement="right">
+        <div class="w-full flex flex-col mx-auto">
+          <t-menu>
             <!-- Button content -->
             <template v-slot:button>
               <t-button class="z-10" variant="primary" full outline>
@@ -333,7 +333,7 @@
               <div class="w-full flex flex-col">
                 <a
                   class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-                  >Profile</a
+                  >Profile Profile Profile Profile Profile</a
                 >
                 <a
                   class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
@@ -355,7 +355,7 @@
           </t-menu>
           <a
             class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-            >Settings</a
+            >SettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettings</a
           >
           <a
             class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"

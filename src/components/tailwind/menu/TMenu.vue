@@ -25,10 +25,14 @@
     <transition
       :name="!animate ? 'fade' : ''"
       mode="out-in"
-      :style="{
-        '--tw-translate-x': hasAlign && getTranslateWidth,
-        '--tw-translate-y': hasAlign && getTranslateHeight
-      }"
+      :style="[
+        hasAlign
+          ? {
+              '--tw-translate-x': hasAlign && getTranslateWidth,
+              '--tw-translate-y': hasAlign && getTranslateHeight
+            }
+          : {}
+      ]"
       :class="[
         renderClass('', 'trigger', {
           'absolute transform': hasAlign
@@ -39,12 +43,14 @@
         v-if="animate || isOpenWithoutAnimate"
         ref="menuRef"
         data-name="menu-items"
+        @click="triggerMenu(false)"
         :class="[
           renderClass(
-            'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right',
+            'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-center',
             'items',
             {
               'right-0': hasAlign && placement === 'right',
+              '-translate-x-1/2 left-1/2': !hasAlign && placement === 'center',
               'left-0': placement !== 'right' || getTranslateHeight,
               'w-full': full,
               'z-30': !hover,
@@ -55,6 +61,7 @@
           )
         ]"
       >
+        {{ !hasAlign && !placement }}
         <slot name="content"></slot>
       </div>
     </transition>
@@ -80,8 +87,9 @@ export default defineComponent({
   props: {
     placement: {
       type: String,
-      default: () => inject(component("placement"), "right"),
-      validator: (value: string) => ["right", "left"].indexOf(value) !== -1
+      default: () => inject(component("placement"), "center"),
+      validator: (value: string) =>
+        ["right", "left", "center"].indexOf(value) !== -1
     },
     disabled: {
       type: Boolean,
@@ -150,7 +158,6 @@ export default defineComponent({
     });
 
     const triggerMenu = (value = null as any) => {
-      console.log(btnWrapper.value.clientWidth);
       if (!props.disabled) {
         open.value = value !== null ? value : !open.value;
       }
