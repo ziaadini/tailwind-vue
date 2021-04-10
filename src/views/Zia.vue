@@ -633,7 +633,7 @@
         </template>
 
         <template #cell="{value}">
-          <span class="text-gray-700 p-12">
+          <span class="text-gray-700">
             {{ value }}
           </span>
         </template>

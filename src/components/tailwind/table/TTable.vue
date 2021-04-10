@@ -384,6 +384,7 @@ import {
   defineComponent,
   inject,
   onMounted,
+  onUpdated,
   PropType,
   ref,
   watch
@@ -513,6 +514,11 @@ export default defineComponent({
         resetFlag.value = true;
       }
     };
+    let updated = 0;
+    onUpdated(() => {
+      updated++;
+      console.log("updated", updated);
+    });
     onMounted(() => {
       emit("closeExpand", resetShowDetails);
     });
