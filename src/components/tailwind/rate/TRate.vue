@@ -15,21 +15,21 @@
         @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="fullIcon"
-        v-show="returnImageSrc(i) === 1"
+        :class="{ hidden: returnImageSrc(i) !== 1 }"
       />
       <t-image
         @mousemove="hover && selectStar(i, $event)"
         @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="halfIcon"
-        v-show="returnImageSrc(i) === 2"
+        :class="{ hidden: returnImageSrc(i) !== 2 }"
       />
       <t-image
         @mousemove="hover && selectStar(i, $event)"
         @click="selectStar(i, $event)"
         v-bind="$attrs"
         :src="emptyIcon"
-        v-show="returnImageSrc(i) === 3"
+        :class="{ hidden: returnImageSrc(i) !== 3 }"
       />
       <slot :name="`after-star-${i}`" />
     </div>

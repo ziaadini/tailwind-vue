@@ -12,7 +12,7 @@
   ],
   "types": "./types/index.d.ts",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve --open --hot",
     "build": "vue-cli-service build",
     "build-bundle": "vue-cli-service build --target lib --name tailwind-vue3 ./src/index.ts",
     "test:unit": "vue-cli-service test:unit",

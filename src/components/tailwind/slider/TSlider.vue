@@ -74,7 +74,6 @@ export default defineComponent({
         items[0].isIntersecting,
         items[items.length - 1].isIntersecting
       ];
-      console.log([rightDisabled.value, leftDisabled.value]);
     });
 
     // const leftDisabled = computed(() => {

@@ -17,8 +17,8 @@
     >
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
-    <t-button rounded variant="success" size="large">Test</t-button>
-    <t-button rounded variant="success" icon="bookmarks" size="large" fab>
+    <t-button rounded variant="success" size="lg">Test</t-button>
+    <t-button rounded variant="success" icon="bookmarks" size="lg" fab>
     </t-button>
   </div>
   <br />
@@ -162,6 +162,7 @@
       placeholder="some test placeholder"
       variant="white"
       left-icon="bookmarks"
+      v-model="text"
       right-icon="bookmarks"
     />
     {{ text1 }}
@@ -307,38 +308,135 @@
   <h6>
     MENU
   </h6>
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-menu placement="right">
+  <div class="w-44 mx-auto">
+    <t-menu align="right" hover>
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline>
-          ...
+          ..........................................................
         </t-button>
       </template>
 
       <!-- Opened dropdown content -->
       <template v-slot:content>
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Profile</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Settings</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Help</a
-        >
+        <div class="w-full flex flex-col">
+          <t-menu placement="right">
+            <!-- Button content -->
+            <template v-slot:button>
+              <t-button class="z-10" variant="primary" full outline>
+                ....
+              </t-button>
+            </template>
 
-        <hr />
+            <!-- Opened dropdown content -->
+            <template v-slot:content>
+              <div class="w-full flex flex-col">
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Profile</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Settings</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Help</a
+                >
 
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
-          >Logout</a
-        >
+                <hr />
+
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+                  >Logout</a
+                >
+              </div>
+            </template>
+          </t-menu>
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
+
+          <hr />
+
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
       </template>
     </t-menu>
+  </div>
+  <div class="w-44 mx-auto">
+    <t-menu align="left" hover>
+      <!-- Button content -->
+      <template v-slot:button>
+        <t-button class="z-10" variant="primary" full outline>
+          ..........................................................
+        </t-button>
+      </template>
+
+      <!-- Opened dropdown content -->
+      <template v-slot:content>
+        <div class="w-full flex flex-col">
+          <t-menu placement="right">
+            <!-- Button content -->
+            <template v-slot:button>
+              <t-button class="z-10" variant="primary" full outline>
+                ....
+              </t-button>
+            </template>
+
+            <!-- Opened dropdown content -->
+            <template v-slot:content>
+              <div class="w-full flex flex-col">
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Profile</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Settings</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Help</a
+                >
+
+                <hr />
+
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+                  >Logout</a
+                >
+              </div>
+            </template>
+          </t-menu>
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
+
+          <hr />
+
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
+      </template>
+    </t-menu>
+  </div>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-menu hover placement="right" animate>
       <!-- Button content -->
       <template v-slot:button>
@@ -349,25 +447,27 @@
 
       <!-- Opened dropdown content -->
       <template v-slot:content>
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Profile</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Settings</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Help</a
-        >
+        <div class="w-full flex flex-col">
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Profile</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
 
-        <hr />
+          <hr />
 
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
-          >Logout</a
-        >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
       </template>
     </t-menu>
   </div>
@@ -628,6 +728,7 @@
   <t-carousel
     :autoPlay="false"
     v-model="itemChange"
+    :swipeEnabled="true"
     :items="links"
     class="w-96 h-96"
     style="margin: 0 auto;"

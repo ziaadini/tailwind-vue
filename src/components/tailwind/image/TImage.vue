@@ -1,4 +1,4 @@
-<template v-if="!hasDefaultSlot">
+<template>
   <img v-if="lazy" v-bind="$attrs" ref="imageRef" />
   <img v-else @load="setLoadingState" v-bind="$attrs" :src="getSrc" />
   <div v-if="loading && hasLoaderSlot">
@@ -12,12 +12,16 @@ import { useImageDownloader } from "@/compositionFunctions/image";
 import {
   computed,
   defineComponent,
+  inject,
   onMounted,
   ref,
   toRefs,
   watch,
   watchEffect
 } from "vue";
+
+const component = (propName: string) => "t-image-" + propName;
+
 export default defineComponent({
   props: {
     src: {
@@ -27,7 +31,7 @@ export default defineComponent({
     },
     default: {
       type: String,
-      default: "",
+      default: () => inject(component("default"), ""),
       required: false //TODO default prop with provide-inject
     },
     lazy: {
@@ -91,7 +95,6 @@ export default defineComponent({
       });
     }
 
-    const hasDefaultSlot = computed(() => !!slots.default);
     const hasLoaderSlot = computed(() => !!slots.loader);
     const getSrc = computed(() => src.value || defaultImage.value);
 
@@ -104,7 +107,6 @@ export default defineComponent({
 
     return {
       imageRef,
-      hasDefaultSlot,
       hasLoaderSlot,
       setLoadingState,
       loading,

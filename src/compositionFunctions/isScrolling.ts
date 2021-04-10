@@ -8,13 +8,11 @@ export const useIsScrolling = (onMount = false, element = ref(null)) => {
     result.value = e;
   };
   const initiateScroll = () => {
-    console.log("scroll event initiate", element);
     if (element.value) {
       (element.value! as HTMLElement).addEventListener("scroll", handleScroll);
     } else document.addEventListener("scroll", handleScroll);
   };
   const destroyScroll = () => {
-    console.log("scroll event destroyed", element);
     if (element.value) {
       (element.value! as HTMLElement).removeEventListener(
         "scroll",
