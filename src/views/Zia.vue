@@ -614,6 +614,7 @@
           { key: 'last_name', label: 'last name', sortable: true },
           { key: 'age', label: 'age', sortable: true }
         ]"
+        :resetExpand="$route.query.page"
       >
         <template #cell(showDetails)="{toggleDetails,item}">
           <t-button class="text-xs" @click="toggleDetails"
@@ -880,6 +881,18 @@ export default defineComponent({
       }
       setSort();
     };
+    // let resetExpand;
+    // const closeExpand = resetMethod => {
+    //   resetExpand = resetMethod;
+    // };
+    // const route = useRoute();
+
+    // watch(
+    //   () => route.query.page,
+    //   () => {
+    //     resetExpand && resetExpand();
+    //   }
+    // );
     return {
       onSort,
       number,
@@ -911,6 +924,7 @@ export default defineComponent({
       radioModel,
       radioModel2,
       bottomSheet
+      // closeExpand
     };
   }
 });

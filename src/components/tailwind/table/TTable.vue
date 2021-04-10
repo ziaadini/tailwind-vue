@@ -379,7 +379,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+  PropType,
+  ref,
+  watch
+} from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTh from "@/components/tailwind/table/TTh.vue";
 import TCollapsible from "@/components/tailwind/collapsible/TCollapsible.vue";
@@ -399,6 +407,9 @@ export default defineComponent({
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sort(_: { key: string; sort: Table.SortEnum; setSort: Function }) {
+      return true;
+    },
+    closeExpand: () => {
       return true;
     }
   },
@@ -486,6 +497,10 @@ export default defineComponent({
           key: "",
           sort: "" as Table.SortEnum
         })
+    },
+    resetExpand: {
+      type: [Number, String, Object, Array],
+      default: () => inject("t-table-resetExpand", 0)
     }
   },
   setup(props, { emit, slots }) {
@@ -498,6 +513,15 @@ export default defineComponent({
         resetFlag.value = true;
       }
     };
+    onMounted(() => {
+      emit("closeExpand", resetShowDetails);
+    });
+    watch(
+      () => props.resetExpand,
+      () => {
+        resetShowDetails();
+      }
+    );
 
     const { getItems, onSort, activeSort } = useTableSort(
       props,
