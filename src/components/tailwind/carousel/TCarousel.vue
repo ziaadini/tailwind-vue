@@ -298,15 +298,18 @@ export default defineComponent({
     } = useSwipeElement();
 
     if (props.swipeEnabled)
-      watchEffect(() => {
-        if (state.isDropped) {
-          if (swipeDiff.value > props.swipeThreshold) {
-            !leftDisabled.value && buttonClick(-1);
-          } else if (swipeDiff.value < -props.swipeThreshold) {
-            !rightDisabled.value && buttonClick(1);
+      watch(
+        () => state.isDropped,
+        value => {
+          if (value) {
+            if (swipeDiff.value > props.swipeThreshold) {
+              !leftDisabled.value && buttonClick(-1);
+            } else if (swipeDiff.value < -props.swipeThreshold) {
+              !rightDisabled.value && buttonClick(1);
+            }
           }
         }
-      });
+      );
 
     const { renderClass } = useRenderClass("carousel");
 
