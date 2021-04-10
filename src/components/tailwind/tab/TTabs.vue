@@ -19,7 +19,9 @@
           name="keyboard_arrow_right"
           data-name="tabs-arrow"
           :class="
-            renderClass('cursor-pointer self-center fill-current', 'arrow')
+            renderClass('cursor-pointer self-center fill-current', 'arrow', {
+              'opacity-50': startIntersecting
+            })
           "
         >
           <svg
@@ -90,7 +92,9 @@
           name="keyboard_arrow_left"
           data-name="tabs-arrow"
           :class="
-            renderClass('cursor-pointer self-center fill-current', 'arrow')
+            renderClass('cursor-pointer self-center fill-current', 'arrow', {
+              'opacity-50': endIntersecting
+            })
           "
         >
           <svg
@@ -122,7 +126,9 @@ import {
   VNode,
   watchEffect,
   watch,
-  inject
+  inject,
+  onMounted,
+  ref
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
@@ -210,9 +216,7 @@ export default defineComponent({
 
     const {
       elementRef: startItem,
-      isIntersecting: startIntersecting,
-      destroyObserver: destroyStart,
-      startObserver: enableStart
+      isIntersecting: startIntersecting
     } = useIntersectElement({
       passRef: true,
       root: navRef.value,
@@ -220,37 +224,32 @@ export default defineComponent({
     });
     const {
       elementRef: endItem,
-      isIntersecting: endIntersecting,
-      destroyObserver: destroyEnd,
-      startObserver: enableEnd
+      isIntersecting: endIntersecting
     } = useIntersectElement({
       passRef: true,
       root: navRef.value,
       defaultValue: true
     });
-    let destroyTimeout;
-    watchEffect(() => {
-      if (startIntersecting?.value && endIntersecting?.value) {
-        clearTimeout(destroyTimeout);
-        destroyTimeout = setTimeout(() => {
-          destroyStart();
-          destroyEnd();
-        }, 300);
+    const hasHorizontalScroll = ref(false);
+    const handleScrollWidth = () => {
+      const clientWidth = (navRef.value as Element).clientWidth;
+      const scrollWidth = (navRef.value as Element).scrollWidth;
+      if (scrollWidth > clientWidth) {
+        hasHorizontalScroll.value = true;
+      } else {
+        hasHorizontalScroll.value = false;
       }
-    });
-    let resizeTimeout;
+    };
+    onMounted(handleScrollWidth);
+
     useResize(() => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        enableStart();
-        enableEnd();
-      }, 200);
+      handleScrollWidth();
     });
 
     const showArrows = computed(
       () =>
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
+        props.arrows && hasHorizontalScroll.value
     );
 
     const { renderClass } = useRenderClass("tabs");
