@@ -55,9 +55,6 @@
           )
         ]"
       >
-        {{ hasAlign }}
-        {{ getTranslateWidth }}
-
         <slot name="content"></slot>
       </div>
     </transition>
