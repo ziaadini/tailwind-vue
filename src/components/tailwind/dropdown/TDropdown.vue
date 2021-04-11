@@ -96,7 +96,7 @@
             'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
             'z-30': !hover,
             'z-40': hover,
-            'divide-y': divide
+            'z-50': isOpened && !hover
           }
         )
       ]"
@@ -107,7 +107,11 @@
         :class="[
           renderClass(
             'overflow-y-auto scrollbar-sm max-h-48',
-            'childrenScrollbar'
+            'childrenScrollbar',
+            {
+              'divide-y': divide,
+              [divideColor]: divide
+            }
           )
         ]"
         data-name="dropdown-childrenScrollbar"
@@ -197,6 +201,11 @@ export default defineComponent({
     divide: {
       type: Boolean,
       default: () => inject(component("divide"), true)
+    },
+
+    divideColor: {
+      type: String,
+      default: () => inject(component("divide"), "gray")
     },
     item: {
       type: Object,
