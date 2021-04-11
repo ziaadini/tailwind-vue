@@ -61,7 +61,6 @@
           )
         ]"
       >
-        {{ !hasAlign && !placement }}
         <slot name="content"></slot>
       </div>
     </transition>
