@@ -320,7 +320,7 @@
       <!-- Opened dropdown content -->
       <template v-slot:content>
         <div class="w-full flex flex-col mx-auto">
-          <t-menu>
+          <t-menu @click.stop="">
             <!-- Button content -->
             <template v-slot:button>
               <t-button class="z-10" variant="primary" full outline>
