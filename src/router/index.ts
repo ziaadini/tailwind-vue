@@ -55,7 +55,8 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "zia" */ "@/views/TextInput.vue")
+    component: () =>
+      import(/* webpackChunkName: "zia" */ "@/views/TextInput.vue")
   },
   {
     path: "/badge",
@@ -87,7 +88,8 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "zia" */ "@/views/Dropdown.vue")
+    component: () =>
+      import(/* webpackChunkName: "zia" */ "@/views/Dropdown.vue")
   },
   {
     path: "/breadcrumb",
@@ -95,7 +97,8 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "zia" */ "@/views/Breadcrumb.vue")
+    component: () =>
+      import(/* webpackChunkName: "zia" */ "@/views/Breadcrumb.vue")
   },
   {
     path: "/carousel",
@@ -103,7 +106,8 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "zia" */ "@/views/Carousel.vue")
+    component: () =>
+      import(/* webpackChunkName: "zia" */ "@/views/Carousel.vue")
   },
   {
     path: "/slider",
@@ -112,6 +116,14 @@ const routes: Array<RouteRecordRaw> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "zia" */ "@/views/Slider.vue")
+  },
+  {
+    path: "/rating",
+    name: "rating",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "zia" */ "@/views/Rating.vue")
   }
 ];
 

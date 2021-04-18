@@ -44,6 +44,86 @@
       ></iframe>
     </div>
 
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Auto Play</h2>
+      <p class="mb-2">Here’s a carousel with autoplay ability.</p>
+
+      <t-carousel
+        autoPlay
+        v-model="itemChange2"
+        :items="links"
+        class="w-96 h-96"
+        style="margin: 0 auto;"
+      >
+        <!-- <t-button variant="primary" :key="i"> test</t-button> -->
+
+        <template #leftButton="{leftDisabled, back}">
+          <t-button variant="primary" :disabled="leftDisabled" @click="back">
+            -</t-button
+          >
+        </template>
+
+        <template #rightButton="{rightDisabled, next}">
+          <t-button variant="primary" :disabled="rightDisabled" @click="next">
+            +</t-button
+          >
+        </template>
+      </t-carousel>
+
+      <iframe
+        width="100%"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/mqvf8er7/1/embedded/html,js/dark/"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Rotate Effect</h2>
+      <p class="mb-2">
+        Here’s a carousel with autoplay ability and rotate effect for change
+        slides.
+      </p>
+
+      <t-carousel
+        autoPlay
+        rotate
+        v-model="itemChange3"
+        :items="links"
+        class="w-96 h-96"
+        style="margin: 0 auto;"
+      >
+        <!-- <t-button variant="primary" :key="i"> test</t-button> -->
+
+        <template #leftButton="{leftDisabled, back}">
+          <t-button variant="primary" :disabled="leftDisabled" @click="back">
+            -</t-button
+          >
+        </template>
+
+        <template #rightButton="{rightDisabled, next}">
+          <t-button variant="primary" :disabled="rightDisabled" @click="next">
+            +</t-button
+          >
+        </template>
+      </t-carousel>
+
+      <iframe
+        width="100%"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/45yu37c0/1/embedded/html,js/dark/"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
     <div class="mt-10 border rounded-sm p-3 w-full shadow-md">
       <article class="prose prose-xl text-left">
         <vue3-markdown-it :source="mdFile" />
@@ -80,7 +160,9 @@ export default defineComponent({
           url: "https://cdn.mobit.ir/product/17864/5f2a53856b1c5.jpg?inline=1"
         }
       ],
-      itemChange: 0
+      itemChange: 0,
+      itemChange2: 0,
+      itemChange3: 0
     };
   },
   async mounted() {

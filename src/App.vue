@@ -37,7 +37,8 @@ export default defineComponent({
         "dropdown",
         "breadcrumb",
         "slider",
-        "carousel"
+        "carousel",
+        "rating"
       ]
     };
   },
