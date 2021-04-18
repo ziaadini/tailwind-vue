@@ -65,9 +65,9 @@ import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import {
   computed,
-  defineComponent, inject,
+  defineComponent,
+  inject,
   onMounted,
-  Ref,
   ref,
   toRefs,
   watch,
@@ -131,7 +131,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const localOpened = ref(false);
 
-    const { modelValue: opened } = toRefs(props)
+    const { modelValue: opened } = toRefs(props);
 
     const btnWrapper = ref(null as any);
 
@@ -156,6 +156,17 @@ export default defineComponent({
       unRegisterEvent
     } = useClickOutside();
 
+    function triggerMenu(value: any = null, header = false) {
+      if (!props.disabled) {
+        if (
+          (localOpened.value && header && props.avoidHeaderClose) ||
+          (!localOpened.value && header && props.avoidHeaderOpen)
+        )
+          return;
+        localOpened.value = value !== null ? value : !localOpened.value;
+      }
+    }
+
     watch(clickedOutside, value => {
       if (value) {
         triggerMenu(false);
@@ -171,17 +182,6 @@ export default defineComponent({
         }
       });
     });
-
-    function triggerMenu (value: any = null, header = false) {
-      if (!props.disabled) {
-        if (
-          (localOpened.value && header && props.avoidHeaderClose) ||
-          (!localOpened.value && header && props.avoidHeaderOpen)
-        )
-          return;
-        localOpened.value = value !== null ? value : !localOpened.value;
-      }
-    };
 
     watch(localOpened, value => {
       emit("update:modelValue", value);
@@ -249,7 +249,7 @@ export default defineComponent({
       animatedOpened,
       animatedClosed,
       isOpenWithoutAnimate,
-      renderClass: renderClass as Function,
+      renderClass,
       btnWrapper
     };
   }
