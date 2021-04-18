@@ -39,7 +39,8 @@ export default defineComponent({
         "slider",
         "carousel",
         "rating",
-        "card"
+        "card",
+        "tab"
       ]
     };
   },
