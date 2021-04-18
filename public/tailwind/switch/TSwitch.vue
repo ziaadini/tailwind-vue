@@ -3,7 +3,7 @@
     data-name="switch-container"
     :class="[
       { 'cursor-pointer': !disabled },
-      renderClass('flex justify-between items-center', 'container')
+      renderClass('flex items-center', 'container')
     ]"
     @click="updateInput"
   >

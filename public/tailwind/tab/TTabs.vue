@@ -13,13 +13,28 @@
         <template v-if="hasRightArrowSlot">
           <slot name="arrowRight" :disabled="endIntersecting"></slot>
         </template>
-        <t-icon
+        <div
           v-else
           :disabled="startIntersecting"
           name="keyboard_arrow_right"
           data-name="tabs-arrow"
-          :class="renderClass('tab-arrow', 'arrow')"
-        ></t-icon>
+          :class="
+            renderClass('cursor-pointer self-center fill-current', 'arrow', {
+              'opacity-50': startIntersecting
+            })
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
+            />
+          </svg>
+        </div>
       </div>
       <nav
         ref="navRef"
@@ -71,13 +86,28 @@
         <template v-if="hasLeftArrowSlot">
           <slot name="arrowLeft" :disabled="endIntersecting"></slot>
         </template>
-        <t-icon
+        <div
           v-else
           :disabled="endIntersecting"
           name="keyboard_arrow_left"
           data-name="tabs-arrow"
-          :class="renderClass('tab-arrow', 'arrow')"
-        ></t-icon>
+          :class="
+            renderClass('cursor-pointer self-center fill-current', 'arrow', {
+              'opacity-50': endIntersecting
+            })
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
+            />
+          </svg>
+        </div>
       </div>
     </div>
     <div>
@@ -96,14 +126,15 @@ import {
   VNode,
   watchEffect,
   watch,
-  inject
+  inject,
+  onMounted,
+  ref
 } from "vue";
 import { useScrollElement } from "@/compositionFunctions/scroll";
-import TIcon from "@/components/tailwind/icon/TIcon.vue";
 import { useIntersectElement } from "@/compositionFunctions/intersect";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import { variants } from "@/utility/css-helper";
-
+import { useResize } from "@/compositionFunctions/useResize";
 interface TabProps {
   title: string;
   value?: string | number;
@@ -111,7 +142,6 @@ interface TabProps {
 
 export default defineComponent({
   name: "TTabs",
-  components: { TIcon },
   props: {
     modelValue: { type: [String, Number], default: 0 },
     arrows: {
@@ -183,25 +213,43 @@ export default defineComponent({
     const onScrollRight = () => {
       scrollRight(navRef.value.clientWidth, 200);
     };
+
     const {
       elementRef: startItem,
       isIntersecting: startIntersecting
     } = useIntersectElement({
       passRef: true,
-      root: navRef.value
+      root: navRef.value,
+      defaultValue: true
     });
     const {
       elementRef: endItem,
       isIntersecting: endIntersecting
     } = useIntersectElement({
       passRef: true,
-      root: navRef.value
+      root: navRef.value,
+      defaultValue: true
+    });
+    const hasHorizontalScroll = ref(false);
+    const handleScrollWidth = () => {
+      const clientWidth = (navRef.value as Element).clientWidth;
+      const scrollWidth = (navRef.value as Element).scrollWidth;
+      if (scrollWidth > clientWidth) {
+        hasHorizontalScroll.value = true;
+      } else {
+        hasHorizontalScroll.value = false;
+      }
+    };
+    onMounted(handleScrollWidth);
+
+    useResize(() => {
+      handleScrollWidth();
     });
 
     const showArrows = computed(
       () =>
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        props.arrows && (!startIntersecting!.value || !endIntersecting!.value)
+        props.arrows && hasHorizontalScroll.value
     );
 
     const { renderClass } = useRenderClass("tabs");

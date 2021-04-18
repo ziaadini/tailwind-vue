@@ -123,7 +123,7 @@
           </div>
         </div>
         <template v-if="hasRowDetailsSlot">
-          <t-collapsable
+          <t-collapsible
             data-name="table-cardCollapse"
             :class="renderClass('', 'cardCollapse')"
             :show="getShowDetails(i)"
@@ -140,7 +140,7 @@
                 }
               "
             ></slot>
-          </t-collapsable>
+          </t-collapsible>
         </template>
       </template>
     </div>
@@ -351,7 +351,7 @@
                         :class="renderClass('', 'detailsTd')"
                         :colspan="getHeaderLength"
                       >
-                        <t-collapsable :show="getShowDetails(i)">
+                        <t-collapsible :show="getShowDetails(i)">
                           <slot
                             name="rowDetails"
                             :show="getShowDetails(i)"
@@ -364,7 +364,7 @@
                               }
                             "
                           ></slot>
-                        </t-collapsable>
+                        </t-collapsible>
                       </td>
                     </tr>
                   </template>
@@ -379,10 +379,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+  onUpdated,
+  PropType,
+  ref,
+  watch
+} from "vue";
 import { Table } from "@/utility/types/base-component-types";
 import TTh from "@/components/tailwind/table/TTh.vue";
-import TCollapsable from "@/components/tailwind/collapsable/TCollapsable.vue";
+import TCollapsible from "@/components/tailwind/collapsible/TCollapsible.vue";
 import {
   useTableHeader,
   useShowDetails,
@@ -395,10 +404,13 @@ import TLoading from "@/components/tailwind/loading/TLoading.vue";
 export default defineComponent({
   name: "TTable",
   inheritAttrs: false,
-  components: { TLoading, TCollapsable, TTh },
+  components: { TLoading, TCollapsible, TTh },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sort(_: { key: string; sort: Table.SortEnum; setSort: Function }) {
+      return true;
+    },
+    closeExpand: () => {
       return true;
     }
   },
@@ -486,6 +498,10 @@ export default defineComponent({
           key: "",
           sort: "" as Table.SortEnum
         })
+    },
+    resetExpand: {
+      type: [Number, String, Object, Array],
+      default: () => inject("t-table-resetExpand", 0)
     }
   },
   setup(props, { emit, slots }) {
@@ -498,6 +514,20 @@ export default defineComponent({
         resetFlag.value = true;
       }
     };
+    let updated = 0;
+    onUpdated(() => {
+      updated++;
+      console.log("updated", updated);
+    });
+    onMounted(() => {
+      emit("closeExpand", resetShowDetails);
+    });
+    watch(
+      () => props.resetExpand,
+      () => {
+        resetShowDetails();
+      }
+    );
 
     const { getItems, onSort, activeSort } = useTableSort(
       props,
