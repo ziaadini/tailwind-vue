@@ -109,7 +109,7 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/button/README.md").then(res =>
+    this.mdFile = await fetch("/tailwind/tab/README.md").then(res =>
       res.text()
     );
   }
