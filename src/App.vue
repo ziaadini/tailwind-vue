@@ -38,7 +38,8 @@ export default defineComponent({
         "breadcrumb",
         "slider",
         "carousel",
-        "rating"
+        "rating",
+        "card"
       ]
     };
   },
