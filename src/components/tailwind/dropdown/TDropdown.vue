@@ -1,13 +1,13 @@
 <template>
-  <div
-    class="relative"
-    @mouseenter="hoverTriggerMenu(true)"
-    @mouseleave="hoverTriggerMenu(false)"
-  >
+  <div class="relative">
     <!-- parent section -->
     <!-- header slot  -->
     <template v-if="hasHeaderSlot">
-      <div ref="dropdownParentRef">
+      <div
+        ref="dropdownParentRef"
+        @mouseenter="hoverTriggerMenu(true)"
+        @mouseleave="hoverTriggerMenu(false)"
+      >
         <slot
           name="header"
           :selectedItem="selectedItem"
@@ -24,6 +24,8 @@
       <div
         ref="dropdownParentRef"
         data-name="dropdown-parent"
+        @mouseenter="hoverTriggerMenu(true)"
+        @mouseleave="hoverTriggerMenu(false)"
         :class="[
           renderClass(
             `cursor-pointer w-64 h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
@@ -94,7 +96,7 @@
             'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
             'z-30': !hover,
             'z-40': hover,
-            'divide-y': divide
+            'z-50': isOpened && !hover
           }
         )
       ]"
@@ -105,7 +107,11 @@
         :class="[
           renderClass(
             'overflow-y-auto scrollbar-sm max-h-48',
-            'childrenScrollbar'
+            'childrenScrollbar',
+            {
+              'divide-y': divide,
+              [divideColor]: divide
+            }
           )
         ]"
         data-name="dropdown-childrenScrollbar"
@@ -195,6 +201,11 @@ export default defineComponent({
     divide: {
       type: Boolean,
       default: () => inject(component("divide"), true)
+    },
+
+    divideColor: {
+      type: String,
+      default: () => inject(component("divide"), "gray")
     },
     item: {
       type: Object,
@@ -520,7 +531,7 @@ export default defineComponent({
     );
 
     const handleEmitOpened = async () => {
-      emit("update:opened", isVisibleWatch.value);
+      emit("opened", isVisibleWatch.value);
       await nextTick();
       handlePlacement();
     };

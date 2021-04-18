@@ -17,8 +17,8 @@
     >
     <t-button ripple variant="warning" icon="bookmarks">Test</t-button>
     <t-button rounded variant="danger">Test</t-button>
-    <t-button rounded variant="success" size="large">Test</t-button>
-    <t-button rounded variant="success" icon="bookmarks" size="large" fab>
+    <t-button rounded variant="success" size="lg">Test</t-button>
+    <t-button rounded variant="success" icon="bookmarks" size="lg" fab>
     </t-button>
   </div>
   <br />
@@ -66,6 +66,22 @@
     <t-button to="zia" rounded variant="success">Test</t-button>
   </div>
 
+  <br />
+  <h6>
+    CARD
+  </h6>
+  <t-card
+    rounded
+    class="m-3"
+    title="rounded card title"
+    description="card descriptions"
+  />
+  <t-card
+    no-shadow
+    class="m-3 border-2"
+    title="no shadow card"
+    description="card descriptions"
+  />
   <br />
   <h6>
     ALERTS
@@ -146,6 +162,7 @@
       placeholder="some test placeholder"
       variant="white"
       left-icon="bookmarks"
+      v-model="text"
       right-icon="bookmarks"
     />
     {{ text1 }}
@@ -291,8 +308,8 @@
   <h6>
     MENU
   </h6>
-  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
-    <t-menu placement="right">
+  <div class="w-44 mx-auto">
+    <t-menu>
       <!-- Button content -->
       <template v-slot:button>
         <t-button class="z-10" variant="primary" full outline>
@@ -302,27 +319,124 @@
 
       <!-- Opened dropdown content -->
       <template v-slot:content>
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Profile</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Settings</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Help</a
-        >
+        <div class="w-full flex flex-col mx-auto">
+          <t-menu @click.stop="">
+            <!-- Button content -->
+            <template v-slot:button>
+              <t-button class="z-10" variant="primary" full outline>
+                ....
+              </t-button>
+            </template>
 
-        <hr />
+            <!-- Opened dropdown content -->
+            <template v-slot:content>
+              <div class="w-full flex flex-col">
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Profile Profile Profile Profile Profile</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Settings</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Help</a
+                >
 
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
-          >Logout</a
-        >
+                <hr />
+
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+                  >Logout</a
+                >
+              </div>
+            </template>
+          </t-menu>
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >SettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettingsSettings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
+
+          <hr />
+
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
       </template>
     </t-menu>
+  </div>
+  <div class="w-44 mx-auto">
+    <t-menu align="left" hover>
+      <!-- Button content -->
+      <template v-slot:button>
+        <t-button class="z-10" variant="primary" full outline>
+          ..........................................................
+        </t-button>
+      </template>
+
+      <!-- Opened dropdown content -->
+      <template v-slot:content>
+        <div class="w-full flex flex-col">
+          <t-menu placement="right">
+            <!-- Button content -->
+            <template v-slot:button>
+              <t-button class="z-10" variant="primary" full outline>
+                ....
+              </t-button>
+            </template>
+
+            <!-- Opened dropdown content -->
+            <template v-slot:content>
+              <div class="w-full flex flex-col">
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Profile</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Settings</a
+                >
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+                  >Help</a
+                >
+
+                <hr />
+
+                <a
+                  class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+                  >Logout</a
+                >
+              </div>
+            </template>
+          </t-menu>
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
+
+          <hr />
+
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
+      </template>
+    </t-menu>
+  </div>
+  <div class="flex justify-center w-100 flex-wrap space-x-1 space-x-reverse">
     <t-menu hover placement="right" animate>
       <!-- Button content -->
       <template v-slot:button>
@@ -333,25 +447,27 @@
 
       <!-- Opened dropdown content -->
       <template v-slot:content>
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Profile</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Settings</a
-        >
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
-          >Help</a
-        >
+        <div class="w-full flex flex-col">
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Profile</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Settings</a
+          >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >Help</a
+          >
 
-        <hr />
+          <hr />
 
-        <a
-          class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
-          >Logout</a
-        >
+          <a
+            class="flex w-full justify-between items-center rounded px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >Logout</a
+          >
+        </div>
       </template>
     </t-menu>
   </div>
@@ -613,6 +729,7 @@
   <t-carousel
     :autoPlay="false"
     v-model="itemChange"
+    :swipeEnabled="true"
     :items="links"
     class="w-96 h-96"
     style="margin: 0 auto;"
@@ -674,18 +791,18 @@
   </h6>
 
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     :scale="2"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     :scale="3"
   ></TZoom>
   <TZoom
-    imgSrc="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+    src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
     maskSrc="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     :scale="4"
   ></TZoom>
@@ -724,6 +841,7 @@
 import { defineComponent, ref } from "vue";
 import TButton from "@/components/tailwind/button/TButton.vue";
 import TAlert from "@/components/tailwind/alert/TAlert.vue";
+import TCard from "@/components/tailwind/card/TCard.vue";
 import TextInput from "@/components/tailwind/text-input/TTextInput.vue";
 import TMenu from "@/components/tailwind/menu/TMenu.vue";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
@@ -740,6 +858,7 @@ export default defineComponent({
   components: {
     TButton,
     TAlert,
+    TCard,
     TextInput,
     TMenu,
     TDropdown,

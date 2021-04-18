@@ -1,7 +1,8 @@
 <template>
   <!-- menu wrapper -->
   <div
-    class="relative"
+    data-name="menu-wrapper"
+    :class="[renderClass('relative', 'wrapper')]"
     @mouseenter="hover && triggerMenu(true)"
     @mouseleave="hover && triggerMenu(false)"
   >
@@ -14,24 +15,43 @@
           'trigger'
         )
       ]"
+      ref="btnWrapper"
       @click="triggerMenu"
     >
       <slot name="button" :isOpen="isOpen"></slot>
     </div>
 
     <!-- menu items-->
-    <transition :name="!animate && 'fade'" mode="out-in">
+    <transition
+      :name="!animate ? 'fade' : ''"
+      mode="out-in"
+      :style="[
+        hasAlign
+          ? {
+              '--tw-translate-x': hasAlign && getTranslateWidth,
+              '--tw-translate-y': hasAlign && getTranslateHeight
+            }
+          : {}
+      ]"
+      :class="[
+        renderClass('', 'trigger', {
+          'absolute transform': hasAlign
+        })
+      ]"
+    >
       <div
         v-if="animate || isOpenWithoutAnimate"
         ref="menuRef"
         data-name="menu-items"
+        @click="triggerMenu(false)"
         :class="[
           renderClass(
-            'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-top-right',
+            'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-center',
             'items',
             {
-              'right-0': placement === 'right',
-              'left-0': placement !== 'right',
+              'right-0': hasAlign && placement === 'right',
+              '-translate-x-1/2 left-1/2': !hasAlign && placement === 'center',
+              'left-0': placement !== 'right' || getTranslateHeight,
               'w-full': full,
               'z-30': !hover,
               'z-40': hover,
@@ -54,6 +74,7 @@ import {
   computed,
   defineComponent,
   inject,
+  onMounted,
   ref,
   watch,
   watchEffect
@@ -65,8 +86,9 @@ export default defineComponent({
   props: {
     placement: {
       type: String,
-      default: () => inject(component("placement"), "right"),
-      validator: (value: string) => ["right", "left"].indexOf(value) !== -1
+      default: () => inject(component("placement"), "center"),
+      validator: (value: string) =>
+        ["right", "left", "center"].indexOf(value) !== -1
     },
     disabled: {
       type: Boolean,
@@ -87,10 +109,16 @@ export default defineComponent({
       type: Boolean,
       default: () => inject(component("animate"), false),
       required: false
+    },
+    align: {
+      type: String,
+      default: null
     }
   },
   setup(props) {
     const open = ref(false);
+
+    const btnWrapper = ref(null as any);
 
     // is menu open
     const isOpen = computed(() => {
@@ -113,17 +141,19 @@ export default defineComponent({
       unRegisterEvent
     } = useClickOutside();
     watch(clickedOutside, value => {
-      console.log("watch clickoutside", value);
       if (value) {
         open.value = false;
       }
     });
-    watchEffect(() => {
-      if (open.value) {
-        registerEvent();
-      } else {
-        unRegisterEvent();
-      }
+
+    onMounted(() => {
+      watchEffect(() => {
+        if (open.value) {
+          registerEvent();
+        } else {
+          unRegisterEvent();
+        }
+      });
     });
 
     const triggerMenu = (value = null as any) => {
@@ -144,16 +174,54 @@ export default defineComponent({
       return !props.animate && isOpen.value;
     });
 
+    const hasAlign = computed(() => {
+      return props.align !== null;
+    });
+
+    function hasRightAlign() {
+      return props.align === "right";
+    }
+
+    function hasLeftAlign() {
+      return props.align === "left";
+    }
+
+    const getTranslateWidth = computed(() => {
+      if (hasAlign.value) {
+        const value = btnWrapper?.value?.clientWidth || 0;
+        if (value) {
+          if (hasRightAlign()) return `${value}px`;
+          else if (hasLeftAlign()) return "-100%";
+          else return 0;
+        }
+      }
+      return 0;
+    });
+
+    const getTranslateHeight = computed(() => {
+      if (hasAlign.value) {
+        const value = -btnWrapper?.value?.clientHeight || 0;
+        if (value) {
+          return `${value}px`;
+        }
+      }
+      return 0;
+    });
+
     const { renderClass } = useRenderClass("menu");
 
     return {
       menuRef,
       triggerMenu,
+      getTranslateHeight,
+      getTranslateWidth,
+      hasAlign,
       isOpen,
       animatedOpened,
       animatedClosed,
       isOpenWithoutAnimate,
-      renderClass
+      renderClass,
+      btnWrapper
     };
   }
 });

@@ -82,7 +82,7 @@
         data-name="drawer-contentContainer"
         :class="[
           renderClass(
-            'overflow-y-auto scrollbar-sm p-4 max-h-screen bottom-sheet-content-container drawer-max-height',
+            'overflow-y-auto scrollbar-sm p-4 max-h-screen drawer-max-height',
             'contentContainer'
           ),
           { 'drawer-height': showHeader, 'w-screen': full }

@@ -55,7 +55,7 @@
             'pr-3': !rightPadding,
             'pl-8': leftPadding,
             'pl-3': !leftPadding,
-            'rounded-full': rounded,
+            'rounded-full': rounded && !area,
             'rounded-sm': !rounded,
             'text-right': isRight,
             'text-center': isCenter,
@@ -169,7 +169,8 @@ export default defineComponent({
     },
     modelValue: {
       type: String,
-      required: true
+      required: false,
+      default: ""
     },
     modelModifiers: {
       default: () => ({} as any)
@@ -194,7 +195,7 @@ export default defineComponent({
     // handle text variant
     const variantClasses = computed((): string => {
       let classes = "";
-      classes += `bg-white text-input-placehoder-black text-dark border ${
+      classes += `bg-white text-input-placeholder-black text-dark border border-solid ${
         props.error
           ? "border-red-500"
           : `border-${
@@ -205,7 +206,7 @@ export default defineComponent({
       }  ${props.hover ? `hover:bg-${props.variant}-50` : ""}`;
 
       classes +=
-        " border transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
+        " transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
       return classes;
     });
 

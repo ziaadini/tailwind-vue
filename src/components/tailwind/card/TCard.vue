@@ -2,7 +2,10 @@
   <div
     data-name="card-container"
     :class="
-      renderClass('shadow-md border border-gray-100 text-right', 'container')
+      renderClass('border border-gray-100 text-right', 'container', {
+        'rounded-sm': rounded,
+        'shadow-md': !noShadow
+      })
     "
   >
     <div
@@ -25,9 +28,11 @@
 
 <script lang="ts">
 import { useRenderClass } from "@/compositionFunctions/settings";
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 
+const component = (propName: string) => "t-card-" + propName;
 export default defineComponent({
+  name: "TCard",
   props: {
     title: {
       type: String,
@@ -36,6 +41,14 @@ export default defineComponent({
     description: {
       type: String,
       default: ""
+    },
+    rounded: {
+      type: Boolean,
+      default: () => inject(component("rounded"), false)
+    },
+    noShadow: {
+      type: Boolean,
+      default: () => inject(component("noShadow"), false)
     }
   },
   setup() {

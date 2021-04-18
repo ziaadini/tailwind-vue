@@ -8,14 +8,6 @@
     @mouseover="setTranslateHover"
     @mouseout="resetTranslate"
   >
-    <!-- zoom mask -->
-    <t-image
-      v-show="showMask"
-      :src="maskSrc"
-      data-name="zoom-mask"
-      :class="[renderClass('w-full h-full', 'mask')]"
-    />
-
     <!-- zoom image -->
     <t-image
       :src="src"
@@ -30,6 +22,19 @@
         '--tw-translate-x': `${-translateXY.x}px`,
         '--tw-translate-y': `${-translateXY.y}px`
       }"
+    />
+
+    <!-- zoom mask -->
+    <!--    TODO v-show="showMask" is not working-->
+    <t-image
+      :src="maskSrc"
+      data-name="zoom-mask"
+      :class="[
+        renderClass('relative -top-full w-full h-full', 'mask'),
+        {
+          hidden: !showMask
+        }
+      ]"
     />
   </div>
 </template>

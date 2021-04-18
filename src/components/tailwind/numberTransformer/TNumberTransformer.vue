@@ -65,17 +65,18 @@ export default defineComponent({
     };
     const { clear, start } = useInterval(callback, null);
 
-    watch(
-      () => getIntervalDuration.value,
-      value => {
-        start(value);
-      }
-    );
+    // watch(
+    //   () => getIntervalDuration.value,
+    //   value => {
+    //     start(value);
+    //   }
+    // );
     watch(
       () => props.number,
       (value, oldValue) => {
         isUpCounter = value > oldValue;
         from.value = oldValue;
+        start(getIntervalDuration.value);
       }
     );
     watch(
