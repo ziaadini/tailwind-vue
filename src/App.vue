@@ -40,7 +40,8 @@ export default defineComponent({
         "carousel",
         "rating",
         "card",
-        "tab"
+        "tab",
+        "accordion"
       ]
     };
   },
