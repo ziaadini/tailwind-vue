@@ -5,7 +5,9 @@
       Toggle contextual overlays for displaying lists of links and more.
     </p>
 
-    <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
       <h2 class="text-xl font-bold mb-2">Simple (use a button to toggle)</h2>
       <p class="mb-2">Choose this basic menu, only with text items.</p>
       <t-menu class="w-30" full>
@@ -42,9 +44,14 @@
       ></iframe>
     </div>
 
-    <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
       <h2 class="text-xl font-bold mb-2">Placement and Animated</h2>
-      <p class="mb-2">Choose this menu and set placement after toggle open also set animation effect.</p>
+      <p class="mb-2">
+        Choose this menu and set placement after toggle open also set animation
+        effect.
+      </p>
       <div class="flex">
         <t-menu placement="left" class="w-30">
           <!-- Button content -->
@@ -129,7 +136,9 @@
       ></iframe>
     </div>
 
-    <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
       <h2 class="text-xl font-bold mb-2">Icon and hover style</h2>
       <p class="mb-2">Choose this menu, set icon for button and hover style.</p>
       <div class="flex">
@@ -160,7 +169,9 @@
         <t-menu hover class="w-30 ml-4" full>
           <!-- Button content -->
           <template v-slot:button>
-            <t-button class="mb-2" variant="success" outline>Menu (Button hover)</t-button>
+            <t-button class="mb-2" variant="success" outline
+              >Menu (Button hover)</t-button
+            >
           </template>
 
           <!-- Opened dropdown content -->
@@ -189,17 +200,25 @@
 
           <!-- Opened dropdown content -->
           <template v-slot:content>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-1
             </a>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-2
             </a>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-3
             </a>
             <hr />
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-red-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >
               Item-4
             </a>
           </template>
@@ -208,22 +227,32 @@
         <t-menu hover class="w-30 ml-4" full>
           <!-- Button content -->
           <template v-slot:button>
-            <t-button class="mb-2" variant="success" outline>Menu (Button and items hover)</t-button>
+            <t-button class="mb-2" variant="success" outline
+              >Menu (Button and items hover)</t-button
+            >
           </template>
 
           <!-- Opened dropdown content -->
           <template v-slot:content>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-1
             </a>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-2
             </a>
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-indigo-600 hover:text-white"
+            >
               Item-3
             </a>
             <hr />
-            <a class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-red-600 hover:text-white">
+            <a
+              class="flex w-full justify-between items-center px-2 py-1 my-1 hover:bg-red-600 hover:text-white"
+            >
               Item-4
             </a>
           </template>
@@ -240,7 +269,9 @@
       ></iframe>
     </div>
 
-    <div class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md">
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
       <h2 class="text-xl font-bold mb-2">Disable</h2>
       <p class="mb-2">Choose this menu with disabled mode.</p>
       <t-menu class="w-30" disabled>
@@ -294,19 +325,21 @@ export default defineComponent({
   name: "App",
   components: {
     TButton,
-    TMenu,
+    TMenu
   },
   setup() {
     return {};
   },
   data() {
     return {
-      mdFile: "",
+      mdFile: ""
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/menu/README.md").then((res) => res.text());
-  },
+    this.mdFile = await fetch("/tailwind/menu/README.md").then(res =>
+      res.text()
+    );
+  }
 });
 </script>
 
