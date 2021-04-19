@@ -1,6 +1,7 @@
 <template>
   <!-- menu wrapper -->
   <div
+    ref="menuRef"
     data-name="menu-wrapper"
     :class="[renderClass('relative', 'wrapper')]"
     @mouseenter="hover && triggerMenu(true)"
@@ -8,6 +9,7 @@
   >
     <!-- menu trigger -->
     <div
+      ref="btnWrapper"
       data-name="menu-trigger"
       :class="[
         renderClass(
@@ -15,51 +17,42 @@
           'trigger'
         )
       ]"
-      ref="btnWrapper"
-      @click="triggerMenu"
+      @click="triggerMenu(null, true)"
     >
       <slot name="button" :isOpen="isOpen"></slot>
     </div>
 
     <!-- menu items-->
-    <transition
-      :name="!animate ? 'fade' : ''"
-      mode="out-in"
-      :style="[
-        hasAlign
-          ? {
-              '--tw-translate-x': hasAlign && getTranslateWidth,
-              '--tw-translate-y': hasAlign && getTranslateHeight
-            }
-          : {}
-      ]"
-      :class="[
-        renderClass('', 'trigger', {
-          'absolute transform': hasAlign
-        })
-      ]"
-    >
+    <transition :name="!animate ? 'fade' : ''" mode="out-in">
       <div
-        v-if="animate || isOpenWithoutAnimate"
-        ref="menuRef"
+        v-show="animate || isOpenWithoutAnimate"
         data-name="menu-items"
-        @click="triggerMenu(false)"
+        :style="[
+          hasAlign
+            ? {
+                '--tw-translate-x': hasAlign && getTranslateWidth,
+                '--tw-translate-y': hasAlign && getTranslateHeight
+              }
+            : {}
+        ]"
         :class="[
           renderClass(
             'absolute shadow-lg border rounded rounded-t-none py-1 px-2 text-sm bg-white z-30 transition transform origin-center',
             'items',
             {
               'right-0': hasAlign && placement === 'right',
-              '-translate-x-1/2 left-1/2': !hasAlign && placement === 'center',
               'left-0': placement !== 'right' || getTranslateHeight,
+              '-translate-x-1/2 left-1/2': !hasAlign && placement === 'center',
               'w-full': full,
               'z-30': !hover,
               'z-40': hover,
               'scale-0 opacity-0': animatedClosed,
-              'scale-100 opacity-1': animatedOpened
+              'scale-100 opacity-1': animatedOpened,
+              transform: hasAlign
             }
           )
         ]"
+        @click="triggerMenu(false)"
       >
         <slot name="content"></slot>
       </div>
@@ -76,14 +69,22 @@ import {
   inject,
   onMounted,
   ref,
+  toRefs,
   watch,
   watchEffect
 } from "vue";
 import { useRenderClass } from "@/compositionFunctions/settings";
-
 const component = (propName: string) => "t-menu-" + propName;
+
 export default defineComponent({
+  model: {
+    prop: "modelValue",
+    event: "update:modelValue"
+  },
   props: {
+    modelValue: {
+      type: Boolean
+    },
     placement: {
       type: String,
       default: () => inject(component("placement"), "center"),
@@ -113,42 +114,68 @@ export default defineComponent({
     align: {
       type: String,
       default: null
+    },
+    forceOpen: {
+      type: Boolean,
+      default: false
+    },
+    avoidHeaderClose: {
+      type: Boolean,
+      default: false
+    },
+    avoidHeaderOpen: {
+      type: Boolean,
+      default: false
     }
   },
-  setup(props) {
-    const open = ref(false);
+  setup(props, { emit }) {
+    const localOpened = ref(false);
+
+    const { modelValue: opened } = toRefs(props);
 
     const btnWrapper = ref(null as any);
 
-    // is menu open
     const isOpen = computed(() => {
-      return open.value && !props.disabled;
+      if (props.forceOpen) {
+        return true;
+      }
+      return localOpened.value && !props.disabled;
     });
 
-    // handle escape key
     const onEscape = e => {
       if (e.key === "Esc" || e.key === "Escape") {
-        open.value = false;
+        localOpened.value = false;
       }
     };
     useKeyDown(onEscape);
 
-    // handle clickoutside
     const {
       clickedOutside,
       elementRef: menuRef,
       registerEvent,
       unRegisterEvent
     } = useClickOutside();
+
+    function triggerMenu(value: any = null, header = false) {
+      if (!props.disabled) {
+        if (
+          (localOpened.value && header && props.avoidHeaderClose) ||
+          (!localOpened.value && header && props.avoidHeaderOpen)
+        )
+          return;
+        localOpened.value = value !== null ? value : !localOpened.value;
+      }
+    }
+
     watch(clickedOutside, value => {
       if (value) {
-        open.value = false;
+        triggerMenu(false);
       }
     });
 
     onMounted(() => {
       watchEffect(() => {
-        if (open.value) {
+        if (localOpened.value) {
           registerEvent();
         } else {
           unRegisterEvent();
@@ -156,11 +183,13 @@ export default defineComponent({
       });
     });
 
-    const triggerMenu = (value = null as any) => {
-      if (!props.disabled) {
-        open.value = value !== null ? value : !open.value;
-      }
-    };
+    watch(localOpened, value => {
+      emit("update:modelValue", value);
+    });
+
+    watch(opened, value => {
+      triggerMenu(value);
+    });
 
     const animatedOpened = computed(() => {
       return props.animate && isOpen.value;
