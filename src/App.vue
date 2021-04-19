@@ -40,7 +40,8 @@ export default defineComponent({
         "rating",
         "card",
         "tab",
-        "accordion"
+        "accordion",
+        "stepper"
       ]
     };
   },
