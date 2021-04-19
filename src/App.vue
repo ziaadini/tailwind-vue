@@ -41,7 +41,8 @@ export default defineComponent({
         "card",
         "tab",
         "accordion",
-        "stepper"
+        "stepper",
+        "timeline"
       ]
     };
   },
