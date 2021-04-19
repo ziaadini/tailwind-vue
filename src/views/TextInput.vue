@@ -163,7 +163,7 @@ import TTextInput from "@/components/tailwind/text-input/TTextInput.vue";
 export default defineComponent({
   name: "App",
   components: {
-    TTextInput,
+    TTextInput
   },
   setup() {
     return {};
@@ -171,14 +171,14 @@ export default defineComponent({
   data() {
     return {
       mdFile: "",
-      myNumber: 0,
+      myNumber: 0
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/text-input/README.md").then((res) =>
+    this.mdFile = await fetch("/tailwind/text-input/README.md").then(res =>
       res.text()
     );
-  },
+  }
 });
 </script>
 

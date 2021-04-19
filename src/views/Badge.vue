@@ -199,21 +199,21 @@ import TBadge from "@/components/tailwind/badge/TBadge.vue";
 export default defineComponent({
   name: "App",
   components: {
-    TBadge,
+    TBadge
   },
   setup() {
     return {};
   },
   data() {
     return {
-      mdFile: "",
+      mdFile: ""
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/badge/README.md").then((res) =>
+    this.mdFile = await fetch("/tailwind/badge/README.md").then(res =>
       res.text()
     );
-  },
+  }
 });
 </script>
 

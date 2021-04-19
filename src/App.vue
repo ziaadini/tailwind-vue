@@ -17,7 +17,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import { TSettings } from "@/utility/types/TSettings";
 import TDropdown from "@/components/tailwind/dropdown/TDropdown.vue";
 
 export default defineComponent({
