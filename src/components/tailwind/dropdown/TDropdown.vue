@@ -1,38 +1,37 @@
 <template>
-  <div class="relative">
+  <div
+    class="relative"
+    ref="dropdownParentRef"
+    @mouseenter="onHoverDropdown(true)"
+    @mouseleave="onHoverDropdown(false)"
+  >
     <!-- parent section -->
     <!-- header slot  -->
     <template v-if="hasHeaderSlot">
-      <div
-        ref="dropdownParentRef"
-        @mouseenter="hoverTriggerMenu(true)"
-        @mouseleave="hoverTriggerMenu(false)"
-      >
+      <div>
         <slot
           name="header"
           :selectedItem="selectedItem"
           :label="selectedItem.label"
           :value="selectedItem.value"
           :selected-text="selectedItem.label || placeholder"
-          :triggerMenu="triggerMenu"
+          :triggerDropdown="triggerOpen"
           v-bind="$attrs"
+          :class="containerClass"
         ></slot>
       </div>
     </template>
     <!-- default dropdown header & activator slot-->
     <template v-else>
       <div
-        ref="dropdownParentRef"
         data-name="dropdown-parent"
-        @mouseenter="hoverTriggerMenu(true)"
-        @mouseleave="hoverTriggerMenu(false)"
         :class="[
           renderClass(
-            `cursor-pointer w-64 h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
+            `cursor-pointer w-full h-10 flex items-center justify-center ${parentRoundedClass} ${parentClass}`,
             'parent'
           )
         ]"
-        @click="triggerMenu(true)"
+        @click="triggerOpen(true)"
       >
         <template v-if="hasActivatorSlot">
           <slot
@@ -81,6 +80,7 @@
     <div
       ref="dropdownRef"
       :class="[
+        containerClass,
         renderClass(
           `${
             variant === 'white'
@@ -90,7 +90,7 @@
         duration-${animationDuration}
         ${getAnimationDelay}
         transform
-        ${handleVerticalTraslate}`,
+        ${handleVerticalTranslate}`,
           'children',
           {
             'opacity-0 -translate-y-1/2 z-0 scale-y-0': isClosed,
@@ -101,7 +101,7 @@
         )
       ]"
       data-name="dropdown-children"
-      class="transform overflow-hidden ease-in-out cursor-pointer transition w-64 absolute bg-white"
+      class="transform overflow-hidden ease-in-out cursor-pointer transition w-full absolute bg-white"
     >
       <div
         :class="[
@@ -117,19 +117,21 @@
         data-name="dropdown-childrenScrollbar"
       >
         <slot name="prepend" :hasItem="hasItem"></slot>
-        <template v-for="(item, index) in getItems" :key="index">
-          <template v-if="hasItemSlot">
+        <template v-for="(item, index) in getItems">
+          <div v-if="hasItemSlot" :key="index">
             <slot
               name="item"
               :original-item="items[index]"
               :item="item"
               :index="index"
             ></slot>
-          </template>
+          </div>
           <template v-else>
             <div
-              class="py-2 overflow-ellipsis overflow-hidden"
+              :key="index"
+              class="p-2 overflow-ellipsis overflow-hidden"
               :class="[
+                containerClass,
                 renderClass(
                   'py-2 overflow-ellipsis overflow-hidden ' + childClass,
                   'childrenItem',
@@ -169,14 +171,15 @@ import {
 } from "@/compositionFunctions/visible";
 import {
   computed,
-  defineComponent,
-  inject,
   nextTick,
   PropType,
   reactive,
   ref,
   toRefs,
-  watch
+  watch,
+  defineComponent,
+  onMounted,
+  inject
 } from "vue";
 import { DropDown } from "@/utility/types/base-component-types";
 import { useDelayHandler } from "@/compositionFunctions/delayHandler";
@@ -184,8 +187,8 @@ import { useKeyDown } from "@/compositionFunctions/keyboardEvents";
 import { useClickOutside } from "@/compositionFunctions/clickEvents";
 import { useRenderClass } from "@/compositionFunctions/settings";
 import TTriangle from "@/components/tailwind/triangle/TTriangle.vue";
-
 const component = (propName: string) => "t-dropdown-" + propName;
+
 export default defineComponent({
   props: {
     variant: {
@@ -196,13 +199,12 @@ export default defineComponent({
       }
     },
     modelValue: {
-      type: String
+      type: [Object, String, Number]
     },
     divide: {
       type: Boolean,
       default: () => inject(component("divide"), true)
     },
-
     divideColor: {
       type: String,
       default: () => inject(component("divide"), "gray")
@@ -237,6 +239,7 @@ export default defineComponent({
       required: false
     },
     items: {
+      // TODO why do we need this prop?
       default: [],
       type: Array as PropType<DropDown.Root>
     },
@@ -261,9 +264,9 @@ export default defineComponent({
       type: Boolean,
       default: () => inject(component("disabled"), false)
     },
-    toggleByHeader: {
+    avoidCloseByHeader: {
       type: Boolean,
-      default: () => inject(component("toggleByHeader"), true)
+      default: true
     },
     parentColorClasses: {
       type: String,
@@ -290,11 +293,82 @@ export default defineComponent({
     },
     triangleProps: {
       type: Object,
-      default: () => inject(component("triangleProps"), {})
+      default: () => ({})
+    },
+    containerClass: {
+      type: [String, Object],
+      default: ""
     }
   },
   components: { TTriangle },
   setup(props, { emit, slots }) {
+    const dropdownRef = ref(null);
+    const dropdownParentRef = ref(null);
+    const containerRef = computed(function() {
+      return !props.avoidCloseByHeader ? dropdownParentRef : dropdownRef;
+    });
+
+    const state = reactive({
+      selected: null as any
+    });
+
+    const localOpened = ref(props.opened);
+    const localDisabled = ref(false);
+
+    const { items, opened, disabled, rounded } = toRefs(props);
+
+    const isOpened = computed(() => {
+      return localOpened.value;
+    });
+
+    const isClosed = computed(() => {
+      return !isOpened.value;
+    });
+
+    const isClosedRounded = computed(() => {
+      return isClosed.value && rounded.value;
+    });
+
+    const isOpenedRounded = computed(() => {
+      return isOpened.value && rounded.value;
+    });
+
+    const { getAnimationDelay } = useDelayHandler(
+      props.animationDelayType,
+      props.animationDelay,
+      isOpened,
+      isClosed
+    );
+
+    function updateSelectedValue(item: any) {
+      state.selected = item.value;
+      emit("update:modelValue", item.value);
+      emit("update:item", item); // TODO why should we update this?
+    }
+
+    const { clickedOutside, registerEvent, unRegisterEvent } = useClickOutside(
+      containerRef.value
+    );
+
+    const { placement, handlePlacement, isOpen: isVisibleWatch } = useIsVisible(
+      dropdownRef,
+      dropdownParentRef
+    );
+    function hasPlacementPosition(position: visibilityOverflow) {
+      return placement?.value?.includes(position);
+    }
+    const isOverflowed = computed(() => {
+      if (props.top) {
+        if (hasPlacementPosition(visibilityOverflow.top)) return false;
+        else if (hasPlacementPosition(visibilityOverflow.bottom)) {
+          return true;
+        } else return false;
+      } else if (hasPlacementPosition(visibilityOverflow.bottom)) return false;
+      else if (hasPlacementPosition(visibilityOverflow.top)) {
+        return true;
+      } else return false;
+    });
+
     const baseClass = computed(
       () =>
         `bg-${
@@ -312,87 +386,6 @@ export default defineComponent({
         }`
     );
     const childClass = `bg-${props.variant}-50 hover:bg-${props.variant}-50 hover:opacity-60 focus:border-${props.variant} transition`;
-
-    const state = reactive({
-      selected: null as any,
-      opened: props.opened,
-      disabled: false
-    });
-
-    const { items, opened, disabled } = toRefs(props);
-
-    // initiate refs
-    const dropdownRef = ref(null);
-    const dropdownParentRef = ref(null);
-
-    const containerRef = computed(function() {
-      return !props.toggleByHeader ? dropdownParentRef : dropdownRef;
-    });
-
-    const isOpened = computed(() => {
-      return state.opened;
-    });
-
-    const isClosed = computed(() => {
-      return !isOpened.value;
-    });
-
-    const isClosedRounded = computed(() => {
-      return isClosed.value && props.rounded;
-    });
-
-    const isOpenedRounded = computed(() => {
-      return isOpened.value && props.rounded;
-    });
-
-    // handle animation delay based on type
-    const { getAnimationDelay } = useDelayHandler(
-      props.animationDelayType,
-      props.animationDelay,
-      isOpened,
-      isClosed
-    );
-
-    function updateSelectedValue(item: any) {
-      state.selected = item.value;
-      emit("update:modelValue", item.value);
-      emit("update:item", item);
-    }
-
-    // init clickoutside
-    const { clickedOutside, registerEvent, unRegisterEvent } = useClickOutside(
-      containerRef.value
-    );
-
-    // init dropdown visibility
-    const { placement, handlePlacement, isOpen: isVisibleWatch } = useIsVisible(
-      dropdownRef,
-      dropdownParentRef
-    );
-
-    // handle dropdown visibility
-    function hasPlacementPosition(position: visibilityOverflow) {
-      return placement.value?.includes(position);
-    }
-    const isOverflowed = computed(() => {
-      if (props.top) {
-        if (hasPlacementPosition(visibilityOverflow.top)) return false;
-        else {
-          if (hasPlacementPosition(visibilityOverflow.bottom)) {
-            return true;
-          } else return false;
-        }
-      } else {
-        if (hasPlacementPosition(visibilityOverflow.bottom)) return false;
-        else {
-          if (hasPlacementPosition(visibilityOverflow.top)) {
-            return true;
-          } else return false;
-        }
-      }
-    });
-
-    // handler parent rounded class
     const parentRoundedClass = computed(() => {
       if (isOpened.value) {
         if (!isOverflowed.value) {
@@ -407,29 +400,24 @@ export default defineComponent({
             }
             return "rounded-t-sm";
           }
-        } else {
-          if (props.top) {
-            if (props.rounded) {
-              return "rounded-t-md";
-            }
-            return "rounded-t-sm";
-          } else {
-            if (props.rounded) {
-              return "rounded-b-md";
-            }
-            return "rounded-b-sm";
+        } else if (props.top) {
+          if (props.rounded) {
+            return "rounded-t-md";
           }
-        }
-      } else {
-        if (props.rounded) {
-          return "rounded-md";
+          return "rounded-t-sm";
         } else {
-          return "rounded-sm";
+          if (props.rounded) {
+            return "rounded-b-md";
+          }
+          return "rounded-b-sm";
         }
+      } else if (props.rounded) {
+        return "rounded-md";
+      } else {
+        return "rounded-sm";
       }
     });
 
-    // handle child wrapper rounded classes
     const roundedClass = computed(() => {
       if (!isOverflowed.value) {
         if (props.top) {
@@ -443,22 +431,20 @@ export default defineComponent({
           }
           return "rounded-b-sm";
         }
-      } else {
-        if (props.top) {
-          if (props.rounded) {
-            return "rounded-b-md";
-          }
-          return "rounded-b-sm";
-        } else {
-          if (props.rounded) {
-            return "rounded-t-md";
-          }
-          return "rounded-t-sm";
+      } else if (props.top) {
+        if (props.rounded) {
+          return "rounded-b-md";
         }
+        return "rounded-b-sm";
+      } else {
+        if (props.rounded) {
+          return "rounded-t-md";
+        }
+        return "rounded-t-sm";
       }
     });
 
-    const handleVerticalTraslate = computed(() => {
+    const handleVerticalTranslate = computed(() => {
       if (!isOverflowed.value) {
         if (props.top) {
           return "-translate-y-full top-0";
@@ -473,7 +459,6 @@ export default defineComponent({
     });
 
     const handleBorderType = computed(() => {
-      // isOverflowed ? 'border-b-0' : 'border-t-0'
       if (!isOverflowed.value) {
         if (props.top) return "border-b-0";
         return "border-t-0";
@@ -483,7 +468,6 @@ export default defineComponent({
       }
     });
 
-    // initialize dropdown items
     const itemFactory = computed(() => {
       if (!items.value || items.value.length === 0) return [];
 
@@ -514,7 +498,7 @@ export default defineComponent({
     const selectedItem = computed(() => {
       return (
         itemFactory.value.find(e => e.value === state.selected) || {
-          label: false
+          label: false // TODO why label false?
         }
       );
     });
@@ -530,73 +514,68 @@ export default defineComponent({
       { immediate: true }
     );
 
-    const handleEmitOpened = async () => {
-      emit("opened", isVisibleWatch.value);
+    const onChangeOpened = async () => {
+      emit("opened", localOpened.value);
       await nextTick();
       handlePlacement();
     };
 
-    // handle open and close state of dropdown
-    async function triggerMenu(value = null as any) {
-      // handle disabled
-      if (state.disabled) return;
-      if (value !== state.opened) {
-        isVisibleWatch.value = state.opened = value;
-        await handleEmitOpened();
+    async function triggerDropdown(value = null as any) {
+      console.log("triggerDropdown", value);
+      if (localDisabled.value) return;
+      if (value !== localOpened.value) {
+        isVisibleWatch.value = localOpened.value = value;
+        await onChangeOpened();
       } else if (value === null) {
-        isVisibleWatch.value = state.opened = !state.opened;
-        await handleEmitOpened();
+        isVisibleWatch.value = localOpened.value = !localOpened.value;
+        await onChangeOpened();
       }
     }
 
-    // handle disabled state
-    watch(disabled, value => {
-      if (value) triggerMenu(false);
-      state.disabled = value;
-    });
+    function triggerOpen(value = true) {
+      localOpened.value = value;
+    }
 
     function selectItem(item) {
-      triggerMenu(false);
+      triggerOpen(false);
       updateSelectedValue(item);
     }
 
-    // handle clickoutside
     const onEscape = (e: any) => {
       if (e.key === "Esc" || e.key === "Escape") {
-        triggerMenu(false);
+        triggerDropdown(false);
       }
     };
     useKeyDown(onEscape);
     watch(clickedOutside, () => {
-      triggerMenu(false);
+      localOpened.value = false;
     });
 
-    function hoverTriggerMenu(value: boolean) {
+    function onHoverDropdown(value: boolean) {
       if (props.hover) {
-        triggerMenu(value);
+        triggerOpen(value);
       }
     }
 
-    watch(opened, value => {
-      if (value) {
-        triggerMenu(true);
-      } else {
-        triggerMenu(false);
-      }
+    watch(localOpened, isOpen => {
+      triggerDropdown(isOpen);
+      isOpen ? registerEvent() : unRegisterEvent();
     });
 
-    watch(toRefs(state).opened, value => {
-      if (value) {
+    watch(disabled, isDisabled => {
+      if (isDisabled) triggerDropdown(false);
+      localDisabled.value = isDisabled;
+    });
+
+    onMounted(() => {
+      if (localOpened.value) {
         registerEvent();
-      } else {
-        unRegisterEvent();
       }
     });
 
-    // handle arrow direction
     const arrowDirection = computed(function() {
       if (props.top) {
-        if (state.opened) {
+        if (opened.value) {
           if (isOverflowed.value) {
             return arrowDirections["arrow-up"];
           }
@@ -605,7 +584,7 @@ export default defineComponent({
           return arrowDirections["arrow-up"];
         }
       } else {
-        if (state.opened) {
+        if (opened.value) {
           if (isOverflowed.value) {
             return arrowDirections["arrow-down"];
           }
@@ -627,7 +606,7 @@ export default defineComponent({
       childClass: props.itemsColorClasses || childClass,
       roundedClass,
       parentRoundedClass,
-      handleVerticalTraslate,
+      handleVerticalTranslate,
       handleBorderType,
       isOpened,
       isClosed,
@@ -635,8 +614,8 @@ export default defineComponent({
       isOpenedRounded,
       getItems: itemFactory,
       hasItem: computed(() => !!itemFactory.value.length),
-      triggerMenu,
-      hoverTriggerMenu,
+      triggerDropdown,
+      onHoverDropdown,
       selectItem,
       selectedItem,
       state,
@@ -646,7 +625,8 @@ export default defineComponent({
       placement,
       arrowDirection,
       getAnimationDelay,
-      renderClass
+      renderClass,
+      triggerOpen
     };
   }
 });
