@@ -42,7 +42,8 @@ export default defineComponent({
         "tab",
         "accordion",
         "stepper",
-        "timeline"
+        "timeline",
+        "fade"
       ]
     };
   },
