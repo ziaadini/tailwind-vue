@@ -22,7 +22,7 @@
       <iframe
         width="100%"
         height="200"
-        src="//jsfiddle.net/mohstarsos1/9mfw2vnq/1/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/9mfw2vnq/3/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -43,7 +43,7 @@
       <iframe
         width="100%"
         height="200"
-        src="//jsfiddle.net/mohstarsos1/kfyheg1m/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/kfyheg1m/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -73,7 +73,7 @@
       <iframe
         width="100%"
         height="300"
-        src="//jsfiddle.net/mohstarsos1/dfh6pvyL/1/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/dfh6pvyL/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"

@@ -46,7 +46,7 @@
       <iframe
         width="100%"
         height="200"
-        src="//jsfiddle.net/mohstarsos1/124gwtm5/1/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/124gwtm5/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -71,7 +71,7 @@
       <iframe
         width="100%"
         height="200"
-        src="//jsfiddle.net/mohstarsos1/h2vzuxt5/3/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/h2vzuxt5/4/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -93,7 +93,7 @@
       <iframe
         width="100%"
         height="200"
-        src="//jsfiddle.net/mohstarsos1/hfs1wd9t/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/hfs1wd9t/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -146,7 +146,7 @@
       <iframe
         width="100%"
         height="500"
-        src="//jsfiddle.net/mohstarsos1/2ubwn60g/1/embedded/html,js/dark/"
+        src="//jsfiddle.net/mohstarsos1/2ubwn60g/3/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
