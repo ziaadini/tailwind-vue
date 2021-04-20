@@ -44,7 +44,8 @@ export default defineComponent({
         "stepper",
         "timeline",
         "fade",
-        "tooltip"
+        "tooltip",
+        "progressbar"
       ]
     };
   },
