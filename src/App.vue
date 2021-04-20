@@ -43,7 +43,8 @@ export default defineComponent({
         "accordion",
         "stepper",
         "timeline",
-        "fade"
+        "fade",
+        "tooltip"
       ]
     };
   },
