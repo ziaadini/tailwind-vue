@@ -46,7 +46,8 @@ export default defineComponent({
         "fade",
         "tooltip",
         "progressbar",
-        "numberpicker"
+        "numberpicker",
+        "drawer"
       ]
     };
   },
