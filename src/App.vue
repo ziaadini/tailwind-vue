@@ -47,7 +47,8 @@ export default defineComponent({
         "tooltip",
         "progressbar",
         "numberpicker",
-        "drawer"
+        "drawer",
+        "bottomsheet"
       ]
     };
   },
