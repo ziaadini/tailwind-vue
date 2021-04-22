@@ -85,7 +85,7 @@
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Close Button</h2>
-      <p class="mb-2">When this prop used, drawer has not btn for closed.</p>
+      <p class="mb-2">When this prop used, drawer has not button for closed.</p>
       <t-drawer
         :hasCloseButton="false"
         teleport-to="#modal-content"
