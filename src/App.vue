@@ -48,7 +48,8 @@ export default defineComponent({
         "progressbar",
         "numberpicker",
         "drawer",
-        "bottomsheet"
+        "bottomsheet",
+        "switch"
       ]
     };
   },
