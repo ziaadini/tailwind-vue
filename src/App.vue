@@ -52,7 +52,8 @@ export default defineComponent({
         "switch",
         "checkbox",
         "skeleton",
-        "loading"
+        "loading",
+        "timer"
       ]
     };
   },
