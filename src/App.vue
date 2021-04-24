@@ -50,7 +50,8 @@ export default defineComponent({
         "drawer",
         "bottomsheet",
         "switch",
-        "checkbox"
+        "checkbox",
+        "skeleton"
       ]
     };
   },
