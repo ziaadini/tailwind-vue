@@ -49,7 +49,8 @@ export default defineComponent({
         "numberpicker",
         "drawer",
         "bottomsheet",
-        "switch"
+        "switch",
+        "checkbox"
       ]
     };
   },
