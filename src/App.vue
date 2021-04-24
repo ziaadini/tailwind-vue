@@ -51,7 +51,8 @@ export default defineComponent({
         "bottomsheet",
         "switch",
         "checkbox",
-        "skeleton"
+        "skeleton",
+        "loading"
       ]
     };
   },
