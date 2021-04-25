@@ -54,7 +54,8 @@ export default defineComponent({
         "skeleton",
         "loading",
         "timer",
-        "rangeSlider"
+        "rangeSlider",
+        "toast"
       ]
     };
   },
