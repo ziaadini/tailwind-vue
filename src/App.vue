@@ -53,7 +53,8 @@ export default defineComponent({
         "checkbox",
         "skeleton",
         "loading",
-        "timer"
+        "timer",
+        "rangeSlider"
       ]
     };
   },
