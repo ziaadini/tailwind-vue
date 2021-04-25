@@ -55,7 +55,8 @@ export default defineComponent({
         "loading",
         "timer",
         "rangeSlider",
-        "toast"
+        "toast",
+        "radio"
       ]
     };
   },
