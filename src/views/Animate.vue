@@ -10,7 +10,9 @@
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Simple</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <p class="mb-2">
+        You can animate the element from start to end point with v-model.
+      </p>
       <t-animate
         class="transform"
         start="translate-x-1/2 opacity-1"
@@ -26,8 +28,8 @@
       >
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="180"
+        src="//jsfiddle.net/mohstarsos1/zo7snt8w/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -38,7 +40,7 @@
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Duration</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <p class="mb-2">Set a duration prop to declaration of animating.</p>
       <t-animate
         class="transform"
         start="translate-x-1/2 opacity-1"
@@ -54,8 +56,38 @@
       >
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="180"
+        src="//jsfiddle.net/mohstarsos1/jLmkn1o7/1/embedded/html,js/dark/"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Allocate Space</h2>
+      <p class="mb-2">
+        Assign space for start to end animated elements.
+      </p>
+      <t-animate
+        class="transform"
+        start="translate-x-1/2 opacity-1"
+        end="translate-y-full opacity-0"
+        :show="animate"
+        :allocate-space="false"
+        :duration="200"
+      >
+        <div class="w-10 h-10 rounded-full bg-warning"></div>
+      </t-animate>
+      <t-button variant="primary" @click="animate = !animate" class="mb-2"
+        >Click to Animate</t-button
+      >
+      <iframe
+        width="100%"
+        height="180"
+        src="//jsfiddle.net/mohstarsos1/us7v0tem/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
