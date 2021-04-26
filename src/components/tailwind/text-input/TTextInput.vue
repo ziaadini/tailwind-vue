@@ -195,7 +195,7 @@ export default defineComponent({
     // handle text variant
     const variantClasses = computed((): string => {
       let classes = "";
-      classes += `bg-white text-input-placehoder-black text-dark border ${
+      classes += `bg-white text-input-placeholder-black text-dark border border-solid ${
         props.error
           ? "border-red-500"
           : `border-${
@@ -206,7 +206,7 @@ export default defineComponent({
       }  ${props.hover ? `hover:bg-${props.variant}-50` : ""}`;
 
       classes +=
-        " border transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
+        " transition hover:opacity-80 shadow-sm hover:shadow-md disabled:opacity-50";
       return classes;
     });
 
