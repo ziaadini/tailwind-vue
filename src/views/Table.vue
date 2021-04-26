@@ -2,36 +2,18 @@
   <div class="flex flex-col items-start p-1" dir="ltr">
     <h3 class="text-5xl font-bold mb-2">Table</h3>
     <p class="mb-2">
-      Small filled buttons in different styles and colors can be used for call
-      to actions in forms and more.
+      The t-table component is used for displaying tabular data. Features
+      include sorting, toggle details and customizing template of component.
     </p>
 
     <div
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Simple</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
-      <t-table
-        :items="[
-          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-          {
-            age: 21,
-            first_name: 'Larsen',
-            last_name: 'Shaw'
-          },
-          {
-            age: 89,
-            first_name: 'Geneva',
-            last_name: 'Wilson'
-          },
-          { age: 38, first_name: 'Jami', last_name: 'Carney' }
-        ]"
-        :fields="[
-          { key: 'first_name', label: 'first name' },
-          { key: 'last_name', label: 'last name' },
-          { key: 'age', label: 'age' }
-        ]"
-      >
+      <p class="mb-2">
+        This type of component is a simple wrapper component around the element.
+      </p>
+      <t-table :items="tableData" :fields="tableHeader">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
         </template>
@@ -74,7 +56,26 @@ export default defineComponent({
   },
   data() {
     return {
-      mdFile: ""
+      mdFile: "",
+      tableData: [
+        { age: 40, firstName: "Dickerson", lastName: "Macdonald" },
+        {
+          age: 21,
+          firstName: "Larsen",
+          lastName: "Shaw"
+        },
+        {
+          age: 89,
+          firstName: "Geneva",
+          lastName: "Wilson"
+        },
+        { age: 38, firstName: "Jami", lastName: "Carney" }
+      ],
+      tableHeader: [
+        { key: "firstName", label: "first name" },
+        { key: "lastName", label: "last name" },
+        { key: "age", label: "age" }
+      ]
     };
   },
   async mounted() {
