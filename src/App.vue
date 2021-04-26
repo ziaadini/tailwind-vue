@@ -57,7 +57,8 @@ export default defineComponent({
         "rangeSlider",
         "toast",
         "radio",
-        "animate"
+        "animate",
+        "table"
       ]
     };
   },
