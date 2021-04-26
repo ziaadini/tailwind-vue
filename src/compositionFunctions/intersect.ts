@@ -1,7 +1,7 @@
-import { onMounted, ref, watch, Ref } from "vue";
+import { onMounted, ref, watch, Ref, unref } from "vue";
 interface IntersectionObserverConfig extends IntersectionObserverInit {
   passRef?: boolean;
-  delay?: number;
+  delay?: Ref<number> | number;
   defaultValue?: boolean;
   enable?: Ref<boolean>;
 }
@@ -9,7 +9,7 @@ interface IntersectionObserverConfig extends IntersectionObserverInit {
 export const useIntersectElement = (
   {
     passRef = true,
-    delay = 0,
+    delay = ref(0) as any,
     defaultValue = false,
     enable = ref(true),
     ...options
@@ -32,11 +32,11 @@ export const useIntersectElement = (
         }
         callbackFunction?.(entries[0], observer);
       };
-      if (delay && delay > 0) {
+      if (unref(delay) && unref(delay) > 0) {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           callbackMethod();
-        }, delay);
+        }, unref(delay) as number);
       } else {
         callbackMethod();
       }
