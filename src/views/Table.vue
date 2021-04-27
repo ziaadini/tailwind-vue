@@ -26,8 +26,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/ptv61jgw/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -55,8 +55,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/pq6x0z5w/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -88,8 +88,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/hj8kw175/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -137,8 +137,8 @@
 
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="500"
+        src="//jsfiddle.net/mohstarsos1/k3h8ydje/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -165,8 +165,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/v1yc4w90/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -193,8 +193,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="300"
+        src="//jsfiddle.net/mohstarsos1/18emcqrg/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -209,6 +209,7 @@
         Use the DivideX and DivideY prop to set the divider border from rows and
         columns of the table.
       </p>
+      <div class="mt-6">Divide X:</div>
       <t-table :divideX="false" :items="tableData" :fields="tableHeader">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
@@ -220,6 +221,7 @@
           <div>{{ value }}</div>
         </template>
       </t-table>
+      <div class="mt-6">Divide Y:</div>
       <t-table :divideY="false" :items="tableData" :fields="tableHeader">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
@@ -231,6 +233,7 @@
           <div>{{ value }}</div>
         </template>
       </t-table>
+      <div class="mt-6">Divide X,Y:</div>
       <t-table
         :divideY="false"
         :divideX="false"
@@ -249,8 +252,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="500"
+        src="//jsfiddle.net/mohstarsos1/8dyzmrtf/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -265,17 +268,19 @@
         With this type of component you are able to give your data tables an
         alternate style.
       </p>
+      <div class="mt-6">Custom Header:</div>
       <t-table :items="tableData" :fields="tableHeader">
         <template #card-header="{item}">
-          <div class="text-blue-500">{{ item.label }}</div>
+          <div class="text-blue-500 font-bold">{{ item.label }}</div>
         </template>
         <template #header="{item}">
-          <div class="text-blue-500">{{ item.label }}</div>
+          <div class="text-blue-500 font-bold">{{ item.label }}</div>
         </template>
         <template #cell="{value}">
           <div>{{ value }}</div>
         </template>
       </t-table>
+      <div class="mt-6">Custom Header (Variant Color Cells):</div>
       <t-table :items="tableData5" :fields="tableHeader5">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
@@ -287,6 +292,7 @@
           <div>{{ value }}</div>
         </template>
       </t-table>
+      <div class="mt-6">Custom Row (Variant Color Rows):</div>
       <t-table :items="tableData6" :fields="tableHeader6">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
@@ -298,6 +304,7 @@
           <div>{{ value }}</div>
         </template>
       </t-table>
+      <div class="mt-6">Without Row Hover Effect:</div>
       <t-table :hover="false" :items="tableData" :fields="tableHeader">
         <template #card-header="{item}">
           <div>{{ item.label }}</div>
@@ -311,8 +318,8 @@
       </t-table>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="500"
+        src="//jsfiddle.net/mohstarsos1/epb6cujv/5/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
