@@ -11,15 +11,83 @@
     >
       <h2 class="text-xl font-bold mb-2">Simple</h2>
       <p class="mb-2">Choose this basic button, only with text.</p>
-      <t-searchable
-        v-model="searchableModel"
-        placeholder="select..."
-        :items="[
-          { label: 'zia', value: 'zzz' },
-          { label: 'ali', value: 'aaa' }
-        ]"
-      ></t-searchable>
-      {{ searchableModel }}
+      <div class="flex w-full items-center mb-4">
+        <t-searchable
+          class="w-1/6 mr-5"
+          v-model="searchableModel"
+          placeholder="select..."
+          :items="[
+            { label: 'VueJS', value: 'VueJS' },
+            { label: 'NuxtJS', value: 'NuxtJS' },
+            { label: 'React', value: 'React' },
+            { label: 'Ember', value: 'Ember' },
+            { label: 'Angular', value: 'Angular' }
+          ]"
+        ></t-searchable>
+        <div>Selected item: {{ searchableModel }}</div>
+      </div>
+      <iframe
+        width="100%"
+        height="100"
+        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Custom No Result Message</h2>
+      <p class="mb-2">Choose this basic button, only with text.</p>
+      <div class="flex w-full items-center mb-4">
+        <t-searchable
+          noResult="Sorry, This is a test text!"
+          class="w-1/6 mr-5"
+          v-model="searchableModel"
+          placeholder="select..."
+          :items="[
+            { label: 'VueJS', value: 'VueJS' },
+            { label: 'NuxtJS', value: 'NuxtJS' },
+            { label: 'React', value: 'React' },
+            { label: 'Ember', value: 'Ember' },
+            { label: 'Angular', value: 'Angular' }
+          ]"
+        ></t-searchable>
+        <div>Selected item: {{ searchableModel }}</div>
+      </div>
+      <iframe
+        width="100%"
+        height="100"
+        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Delayed Search</h2>
+      <p class="mb-2">Choose this basic button, only with text.</p>
+      <div class="flex w-full items-center mb-4">
+        <t-searchable
+          :delay="1000"
+          class="w-1/6 mr-5"
+          v-model="searchableModel"
+          placeholder="select..."
+          :items="[
+            { label: 'VueJS', value: 'VueJS' },
+            { label: 'NuxtJS', value: 'NuxtJS' },
+            { label: 'React', value: 'React' },
+            { label: 'Ember', value: 'Ember' },
+            { label: 'Angular', value: 'Angular' }
+          ]"
+        ></t-searchable>
+        <div>Selected item: {{ searchableModel }}</div>
+      </div>
       <iframe
         width="100%"
         height="100"
