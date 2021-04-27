@@ -326,6 +326,64 @@
       ></iframe>
     </div>
 
+    <div
+      class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
+    >
+      <h2 class="text-xl font-bold mb-2">Toggle Row</h2>
+      <p class="mb-2">
+        With this type of component you can toggled row for table.
+      </p>
+      <t-table
+        :items="tableData7"
+        :fields="tableHeader7"
+        :resetExpand="$route.query.page"
+      >
+        <template #cell(showDetails)="{toggleDetails,item}">
+          <t-button
+            variant="success"
+            class="text-xs"
+            size="sm"
+            @click="toggleDetails"
+            >toggleDetails ({{ item.age }})</t-button
+          >
+        </template>
+
+        <template #card-cell(showDetails)="{toggleDetails,item}">
+          <t-button
+            variant="success"
+            class="text-xs"
+            size="sm"
+            @click="toggleDetails"
+            >toggleDetails ({{ item.age }})</t-button
+          >
+        </template>
+
+        <template #cell="{value}">
+          <span class="text-gray-700">
+            {{ value }}
+          </span>
+        </template>
+        <template #rowDetails="{rowItem}">
+          <t-card
+            data-container-delete="text-right shadow-md border border-gray-100"
+            data-container-add="text-gray-500 bg-gray-100"
+            data-title-delete="text-danger"
+            title="hello world"
+          >
+            <div class="h-16">This is a test text ({{ rowItem.age }})</div>
+          </t-card>
+        </template>
+      </t-table>
+      <iframe
+        width="100%"
+        height="500"
+        src="//jsfiddle.net/mohstarsos1/6un08s5g/3/embedded/html,js/dark/"
+        allowfullscreen="allowfullscreen"
+        allowpaymentrequest
+        frameborder="0"
+      ></iframe>
+    </div>
+
     <div class="mt-10 border rounded-sm p-3 w-full shadow-md">
       <article class="prose prose-xl text-left">
         <vue3-markdown-it :source="mdFile" />
@@ -337,11 +395,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TTable from "@/components/tailwind/table/TTable.vue";
+import TButton from "@/components/tailwind/button/TButton.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    TTable
+    TTable,
+    TButton
   },
   setup() {
     return {};
@@ -471,6 +531,26 @@ export default defineComponent({
         }
       ],
       tableHeader6: [
+        { key: "firstName", label: "first name" },
+        { key: "lastName", label: "last name" },
+        { key: "age", label: "age" }
+      ],
+      tableData7: [
+        { age: 40, firstName: "Dickerson", lastName: "Macdonald" },
+        {
+          age: 21,
+          firstName: "Larsen",
+          lastName: "Shaw"
+        },
+        {
+          age: 89,
+          firstName: "Geneva",
+          lastName: "Wilson"
+        },
+        { age: 39, firstName: "Jon", lastName: "Carney" }
+      ],
+      tableHeader7: [
+        { key: "showDetails", label: "show details" },
         { key: "firstName", label: "first name" },
         { key: "lastName", label: "last name" },
         { key: "age", label: "age" }
