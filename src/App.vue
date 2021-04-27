@@ -58,7 +58,8 @@ export default defineComponent({
         "toast",
         "radio",
         "animate",
-        "table"
+        "table",
+        "pagination"
       ]
     };
   },
