@@ -59,7 +59,8 @@ export default defineComponent({
         "radio",
         "animate",
         "table",
-        "pagination"
+        "pagination",
+        "searchable"
       ]
     };
   },
