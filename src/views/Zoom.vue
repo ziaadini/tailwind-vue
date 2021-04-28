@@ -20,7 +20,7 @@
       <iframe
         width="100%"
         height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        src="//jsfiddle.net/mohstarsos1/e1u89tf6/1/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -56,8 +56,8 @@
       ></TZoom>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="180"
+        src="//jsfiddle.net/mohstarsos1/qfc2ex64/1/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -80,7 +80,7 @@
       <iframe
         width="100%"
         height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        src="//jsfiddle.net/mohstarsos1/h2t4y1pj/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
