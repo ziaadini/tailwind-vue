@@ -318,6 +318,23 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "zia" */ "@/views/Searchable.vue")
+  },
+  {
+    path: "/numberTransformer",
+    name: "numberTransformer",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "zia" */ "@/views/NumberTransformer.vue")
+  },
+  {
+    path: "/zoom",
+    name: "zoom",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "zia" */ "@/views/Zoom.vue")
   }
 ];
 

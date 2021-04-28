@@ -60,7 +60,9 @@ export default defineComponent({
         "animate",
         "table",
         "pagination",
-        "searchable"
+        "searchable",
+        "numberTransformer",
+        "zoom"
       ]
     };
   },
