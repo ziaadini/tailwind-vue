@@ -82,11 +82,16 @@
         >notice: Only worked when localSearch prop is false.</span
       ><br />
       <div class="flex w-full items-center mb-4">
+        32
+
         <t-searchable
           :delay="1000"
           class="w-1/6 mr-5"
           v-model="searchableModel3"
+          :items="searchableItems"
           placeholder="select..."
+          @search="searchAjax"
+          :local-search="false"
         ></t-searchable>
         <div>Selected item: {{ searchableModel3 }}</div>
       </div>
@@ -126,7 +131,7 @@ export default defineComponent({
       searchableModel: "",
       searchableModel2: "",
       searchableModel3: "",
-      searchableItems:[]
+      searchableItems: []
     };
   },
   async mounted() {
@@ -134,18 +139,19 @@ export default defineComponent({
       res.text()
     );
   },
-  methods:{
-    searchAjax = ({ search, setLoading }) => {
+  methods: {
+    searchAjax({ search, setLoading }): void {
       setLoading(true);
       fetch(
         `https://api.github.com/search/repositories?q=${escape(search)}`
       ).then(res => {
+        console.log(res);
         res.json().then(json => {
-          this.searchableItems.value = json.items;
+          this.searchableItems = json.items;
           setLoading(false);
         });
       });
-    };
+    }
   }
 });
 </script>
