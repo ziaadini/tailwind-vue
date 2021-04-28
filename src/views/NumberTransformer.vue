@@ -2,19 +2,18 @@
   <div class="flex flex-col items-start p-1" dir="ltr">
     <h3 class="text-5xl font-bold mb-2">Number Transformer</h3>
     <p class="mb-2">
-      Small filled buttons in different styles and colors can be used for call
-      to actions in forms and more.
+      Transform the number with stepper animation from start to end point.
     </p>
 
     <div
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Simple</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <p class="mb-2">Set the number and change it.</p>
       <div class="flex items-center mb-3">
         <t-number-transformer
           :number="number"
-          class="mr-4 w-40"
+          class="mr-4 w-40 font-bold"
         ></t-number-transformer>
         <t-button @click="number = 1000" variant="success" size="sm"
           >Transform</t-button
@@ -22,11 +21,10 @@
           >Reset</t-button
         >
       </div>
-
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="150"
+        src="//jsfiddle.net/mohstarsos1/sgjna6ev/2/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -37,11 +35,14 @@
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Duration</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <p class="mb-2">
+        With use this prop you can define time to operate number transformation.
+        (example: 2Sec)
+      </p>
       <div class="flex items-center mb-3">
         <t-number-transformer
           :number="number2"
-          class="mr-4 w-40"
+          class="mr-4 w-40 font-bold"
           :maxDuration="2000"
         ></t-number-transformer>
         <t-button @click="number2 = 1000" variant="success" size="sm"
@@ -53,8 +54,8 @@
 
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="150"
+        src="//jsfiddle.net/mohstarsos1/0tu745L6/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -65,15 +66,18 @@
       class="flex flex-col items-start mt-10 border rounded-sm p-3 w-full shadow-md"
     >
       <h2 class="text-xl font-bold mb-2">Step</h2>
-      <p class="mb-2">Choose this basic button, only with text.</p>
+      <p class="mb-2">
+        This prop define step to transformation. (example: each 10 from 0 to
+        100)
+      </p>
       <div class="flex items-center mb-3">
         <t-number-transformer
-          :step="100000"
+          :step="10"
           :number="number3"
-          class="mr-4 w-40"
+          class="mr-4 w-40 font-bold"
           :maxDuration="2000"
         ></t-number-transformer>
-        <t-button @click="number3 = 1000000" variant="success" size="sm"
+        <t-button @click="number3 = 100" variant="success" size="sm"
           >Transform</t-button
         ><t-button @click="number3 = 0" variant="warning" size="sm" class="ml-2"
           >Reset</t-button
@@ -82,8 +86,8 @@
 
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="150"
+        src="//jsfiddle.net/mohstarsos1/9tpmuxbn/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
