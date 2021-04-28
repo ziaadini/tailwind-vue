@@ -13,10 +13,7 @@
       <p class="mb-2">
         Define a image source and hover your mouse to view zoom.
       </p>
-      <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-        class="mb-3"
-      ></TZoom>
+      <TZoom src="https://picsum.photos/800/600" class="mb-3"></TZoom>
       <iframe
         width="100%"
         height="100"
@@ -35,22 +32,14 @@
         You can set this prop for scaling hovered image.
       </p>
       <div class="mt-8">Default Scale (1.5)</div>
-      <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      ></TZoom>
+      <TZoom src="https://picsum.photos/800/600"></TZoom>
       <div class="mt-8">Scale 2</div>
-      <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-        :scale="2"
-      ></TZoom>
+      <TZoom src="https://picsum.photos/800/600" :scale="2"></TZoom>
       <div class="mt-8">Scale 3</div>
-      <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-        :scale="3"
-      ></TZoom>
+      <TZoom src="https://picsum.photos/800/600" :scale="3"></TZoom>
       <div class="mt-8">Scale 4</div>
       <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+        src="https://picsum.photos/800/600"
         :scale="4"
         class="mb-3"
       ></TZoom>
@@ -72,8 +61,8 @@
         Define another image source for show when not hovered via cursor.
       </p>
       <TZoom
-        src="https://images.pexels.com/photos/6303791/pexels-photo-6303791.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-        maskSrc="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+        src="https://picsum.photos/800/600"
+        maskSrc="https://picsum.photos/seed/picsum/800/600"
         :scale="4"
         class="mb-3"
       ></TZoom>

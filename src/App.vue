@@ -62,7 +62,8 @@ export default defineComponent({
         "pagination",
         "searchable",
         "numberTransformer",
-        "zoom"
+        "zoom",
+        "image"
       ]
     };
   },
