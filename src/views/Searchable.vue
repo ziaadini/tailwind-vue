@@ -31,8 +31,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="250"
+        src="//jsfiddle.net/mohstarsos1/kwbq0ge4/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -65,8 +65,8 @@
       </div>
       <iframe
         width="100%"
-        height="100"
-        src="//jsfiddle.net/mohstarsos1/13xgw0ry/8/embedded/html/dark"
+        height="260"
+        src="//jsfiddle.net/mohstarsos1/L5fevqpy/1/embedded/html,js/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
         frameborder="0"
@@ -82,8 +82,6 @@
         >notice: Only worked when localSearch prop is false.</span
       ><br />
       <div class="flex w-full items-center mb-4">
-        32
-
         <t-searchable
           :delay="1000"
           class="w-1/6 mr-5"
