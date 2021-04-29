@@ -558,9 +558,9 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/table/README.md").then(res =>
-      res.text()
-    );
+    this.mdFile = await fetch(
+      "https://raw.githubusercontent.com/ziaadini/tailwind-vue/master/public/tailwind/table/README.md"
+    ).then(res => res.text());
   }
 });
 </script>

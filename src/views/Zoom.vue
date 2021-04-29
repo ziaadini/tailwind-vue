@@ -102,9 +102,9 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.mdFile = await fetch("/tailwind/zoom/README.md").then(res =>
-      res.text()
-    );
+    this.mdFile = await fetch(
+      "https://raw.githubusercontent.com/ziaadini/tailwind-vue/master/public/tailwind/zoom/README.md"
+    ).then(res => res.text());
   }
 });
 </script>
