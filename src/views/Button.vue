@@ -80,7 +80,7 @@
       </div>
       <iframe
         width="100%"
-        height="300"
+        height="330"
         src="//jsfiddle.net/mohstarsos1/ftdboukw/4/embedded/html/dark/"
         allowfullscreen="allowfullscreen"
         allowpaymentrequest
